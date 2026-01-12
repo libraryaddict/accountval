@@ -63,6 +63,20 @@ class NewPrices {
     this.settings = settings;
   }
 
+  doWarning() {
+    if (this.prices == null || this.ofThePast || this.lastUpdated == null) {
+      return false;
+    }
+
+    const aWeekIsThisManyMillis = 7 * 24 * 60 * 60 * 1000;
+
+    if (this.lastUpdated + aWeekIsThisManyMillis < Date.now()) {
+      return false;
+    }
+
+    return true;
+  }
+
   isValid() {
     if (this.prices == null) {
       return false;
@@ -245,6 +259,10 @@ export class PriceResolver {
     this.specialCase.set(Item.get("Meat Paste"), 10);
     this.specialCase.set(Item.get("Meat Stack"), 100);
     this.specialCase.set(Item.get("Dense meat stack"), 1000);
+  }
+
+  doWarning(): boolean {
+    return this.newPrices && this.newPrices.doWarning();
   }
 
   itemPrice(
