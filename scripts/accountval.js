@@ -2529,7 +2529,21 @@ NewPrices = /*#__PURE__*/function () {
 
   function NewPrices(settings) {_classCallCheck(this, NewPrices);_defineProperty(this, "prices", void 0);_defineProperty(this, "lastUpdated", void 0);_defineProperty(this, "ofThePast", false);_defineProperty(this, "settings", void 0);
     this.settings = settings;
-  }return _createClass(NewPrices, [{ key: "isValid", value:
+  }return _createClass(NewPrices, [{ key: "doWarning", value:
+
+    function doWarning() {
+      if (this.prices == null || this.ofThePast || this.lastUpdated == null) {
+        return false;
+      }
+
+      var aWeekIsThisManyMillis = 7 * 24 * 60 * 60 * 1000;
+
+      if (this.lastUpdated + aWeekIsThisManyMillis < Date.now()) {
+        return false;
+      }
+
+      return true;
+    } }, { key: "isValid", value:
 
     function isValid() {
       if (this.prices == null) {
@@ -2713,6 +2727,10 @@ var PriceResolver = /*#__PURE__*/function () {
       this.specialCase.set(kolmafia__WEBPACK_IMPORTED_MODULE_0__.Item.get("Meat Paste"), 10);
       this.specialCase.set(kolmafia__WEBPACK_IMPORTED_MODULE_0__.Item.get("Meat Stack"), 100);
       this.specialCase.set(kolmafia__WEBPACK_IMPORTED_MODULE_0__.Item.get("Dense meat stack"), 1000);
+    } }, { key: "doWarning", value:
+
+    function doWarning() {
+      return this.newPrices && this.newPrices.doWarning();
     } }, { key: "itemPrice", value:
 
     function itemPrice(
@@ -4065,15 +4083,18 @@ AccountVal = /*#__PURE__*/function () {function AccountVal() {_classCallCheck(th
         );
       }
 
-      this.printLine("<font color='".concat(
-        _AccountValColors__WEBPACK_IMPORTED_MODULE_5__/* .AccountValColors */ .HK.attentionGrabbingWarning, "'>Unfortunately I'm having issues resolving mall prices, the old database has gone down and my PR for the other source is on hold and waiting for approval. <u><a href='https://github.com/loathers/pricegun/pull/8'>https://github.com/loathers/pricegun/pull/8</a></u></font>"),
-      "html"
-      );
-      this.printLine("As such please bear with me that prices are effectively 'frozen'.",
+      if (this.logic.priceResolver.doWarning()) {
+        this.printLine("<font color='".concat(
+          _AccountValColors__WEBPACK_IMPORTED_MODULE_5__/* .AccountValColors */ .HK.attentionGrabbingWarning, "'>Unfortunately I'm having issues resolving mall prices, the old database has gone down and my PR for the other source is on hold and waiting for approval. <u><a href='https://github.com/loathers/pricegun/pull/8'>https://github.com/loathers/pricegun/pull/8</a></u></font>"),
+        "html"
+        );
 
-      "plain",
-      _AccountValColors__WEBPACK_IMPORTED_MODULE_5__/* .AccountValColors */ .HK.attentionGrabbingWarning
-      );
+        this.printLine("As such please bear with me that prices are effectively 'frozen'.",
+
+        "plain",
+        _AccountValColors__WEBPACK_IMPORTED_MODULE_5__/* .AccountValColors */ .HK.attentionGrabbingWarning
+        );
+      }
     } }, { key: "printMeat", value:
 
     function printMeat() {
