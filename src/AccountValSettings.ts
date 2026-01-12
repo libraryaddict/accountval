@@ -102,6 +102,7 @@ export class AccountValSettings {
   showSingleItemWorth: boolean = false;
   dateToFetch: string;
   logOutputAs: "fancy" | "plain" = "fancy";
+  logOutputTo: string;
 
   static getSettings(): ValSetting[] {
     const settings: ValSetting[] = [];
@@ -357,6 +358,12 @@ export class AccountValSettings {
       "logOutputAs",
       ["text", "logtype", "formatting"],
       `If accountval should log everything with "fancy" text, which means html, or "plain" which means the output is also logged to your session log, but will have no hover text or colors. Try looking into kolmafia 'mirror' if you want the output as html. Example usage: "text=plain". Change the default by using "set accountval_text=plain"`
+    );
+    makeSetting(
+      FieldType.STRING,
+      "logOutputTo",
+      ["output"],
+      `Send the output of accountval to a file instead of printing into cli, eg 'output=accountval.html' would send it into the 'data/accountval.html'. If the file ends with .html, it will entity encode all non-html lines.`
     );
 
     for (const preset of getPresets()) {

@@ -1,5 +1,7 @@
 import {
+  bufferToFile,
   entityDecode,
+  entityEncode,
   getPlayerName,
   Item,
   myClosetMeat,
@@ -26,6 +28,7 @@ import { AccValTiming } from "./AccountValTimings";
 class AccountVal {
   private logic: AccountValLogic;
   private settings: AccountValSettings;
+  private output: string[];
 
   getSettings(): AccountValSettings {
     return this.settings;
@@ -293,9 +296,9 @@ class AccountVal {
       );
 
       if (skipping > 0) {
+        this.printLine("", "plain");
         this.printLine(
-          `
-          <font color='${
+          `<font color='${
             AccountValColors.minorNote
           }'>Skipping ${AccountValUtils.getNumber(
             skipping
@@ -483,7 +486,26 @@ class AccountVal {
       textType = "plain";
     }
 
-    if (textType == "html") {
+    if (this.settings.logOutputTo) {
+      if (this.output == null) {
+        if (line != null) {
+          line = line.trim();
+        }
+
+        // Don't start the file with empty lines
+        if (line == null || line == "") {
+          return;
+        }
+
+        this.output = [];
+      }
+
+      if (textType == "plain" && this.settings.logOutputTo.endsWith(".html")) {
+        line = entityEncode(line);
+      }
+
+      this.output.push(line);
+    } else if (textType == "html") {
       printHtml(line);
     } else if (color != null) {
       print(line, color);
@@ -646,6 +668,15 @@ class AccountVal {
     return true;
   }
 
+  stop() {
+    if (this.output == null || this.output.length == 0) {
+      return;
+    }
+
+    bufferToFile(this.output.join("\n"), this.settings.logOutputTo);
+    print(`accounval results printed to 'data/${this.settings.logOutputTo}'`);
+  }
+
   start() {
     AccValTiming.start("Construct Logic");
     const priceSettings = new PricingSettings();
@@ -708,6 +739,7 @@ export function main(command: string) {
     //     AccValTiming.stop("Load Command");
     AccValTiming.start("Run AccountVal");
     val.start();
+    val.stop();
     AccValTiming.stop("Run AccountVal");
   }
 
