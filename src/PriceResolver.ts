@@ -53,6 +53,66 @@ interface ItemPriceMap {
   lastSoldAt: number;
 }
 
+interface PricegunItem {
+  itemId: number;
+  volume: number;
+  value: number;
+  date: number;
+}
+
+class PricegunPrices {
+  prices: PricegunItem[] = [];
+
+  loadItem(page: any, items?: Item) {
+    if (!page["value"]) {
+      for (let i = 0; i < page.length; i++) {
+        this.loadItem(page[i], null);
+      }
+
+      return;
+    }
+
+    this.prices[page.itemId] = {
+      itemId: page.itemId,
+      volume: page.volume,
+      value: page.value,
+      date: Math.floor(Date.parse(page.date) / 1000)
+    };
+  }
+
+  bulkLoad(items: Item[]) {
+    const amount = 500;
+
+    for (let i = 0; i < items.length; i += amount) {
+      const sub = items.splice(0, Math.min(items.length, amount));
+
+      print("Pricegunning " + sub.length + " items... ");
+      const page = visitUrl(
+        `https://pricegun.loathers.net/api/${sub.map((i) => i.id).join(",")}`
+      );
+
+      if (!page.includes('"value"')) {
+        if (sub.length == 1) {
+          this.prices[sub[0].id] = null;
+        }
+
+        return;
+      }
+
+      this.loadItem(JSON.parse(page), sub.length == 1 ? sub[0] : null);
+    }
+  }
+
+  getPrice(item: Item): PricegunItem {
+    if (this.prices[item.id] == undefined) {
+      // const page = visitUrl(`https://pricegun.loathers.net/api/${item.id}`);
+      //    this.loadItem(page, item);
+    }
+
+    return this.prices[item.id];
+  }
+}
+
 class NewPrices {
   prices: ItemPriceMap[];
   lastUpdated: number;
@@ -243,10 +303,12 @@ export class PriceResolver {
   private specialCase: Map<Item, number> = new Map();
   private settings: PricingSettings;
   private newPrices: NewPrices;
+  private pricegun: PricegunPrices;
 
   constructor(settings: PricingSettings) {
     this.settings = settings;
     this.newPrices = new NewPrices(settings);
+    this.pricegun = new PricegunPrices();
 
     if (!settings.oldPricing) {
       this.newPrices.load();
@@ -263,6 +325,14 @@ export class PriceResolver {
 
   doWarning(): boolean {
     return this.newPrices && this.newPrices.doWarning();
+  }
+
+  bulkLoad(item: Item[]) {
+    if (!this.settings.globalSettings.pricegun) {
+      return;
+    }
+
+    this.pricegun.bulkLoad(item);
   }
 
   itemPrice(
@@ -338,6 +408,27 @@ export class PriceResolver {
 
       if (!item.tradeable) {
         return new ItemPrice(item, autosellPrice(item), PriceType.AUTOSELL, 0);
+      }
+
+      if (this.settings.globalSettings.pricegun) {
+        const price = this.pricegun.getPrice(item);
+
+        if (price != null) {
+          const daysAge = Math.round(
+            (Date.now() / 1000 - price.date) / (60 * 60 * 24)
+          );
+
+          return new ItemPrice(
+            item,
+            price.value,
+            PriceType.NEW_PRICES,
+            daysAge,
+            price.volume,
+            price.value
+          );
+        } else if (this.newPrices.ofThePast) {
+          return null;
+        }
       }
 
       if (this.newPrices.isValid()) {

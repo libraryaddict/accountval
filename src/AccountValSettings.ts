@@ -103,6 +103,7 @@ export class AccountValSettings {
   dateToFetch: string;
   logOutputAs: "fancy" | "plain" = "fancy";
   logOutputTo: string;
+  pricegun: boolean = false;
 
   static getSettings(): ValSetting[] {
     const settings: ValSetting[] = [];
@@ -364,6 +365,12 @@ export class AccountValSettings {
       "logOutputTo",
       ["output"],
       `Send the output of accountval to a file instead of printing into cli, eg 'output=accountval.html' would send it into the 'data/accountval.html'. If the file ends with .html, it will entity encode all non-html lines.`
+    );
+    makeSetting(
+      FieldType.BOOLEAN,
+      "pricegun",
+      ["pricegun"],
+      `Resolve prices using pricegun. This will be slow.`
     );
 
     for (const preset of getPresets()) {
@@ -759,6 +766,7 @@ export class PricingSettings {
   public maxPriceAge: number;
   public oldPricing: boolean;
   public dateToFetch: string;
+  public globalSettings: AccountValSettings;
 
   /**
    * A scaler on where we want stuff that's lower priced, to be updated less often. Returns day count.

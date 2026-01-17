@@ -613,6 +613,10 @@ export class AccountValLogic {
 
     AccValTiming.start("Add Logic Prices");
 
+    this.priceResolver.bulkLoad(
+      [...this.ownedItems.keys()].map((i) => i.tradeableItem)
+    );
+
     for (const i of this.ownedItems.keys()) {
       AccValTiming.start("Price Item", true);
       const price: ItemPrice = this.priceResolver.itemPrice(
@@ -655,6 +659,8 @@ export class AccountValLogic {
 
     if (toCheck.length > 0) {
       AccValTiming.start("Check Remaining Logic Item Prices");
+
+      this.priceResolver.bulkLoad(toCheck.map((i) => i[0].tradeableItem));
 
       for (const check of toCheck) {
         const i = check[0];
