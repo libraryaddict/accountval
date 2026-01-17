@@ -454,7 +454,14 @@ var AccountValSettings = /*#__PURE__*/function () {function AccountValSettings()
     AccountValSettings.defaultMaxNaturalPrice);_defineProperty(this, "showSingleItemWorth",
     false);_defineProperty(this, "dateToFetch", void 0);_defineProperty(this, "logOutputAs",
 
-    "fancy");_defineProperty(this, "logOutputTo", void 0);}return _createClass(AccountValSettings, [{ key: "getSetting", value:
+    "fancy");_defineProperty(this, "logOutputTo", void 0);_defineProperty(this, "pricegun",
+
+    false);}return _createClass(AccountValSettings, [{ key: "getSetting", value:
+
+
+
+
+
 
 
 
@@ -1102,13 +1109,14 @@ var AccountValSettings = /*#__PURE__*/function () {function AccountValSettings()
       }
 
       return num;
-    } }], [{ key: "getSettings", value: function getSettings() {var settings = [];function makeSetting(type, name, aliases, desc, groupUnder, preset) {var setting = { groupUnder: groupUnder, type: type, field: name, names: aliases.map((s) => s.toLowerCase()), desc: desc, preset: preset };settings.push(setting);return setting;}makeSetting(FieldType.BOOLEAN, "fetchCloset", ["closet", "clos"], "Should it fetch from the closet");makeSetting(FieldType.BOOLEAN, "fetchStorage", ["storage", "stor", "hagnk", "hagnks"], "Should it fetch from storage");makeSetting(FieldType.BOOLEAN, "fetchShop", ["store", "mall", "shop"], "Should it fetch from the shop");makeSetting(FieldType.BOOLEAN, "fetchInventory", ["inventory", "inv"], "Should it fetch from your inventory");makeSetting(FieldType.BOOLEAN, "fetchDisplaycase", ["displaycase", "display", "dc"], "Should it fetch from the displaycase");makeSetting(FieldType.BOOLEAN, "fetchClan", ["clan", "stash"], "Should it check clan's stash? False by default");makeSetting(FieldType.BOOLEAN, "fetchSession", ["session"], "Should it fetch using your current session of items acquired? False by default");makeSetting(FieldType.BOOLEAN, "doTradeables", ["tradeable", "tradeables", "trade", "tradable"], "Should it do tradeables");makeSetting(FieldType.BOOLEAN, "doNontradeables", ["notrade", "nontrade", "notradeable", "notradable", "nontradeable", "notradeables", "nontradeables", "untrade", "untradeable", "untradeables"], "Should it do non-tradeables (Resolves to tradeables if it can)");makeSetting(FieldType.BOOLEAN, "fetchFamiliars", ["familiar", "familiars", "fam", "fams"], "Should it do familiars (Resolves to their item). Bound being true also means this is true if not set");makeSetting(FieldType.BOOLEAN, "fetchSnapshot", ["snapshot"], "Should it attempt to use av-snapshot?");makeSetting(FieldType.BOOLEAN, "doBound", ["bound", "bind", "bounded", "binds", "binded"], "Should it do items that are bound to your account (Generally only iotms)");makeSetting(FieldType.NUMBER, "minimumMeat", ["meat", "minmeat", "minimummeat", "minmeat", "min-meat", "minprice", "price"], "Each item total worth, at least this amount.");makeSetting(FieldType.NUMBER, "minimumAmount", ["amount", "count", "minimumamount", "minamount"], "At least this many items");makeSetting(FieldType.NUMBER, "displayLimit", ["limit", "displaylimit", "maxdisplay", "lines"], "Limit results to display this amount");makeSetting(FieldType.NAME, "playerId", ["player", "playerid", "playername", "user", "who", "target", "name", "username"], 'Target another player\'s DC and Shop. Can provide the dc/shop param. Can do player="John Smith" for spaces');makeSetting(FieldType.BOOLEAN, "doSuperFast", ["fast", "superfast", "speed", "quick", "rough"], "Try resolve everything with historical price, no matter how outdated");makeSetting(FieldType.NUMBER, "maxAge", ["age", "maxage", "days"], "The max days a price is allowed to be outdated, useful if you're trying to force things to be more up to date");makeSetting(FieldType.SORTBY, "sortBy", ["sort", "sortby", "sorted"], "What we should sort the results by, prefix with ! or - to reverse sort. Supports: " + Object.keys(SortBy).filter((s) => s.length > 2).join(", "));makeSetting(FieldType.BOOLEAN, "shopWorth", ["worth", "shopworth", "pricing", "prices"], "Seperates items in shop from the other items, and shows how under/overpriced they are. This can be inaccurate");makeSetting(FieldType.STRING, "javascriptFilter", ["jsfilter", "javascriptfilter", "javascript", "js"], 'Filters if an item can be shown, provides an item & amount and expects a boolean. Any double quotes in your code must not have an empty space to the right. Example: jsfilter="(item, amount, worth, sales) => item.name.includes("beer") && toSlot(item) != Slot.none"');makeSetting(FieldType.NUMBER, "sales", ["sales", "sold"], "Hides items that have less than this amount of sales");makeSetting(FieldType.BOOLEAN, "useLastSold", ["useLastSold", "lastsold", "soldprice"], "Resolve prices by their last sold, initial runs with this parameter can be quite slow");makeSetting(FieldType.BOOLEAN, "brief", ["brief"], "Prints out a single line as the final result, the total meat.");makeSetting(FieldType.BOOLEAN, "oldPricing", ["oldpricing"], "Has accountval calculate prices from the old slower and more inaccurate method");makeSetting(FieldType.COLOR_SCHEME, "colorScheme", ["color", "colors", "colorscheme", "scheme"], "What color schemes to use, set `accountvalColorScheme` pref to change the default. Supports: " + (0,AccountValColors/* getAccountvalColors */.Xf)().join(", "));makeSetting(FieldType.NUMBER, "maxNaturalPrice", ["max", "mallmax"], "The max natural price an item will reach before it's capped and called mall extinct");makeSetting(FieldType.BOOLEAN, "doCategories", ["category", "categories", "shelf", "shelves"], "Used only for Display Cases at this point, seperates the items into categories");makeSetting(FieldType.BOOLEAN, "showSingleItemWorth", ["each"], "Displays the individual price of each item instead of the total, works best with `sort=meat`");makeSetting(FieldType.STRING, "dateToFetch", ["date", "fetchdate", "historical", "time", "when", "at"], "View everything with the prices of the past, either provide a `1d2m3y` which will automatically convert that into 1 day, 2 months and 3 years ago (capped automatically), or a specified date `DD-MM-YYYY` which cannot be older than 22-08-2023. This obviously won't work for newer items, and will make a backend call to `kolprices.lib.co.nz/files/:date`");makeSetting(FieldType.TEXT_TYPE, "logOutputAs", ["text", "logtype", "formatting"], "If accountval should log everything with \"fancy\" text, which means html, or \"plain\" which means the output is also logged to your session log, but will have no hover text or colors. Try looking into kolmafia 'mirror' if you want the output as html. Example usage: \"text=plain\". Change the default by using \"set accountval_text=plain\"");makeSetting(FieldType.STRING, "logOutputTo", ["output"], "Send the output of accountval to a file instead of printing into cli, eg 'output=accountval.html' would send it into the 'data/accountval.html'. If the file ends with .html, it will entity encode all non-html lines.");var _iterator5 = _createForOfIteratorHelper(getPresets()),_step5;try {for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {var preset = _step5.value;makeSetting(FieldType.BOOLEAN, preset.name()[0], preset.name(), preset.desc(), "Preset Filters", preset);}} catch (err) {_iterator5.e(err);} finally {_iterator5.f();}return settings;} }]);}();_defineProperty(AccountValSettings, "timingsDebug", false); // Increase the max by 2b every year.
+    } }], [{ key: "getSettings", value: function getSettings() {var settings = [];function makeSetting(type, name, aliases, desc, groupUnder, preset) {var setting = { groupUnder: groupUnder, type: type, field: name, names: aliases.map((s) => s.toLowerCase()), desc: desc, preset: preset };settings.push(setting);return setting;}makeSetting(FieldType.BOOLEAN, "fetchCloset", ["closet", "clos"], "Should it fetch from the closet");makeSetting(FieldType.BOOLEAN, "fetchStorage", ["storage", "stor", "hagnk", "hagnks"], "Should it fetch from storage");makeSetting(FieldType.BOOLEAN, "fetchShop", ["store", "mall", "shop"], "Should it fetch from the shop");makeSetting(FieldType.BOOLEAN, "fetchInventory", ["inventory", "inv"], "Should it fetch from your inventory");makeSetting(FieldType.BOOLEAN, "fetchDisplaycase", ["displaycase", "display", "dc"], "Should it fetch from the displaycase");makeSetting(FieldType.BOOLEAN, "fetchClan", ["clan", "stash"], "Should it check clan's stash? False by default");makeSetting(FieldType.BOOLEAN, "fetchSession", ["session"], "Should it fetch using your current session of items acquired? False by default");makeSetting(FieldType.BOOLEAN, "doTradeables", ["tradeable", "tradeables", "trade", "tradable"], "Should it do tradeables");makeSetting(FieldType.BOOLEAN, "doNontradeables", ["notrade", "nontrade", "notradeable", "notradable", "nontradeable", "notradeables", "nontradeables", "untrade", "untradeable", "untradeables"], "Should it do non-tradeables (Resolves to tradeables if it can)");makeSetting(FieldType.BOOLEAN, "fetchFamiliars", ["familiar", "familiars", "fam", "fams"], "Should it do familiars (Resolves to their item). Bound being true also means this is true if not set");makeSetting(FieldType.BOOLEAN, "fetchSnapshot", ["snapshot"], "Should it attempt to use av-snapshot?");makeSetting(FieldType.BOOLEAN, "doBound", ["bound", "bind", "bounded", "binds", "binded"], "Should it do items that are bound to your account (Generally only iotms)");makeSetting(FieldType.NUMBER, "minimumMeat", ["meat", "minmeat", "minimummeat", "minmeat", "min-meat", "minprice", "price"], "Each item total worth, at least this amount.");makeSetting(FieldType.NUMBER, "minimumAmount", ["amount", "count", "minimumamount", "minamount"], "At least this many items");makeSetting(FieldType.NUMBER, "displayLimit", ["limit", "displaylimit", "maxdisplay", "lines"], "Limit results to display this amount");makeSetting(FieldType.NAME, "playerId", ["player", "playerid", "playername", "user", "who", "target", "name", "username"], 'Target another player\'s DC and Shop. Can provide the dc/shop param. Can do player="John Smith" for spaces');makeSetting(FieldType.BOOLEAN, "doSuperFast", ["fast", "superfast", "speed", "quick", "rough"], "Try resolve everything with historical price, no matter how outdated");makeSetting(FieldType.NUMBER, "maxAge", ["age", "maxage", "days"], "The max days a price is allowed to be outdated, useful if you're trying to force things to be more up to date");makeSetting(FieldType.SORTBY, "sortBy", ["sort", "sortby", "sorted"], "What we should sort the results by, prefix with ! or - to reverse sort. Supports: " + Object.keys(SortBy).filter((s) => s.length > 2).join(", "));makeSetting(FieldType.BOOLEAN, "shopWorth", ["worth", "shopworth", "pricing", "prices"], "Seperates items in shop from the other items, and shows how under/overpriced they are. This can be inaccurate");makeSetting(FieldType.STRING, "javascriptFilter", ["jsfilter", "javascriptfilter", "javascript", "js"], 'Filters if an item can be shown, provides an item & amount and expects a boolean. Any double quotes in your code must not have an empty space to the right. Example: jsfilter="(item, amount, worth, sales) => item.name.includes("beer") && toSlot(item) != Slot.none"');makeSetting(FieldType.NUMBER, "sales", ["sales", "sold"], "Hides items that have less than this amount of sales");makeSetting(FieldType.BOOLEAN, "useLastSold", ["useLastSold", "lastsold", "soldprice"], "Resolve prices by their last sold, initial runs with this parameter can be quite slow");makeSetting(FieldType.BOOLEAN, "brief", ["brief"], "Prints out a single line as the final result, the total meat.");makeSetting(FieldType.BOOLEAN, "oldPricing", ["oldpricing"], "Has accountval calculate prices from the old slower and more inaccurate method");makeSetting(FieldType.COLOR_SCHEME, "colorScheme", ["color", "colors", "colorscheme", "scheme"], "What color schemes to use, set `accountvalColorScheme` pref to change the default. Supports: " + (0,AccountValColors/* getAccountvalColors */.Xf)().join(", "));makeSetting(FieldType.NUMBER, "maxNaturalPrice", ["max", "mallmax"], "The max natural price an item will reach before it's capped and called mall extinct");makeSetting(FieldType.BOOLEAN, "doCategories", ["category", "categories", "shelf", "shelves"], "Used only for Display Cases at this point, seperates the items into categories");makeSetting(FieldType.BOOLEAN, "showSingleItemWorth", ["each"], "Displays the individual price of each item instead of the total, works best with `sort=meat`");makeSetting(FieldType.STRING, "dateToFetch", ["date", "fetchdate", "historical", "time", "when", "at"], "View everything with the prices of the past, either provide a `1d2m3y` which will automatically convert that into 1 day, 2 months and 3 years ago (capped automatically), or a specified date `DD-MM-YYYY` which cannot be older than 22-08-2023. This obviously won't work for newer items, and will make a backend call to `kolprices.lib.co.nz/files/:date`");makeSetting(FieldType.TEXT_TYPE, "logOutputAs", ["text", "logtype", "formatting"], "If accountval should log everything with \"fancy\" text, which means html, or \"plain\" which means the output is also logged to your session log, but will have no hover text or colors. Try looking into kolmafia 'mirror' if you want the output as html. Example usage: \"text=plain\". Change the default by using \"set accountval_text=plain\"");makeSetting(FieldType.STRING, "logOutputTo", ["output"], "Send the output of accountval to a file instead of printing into cli, eg 'output=accountval.html' would send it into the 'data/accountval.html'. If the file ends with .html, it will entity encode all non-html lines.");makeSetting(FieldType.BOOLEAN, "pricegun", ["pricegun"], "Resolve prices using pricegun. This will be slow.");var _iterator5 = _createForOfIteratorHelper(getPresets()),_step5;try {for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {var preset = _step5.value;makeSetting(FieldType.BOOLEAN, preset.name()[0], preset.name(), preset.desc(), "Preset Filters", preset);}} catch (err) {_iterator5.e(err);} finally {_iterator5.f();}return settings;} }]);}();_defineProperty(AccountValSettings, "timingsDebug", false); // Increase the max by 2b every year.
 // 2022 = 2b, 23 = 4b, 25 = 8b, 26 = 10b
 _defineProperty(AccountValSettings, "defaultMaxNaturalPrice", (new Date().getFullYear() - 2021) * 2000000000);
 var PricingSettings = /*#__PURE__*/function () {function PricingSettings() {_classCallCheck(this, PricingSettings);_defineProperty(this, "expensivePricesAt",
     40000000);_defineProperty(this, "cheapTotalsLessThan",
     20000000);_defineProperty(this, "cheapPricesLessThan",
-    2000000);_defineProperty(this, "maxPriceAge", void 0);_defineProperty(this, "oldPricing", void 0);_defineProperty(this, "dateToFetch", void 0);}return _createClass(PricingSettings, [{ key: "getMaxPriceAge", value:
+    2000000);_defineProperty(this, "maxPriceAge", void 0);_defineProperty(this, "oldPricing", void 0);_defineProperty(this, "dateToFetch", void 0);_defineProperty(this, "globalSettings", void 0);}return _createClass(PricingSettings, [{ key: "getMaxPriceAge", value:
+
 
 
 
@@ -1839,7 +1847,11 @@ var AccountValLogic = /*#__PURE__*/function () {
         prices.push([item, price]);
       };
 
-      _AccountValTimings__WEBPACK_IMPORTED_MODULE_6__/* .AccValTiming */ .p.start("Add Logic Prices");var _iterator6 = _createForOfIteratorHelper(
+      _AccountValTimings__WEBPACK_IMPORTED_MODULE_6__/* .AccValTiming */ .p.start("Add Logic Prices");
+
+      this.priceResolver.bulkLoad(
+        _toConsumableArray(this.ownedItems.keys()).map((i) => i.tradeableItem)
+      );var _iterator6 = _createForOfIteratorHelper(
 
           this.ownedItems.keys()),_step6;try {for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {var _i2 = _step6.value;
           _AccountValTimings__WEBPACK_IMPORTED_MODULE_6__/* .AccValTiming */ .p.start("Price Item", true);
@@ -1882,7 +1894,9 @@ var AccountValLogic = /*#__PURE__*/function () {
       }
 
       if (toCheck.length > 0) {
-        _AccountValTimings__WEBPACK_IMPORTED_MODULE_6__/* .AccValTiming */ .p.start("Check Remaining Logic Item Prices");var _iterator7 = _createForOfIteratorHelper(
+        _AccountValTimings__WEBPACK_IMPORTED_MODULE_6__/* .AccValTiming */ .p.start("Check Remaining Logic Item Prices");
+
+        this.priceResolver.bulkLoad(toCheck.map((i) => i[0].tradeableItem));var _iterator7 = _createForOfIteratorHelper(
 
             toCheck),_step7;try {for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {var check = _step7.value;
             var i = check[0];
@@ -2521,6 +2535,66 @@ var ItemPrice = /*#__PURE__*/_createClass(
 
 
 
+
+
+
+
+
+
+
+PricegunPrices = /*#__PURE__*/function () {function PricegunPrices() {_classCallCheck(this, PricegunPrices);_defineProperty(this, "prices",
+    []);}return _createClass(PricegunPrices, [{ key: "loadItem", value:
+
+    function loadItem(page, items) {
+      if (!page["value"]) {
+        for (var i = 0; i < page.length; i++) {
+          this.loadItem(page[i], null);
+        }
+
+        return;
+      }
+
+      this.prices[page.itemId] = {
+        itemId: page.itemId,
+        volume: page.volume,
+        value: page.value,
+        date: Math.floor(Date.parse(page.date) / 1000)
+      };
+    } }, { key: "bulkLoad", value:
+
+    function bulkLoad(items) {
+      var amount = 500;
+
+      for (var i = 0; i < items.length; i += amount) {
+        var sub = items.splice(0, Math.min(items.length, amount));
+
+        (0,kolmafia__WEBPACK_IMPORTED_MODULE_0__.print)("Pricegunning " + sub.length + " items... ");
+        var page = (0,kolmafia__WEBPACK_IMPORTED_MODULE_0__.visitUrl)("https://pricegun.loathers.net/api/".concat(
+          sub.map((i) => i.id).join(","))
+        );
+
+        if (!page.includes('"value"')) {
+          if (sub.length == 1) {
+            this.prices[sub[0].id] = null;
+          }
+
+          return;
+        }
+
+        this.loadItem(JSON.parse(page), sub.length == 1 ? sub[0] : null);
+      }
+    } }, { key: "getPrice", value:
+
+    function getPrice(item) {
+      if (this.prices[item.id] == undefined) {
+
+
+        // const page = visitUrl(`https://pricegun.loathers.net/api/${item.id}`);
+        //    this.loadItem(page, item);
+      }return this.prices[item.id];
+    } }]);}();var
+
+
 NewPrices = /*#__PURE__*/function () {
 
 
@@ -2712,9 +2786,11 @@ var PriceResolver = /*#__PURE__*/function () {
 
 
 
-  function PriceResolver(settings) {_classCallCheck(this, PriceResolver);_defineProperty(this, "specialCase", new Map());_defineProperty(this, "settings", void 0);_defineProperty(this, "newPrices", void 0);
+
+  function PriceResolver(settings) {_classCallCheck(this, PriceResolver);_defineProperty(this, "specialCase", new Map());_defineProperty(this, "settings", void 0);_defineProperty(this, "newPrices", void 0);_defineProperty(this, "pricegun", void 0);
     this.settings = settings;
     this.newPrices = new NewPrices(settings);
+    this.pricegun = new PricegunPrices();
 
     if (!settings.oldPricing) {
       this.newPrices.load();
@@ -2731,6 +2807,14 @@ var PriceResolver = /*#__PURE__*/function () {
 
     function doWarning() {
       return this.newPrices && this.newPrices.doWarning();
+    } }, { key: "bulkLoad", value:
+
+    function bulkLoad(item) {
+      if (!this.settings.globalSettings.pricegun) {
+        return;
+      }
+
+      this.pricegun.bulkLoad(item);
     } }, { key: "itemPrice", value:
 
     function itemPrice(
@@ -2808,21 +2892,42 @@ var PriceResolver = /*#__PURE__*/function () {
           return new ItemPrice(item, (0,kolmafia__WEBPACK_IMPORTED_MODULE_0__.autosellPrice)(item), PriceType.AUTOSELL, 0);
         }
 
-        if (this.newPrices.isValid()) {
-          var price = this.newPrices.prices[(0,kolmafia__WEBPACK_IMPORTED_MODULE_0__.toInt)(item)];
+        if (this.settings.globalSettings.pricegun) {
+          var price = this.pricegun.getPrice(item);
 
           if (price != null) {
             var daysAge = Math.round(
-              (Date.now() / 1000 - price.updated) / (60 * 60 * 24)
+              (Date.now() / 1000 - price.date) / (60 * 60 * 24)
             );
 
             return new ItemPrice(
               item,
-              price.price,
+              price.value,
               PriceType.NEW_PRICES,
               daysAge,
               price.volume,
-              price.lastSoldAt
+              price.value
+            );
+          } else if (this.newPrices.ofThePast) {
+            return null;
+          }
+        }
+
+        if (this.newPrices.isValid()) {
+          var _price = this.newPrices.prices[(0,kolmafia__WEBPACK_IMPORTED_MODULE_0__.toInt)(item)];
+
+          if (_price != null) {
+            var _daysAge = Math.round(
+              (Date.now() / 1000 - _price.updated) / (60 * 60 * 24)
+            );
+
+            return new ItemPrice(
+              item,
+              _price.price,
+              PriceType.NEW_PRICES,
+              _daysAge,
+              _price.volume,
+              _price.lastSoldAt
             );
           } else if (this.newPrices.ofThePast) {
             return null;
@@ -2913,13 +3018,13 @@ var PriceResolver = /*#__PURE__*/function () {
           return new ItemPrice(item, -1, resolver.getPriceType(), 0);
         }
 
-        var _price = resolver.getPrice();
+        var _price2 = resolver.getPrice();
 
-        if (_price == null) {
-          _price = mallPricing.getPrice();
+        if (_price2 == null) {
+          _price2 = mallPricing.getPrice();
         }
 
-        return _price;
+        return _price2;
       } finally {
         _AccountValTimings__WEBPACK_IMPORTED_MODULE_1__/* .AccValTiming */ .p.stop("Run Final Pricing Check");
       }
@@ -4341,6 +4446,7 @@ AccountVal = /*#__PURE__*/function () {function AccountVal() {_classCallCheck(th
       priceSettings.maxPriceAge = this.settings.maxAge;
       priceSettings.oldPricing = this.settings.oldPricing;
       priceSettings.dateToFetch = this.settings.dateToFetch;
+      priceSettings.globalSettings = this.settings;
       this.logic = new _AccountValLogic__WEBPACK_IMPORTED_MODULE_1__/* .AccountValLogic */ .ND(this.settings, priceSettings);
       _AccountValTimings__WEBPACK_IMPORTED_MODULE_6__/* .AccValTiming */ .p.stop("Construct Logic");
 
