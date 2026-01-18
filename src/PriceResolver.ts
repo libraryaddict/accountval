@@ -8,311 +8,38 @@ import {
   fileToBuffer,
   toInt,
   getRelated,
-  visitUrl
+  visitUrl,
 } from "kolmafia";
 import { PricingSettings } from "./AccountValSettings";
 import { AccValTiming } from "./AccountValTimings";
-
-export enum PriceType {
-  NEW_PRICES,
-  HISTORICAL,
-  MALL,
-  MALL_SALES,
-  AUTOSELL
-}
-
-export class ItemPrice {
-  item: Item;
-  price: number;
-  price2: number;
-  accuracy: PriceType;
-  daysOutdated: number;
-  volume: number;
-
-  constructor(
-    item: Item,
-    price: number,
-    accuracy: PriceType,
-    daysOutdated: number,
-    volume: number = -1,
-    price2: number = -1
-  ) {
-    this.item = item;
-    this.price = price;
-    this.accuracy = accuracy;
-    this.daysOutdated = daysOutdated;
-    this.volume = volume;
-    this.price2 = price2;
-  }
-}
-
-interface ItemPriceMap {
-  updated: number;
-  price: number;
-  volume: number;
-  lastSoldAt: number;
-}
-
-interface PricegunItem {
-  itemId: number;
-  volume: number;
-  value: number;
-  date: number;
-}
-
-class PricegunPrices {
-  prices: PricegunItem[] = [];
-
-  loadItem(page: any, items?: Item) {
-    if (!page["value"]) {
-      for (let i = 0; i < page.length; i++) {
-        this.loadItem(page[i], null);
-      }
-
-      return;
-    }
-
-    this.prices[page.itemId] = {
-      itemId: page.itemId,
-      volume: page.volume,
-      value: page.value,
-      date: Math.floor(Date.parse(page.date) / 1000)
-    };
-  }
-
-  bulkLoad(items: Item[]) {
-    const amount = 500;
-
-    for (let i = 0; i < items.length; i += amount) {
-      const sub = items.splice(0, Math.min(items.length, amount));
-
-      print("Pricegunning " + sub.length + " items... ");
-      const page = visitUrl(
-        `https://pricegun.loathers.net/api/${sub.map((i) => i.id).join(",")}`
-      );
-
-      if (!page.includes('"value"')) {
-        if (sub.length == 1) {
-          this.prices[sub[0].id] = null;
-        }
-
-        return;
-      }
-
-      this.loadItem(JSON.parse(page), sub.length == 1 ? sub[0] : null);
-    }
-  }
-
-  getPrice(item: Item): PricegunItem {
-    if (this.prices[item.id] == undefined) {
-      // const page = visitUrl(`https://pricegun.loathers.net/api/${item.id}`);
-      //    this.loadItem(page, item);
-    }
-
-    return this.prices[item.id];
-  }
-}
-
-class NewPrices {
-  prices: ItemPriceMap[];
-  lastUpdated: number;
-  ofThePast: boolean = false;
-  settings: PricingSettings;
-
-  constructor(settings: PricingSettings) {
-    this.settings = settings;
-  }
-
-  doWarning() {
-    if (this.prices == null || this.ofThePast || this.lastUpdated == null) {
-      return false;
-    }
-
-    const aWeekIsThisManyMillis = 7 * 24 * 60 * 60 * 1000;
-
-    if (this.lastUpdated + aWeekIsThisManyMillis < Date.now()) {
-      return false;
-    }
-
-    return true;
-  }
-
-  isValid() {
-    if (this.prices == null) {
-      return false;
-    }
-
-    if (this.ofThePast) {
-      return true;
-    }
-
-    if (this.lastUpdated == null) {
-      return false;
-    }
-
-    // If it hasn't been updated in a five week, then Irrat is ded
-    const irratDedAtWeek = 3;
-    const aWeekIsThisManyMillis = 7 * 24 * 60 * 60 * 1000;
-
-    if (
-      this.lastUpdated + irratDedAtWeek * aWeekIsThisManyMillis <
-      Date.now()
-    ) {
-      return false;
-    }
-
-    return true;
-  }
-
-  getData(): string {
-    const toFetch = this.settings.dateToFetch;
-
-    if (toFetch == null) {
-      return fileToBuffer("irrats_item_prices.txt");
-    }
-
-    let finalDateString: string;
-    const minDate = new Date(2023, 7, 23); // August is month 7 (0-indexed)
-    minDate.setHours(0, 0, 0, 0); // Normalize to midnight for accurate comparison
-
-    const absoluteDateRegex = /^\d{1,2}[-/]\d{1,2}[-/]\d{4}$/;
-
-    if (absoluteDateRegex.test(toFetch)) {
-      const [day, month, year] = toFetch.split(/[-/]/).map(Number);
-      const parsedDate = new Date(year, month - 1, day);
-      parsedDate.setHours(0, 0, 0, 0);
-
-      // Verify that the created date is valid
-      if (
-        parsedDate.getFullYear() !== year ||
-        parsedDate.getMonth() !== month - 1 ||
-        parsedDate.getDate() !== day
-      ) {
-        throw new Error(
-          `Invalid date provided: ${toFetch} resolved to ${parsedDate.getDate()}-${
-            parsedDate.getMonth() + 1
-          }-${parsedDate.getFullYear()}.`
-        );
-      }
-
-      if (parsedDate < minDate) {
-        throw new Error(`Date ${toFetch} cannot be older than 23-08-2023.`);
-      }
-
-      finalDateString = toFetch;
-    } else {
-      // Handle relative date format like '1d2m3y'
-      const dMatch = toFetch.match(/(\d+)d(?:ays?)?/);
-      const mMatch = toFetch.match(/(\d+)m(?:onths?)?/);
-      const yMatch = toFetch.match(/(\d+)y(?:ears?)?/);
-
-      const days = dMatch ? parseInt(dMatch[1], 10) : 0;
-      const months = mMatch ? parseInt(mMatch[1], 10) : 0;
-      const years = yMatch ? parseInt(yMatch[1], 10) : 0;
-
-      // Validate that the entire string consists only of relative times
-      const consumedLength =
-        (dMatch?.[0].length ?? 0) +
-        (mMatch?.[0].length ?? 0) +
-        (yMatch?.[0].length ?? 0);
-
-      if (consumedLength !== toFetch.length || consumedLength === 0) {
-        throw new Error(
-          `Invalid date format for 'dateToFetch': "${toFetch}". Please use 'DD-MM-YYYY' or a relative format like '1d2m3y'.`
-        );
-      }
-
-      let targetDate = new Date();
-      targetDate.setDate(targetDate.getDate() - days);
-      targetDate.setMonth(targetDate.getMonth() - months);
-      targetDate.setFullYear(targetDate.getFullYear() - years);
-
-      // Cap the date if it's older than the allowed date
-      if (targetDate < minDate) {
-        targetDate = minDate;
-      }
-
-      // Format the calculated date into DD-MM-YYYY
-      const finalDay = String(targetDate.getDate()).padStart(2, "0");
-      const finalMonth = String(targetDate.getMonth() + 1).padStart(2, "0");
-      const finalYear = targetDate.getFullYear();
-      finalDateString = `${finalDay}-${finalMonth}-${finalYear}`;
-    }
-
-    const responseText: string = visitUrl(
-      `https://kolprices.lib.co.nz/file/${finalDateString}`
-    );
-
-    if (!responseText.startsWith("Last Updated:")) {
-      if (responseText.length > 200) {
-        throw new Error("Received an unexpected response from the server.");
-      } else {
-        throw new Error(responseText);
-      }
-    }
-
-    print(`Now resolving prices with date: ${finalDateString}`, "blue");
-    this.ofThePast = true;
-
-    return responseText;
-  }
-
-  load() {
-    const buffer = this.getData();
-
-    if (buffer.length <= 10) {
-      return;
-    }
-
-    this.prices = [];
-
-    for (const spl of buffer.split(/[\n\r]+/)) {
-      if (spl.startsWith("#")) {
-        continue;
-      }
-
-      const spl2 = spl.split("\t");
-
-      if (spl2.length == 2 && spl2[0] == "Last Updated:") {
-        this.lastUpdated = parseInt(spl2[1]);
-
-        continue;
-      }
-
-      if (spl2.length < 3) {
-        continue;
-      }
-
-      const itemId = parseInt(spl2[0]);
-      const age = parseInt(spl2[1]);
-      const price = parseInt(spl2[2]);
-      const volume = spl2[3] ? parseInt(spl2[3]) : -1;
-      const lastSoldAt = spl2[4] ? parseInt(spl2[4]) : -1;
-
-      this.prices[itemId] = {
-        price: price,
-        updated: age,
-        volume: volume,
-        lastSoldAt: lastSoldAt
-      };
-    }
-  }
-}
+import { ItemPrice, PriceType, PriceVolunteer } from "./types";
+import { HistoricalPricing, MallPricing } from "./pricing/kolmafia";
+import { IrratPrices } from "./pricing/irratprices";
+import { PricegunResolver } from "./pricing/pricegun";
 
 export class PriceResolver {
   private specialCase: Map<Item, number> = new Map();
   private settings: PricingSettings;
-  private newPrices: NewPrices;
-  private pricegun: PricegunPrices;
+  private resolvers: PriceVolunteer[] = [];
 
   constructor(settings: PricingSettings) {
     this.settings = settings;
-    this.newPrices = new NewPrices(settings);
-    this.pricegun = new PricegunPrices();
 
-    if (!settings.oldPricing) {
-      this.newPrices.load();
+    let specialResolver: PriceVolunteer;
+
+    if (settings.globalSettings.pricegun) {
+      specialResolver = new PricegunResolver();
+    } else {
+      specialResolver = new IrratPrices(settings);
     }
+
+    if (specialResolver && specialResolver.load) {
+      specialResolver.load();
+    }
+
+    this.resolvers.push(specialResolver);
+    this.resolvers.push(new HistoricalPricing());
+    this.resolvers.push(new MallPricing());
 
     this.fillSpecialCase();
   }
@@ -324,25 +51,47 @@ export class PriceResolver {
   }
 
   doWarning(): boolean {
-    return this.newPrices && this.newPrices.doWarning();
-  }
-
-  bulkLoad(item: Item[]) {
-    if (!this.settings.globalSettings.pricegun) {
-      return;
+    if (this.resolvers[0] instanceof IrratPrices) {
+      return this.resolvers[0].doWarning();
     }
 
-    this.pricegun.bulkLoad(item);
+    return false;
+  }
+
+  bulkLoad(items: Item[]) {
+    // Dedupes items
+    const toCheck = items.filter((i, ind) => items.lastIndexOf(i) == ind);
+    const checked: Item[] = [];
+
+    for (const item of items) {
+      if (checked.includes(item)) continue;
+
+      const foldables = Object.keys(getRelated(item, "fold"));
+
+      if (foldables == null || foldables.length <= 1) continue;
+
+      const items = foldables
+        .map((s) => Item.get(s))
+        .filter((i) => !checked.includes(i));
+
+      checked.push(...items);
+      items.filter((i) => !toCheck.includes(i)).forEach((i) => toCheck.push(i));
+    }
+
+    this.resolvers[0].bulkResolve(toCheck);
   }
 
   itemPrice(
     item: Item,
-    amount: number,
     ignoreFold: boolean = false,
     forcePricing: PriceType = null,
     doSuperFast: boolean = false,
-    doEstimates: boolean = false
+    doEstimates: boolean = false,
   ): ItemPrice {
+    if (this.settings.globalSettings.pricegun) {
+      ignoreFold = true;
+    }
+
     if (!ignoreFold) {
       AccValTiming.start("Check Foldable", true);
 
@@ -357,12 +106,11 @@ export class PriceResolver {
               .map((f) =>
                 this.itemPrice(
                   Item.get(f),
-                  amount,
                   true,
                   forcePricing,
                   doSuperFast,
-                  doEstimates
-                )
+                  doEstimates,
+                ),
               )
               .filter((p) => p != null);
 
@@ -371,7 +119,7 @@ export class PriceResolver {
                 ? f1.item.tradeable
                   ? -1
                   : 1
-                : f1.price - f2.price
+                : f1.price - f2.price,
             );
 
             const compare = foldPrices.find((f) => f.item == item);
@@ -402,251 +150,29 @@ export class PriceResolver {
           item,
           this.specialCase.get(item),
           PriceType.MALL,
-          0
+          0,
         );
       }
 
       if (!item.tradeable) {
         return new ItemPrice(item, autosellPrice(item), PriceType.AUTOSELL, 0);
       }
-
-      if (this.settings.globalSettings.pricegun) {
-        const price = this.pricegun.getPrice(item);
-
-        if (price != null) {
-          const daysAge = Math.round(
-            (Date.now() / 1000 - price.date) / (60 * 60 * 24)
-          );
-
-          return new ItemPrice(
-            item,
-            price.value,
-            PriceType.NEW_PRICES,
-            daysAge,
-            price.volume,
-            price.value
-          );
-        } else if (this.newPrices.ofThePast) {
-          return null;
-        }
-      }
-
-      if (this.newPrices.isValid()) {
-        const price = this.newPrices.prices[toInt(item)];
-
-        if (price != null) {
-          const daysAge = Math.round(
-            (Date.now() / 1000 - price.updated) / (60 * 60 * 24)
-          );
-
-          return new ItemPrice(
-            item,
-            price.price,
-            PriceType.NEW_PRICES,
-            daysAge,
-            price.volume,
-            price.lastSoldAt
-          );
-        } else if (this.newPrices.ofThePast) {
-          return null;
-        }
-      }
     } finally {
       AccValTiming.stop("Check Pricing Misc");
     }
 
-    AccValTiming.start("Create Price Resolver", true);
-
-    const historyPricing = new HistoricalPricing(this.settings, item, amount);
-    const mallPricing = new MallSalesPricing(this.settings, item, amount);
-    let resolver: PriceVolunteer;
-
-    if (forcePricing == PriceType.HISTORICAL) {
-      resolver = historyPricing;
-    } else if (forcePricing == PriceType.MALL) {
-      resolver = mallPricing;
-    } else {
-      const viablePrices: PriceVolunteer[] = [
-        historyPricing,
-        mallPricing
-      ].filter((p) => p.isViable() && !p.isOutdated());
-
-      viablePrices.sort((v1, v2) => {
-        const p1 = v1.getPrice(true);
-        const p2 = v2.getPrice(true);
-
-        if (p1 == null || p2 == null || p1.price == p2.price) {
-          return v1.getAge() - v2.getAge();
-        }
-
-        return p1.price - p2.price;
-      });
-
-      resolver = viablePrices.length > 0 ? viablePrices[0] : historyPricing;
-
-      /* // If we're not doing sales, and the price is apparently worth more than 50m
-      if (
-        !doSuperFast &&
-        resolver != null &&
-        historicalPrice(item) > 50_000_000
-      ) {
-        // If we have no sale history on record, or the price diff is more than 50m
-        if (
-          oldMallHistoryPricing.getAge() == -1 ||
-          Math.abs(
-            oldMallHistoryPricing.getPrice(true).price - historicalPrice(item)
-          ) > 50_000_000
-        ) {
-          resolver = oldMallHistoryPricing;
-        }
-      }*/
-    }
-
-    AccValTiming.stop("Create Price Resolver");
-
-    AccValTiming.start("Run Pricing Checks", true);
-
-    try {
-      if (
-        resolver != null &&
-        doEstimates &&
-        historyPricing != resolver &&
-        resolver.isOutdated() &&
-        historicalAge(item) < 365 &&
-        historicalPrice(item) <= Math.max(autosellPrice(item) * 3, 500)
-      ) {
-        return new ItemPrice(
-          item,
-          historicalPrice(item),
-          PriceType.HISTORICAL,
-          historicalAge(item)
-        );
-      }
-    } finally {
-      AccValTiming.stop("Run Pricing Checks");
-    }
-
     AccValTiming.start("Run Final Pricing Check", true);
 
-    try {
-      if (
-        doEstimates &&
-        (doSuperFast ? !resolver.isViable() : resolver.isOutdated())
-      ) {
-        return new ItemPrice(item, -1, resolver.getPriceType(), 0);
-      }
+    for (const resolver of this.resolvers) {
+      const price = resolver.resolve(item);
 
-      let price = resolver.getPrice();
-
-      if (price == null) {
-        price = mallPricing.getPrice();
+      if (price == null && this.settings.dateToFetch == null) {
+        continue;
       }
 
       return price;
-    } finally {
-      AccValTiming.stop("Run Final Pricing Check");
-    }
-  }
-}
-
-interface PriceVolunteer {
-  /**
-   * If this doesn't have enough data saved
-   */
-  isViable(): boolean;
-
-  /**
-   * If this is useful but out of date
-   */
-  isOutdated(): boolean;
-
-  getAge(): number;
-
-  getPrice(dontUpdate?: boolean): ItemPrice;
-
-  getPriceType(): PriceType;
-}
-
-class MallSalesPricing implements PriceVolunteer {
-  private item: Item;
-  private amount: number;
-  private settings: PricingSettings;
-
-  constructor(settings: PricingSettings, item: Item, amount: number) {
-    this.settings = settings;
-    this.item = item;
-    this.amount = amount;
-  }
-
-  isViable(): boolean {
-    return true;
-  }
-
-  isOutdated(): boolean {
-    return true;
-  }
-
-  getAge(): number {
-    return 0;
-  }
-
-  getPrice(): ItemPrice {
-    return new ItemPrice(this.item, mallPrice(this.item), PriceType.MALL, 0);
-  }
-
-  getPriceType(): PriceType {
-    return PriceType.MALL;
-  }
-}
-
-class HistoricalPricing implements PriceVolunteer {
-  private item: Item;
-  private amount: number;
-  private settings: PricingSettings;
-
-  constructor(settings: PricingSettings, item: Item, amount: number) {
-    this.settings = settings;
-    this.item = item;
-    this.amount = amount;
-  }
-
-  isViable(): boolean {
-    return historicalPrice(this.item) > 0;
-  }
-
-  isOutdated(): boolean {
-    const histPrice = historicalPrice(this.item);
-    const histAge = historicalAge(this.item);
-
-    const days = this.settings.getMaxPriceAge(histPrice, this.amount);
-
-    return histAge > days;
-  }
-
-  getAge(): number {
-    return historicalAge(this.item);
-  }
-
-  getPrice(): ItemPrice {
-    const histPrice = historicalPrice(this.item);
-
-    if (histPrice <= 0) {
-      return new MallSalesPricing(
-        this.settings,
-        this.item,
-        this.amount
-      ).getPrice();
     }
 
-    return new ItemPrice(
-      this.item,
-      historicalPrice(this.item),
-      PriceType.HISTORICAL,
-      historicalAge(this.item)
-    );
-  }
-
-  getPriceType(): PriceType {
-    return PriceType.HISTORICAL;
+    throw "Failed to resolve price for " + item;
   }
 }

@@ -40,9 +40,11 @@ export class CoinmasterResolver {
         item: item,
         coinmaster: item.seller,
         currencyCost: price,
-        currency: token
+        currency: token,
       });
     }
+
+    this.prices.bulkLoad(this.items.map((i) => i.item));
   }
 
   getHighestCoinmaster(currency: Item): CoinmasterItem {
@@ -54,7 +56,7 @@ export class CoinmasterResolver {
       }
 
       if (item.price == null) {
-        const itemPrice = this.prices.itemPrice(item.item, 1);
+        const itemPrice = this.prices.itemPrice(item.item);
 
         if (itemPrice == null) {
           return null;

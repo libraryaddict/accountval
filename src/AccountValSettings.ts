@@ -4,12 +4,12 @@ import {
   isDarkMode,
   print,
   toBoolean,
-  toFloat
+  toFloat,
 } from "kolmafia";
 import {
   AccountValColors,
   getAccountvalColors,
-  loadAccountvalColors
+  loadAccountvalColors,
 } from "./AccountValColors";
 import { AccountValPreset, getPresets } from "./AccountValPresets";
 import { ValItem } from "./AccountValLogic";
@@ -21,7 +21,7 @@ export enum FieldType {
   BOOLEAN,
   NAME,
   STRING,
-  TEXT_TYPE
+  TEXT_TYPE,
 }
 
 export interface ValSetting {
@@ -39,7 +39,7 @@ export enum SortBy {
   PRICE,
   TOTAL_PRICE,
   SALES_VOLUME,
-  ITEM_ID
+  ITEM_ID,
 }
 
 const sortByAliases: Map<string, SortBy> = new Map([
@@ -51,7 +51,7 @@ const sortByAliases: Map<string, SortBy> = new Map([
   ["totalprice", SortBy.TOTAL_PRICE],
   ["id", SortBy.ITEM_ID],
   ["sales", SortBy.SALES_VOLUME],
-  ["sold", SortBy.SALES_VOLUME]
+  ["sold", SortBy.SALES_VOLUME],
 ]);
 
 type PresetSetting = {
@@ -114,7 +114,7 @@ export class AccountValSettings {
       aliases: string[],
       desc: string,
       groupUnder?: string,
-      preset?: AccountValPreset
+      preset?: AccountValPreset,
     ) {
       const setting: ValSetting = {
         groupUnder,
@@ -122,7 +122,7 @@ export class AccountValSettings {
         field: name,
         names: aliases.map((s) => s.toLowerCase()),
         desc,
-        preset: preset
+        preset: preset,
       };
 
       settings.push(setting);
@@ -134,49 +134,49 @@ export class AccountValSettings {
       FieldType.BOOLEAN,
       "fetchCloset",
       ["closet", "clos"],
-      "Should it fetch from the closet"
+      "Should it fetch from the closet",
     );
     makeSetting(
       FieldType.BOOLEAN,
       "fetchStorage",
       ["storage", "stor", "hagnk", "hagnks"],
-      "Should it fetch from storage"
+      "Should it fetch from storage",
     );
     makeSetting(
       FieldType.BOOLEAN,
       "fetchShop",
       ["store", "mall", "shop"],
-      "Should it fetch from the shop"
+      "Should it fetch from the shop",
     );
     makeSetting(
       FieldType.BOOLEAN,
       "fetchInventory",
       ["inventory", "inv"],
-      "Should it fetch from your inventory"
+      "Should it fetch from your inventory",
     );
     makeSetting(
       FieldType.BOOLEAN,
       "fetchDisplaycase",
       ["displaycase", "display", "dc"],
-      "Should it fetch from the displaycase"
+      "Should it fetch from the displaycase",
     );
     makeSetting(
       FieldType.BOOLEAN,
       "fetchClan",
       ["clan", "stash"],
-      "Should it check clan's stash? False by default"
+      "Should it check clan's stash? False by default",
     );
     makeSetting(
       FieldType.BOOLEAN,
       "fetchSession",
       ["session"],
-      "Should it fetch using your current session of items acquired? False by default"
+      "Should it fetch using your current session of items acquired? False by default",
     );
     makeSetting(
       FieldType.BOOLEAN,
       "doTradeables",
       ["tradeable", "tradeables", "trade", "tradable"],
-      "Should it do tradeables"
+      "Should it do tradeables",
     );
     makeSetting(
       FieldType.BOOLEAN,
@@ -191,27 +191,27 @@ export class AccountValSettings {
         "nontradeables",
         "untrade",
         "untradeable",
-        "untradeables"
+        "untradeables",
       ],
-      "Should it do non-tradeables (Resolves to tradeables if it can)"
+      "Should it do non-tradeables (Resolves to tradeables if it can)",
     );
     makeSetting(
       FieldType.BOOLEAN,
       "fetchFamiliars",
       ["familiar", "familiars", "fam", "fams"],
-      "Should it do familiars (Resolves to their item). Bound being true also means this is true if not set"
+      "Should it do familiars (Resolves to their item). Bound being true also means this is true if not set",
     );
     makeSetting(
       FieldType.BOOLEAN,
       "fetchSnapshot",
       ["snapshot"],
-      "Should it attempt to use av-snapshot?"
+      "Should it attempt to use av-snapshot?",
     );
     makeSetting(
       FieldType.BOOLEAN,
       "doBound",
       ["bound", "bind", "bounded", "binds", "binded"],
-      "Should it do items that are bound to your account (Generally only iotms)"
+      "Should it do items that are bound to your account (Generally only iotms)",
     );
 
     makeSetting(
@@ -224,21 +224,21 @@ export class AccountValSettings {
         "minmeat",
         "min-meat",
         "minprice",
-        "price"
+        "price",
       ],
-      "Each item total worth, at least this amount."
+      "Each item total worth, at least this amount.",
     );
     makeSetting(
       FieldType.NUMBER,
       "minimumAmount",
       ["amount", "count", "minimumamount", "minamount"],
-      "At least this many items"
+      "At least this many items",
     );
     makeSetting(
       FieldType.NUMBER,
       "displayLimit",
       ["limit", "displaylimit", "maxdisplay", "lines"],
-      "Limit results to display this amount"
+      "Limit results to display this amount",
     );
     makeSetting(
       FieldType.NAME,
@@ -251,22 +251,22 @@ export class AccountValSettings {
         "who",
         "target",
         "name",
-        "username"
+        "username",
       ],
-      'Target another player\'s DC and Shop. Can provide the dc/shop param. Can do player="John Smith" for spaces'
+      'Target another player\'s DC and Shop. Can provide the dc/shop param. Can do player="John Smith" for spaces',
     );
     makeSetting(
       FieldType.BOOLEAN,
       "doSuperFast",
       ["fast", "superfast", "speed", "quick", "rough"],
-      "Try resolve everything with historical price, no matter how outdated"
+      "Try resolve everything with historical price, no matter how outdated",
     );
 
     makeSetting(
       FieldType.NUMBER,
       "maxAge",
       ["age", "maxage", "days"],
-      "The max days a price is allowed to be outdated, useful if you're trying to force things to be more up to date"
+      "The max days a price is allowed to be outdated, useful if you're trying to force things to be more up to date",
     );
 
     makeSetting(
@@ -276,49 +276,49 @@ export class AccountValSettings {
       "What we should sort the results by, prefix with ! or - to reverse sort. Supports: " +
         Object.keys(SortBy)
           .filter((s) => s.length > 2)
-          .join(", ")
+          .join(", "),
     );
 
     makeSetting(
       FieldType.BOOLEAN,
       "shopWorth",
       ["worth", "shopworth", "pricing", "prices"],
-      "Seperates items in shop from the other items, and shows how under/overpriced they are. This can be inaccurate"
+      "Seperates items in shop from the other items, and shows how under/overpriced they are. This can be inaccurate",
     );
 
     makeSetting(
       FieldType.STRING,
       "javascriptFilter",
       ["jsfilter", "javascriptfilter", "javascript", "js"],
-      'Filters if an item can be shown, provides an item & amount and expects a boolean. Any double quotes in your code must not have an empty space to the right. Example: jsfilter="(item, amount, worth, sales) => item.name.includes("beer") && toSlot(item) != Slot.none"'
+      'Filters if an item can be shown, provides an item & amount and expects a boolean. Any double quotes in your code must not have an empty space to the right. Example: jsfilter="(item, amount, worth, sales) => item.name.includes("beer") && toSlot(item) != Slot.none"',
     );
 
     makeSetting(
       FieldType.NUMBER,
       "sales",
       ["sales", "sold"],
-      "Hides items that have less than this amount of sales"
+      "Hides items that have less than this amount of sales",
     );
 
     makeSetting(
       FieldType.BOOLEAN,
       "useLastSold",
       ["useLastSold", "lastsold", "soldprice"],
-      "Resolve prices by their last sold, initial runs with this parameter can be quite slow"
+      "Resolve prices by their last sold, initial runs with this parameter can be quite slow",
     );
 
     makeSetting(
       FieldType.BOOLEAN,
       "brief",
       ["brief"],
-      "Prints out a single line as the final result, the total meat."
+      "Prints out a single line as the final result, the total meat.",
     );
 
     makeSetting(
       FieldType.BOOLEAN,
       "oldPricing",
       ["oldpricing"],
-      "Has accountval calculate prices from the old slower and more inaccurate method"
+      "Has accountval calculate prices from the old slower and more inaccurate method",
     );
 
     makeSetting(
@@ -326,52 +326,52 @@ export class AccountValSettings {
       "colorScheme",
       ["color", "colors", "colorscheme", "scheme"],
       "What color schemes to use, set `accountvalColorScheme` pref to change the default. Supports: " +
-        getAccountvalColors().join(", ")
+        getAccountvalColors().join(", "),
     );
 
     makeSetting(
       FieldType.NUMBER,
       "maxNaturalPrice",
       ["max", "mallmax"],
-      "The max natural price an item will reach before it's capped and called mall extinct"
+      "The max natural price an item will reach before it's capped and called mall extinct",
     );
 
     makeSetting(
       FieldType.BOOLEAN,
       "doCategories",
       ["category", "categories", "shelf", "shelves"],
-      "Used only for Display Cases at this point, seperates the items into categories"
+      "Used only for Display Cases at this point, seperates the items into categories",
     );
     makeSetting(
       FieldType.BOOLEAN,
       "showSingleItemWorth",
       ["each"],
-      "Displays the individual price of each item instead of the total, works best with `sort=meat`"
+      "Displays the individual price of each item instead of the total, works best with `sort=meat`",
     );
     makeSetting(
       FieldType.STRING,
       "dateToFetch",
       ["date", "fetchdate", "historical", "time", "when", "at"],
-      "View everything with the prices of the past, either provide a `1d2m3y` which will automatically convert that into 1 day, 2 months and 3 years ago (capped automatically), or a specified date `DD-MM-YYYY` which cannot be older than 22-08-2023. This obviously won't work for newer items, and will make a backend call to `kolprices.lib.co.nz/files/:date`"
+      "View everything with the prices of the past, either provide a `1d2m3y` which will automatically convert that into 1 day, 2 months and 3 years ago (capped automatically), or a specified date `DD-MM-YYYY` which cannot be older than 22-08-2023. This obviously won't work for newer items, and will make a backend call to `kolprices.lib.co.nz/files/:date`",
     );
     makeSetting(
       FieldType.TEXT_TYPE,
       "logOutputAs",
       ["text", "logtype", "formatting"],
-      `If accountval should log everything with "fancy" text, which means html, or "plain" which means the output is also logged to your session log, but will have no hover text or colors. Try looking into kolmafia 'mirror' if you want the output as html. Example usage: "text=plain". Change the default by using "set accountval_text=plain"`
+      `If accountval should log everything with "fancy" text, which means html, or "plain" which means the output is also logged to your session log, but will have no hover text or colors. Try looking into kolmafia 'mirror' if you want the output as html. Example usage: "text=plain". Change the default by using "set accountval_text=plain"`,
     );
     makeSetting(
       FieldType.STRING,
       "logOutputTo",
       ["output"],
-      `Send the output of accountval to a file instead of printing into cli, eg 'output=accountval.html' would send it into the 'data/accountval.html'. If the file ends with .html, it will entity encode all non-html lines.`
+      `Send the output of accountval to a file instead of printing into cli, eg 'output=accountval.html' would send it into the 'data/accountval.html'. If the file ends with .html, it will entity encode all non-html lines.`,
     );
-    /*makeSetting(
+    makeSetting(
       FieldType.BOOLEAN,
       "pricegun",
       ["pricegun"],
-      `Resolve prices using pricegun. This will be slow.`
-    );*/
+      `Resolve prices using pricegun. This will be slow.`,
+    );
 
     for (const preset of getPresets()) {
       makeSetting(
@@ -380,7 +380,7 @@ export class AccountValSettings {
         preset.name(),
         preset.desc(),
         "Preset Filters",
-        preset
+        preset,
       );
     }
 
@@ -406,7 +406,7 @@ export class AccountValSettings {
 
     if (getProperty("accountval_maxNaturalPrice").length > 0) {
       this.maxNaturalPrice = this.toNumber(
-        getProperty("accountval_maxNaturalPrice")
+        getProperty("accountval_maxNaturalPrice"),
       );
     }
 
@@ -417,7 +417,7 @@ export class AccountValSettings {
         this.logOutputAs = str;
       } else {
         errors.push(
-          `The property 'accountval_text' has been set to '${str}' which is invalid.`
+          `The property 'accountval_text' has been set to '${str}' which is invalid.`,
         );
       }
     }
@@ -437,7 +437,7 @@ export class AccountValSettings {
 
     const addUnknown = (arg) => {
       errors.push(
-        `Failed to handle parameter: <font color='${AccountValColors.failedToParseSettings}'>${arg}</font>`
+        `Failed to handle parameter: <font color='${AccountValColors.failedToParseSettings}'>${arg}</font>`,
       );
     };
 
@@ -586,7 +586,7 @@ export class AccountValSettings {
 
             if (!v.match(/^[0-9]+$/)) {
               errors.push(
-                `Failed to convert <font color='${AccountValColors.failedToParseSettings}'>${v}</font> into a player ID`
+                `Failed to convert <font color='${AccountValColors.failedToParseSettings}'>${v}</font> into a player ID`,
               );
               continue;
             }
@@ -619,7 +619,7 @@ export class AccountValSettings {
         if (setting.preset != null) {
           this.presets.push({
             preset: setting.preset,
-            negated: !isTrue
+            negated: !isTrue,
           });
         } else {
           this[setting.field] = isTrue;
@@ -638,7 +638,7 @@ export class AccountValSettings {
       "fetchClan",
       "fetchSession",
       "fetchFamiliars",
-      "fetchSnapshot"
+      "fetchSnapshot",
     ];
 
     // We can do fams if bound isn't false
@@ -655,16 +655,16 @@ export class AccountValSettings {
       this.doTradeables = this.doBound
         ? false
         : wasSet.includes("doNontradeables")
-        ? !this.doNontradeables
-        : true;
+          ? !this.doNontradeables
+          : true;
     }
 
     if (!wasSet.includes("doNontradeables")) {
       this.doNontradeables = this.doBound
         ? false
         : wasSet.includes("doTradeables")
-        ? !this.doTradeables
-        : true;
+          ? !this.doTradeables
+          : true;
     }
 
     if (!wasSet.includes("doBound")) {
@@ -714,7 +714,7 @@ export class AccountValSettings {
       (pre) =>
         (pre.preset.isShown != null
           ? pre.preset.isShown(item, worth)
-          : pre.preset.isProcessed(item.actualItem, worth)) != pre.negated
+          : pre.preset.isProcessed(item.actualItem, worth)) != pre.negated,
     );
   }
 
