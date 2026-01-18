@@ -2882,7 +2882,7 @@ var PricegunResolver = /*#__PURE__*/function () {function PricegunResolver() {pr
       return items.map((i) => {
         var price = this.items[i.id];
 
-        if (price == null) return null;
+        if (price == null || price.volume < 0) return null;
 
         return new types/* ItemPrice */.$(
           i,
@@ -2937,9 +2937,27 @@ var PricegunResolver = /*#__PURE__*/function () {function PricegunResolver() {pr
             }} catch (err) {_iterator2.e(err);} finally {_iterator2.f();}
         }
 
-        items.forEach((i) => {var _this$items$i$id;return this.items[i.id] = (_this$items$i$id = this.items[i.id]) !== null && _this$items$i$id !== void 0 ? _this$items$i$id : null;});
+        items.forEach(
+          (i) => {var _this$items$i$id;return (
+              this.items[i.id] = (_this$items$i$id = this.items[i.id]) !== null && _this$items$i$id !== void 0 ? _this$items$i$id : {
+                itemId: i.id,
+                value: 0,
+                volume: -1,
+                retrieved: Math.round(Date.now() / 1000),
+                dateTime: 0
+              });}
+        );
       } catch (e) {
-        items.forEach((i) => this.items[i.id] = null);
+        items.forEach(
+          (i) =>
+          this.items[i.id] = {
+            itemId: i.id,
+            value: 0,
+            volume: -1,
+            retrieved: Math.round(Date.now() / 1000),
+            dateTime: 0
+          }
+        );
       }
     } }, { key: "isViable", value:
 
