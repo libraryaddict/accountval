@@ -44,4 +44,6 @@ export interface PriceVolunteer {
   resolve(item: Item): ItemPrice;
 
   load?(): void;
+
+  stop?(): void;
 }

@@ -58,6 +58,10 @@ export class PriceResolver {
     return false;
   }
 
+  stop() {
+    this.resolvers.forEach((r) => r.stop && r.stop());
+  }
+
   bulkLoad(items: Item[]) {
     // Dedupes items
     const toCheck = items.filter((i, ind) => items.lastIndexOf(i) == ind);

@@ -1,4 +1,4 @@
-import { Item, print, visitUrl } from "kolmafia";
+import { bufferToFile, fileToBuffer, Item, print, visitUrl } from "kolmafia";
 import { ItemPrice, PriceType, PriceVolunteer } from "../types";
 
 type PricegunItem = {
@@ -7,10 +7,38 @@ type PricegunItem = {
   date?: string;
   dateTime: number; // Injected by us
   itemId: number;
+  retrieved: number;
 };
 
 export class PricegunResolver implements PriceVolunteer {
-  items: PricegunItem[] = [];
+  items: PricegunItem[];
+
+  load(): void {
+    this.items = [];
+
+    const buffer = fileToBuffer("pricegun_prices.txt");
+
+    if (buffer.length == 0) return;
+
+    const cutoff = Date.now() / 1000 - 24 * 60 * 60;
+
+    for (const item of JSON.parse(buffer)) {
+      if (item.retrieved < cutoff) continue;
+
+      this.items[item.itemId] = item;
+    }
+  }
+
+  stop(): void {
+    if (this.items == null) return;
+
+    const cutoff = Date.now() / 1000 - 23 * 60 * 60;
+
+    bufferToFile(
+      JSON.stringify(this.items.filter((i) => i && i.retrieved > cutoff)),
+      "pricegun_prices.txt",
+    );
+  }
 
   loadItemFromApi(item: PricegunItem) {
     this.items[item.itemId] = {
@@ -18,6 +46,7 @@ export class PricegunResolver implements PriceVolunteer {
       value: item.value,
       dateTime: Math.round(Date.parse(item.date) / 1000),
       volume: item.volume,
+      retrieved: Math.round(Date.now() / 1000),
     };
   }
 
@@ -64,6 +93,13 @@ export class PricegunResolver implements PriceVolunteer {
       return;
     }
 
+    let injectedUnwantedItem = false;
+
+    if (items.length + 3 < MAX_AMOUNT && items.find((i) => i.id == 1) == null) {
+      items.push(Item.get(1));
+      injectedUnwantedItem = true;
+    }
+
     print(`Fetching ${items.length} prices from pricegun.`);
 
     try {
@@ -75,6 +111,8 @@ export class PricegunResolver implements PriceVolunteer {
         this.loadItemFromApi(JSON.parse(page));
       } else {
         for (const item of JSON.parse(page)) {
+          if (injectedUnwantedItem && item.itemId == 1) continue;
+
           this.loadItemFromApi(item);
         }
       }

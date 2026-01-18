@@ -671,6 +671,8 @@ class AccountVal {
   }
 
   stop() {
+    this.logic.priceResolver.stop();
+
     if (this.output == null || this.output.length == 0) {
       return;
     }
