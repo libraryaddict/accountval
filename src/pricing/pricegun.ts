@@ -62,7 +62,7 @@ export class PricegunResolver implements PriceVolunteer {
     return items.map((i) => {
       const price = this.items[i.id];
 
-      if (price == null) return null;
+      if (price == null || price.volume < 0) return null;
 
       return new ItemPrice(
         i,
@@ -117,9 +117,27 @@ export class PricegunResolver implements PriceVolunteer {
         }
       }
 
-      items.forEach((i) => (this.items[i.id] = this.items[i.id] ?? null));
+      items.forEach(
+        (i) =>
+          (this.items[i.id] = this.items[i.id] ?? {
+            itemId: i.id,
+            value: 0,
+            volume: -1,
+            retrieved: Math.round(Date.now() / 1000),
+            dateTime: 0,
+          }),
+      );
     } catch (e) {
-      items.forEach((i) => (this.items[i.id] = null));
+      items.forEach(
+        (i) =>
+          (this.items[i.id] = {
+            itemId: i.id,
+            value: 0,
+            volume: -1,
+            retrieved: Math.round(Date.now() / 1000),
+            dateTime: 0,
+          }),
+      );
     }
   }
 
