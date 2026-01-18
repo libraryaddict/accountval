@@ -2829,15 +2829,44 @@ function pricegun_typeof(o) {"@babel/helpers - typeof";return pricegun_typeof = 
 
 
 
-var PricegunResolver = /*#__PURE__*/function () {function PricegunResolver() {pricegun_classCallCheck(this, PricegunResolver);pricegun_defineProperty(this, "items",
-    []);}return pricegun_createClass(PricegunResolver, [{ key: "loadItemFromApi", value:
+
+var PricegunResolver = /*#__PURE__*/function () {function PricegunResolver() {pricegun_classCallCheck(this, PricegunResolver);pricegun_defineProperty(this, "items", void 0);}return pricegun_createClass(PricegunResolver, [{ key: "load", value:
+
+
+    function load() {
+      this.items = [];
+
+      var buffer = (0,external_kolmafia_.fileToBuffer)("pricegun_prices.txt");
+
+      if (buffer.length == 0) return;
+
+      var cutoff = Date.now() / 1000 - 24 * 60 * 60;var _iterator = pricegun_createForOfIteratorHelper(
+
+          JSON.parse(buffer)),_step;try {for (_iterator.s(); !(_step = _iterator.n()).done;) {var item = _step.value;
+          if (item.retrieved < cutoff) continue;
+
+          this.items[item.itemId] = item;
+        }} catch (err) {_iterator.e(err);} finally {_iterator.f();}
+    } }, { key: "stop", value:
+
+    function stop() {
+      if (this.items == null) return;
+
+      var cutoff = Date.now() / 1000 - 23 * 60 * 60;
+
+      (0,external_kolmafia_.bufferToFile)(
+        JSON.stringify(this.items.filter((i) => i && i.retrieved > cutoff)),
+        "pricegun_prices.txt"
+      );
+    } }, { key: "loadItemFromApi", value:
 
     function loadItemFromApi(item) {
       this.items[item.itemId] = {
         itemId: item.itemId,
         value: item.value,
         dateTime: Math.round(Date.parse(item.date) / 1000),
-        volume: item.volume
+        volume: item.volume,
+        retrieved: Math.round(Date.now() / 1000)
       };
     } }, { key: "bulkResolve", value:
 
@@ -2884,6 +2913,13 @@ var PricegunResolver = /*#__PURE__*/function () {function PricegunResolver() {pr
         return;
       }
 
+      var injectedUnwantedItem = false;
+
+      if (items.length + 3 < MAX_AMOUNT && items.find((i) => i.id == 1) == null) {
+        items.push(external_kolmafia_.Item.get(1));
+        injectedUnwantedItem = true;
+      }
+
       (0,external_kolmafia_.print)("Fetching ".concat(items.length, " prices from pricegun."));
 
       try {
@@ -2893,10 +2929,12 @@ var PricegunResolver = /*#__PURE__*/function () {function PricegunResolver() {pr
 
         if (items.length == 1) {
           this.loadItemFromApi(JSON.parse(page));
-        } else {var _iterator = pricegun_createForOfIteratorHelper(
-              JSON.parse(page)),_step;try {for (_iterator.s(); !(_step = _iterator.n()).done;) {var item = _step.value;
+        } else {var _iterator2 = pricegun_createForOfIteratorHelper(
+              JSON.parse(page)),_step2;try {for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {var item = _step2.value;
+              if (injectedUnwantedItem && item.itemId == 1) continue;
+
               this.loadItemFromApi(item);
-            }} catch (err) {_iterator.e(err);} finally {_iterator.f();}
+            }} catch (err) {_iterator2.e(err);} finally {_iterator2.f();}
         }
 
         items.forEach((i) => {var _this$items$i$id;return this.items[i.id] = (_this$items$i$id = this.items[i.id]) !== null && _this$items$i$id !== void 0 ? _this$items$i$id : null;});
@@ -2960,6 +2998,10 @@ var PriceResolver = /*#__PURE__*/function () {
       }
 
       return false;
+    } }, { key: "stop", value:
+
+    function stop() {
+      this.resolvers.forEach((r) => r.stop && r.stop());
     } }, { key: "bulkLoad", value:
 
     function bulkLoad(items) {
@@ -4379,6 +4421,8 @@ AccountVal = /*#__PURE__*/function () {function AccountVal() {_classCallCheck(th
     } }, { key: "stop", value:
 
     function stop() {
+      this.logic.priceResolver.stop();
+
       if (this.output == null || this.output.length == 0) {
         return;
       }
