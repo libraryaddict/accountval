@@ -18,25 +18,31 @@ export class PricegunResolver implements PriceVolunteer {
 
     const buffer = fileToBuffer("pricegun_prices.txt");
 
-    if (buffer.length == 0) return;
+    if (buffer.length == 0) {
+      return;
+    }
 
     const cutoff = Date.now() / 1000 - 24 * 60 * 60;
 
     for (const item of JSON.parse(buffer)) {
-      if (item.retrieved < cutoff) continue;
+      if (item.retrieved < cutoff) {
+        continue;
+      }
 
       this.items[item.itemId] = item;
     }
   }
 
   stop(): void {
-    if (this.items == null) return;
+    if (this.items == null) {
+      return;
+    }
 
     const cutoff = Date.now() / 1000 - 23 * 60 * 60;
 
     bufferToFile(
       JSON.stringify(this.items.filter((i) => i && i.retrieved > cutoff)),
-      "pricegun_prices.txt",
+      "pricegun_prices.txt"
     );
   }
 
@@ -46,7 +52,7 @@ export class PricegunResolver implements PriceVolunteer {
       value: item.value,
       dateTime: Math.round(Date.parse(item.date) / 1000),
       volume: item.volume,
-      retrieved: Math.round(Date.now() / 1000),
+      retrieved: Math.round(Date.now() / 1000)
     };
   }
 
@@ -62,14 +68,16 @@ export class PricegunResolver implements PriceVolunteer {
     return items.map((i) => {
       const price = this.items[i.id];
 
-      if (price == null || price.volume < 0) return null;
+      if (price == null || price.volume < 0) {
+        return null;
+      }
 
       return new ItemPrice(
         i,
-        price.value,
+        Math.round(price.value),
         PriceType.NEW_PRICES,
         now - price.dateTime,
-        price.volume,
+        price.volume
       );
     });
   }
@@ -81,7 +89,7 @@ export class PricegunResolver implements PriceVolunteer {
     if (items.length > MAX_AMOUNT) {
       // We try to have every request take the same length of time
       const amountInEachReq = Math.ceil(
-        items.length / Math.ceil(items.length / MAX_AMOUNT),
+        items.length / Math.ceil(items.length / MAX_AMOUNT)
       );
 
       for (let i = 0; i < items.length; i += amountInEachReq) {
@@ -104,14 +112,16 @@ export class PricegunResolver implements PriceVolunteer {
 
     try {
       const page = visitUrl(
-        `https://pricegun.loathers.net/api/${items.map((i) => i.id).join(",")}`,
+        `https://pricegun.loathers.net/api/${items.map((i) => i.id).join(",")}`
       );
 
       if (items.length == 1) {
         this.loadItemFromApi(JSON.parse(page));
       } else {
         for (const item of JSON.parse(page)) {
-          if (injectedUnwantedItem && item.itemId == 1) continue;
+          if (injectedUnwantedItem && item.itemId == 1) {
+            continue;
+          }
 
           this.loadItemFromApi(item);
         }
@@ -124,8 +134,8 @@ export class PricegunResolver implements PriceVolunteer {
             value: 0,
             volume: -1,
             retrieved: Math.round(Date.now() / 1000),
-            dateTime: 0,
-          }),
+            dateTime: 0
+          })
       );
     } catch (e) {
       items.forEach(
@@ -135,8 +145,8 @@ export class PricegunResolver implements PriceVolunteer {
             value: 0,
             volume: -1,
             retrieved: Math.round(Date.now() / 1000),
-            dateTime: 0,
-          }),
+            dateTime: 0
+          })
       );
     }
   }
