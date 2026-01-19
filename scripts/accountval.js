@@ -2838,19 +2838,25 @@ var PricegunResolver = /*#__PURE__*/function () {function PricegunResolver() {pr
 
       var buffer = (0,external_kolmafia_.fileToBuffer)("pricegun_prices.txt");
 
-      if (buffer.length == 0) return;
+      if (buffer.length == 0) {
+        return;
+      }
 
       var cutoff = Date.now() / 1000 - 24 * 60 * 60;var _iterator = pricegun_createForOfIteratorHelper(
 
           JSON.parse(buffer)),_step;try {for (_iterator.s(); !(_step = _iterator.n()).done;) {var item = _step.value;
-          if (item.retrieved < cutoff) continue;
+          if (item.retrieved < cutoff) {
+            continue;
+          }
 
           this.items[item.itemId] = item;
         }} catch (err) {_iterator.e(err);} finally {_iterator.f();}
     } }, { key: "stop", value:
 
     function stop() {
-      if (this.items == null) return;
+      if (this.items == null) {
+        return;
+      }
 
       var cutoff = Date.now() / 1000 - 23 * 60 * 60;
 
@@ -2882,11 +2888,13 @@ var PricegunResolver = /*#__PURE__*/function () {function PricegunResolver() {pr
       return items.map((i) => {
         var price = this.items[i.id];
 
-        if (price == null || price.volume < 0) return null;
+        if (price == null || price.volume < 0) {
+          return null;
+        }
 
         return new types/* ItemPrice */.$(
           i,
-          price.value,
+          Math.round(price.value),
           types/* PriceType */.S.NEW_PRICES,
           now - price.dateTime,
           price.volume
@@ -2931,7 +2939,9 @@ var PricegunResolver = /*#__PURE__*/function () {function PricegunResolver() {pr
           this.loadItemFromApi(JSON.parse(page));
         } else {var _iterator2 = pricegun_createForOfIteratorHelper(
               JSON.parse(page)),_step2;try {for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {var item = _step2.value;
-              if (injectedUnwantedItem && item.itemId == 1) continue;
+              if (injectedUnwantedItem && item.itemId == 1) {
+                continue;
+              }
 
               this.loadItemFromApi(item);
             }} catch (err) {_iterator2.e(err);} finally {_iterator2.f();}
