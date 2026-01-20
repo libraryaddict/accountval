@@ -18,13 +18,13 @@ import {
   shopAmount,
   shopPrice,
   Skill,
-  toInt,
+  toInt
 } from "kolmafia";
 import { ItemResolver, ItemType } from "./ItemResolver";
 import {
   AccountValSettings,
   PricingSettings,
-  SortBy,
+  SortBy
 } from "./AccountValSettings";
 import { FetchFromPage } from "./PageResolver";
 import { AccountValColors } from "./AccountValColors";
@@ -41,7 +41,7 @@ export enum ItemStatus {
 
   IN_USE,
 
-  SHOP_WORTH,
+  SHOP_WORTH
 }
 
 export class ValItem {
@@ -61,7 +61,7 @@ export class ValItem {
     name: string = item.name,
     pluralName: string = item.plural,
     bound?: ItemStatus,
-    snapshotSource?: string,
+    snapshotSource?: string
   ) {
     this.actualItem = actualItem;
     this.name = name;
@@ -119,7 +119,7 @@ export class AccountValLogic {
     item: Item,
     amount: number,
     price?: number,
-    sales?: number,
+    sales?: number
   ) => boolean;
 
   constructor(settings: AccountValSettings, priceSettings: PricingSettings) {
@@ -202,7 +202,7 @@ export class AccountValLogic {
 
       if (this.settings.doBound && this.settings.fetchingNonItems) {
         for (const item of this.resolver.accValStuff.filter(
-          (s) => s.itemType == ItemType.SKILL && skills.includes(s.skill),
+          (s) => s.itemType == ItemType.SKILL && skills.includes(s.skill)
         )) {
           this.addItem(
             new ValItem(
@@ -210,19 +210,19 @@ export class AccountValLogic {
               item.actualItem,
               item.actualItem.name,
               item.actualItem.plural,
-              ItemStatus.BOUND,
-            ),
+              ItemStatus.BOUND
+            )
           );
         }
       }
 
       const owned: Map<Item, [ValItem, number]> = new Map(
-        [...this.ownedItems].map(([k, v]) => [k.tradeableItem, [k, v]]),
+        [...this.ownedItems].map(([k, v]) => [k.tradeableItem, [k, v]])
       );
 
       items.forEach((v, k) => {
         const boundItem = this.resolver.accValStuff.find(
-          (i) => i.actualItem == k,
+          (i) => i.actualItem == k
         );
 
         if (boundItem == null) {
@@ -269,9 +269,9 @@ export class AccountValLogic {
             name,
             plural,
             ItemStatus.BOUND,
-            "av-snapshot",
+            "av-snapshot"
           ),
-          v,
+          v
         );
       });
     }
@@ -287,23 +287,23 @@ export class AccountValLogic {
     while (this.settings.javascriptFilter.includes("$kol")) {
       this.settings.javascriptFilter = this.settings.javascriptFilter.replace(
         "$kol",
-        'require("kolmafia")',
+        'require("kolmafia")'
       );
     }
 
     print(
       "JS Filter has been set to: " + this.settings.javascriptFilter,
-      AccountValColors.minorNote,
+      AccountValColors.minorNote
     );
 
     try {
       this.jsFilter = eval(
-        `with (require("kolmafia")) ` + this.settings.javascriptFilter,
+        `with (require("kolmafia")) ` + this.settings.javascriptFilter
       );
     } catch (e) {
       print(
         "Invalid jsfilter provided! Error as follows:",
-        AccountValColors.attentionGrabbingWarning,
+        AccountValColors.attentionGrabbingWarning
       );
       print();
       throw e;
@@ -376,7 +376,7 @@ export class AccountValLogic {
 
           megaExtra.set(k.item, {
             shelf: k.shelf,
-            count: v,
+            count: v
           });
         });
         AccValTiming.stop("Resolve and Add Display Case with Shelves");
@@ -439,7 +439,7 @@ export class AccountValLogic {
       AccValTiming.start("Resolve Familiars");
       this.resolver.resolveFamiliars(
         Familiar.all().filter((f) => haveFamiliar(f)),
-        this.ownedItems,
+        this.ownedItems
       );
       AccValTiming.stop("Resolve Familiars");
     }
@@ -456,7 +456,7 @@ export class AccountValLogic {
             i.tradeable ? this.settings.doTradeables : this.settings.doBound
           ) {
             this.addItem(
-              new ValItem(i, i, i.name, i.plural, ItemStatus.IN_USE),
+              new ValItem(i, i, i.name, i.plural, ItemStatus.IN_USE)
             );
           }
         }
@@ -499,7 +499,7 @@ export class AccountValLogic {
     if (this.settings.doBound || this.settings.doNontradeables) {
       this.resolver.resolveBoundToTradeables(copy, this.ownedItems, [
         this.settings.doBound ? ItemType.UNTRADEABLE_ITEM : null,
-        this.settings.doNontradeables ? ItemType.CURRENCY : null,
+        this.settings.doNontradeables ? ItemType.CURRENCY : null
       ]);
     }
 
@@ -569,6 +569,10 @@ export class AccountValLogic {
         this.ownedItems.delete(item);
         continue;
       }
+
+      if (item.isBound() && this.ownedItems.get(item) > 1) {
+        this.ownedItems.set(item, 1);
+      }
     }
   }
 
@@ -603,7 +607,7 @@ export class AccountValLogic {
 
       if (
         settings.presets.some(
-          (p) => !p.negated && p.preset.name().includes("autosell"),
+          (p) => !p.negated && p.preset.name().includes("autosell")
         )
       ) {
         price.price = autosellPrice(item.actualItem);
@@ -615,7 +619,7 @@ export class AccountValLogic {
     AccValTiming.start("Add Logic Prices");
 
     this.priceResolver.bulkLoad(
-      [...this.ownedItems.keys()].map((i) => i.tradeableItem),
+      [...this.ownedItems.keys()].map((i) => i.tradeableItem)
     );
 
     for (const i of this.ownedItems.keys()) {
@@ -629,7 +633,7 @@ export class AccountValLogic {
             ? PriceType.MALL_SALES
             : null,
         this.settings.doSuperFast,
-        true,
+        true
       );
       AccValTiming.stop("Price Item");
 
@@ -653,7 +657,7 @@ export class AccountValLogic {
     if (toCheck.length > 200) {
       print(
         "Think this will take too long? Use the parameter 'fast', it's less accurate!",
-        AccountValColors.helpfulStateInfo,
+        AccountValColors.helpfulStateInfo
       );
     }
 
@@ -675,14 +679,14 @@ export class AccountValLogic {
               " / " +
               toCheck.length +
               ")",
-            AccountValColors.helpfulStateInfo,
+            AccountValColors.helpfulStateInfo
           );
         }
 
         const price: ItemPrice = this.priceResolver.itemPrice(
           i.tradeableItem,
           false,
-          check[1].accuracy,
+          check[1].accuracy
         );
 
         if (price == null) {
