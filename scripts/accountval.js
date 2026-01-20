@@ -1851,6 +1851,10 @@ var AccountValLogic = /*#__PURE__*/function () {
             this.ownedItems.delete(item);
             continue;
           }
+
+          if (item.isBound() && this.ownedItems.get(item) > 1) {
+            this.ownedItems.set(item, 1);
+          }
         }} catch (err) {_iterator5.e(err);} finally {_iterator5.f();}
     } }, { key: "doPricing", value:
 
