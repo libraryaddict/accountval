@@ -11,7 +11,7 @@ This script uses JavaScript (Written in TypeScript) instead of ash, and offers t
 To install this script, use
 
 ```text
-git checkout libraryaddict/KolAccountVal release
+git checkout libraryaddict/AccountVal release
 ```
 
 To run, just use
