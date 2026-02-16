@@ -1,4 +1,4 @@
-# Original data stolen from https://github.com/soolar/accountval.ash (Mostly OC nowadays)
+# Original data taken from https://github.com/soolar/accountval.ash
 # Item Containers! Start with i
 i	packet of mayfly bait	mayfly bait necklace
 i	Clan VIP Lounge invitation	Clan VIP Lounge key
@@ -111,6 +111,7 @@ i	Lab-grown blood cubic zirconia	blood cubic zirconia
 i	shrunken head in a duffel bag	shrunken head
 i	seal-clubbing club loot box	The Eternity Codpiece
 i	discreetly-wrapped Eternity Codpiece	legendary seal-clubbing club
+i	boxed Heartstone	Heartstone
 
 
 
