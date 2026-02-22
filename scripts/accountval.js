@@ -441,6 +441,8 @@ var AccountValLogic = /*#__PURE__*/function () {
       if (this.settings.fetchStorage) {
         _AccountValTimings__WEBPACK_IMPORTED_MODULE_5__/* .AccValTiming */ .p.start("Resolve and Add Storage");
         add((0,kolmafia__WEBPACK_IMPORTED_MODULE_0__.getStorage)());
+        add((0,kolmafia__WEBPACK_IMPORTED_MODULE_0__.getFreePulls)());
+        add((0,kolmafia__WEBPACK_IMPORTED_MODULE_0__.getNoPulls)());
         _AccountValTimings__WEBPACK_IMPORTED_MODULE_5__/* .AccValTiming */ .p.stop("Resolve and Add Storage");
       }
 
