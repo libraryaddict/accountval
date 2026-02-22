@@ -211,6 +211,7 @@ g	packet of rock seeds	rock
 # Item | Check Against | X of our item = 1 of that item
 t	ChibiBuddy™ (on)	ChibiBuddy™ (off)	1
 t	distilled resin	inflammable leaf	50
+t	Rethinking Candy	Knucklebone	2750
 
 
 # Items that are a coinmaster currency, and is dynamically priced because there's no solid metric
