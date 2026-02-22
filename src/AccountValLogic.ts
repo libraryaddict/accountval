@@ -5,7 +5,9 @@ import {
   Familiar,
   getCloset,
   getDisplay,
+  getFreePulls,
   getInventory,
+  getNoPulls,
   getPlayerName,
   getShop,
   getStash,
@@ -354,6 +356,8 @@ export class AccountValLogic {
     if (this.settings.fetchStorage) {
       AccValTiming.start("Resolve and Add Storage");
       add(getStorage());
+      add(getFreePulls());
+      add(getNoPulls());
       AccValTiming.stop("Resolve and Add Storage");
     }
 
