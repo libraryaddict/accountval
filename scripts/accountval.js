@@ -4518,6 +4518,14 @@ AccountVal = /*#__PURE__*/function () {function AccountVal() {_classCallCheck(th
 
 
 function main(command) {
+  var requiredRevision = 28933;
+
+  if ((0,kolmafia__WEBPACK_IMPORTED_MODULE_0__.getRevision)() < requiredRevision) {
+    (0,kolmafia__WEBPACK_IMPORTED_MODULE_0__.printHtml)("<font color='red'>You need to update KoLMafia to the latest version. This script will not work properly on versions older than ".concat(
+      requiredRevision, ".</font>")
+    );
+  }
+
   //   AccValTiming.start("Construct Class");
   var val = new AccountVal();
   //   AccValTiming.stop("Construct Class");
