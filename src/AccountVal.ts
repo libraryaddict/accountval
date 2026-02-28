@@ -3,6 +3,7 @@ import {
   entityDecode,
   entityEncode,
   getPlayerName,
+  getRevision,
   Item,
   myClosetMeat,
   myId,
@@ -11,14 +12,14 @@ import {
   myStorageMeat,
   print,
   printHtml,
-  toInt,
+  toInt
 } from "kolmafia";
 import { AccountValLogic, ItemStatus, ValItem } from "./AccountValLogic";
 import {
   AccountValSettings,
   FieldType,
   PricingSettings,
-  SortBy,
+  SortBy
 } from "./AccountValSettings";
 import { AccountValUtils } from "./AccountValUtils";
 import { AccountValColors, showAccountvalColors } from "./AccountValColors";
@@ -38,7 +39,7 @@ class AccountVal {
     let netvalue: number = 0;
 
     const aWorth = this.logic.priceResolver.itemPrice(
-      Item.get("Mr. Accessory"),
+      Item.get("Mr. Accessory")
     ).price;
 
     let lines: string[] = [];
@@ -67,7 +68,7 @@ class AccountVal {
         lines.push(
           `<u><b>DC Shelf:</b> ${this.escapeHTML(lastCategory)}<font color='${
             AccountValColors.minorNote
-          }'>, worth ${AccountValUtils.getNumber(shelfValue)} meat</font></u>`,
+          }'>, worth ${AccountValUtils.getNumber(shelfValue)} meat</font></u>`
         );
         lines.push("");
       }
@@ -99,7 +100,7 @@ class AccountVal {
         this.settings.maxNaturalPrice + 1,
         price.price <= 0 && item.worthMultiplier == 1
           ? -1
-          : price.price * (1 / item.worthMultiplier),
+          : price.price * (1 / item.worthMultiplier)
       );
 
       const count = this.logic.ownedItems.get(item);
@@ -108,7 +109,7 @@ class AccountVal {
         this.printLine(
           "Unable to handle the item '" + item.name + "', skipping..",
           "plain",
-          AccountValColors.attentionGrabbingWarning,
+          AccountValColors.attentionGrabbingWarning
         );
         continue;
       }
@@ -125,7 +126,7 @@ class AccountVal {
         item: item,
         price: price,
         worthEach: worthEach,
-        count: count,
+        count: count
       });
     }
 
@@ -149,12 +150,12 @@ class AccountVal {
         title.push("");
         title.push(
           `${this.escapeHTML(item.tradeableItem.name)} / ${this.escapeHTML(
-            item.pluralName,
+            item.pluralName
           )} (${item.worthMultiplier}) = ${
             item.pluralName
           } are worth ${AccountValUtils.getNumber(
-            Math.round(worthEach),
-          )} meat each.`,
+            Math.round(worthEach)
+          )} meat each.`
         );
       } else {
         title.push(`=== ${this.escapeHTML(item.tradeableItem.name)} ===`);
@@ -174,12 +175,12 @@ class AccountVal {
             ? "Last sold"
             : price.accuracy == PriceType.AUTOSELL
               ? "Autosell"
-              : "Last mafia malled") + tradeableWorth,
+              : "Last mafia malled") + tradeableWorth
       );
 
       if (price.price2 > 0 && price.accuracy == PriceType.NEW_PRICES) {
         title.push(
-          `Last sold @ ${AccountValUtils.getNumber(price.price2)} meat.`,
+          `Last sold @ ${AccountValUtils.getNumber(price.price2)} meat.`
         );
       }
 
@@ -188,7 +189,7 @@ class AccountVal {
           pronoun +
             " selling @ " +
             AccountValUtils.getNumber(item.shopWorth) +
-            " meat.",
+            " meat."
         );
       }
 
@@ -203,14 +204,14 @@ class AccountVal {
             AccountValUtils.getNumber(price.daysOutdated, 1) +
             " day" +
             (price.daysOutdated != 1 ? "s" : "") +
-            " ago.",
+            " ago."
         );
       }
 
       if (price.volume >= 0) {
         title.push("");
         title.push(
-          `${AccountValUtils.getNumber(price.volume)} sold in the last week.`,
+          `${AccountValUtils.getNumber(price.volume)} sold in the last week.`
         );
       }
 
@@ -241,7 +242,7 @@ class AccountVal {
             -999,
             999,
             "Very underpriced",
-            "Very overpriced",
+            "Very overpriced"
           );
 
           if (boundInfo.match(/\d$/)) {
@@ -252,7 +253,7 @@ class AccountVal {
         }
 
         name = `${name} (<font color='${color}' title='${title.join(
-          "&#010;",
+          "&#010;"
         )}'>${this.escapeHTML(boundInfo)}</font>)`;
       }
 
@@ -281,7 +282,7 @@ class AccountVal {
           this.escapeHTML(title.join("&#010;")) +
           "'>" +
           text +
-          "</font>",
+          "</font>"
       );
     }
 
@@ -291,7 +292,7 @@ class AccountVal {
       lines = lines.reverse();
       const skipping = Math.max(
         0,
-        resolved.length - this.settings.displayLimit,
+        resolved.length - this.settings.displayLimit
       );
 
       if (skipping > 0) {
@@ -300,11 +301,11 @@ class AccountVal {
           `<font color='${
             AccountValColors.minorNote
           }'>Skipping ${AccountValUtils.getNumber(
-            skipping,
+            skipping
           )} lines and displaying the last ${AccountValUtils.getNumber(
-            this.settings.displayLimit,
+            this.settings.displayLimit
           )} lines..</font>`,
-          "html",
+          "html"
         );
       }
 
@@ -323,7 +324,7 @@ class AccountVal {
       if (mallExtinct.length > 0) {
         const colors: string[] = [
           AccountValColors.mallExtinctColor1,
-          AccountValColors.mallExtinctColor2,
+          AccountValColors.mallExtinctColor2
         ];
 
         const extinct = mallExtinct.map(
@@ -334,7 +335,7 @@ class AccountVal {
             title +
             "'>" +
             name +
-            "</font>",
+            "</font>"
         );
 
         this.printLine(
@@ -342,7 +343,7 @@ class AccountVal {
             extinct.length +
             " mall extinct items! Items: " +
             extinct.join(", "),
-          "html",
+          "html"
         );
       }
     }
@@ -352,17 +353,17 @@ class AccountVal {
     this.printLine(
       pronoun + " worth " + AccountValUtils.getNumber(netvalue) + " meat!",
       "plain",
-      AccountValColors.helpfulStateInfo,
+      AccountValColors.helpfulStateInfo
     );
 
     if (this.settings.fetchSession && mySessionMeat() != 0) {
       mrAMeat = netvalue + mySessionMeat();
       this.printLine(
         `Add meat from session, that's ${AccountValUtils.getNumber(
-          mrAMeat,
+          mrAMeat
         )} meat!`,
         "plain",
-        AccountValColors.helpfulStateInfo,
+        AccountValColors.helpfulStateInfo
       );
     }
 
@@ -374,11 +375,11 @@ class AccountVal {
 
     this.printLine(
       `<font title='With Mr. Accessory worth being ${AccountValUtils.getNumber(
-        aWorth,
+        aWorth
       )} meat'>Going by the value of a Mr. Accessory, that's $${AccountValUtils.getNumber(
-        mrAWorth * 10,
+        mrAWorth * 10
       )}</font>`,
-      "html",
+      "html"
     );
 
     if (
@@ -392,7 +393,7 @@ class AccountVal {
         -999,
         999,
         "Very underpriced",
-        "Very overpriced",
+        "Very overpriced"
       );
 
       if (perc.match(/\d$/)) {
@@ -403,7 +404,7 @@ class AccountVal {
       this.printLine(
         "Disclaimer: Cheapest price being 100% can mean we're comparing prices against.. this shop.",
         "plain",
-        AccountValColors.minorNote,
+        AccountValColors.minorNote
       );
     }
 
@@ -414,29 +415,29 @@ class AccountVal {
         `<font color='${
           AccountValColors.minorNote
         }' title="The max natural price is currently set to ${AccountValUtils.getNumber(
-          this.settings.maxNaturalPrice,
+          this.settings.maxNaturalPrice
         )}. (${
           this.settings.maxNaturalPrice ==
           AccountValSettings.defaultMaxNaturalPrice
             ? "default"
             : `default is ${AccountValUtils.getNumber(
-                AccountValSettings.defaultMaxNaturalPrice,
+                AccountValSettings.defaultMaxNaturalPrice
               )}`
         })&#010;&#010;You can change this by using 'max=3b' as an arg.&#010;You can also set the property 'accountval_maxNaturalPrice' to a number (3b, 5,000,000, 3m1k, etc), this cap increases by 2b every year to account for meatflation">Some items were expensive and were marked as mall extinct. Hover for details.</font>`,
-        "html",
+        "html"
       );
     }
 
     if (this.logic.priceResolver.doWarning()) {
       this.printLine(
         `<font color='${AccountValColors.attentionGrabbingWarning}'>Unfortunately I'm having issues resolving mall prices, the old database has gone down and my PR for the other source is on hold and waiting for approval. <u><a href='https://github.com/loathers/pricegun/pull/8'>https://github.com/loathers/pricegun/pull/8</a></u></font>`,
-        "html",
+        "html"
       );
 
       this.printLine(
         `As such please bear with me that prices are effectively 'frozen'.`,
         "plain",
-        AccountValColors.attentionGrabbingWarning,
+        AccountValColors.attentionGrabbingWarning
       );
     }
   }
@@ -452,21 +453,21 @@ class AccountVal {
     if (this.settings.fetchInventory && myMeat() != 0) {
       meat += myMeat();
       meatSources.push(
-        AccountValUtils.getNumber(myMeat()) + " meat in inventory",
+        AccountValUtils.getNumber(myMeat()) + " meat in inventory"
       );
     }
 
     if (this.settings.fetchCloset && myClosetMeat() != 0) {
       meat += myClosetMeat();
       meatSources.push(
-        AccountValUtils.getNumber(myClosetMeat()) + " meat in closet",
+        AccountValUtils.getNumber(myClosetMeat()) + " meat in closet"
       );
     }
 
     if (this.settings.fetchStorage && myStorageMeat() != 0) {
       meat += myStorageMeat();
       meatSources.push(
-        AccountValUtils.getNumber(myStorageMeat()) + " meat in storage",
+        AccountValUtils.getNumber(myStorageMeat()) + " meat in storage"
       );
     }
 
@@ -477,7 +478,7 @@ class AccountVal {
           "'>This doesn't include your " +
           AccountValUtils.getNumber(meat) +
           " meat!</font>",
-        "html",
+        "html"
       );
     }
   }
@@ -529,16 +530,16 @@ class AccountVal {
     this.printLine(
       "AccountVal is a script to check what your account is worth, and find the good stuff fast.",
       "plain",
-      AccountValColors.helpfulStateInfo,
+      AccountValColors.helpfulStateInfo
     );
     this.printLine(
       "You can provide these as a parameter to accountval to do other stuff than the base script. Hover over them to see aliases.",
       "plain",
-      AccountValColors.helpfulStateInfo,
+      AccountValColors.helpfulStateInfo
     );
     this.printLine(
       `<font color='${AccountValColors.helpfulStateInfo}'>Use ! or - to negate a boolean option, as well as =. Eg:</font><font color='gray'> -bound !bound bound=false</font>`,
-      "html",
+      "html"
     );
 
     const groups: [string, string[]][] = [];
@@ -566,7 +567,7 @@ class AccountVal {
 
       if (setting.groupUnder != null) {
         let group: [string, string[]] = groups.find(
-          ([l]) => l == setting.groupUnder,
+          ([l]) => l == setting.groupUnder
         );
 
         if (group == null) {
@@ -580,7 +581,7 @@ class AccountVal {
                   .filter((s) => s != setting.names[0])
                   .join(", ")}`
               : ""
-          }'><b>${setting.names[0]}</b></font>`,
+          }'><b>${setting.names[0]}</b></font>`
         );
       } else {
         this.printLine(
@@ -589,7 +590,7 @@ class AccountVal {
           }' title='Aliases: ${setting.names.join(", ")}'><b>${
             setting.names[0]
           }</b> - ${setting.desc}${defaultOf}</font>`,
-          "html",
+          "html"
         );
       }
     }
@@ -606,13 +607,13 @@ class AccountVal {
         `<font color='${
           AccountValColors.minorNote
         }'><b>${groupName}:</b> ${toPrint.join(", ")}</font>`,
-        "html",
+        "html"
       );
     }
 
     this.printLine(
       `<font color='${AccountValColors.minorNote}'>Disclaimer: The prices shown are not absolute, and can overstate what it really is worth.</font>`,
-      "html",
+      "html"
     );
     // show - How many to show, defaults to 100
     // count - How many we must have of this item
@@ -634,7 +635,7 @@ class AccountVal {
       this.printLine(
         "To fine tune what we check, including to tradeables only.. Provide the parameter 'help' for more info",
         "plain",
-        AccountValColors.helpfulStateInfo,
+        AccountValColors.helpfulStateInfo
       );
       command = "";
     } else if (command.toLowerCase().match(/([^a-z]|^)help([^a-z]|$)/)) {
@@ -651,7 +652,7 @@ class AccountVal {
 
     const spl: string[] = AccountValUtils.splitArguments(
       this.settings,
-      command,
+      command
     );
 
     const unknown = this.settings.doSettings(spl);
@@ -660,8 +661,8 @@ class AccountVal {
       unknown.forEach((s) =>
         this.printLine(
           `<font color='${AccountValColors.attentionGrabbingWarning}'>${s}</font>`,
-          "html",
-        ),
+          "html"
+        )
       );
 
       return false;
@@ -708,7 +709,7 @@ class AccountVal {
     this.runTest("", {
       doBound: true,
       sortBy: SortBy.TOTAL_PRICE,
-      fetchInventory: true,
+      fetchInventory: true
     });
     this.runTest("sort meat!bound", { doBound: false, sortBy: SortBy.PRICE });
     this.printLine("Tests Finished", "plain", "green");
@@ -727,13 +728,21 @@ class AccountVal {
       this.printLine(
         `On '${args}', ${key} was not set to ${value} but instead ${setTo}`,
         "plain",
-        "red",
+        "red"
       );
     }
   }
 }
 
 export function main(command: string) {
+  const requiredRevision = 28933;
+
+  if (getRevision() < requiredRevision) {
+    printHtml(
+      `<font color='red'>You need to update KoLMafia to the latest version. This script will not work properly on versions older than ${requiredRevision}.</font>`
+    );
+  }
+
   //   AccValTiming.start("Construct Class");
   const val = new AccountVal();
   //   AccValTiming.stop("Construct Class");
