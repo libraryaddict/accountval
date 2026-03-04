@@ -1079,7 +1079,24 @@ var autoselluseItems = [
 "Solid gold jewel",
 "Stolen meatpouch",
 "Warm Subject gift certificate",
-"Envelope full of Meat"].
+"Envelope full of Meat",
+"chest of the Bonerdagon",
+"cursed piece of thirteen",
+"Discount Telescope Warehouse gift certificate",
+"dungeon dragon chest",
+"fat stack of cash",
+"flytrap pellet",
+"Gratitude chocolate (Meat-filled)",
+"handful of tips",
+"kobold treasure hoard",
+"loose Meats",
+"meat globe",
+"Mr. Big's Wallet",
+//"nest egg", This is a collectible, don't show it incase someone makes a whoopsie
+"pixel coin",
+"pixellated moneybag",
+"smut orc keepsake box",
+"Stock Certificate"].
 map((s) => external_kolmafia_.Item.get(s));
 
 presets.push({
@@ -2392,8 +2409,8 @@ var ItemResolver = /*#__PURE__*/function () {
 
 
   function ItemResolver(prices) {_classCallCheck(this, ItemResolver);_defineProperty(this, "visitCache", new Map());_defineProperty(this, "accValStuff", void 0);_defineProperty(this, "accountValCache", new Map());_defineProperty(this, "accountValVisitCachePropName", "_accountValVisitCache");_defineProperty(this, "prices", void 0);
-    this.accValStuff = this.loadAccountValStuff();
     this.prices = prices;
+    this.accValStuff = this.loadAccountValStuff();
   }return _createClass(ItemResolver, [{ key: "loadCache", value:
 
     function loadCache() {
@@ -2653,7 +2670,7 @@ var ItemResolver = /*#__PURE__*/function () {
       var buffer = _data_accountval_binds_txt__WEBPACK_IMPORTED_MODULE_4__;
       var values = [];var _iterator7 = _createForOfIteratorHelper(
 
-          buffer.split(/(\n|\r)+/)),_step7;try {for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {var line = _step7.value;
+          buffer.split(/(\n|\r)+/)),_step7;try {loop: for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {var line = _step7.value;
           if (line.startsWith("#") || line.length == 0) {
             continue;
           }
@@ -2676,36 +2693,34 @@ var ItemResolver = /*#__PURE__*/function () {
             continue;
           }
 
-          var e = void 0;
-
           switch (spl[0]) {
             case "i":
-              e = ItemType.UNTRADEABLE_ITEM;
+              _v.itemType = ItemType.UNTRADEABLE_ITEM;
               _v.untradeableItem = kolmafia__WEBPACK_IMPORTED_MODULE_0__.Item.get(spl[2]);
               break;
             case "b":
-              e = ItemType.BOOK;
+              _v.itemType = ItemType.BOOK;
               _v.skill = kolmafia__WEBPACK_IMPORTED_MODULE_0__.Skill.get(spl[2]);
               break;
             case "p":
-              e = ItemType.PROPERTY;
+              _v.itemType = ItemType.PROPERTY;
               _v.userSetting = spl[2];
               break;
             case "e":
-              e = ItemType.EUDORA;
+              _v.itemType = ItemType.EUDORA;
               _v.correspondence = spl[2];
               break;
             case "v":
-              e = ItemType.VISIT_URL_CHECK;
+              _v.itemType = ItemType.VISIT_URL_CHECK;
               _v.visitUrlLink = spl[2];
               _v.visitUrlIncludes = spl[3];
               break;
             case "g":
-              e = ItemType.GARDEN;
+              _v.itemType = ItemType.GARDEN;
               _v.garden = spl[2];
               break;
             case "t":
-              e = ItemType.CURRENCY;
+              _v.itemType = ItemType.CURRENCY;
 
               // Some currencies are resolved later
               if (spl.length > 2) {
@@ -2715,11 +2730,15 @@ var ItemResolver = /*#__PURE__*/function () {
 
               break;
             case "c":
-              e = ItemType.CAMPGROUND;
+              _v.itemType = ItemType.CAMPGROUND;
               break;
             case "s":
-              e = ItemType.SCRIPT;
+              _v.itemType = ItemType.SCRIPT;
               _v.script = spl[2];
+              break;
+            case "h":
+              this.prices.addSpecialCase(_v.actualItem, parseInt(spl[2]));
+              continue loop;
               break;
             default:
               (0,kolmafia__WEBPACK_IMPORTED_MODULE_0__.print)(
@@ -2729,7 +2748,6 @@ var ItemResolver = /*#__PURE__*/function () {
               continue;
           }
 
-          _v.itemType = e;
           values.push(_v);
         }} catch (err) {_iterator7.e(err);} finally {_iterator7.f();}
 
@@ -3523,7 +3541,11 @@ var PriceResolver = /*#__PURE__*/function () {
     this.resolvers.push(new MallPricing());
 
     this.fillSpecialCase();
-  }return PriceResolver_createClass(PriceResolver, [{ key: "fillSpecialCase", value:
+  }return PriceResolver_createClass(PriceResolver, [{ key: "addSpecialCase", value:
+
+    function addSpecialCase(item, meat) {
+      this.specialCase.set(item, meat);
+    } }, { key: "fillSpecialCase", value:
 
     function fillSpecialCase() {
       this.specialCase.set(external_kolmafia_.Item.get("Meat Paste"), 10);
@@ -3549,11 +3571,15 @@ var PriceResolver = /*#__PURE__*/function () {
       var checked = [];var _iterator = PriceResolver_createForOfIteratorHelper(
 
           items),_step;try {for (_iterator.s(); !(_step = _iterator.n()).done;) {var item = _step.value;
-          if (checked.includes(item)) continue;
+          if (checked.includes(item)) {
+            continue;
+          }
 
           var foldables = Object.keys((0,external_kolmafia_.getRelated)(item, "fold"));
 
-          if (foldables == null || foldables.length <= 1) continue;
+          if (foldables == null || foldables.length <= 1) {
+            continue;
+          }
 
           var _items = foldables.
           map((s) => external_kolmafia_.Item.get(s)).
@@ -3709,7 +3735,7 @@ var ItemPrice = /*#__PURE__*/_createClass(
 /***/ 854
 (module) {
 
-module.exports = "# Original data taken from https://github.com/soolar/accountval.ash\n# Item Containers! Start with i\ni\tpacket of mayfly bait\tmayfly bait necklace\ni\tClan VIP Lounge invitation\tClan VIP Lounge key\ni\tMake-Your-Own-Vampire-Fangs kit\tplastic vampire fangs\ni\tFolder Holder\tover-the-shoulder Folder Holder\ni\tcan of Rain-Doh\tempty Rain-Doh can\ni\tDiscontent&trade; Winter Garden Catalog\tpacket of winter seeds\ni\tEd the Undying exhibit crate\tThe Crown of Ed the Undying\ni\tPack of Every Card\tDeck of Every Card\ni\tDIY protonic accelerator kit\tprotonic accelerator pack\ni\tDear Past Self Package\tTime-Spinner\ni\tGranny Tood's Thanksgarden Catalog\tpacket of thanksgarden seeds\ni\tsuspicious package\tKremlin's Greatest Briefcase\ni\tLI-11 Motor Pool voucher\tAsdon Martin keyfob (on ring)\ni\tGrumpy Bumpkin's Pumpkin Seed Catalog\tpacket of pumpkin seeds\ni\tMint Salton Pepper's Peppermint Seed Catalog\tPeppermint Pip Packet\ni\tPete & Jackie's Dragon Tooth Emporium Catalog\tpacket of dragon's teeth\ni\tPocket Meteor Guide\tPocket Meteor Guide (well-thumbed)\ni\tcorked genie bottle\tgenie bottle\ni\tpantogram\tportable pantogram\ni\tlocked mumming trunk\tmumming trunk\ni\tJanuary's Garbage Tote (unopened)\tJanuary's Garbage Tote\ni\tPok&eacute;fam Guide to Capturing All of Them\tpacket of tall grass seeds\ni\tSongBoom&trade; BoomBox Box\tSongBoom&trade; BoomBox\ni\tBastille Battalion control rig crate\tBastille Battalion control rig\ni\tlatte lovers club card\tlatte lovers member's mug\ni\tKramco Industries packing carton\tKramco Sausage-o-Matic&trade;\ni\tmint condition Lil' Doctor&trade; bag\tLil' Doctor&trade; bag\ni\tvampyric cloake pattern\tvampyric cloake\ni\tFourth of May Cosplay Saber kit\tFourth of May Cosplay Saber\ni\trune-strewn spoon cocoon\thewn moon-rune spoon\ni\tBeach Comb Box\tBeach Comb\ni\tUnopened Eight Days a Week Pill Keeper\tEight Days a Week Pill Keeper\ni\tunopened diabolic pizza cube box\tdiabolic pizza cube\ni\tunopened Bird-a-Day calendar\tBird-a-Day calendar\ni\tmint-in-box Powerful Glove\tPowerful Glove\ni\tBetter Shrooms and Gardens catalog\tpacket of mushroom spores\ni\tGuzzlr application\tGuzzlr tablet\ni\tbag of Iunion stones\tIunion Crown\ni\tpackaged SpinMaster&trade; lathe\tSpinMaster&trade; lathe\ni\tBagged Cargo Cultist Shorts\tCargo Cultist Shorts\ni\tComprehensive Cartographic Compendium\tComprehensive Cartographic Compendium (well-read)\ni\tpackaged knock-off retro superhero cape\tunwrapped knock-off retro superhero cape\ni\tpackaged miniature crystal ball\tminiature crystal ball\ni\temotion chip\tspinal-fluid-covered emotion chip\ni\tpower seed\tpotted power plant\ni\tpackaged backup camera\tbackup camera\ni\tpackaged familiar scrapbook\tfamiliar scrapbook\ni\tpackaged industrial fire extinguisher\tindustrial fire extinguisher\ni\tPackaged Daylight Shavings Helmet\tDaylight Shavings Helmet\ni\tPackaged cold medicine cabinet\tCold medicine cabinet\ni\tbox o' ghosts\tgregarious ghostling\ni\tGordon Beer's Beer Garden Catalog\tPacket of beer seeds\ni\tMint condition magnifying glass\tcursed magnifying glass\ni\tAntique pair of blue jeans\tEllsbury's journal (used)\ni\twarehouse key\tmime army insignia (cryonics)\ni\twarehouse key\tmime army insignia (morale)\ni\twarehouse key\tmime army insignia (psychological warfare)\ni\twarehouse key\tmime army insignia (pyrotechnics)\ni\twarehouse key\tmime army insignia (sanitation)\ni\twarehouse key\tmime army insignia (espionage)\ni\twarehouse key\tmime army insignia (infantry)\ni\twarehouse key\tmime army insignia (intelligence)\ni\twarehouse key\tmime army infiltration glove\ni\twarehouse key\tmime army challenge coin\ni\twarehouse key\tmime army shotglass\ni\twarehouse key\tmiming corduroys\ni\twarehouse key\tmiming beret\ni\twarehouse key\tmiming gloves\ni\twarehouse key\tmiming boots\ni\twarehouse key\tmiming shirt\ni\tcombat lover's locket lockbox\tcombat lover's locket\ni\tundamaged Unbreakable Umbrella\tUnbreakable umbrella\ni\tpackaged June cleaver\tJune cleaver\ni\tdesigner sweatpants (new old stock)\tDesigner sweatpants\ni\tunopened tiny stillsuit\ttiny stillsuit\ni\tpackaged Jurassic Parka\tJurassic Parka\ni\tpackaged model train set\tmodel train set\ni\tChibiBuddy™ (off)\tChibiBuddy™ (on)\ni\tRock Garden Guide\tpacket of rock seeds\ni\tS.I.T. Course Voucher\tS.I.T. Course Completion Certificate\ni\tClosed-circuit phone system\tClosed-circuit pay phone\ni\tCursed monkey glove\tcursed monkey's paw\ni\tshrink-wrapped Cincho de Mayo\tCincho de Mayo\ni\tshrink-wrapped 2002 Mr. Store Catalog\t2002 Mr. Store Catalog\ni\tboxed august scepter\taugust scepter\ni\tbook of facts\tbook of facts (dog-eared)\ni\tcrated wardrobe-o-matic\twardrobe-o-matic\ni\twrapped candy cane sword cane\tcandy cane sword cane\ni\tin-the-box spring shoes\tspring shoes\ni\tpackaged Everfull Dart Holster\tEverfull Dart Holster\ni\tBoxed Apriling band helmet\tApriling band helmet\ni\tboxed Mayam Calendar\tMayam Calendar\ni\tpackaged Roman Candelabra\tRoman Candelabra\ni\tuntorn tearaway pants package\ttearaway pants\ni\tBoxed Sept-Ember Censer\tSept-Ember Censer\ni\tboxed bat wings\tbat wings\ni\tSealed TakerSpace letter of Marque\tTakerSpace letter of Marque\ni\tMcHugeLarge deluxe ski set\tMcHugeLarge duffel bag\ni\tCyberRealm keycode\tserver room key\ni\teldritch tincture\teldritch tincture (depleted)\ni\tnew-in-box toy Cupid bow\ttoy Cupid bow\ni\tassemble-it-yourself Leprecondo\tLeprecondo\ni\tPackaged April Shower Thoughts Calendar\tApril Shower Thoughts shield\ni\tUnpeeled Peridot of Peril\tPeridot of Peril\ni\tpackaged prismatic beret\tprismatic beret\ni\tMöbius ring box\tMöbius ring\ni\tpackaged Monodent of the Sea\tMonodent of the Sea\ni\tLab-grown blood cubic zirconia\tblood cubic zirconia\ni\tshrunken head in a duffel bag\tshrunken head\ni\tseal-clubbing club loot box\tThe Eternity Codpiece\ni\tdiscreetly-wrapped Eternity Codpiece\tlegendary seal-clubbing club\ni\tboxed Heartstone\tHeartstone\n\n\n\n\n# Bookshelf stuff! Start with b\nb\tTome of Snowcone Summoning\tSummon Snowcones\nb\tScratch 'n' Sniff Sticker Tome\tSummon Stickers\nb\tTome of Sugar Shummoning\tSummon Sugar Sheets\nb\tTome of Clip Art\tSummon Clip Art\nb\tTome of Rad Libs\tSummon Rad Libs\nb\tThe Smith's Tome\tSummon Smithsness\nb\tMcPhee's Grimoire of Hilarious Object Summoning\tSummon Hilarious Objects\nb\tSp'n-Zor's Grimoire of &quot;Tasteful&quot; Gifts\tSummon Tasteful Items\nb\tSorcerers of the Shore Grimoire\tSummon Alice's Army Cards\nb\tThinknerd's Grimoire of Geeky Gifts\t Summon Geeky Gifts\nb\tLibram of Candy Heart Summoning\tSummon Candy Heart\nb\tLibram of Divine Favors\tSummon Party Favor\nb\tLibram of Love Songs\tSummon Love Song\nb\tLibram of BRICKOs\tSummon BRICKOs\nb\tGygaxian Libram\tSummon Dice\nb\tLibram of Resolutions\tSummon Resolutions\nb\tLibram of Pulled Taffy\tSummon Taffy\nb\tThe Confiscator's Grimoire\tSummon Confiscated Things\n\n\n\n# Property based detection! Start with p\np\tairplane charter: Spring Break Beach\tsleazeAirportAlways&!_sleazeAirportToday\np\tairplane charter: Conspiracy Island\tspookyAirportAlways&!_spookyAirportToday\np\tairplane charter: Dinseylandfill\tstenchAirportAlways&!_stenchAirportToday\np\tairplane charter: That 70s Volcano\thotAirportAlways&!_hotAirportToday\np\tairplane charter: The Glaciest\tcoldAirportAlways&!_coldAirportToday\np\tChateau Mantegna room key\tchateauAvailable\np\tbottle of lovebug pheromones\tlovebugsUnlocked\np\tshrine to the Barrel god\tbarrelShrineUnlocked\np\tX-32-F snowman crate\tsnojoAvailable\np\tLT&T telegraph office deed\ttelegraphOfficeAvailable\np\tdetective school application\thasDetectiveSchool\np\tBuild-a-City Gingerbread kit\tgingerbreadCityAvailable&!_gingerbreadCityToday\np\theart-shaped crate\tloveTunnelAvailable&!_loveTunnelUsed\np\tSpacegate access badge\tspacegateAlways&!_spacegateToday\np\tFantasyRealm membership packet\tfrAlways&!_frToday\np\tHorsery contract\thorseryAvailable\np\tNeverending Party invitation envelope\tneverendingPartyAlways&!_neverendingPartyToday\np\tvoter registration form\tvoteAlways&!_voteToday\np\tBoxing Day care package\tdaycareOpen&!_daycareToday\np\tPirateRealm membership packet\tprAlways&!_prToday\np\tDistant Woods Getaway Brochure\tgetawayCampsiteUnlocked\np\tUndrilled cosmic bowling ball\thasCosmicBowlingBall\np\tMayDay™ contract\thasMaydayContract\np\tboxed autumn-aton\thasAutumnaton\np\tdeed to Oliver's Place\townsSpeakeasy\n\n\n\n# Eudoras! Start with e\ne\tMy Own Pen Pal kit\tPen Pal\ne\tGameInformPowerDailyPro subscription card\tGameInformPowerDailyPro Magazine\ne\tXi Receiver Unit\tXi Receiver Unit\ne\tNew-You Club Membership Form\tNew-You Club\ne\tOur Daily Candles™ order form\tOur Daily Candles\ne\tBlack and White Apron Enrollment Form\tBlack & White Apron\n\n\n\n# visit_url contains... Start with v\n\n\n\n# eval(function) => boolean! Starts with s for script\ns\tOrder of the Green Thumb Order Form\trequire(\"kolmafia\").floristAvailable()\n\n\n\n# campground items! Starts with c\nc\tHaunted Doghouse\nc\tWitchess Set\nc\tSource terminal\nc\tpotted tea tree\nc\tA Guide to Burning Leaves\n\n\n\n# Gardens\ng\tpacket of pumpkin seeds\tpumpkin\t\ng\tPeppermint Pip Packet\tpeppermint\ng\tpacket of dragon's teeth\tskeleton\ng\tPacket of beer seeds\tbeer\ng\tpacket of winter seeds\twinter\ng\tpacket of thanksgarden seeds\tthanksgarden\ng\tpacket of tall grass seeds\tgrass\ng\tpacket of mushroom spores\tmushroom\ng\tpacket of rock seeds\trock\n\n\n# Items that are dependent on the value of another as they're no-trade\n# Item | Check Against | X of our item = 1 of that item\nt\tChibiBuddy™ (on)\tChibiBuddy™ (off)\t1\nt\tdistilled resin\tinflammable leaf\t50\nt\tRethinking Candy\tKnucklebone\t2750\n\n\n# Items that are a coinmaster currency, and is dynamically priced because there's no solid metric\n# The price is resolved at runtime\nt\tfat loot token\nt\tCop dollar\nt\tDriplet\nt\tChroner\nt\tFreddy Kruegerand\nt\tGuzzlrbuck\nt\tBeach Buck\nt\tVolcoino\nt\tFunFunds™\nt\tCoinspiracy\nt\tWal-Mart gift certificate\nt\tRubee™\nt\tbuffalo dime\nt\tSpacegate Research\n";
+module.exports = "# Original data taken from https://github.com/soolar/accountval.ash\n# Item Containers! Start with i\ni\tpacket of mayfly bait\tmayfly bait necklace\ni\tClan VIP Lounge invitation\tClan VIP Lounge key\ni\tMake-Your-Own-Vampire-Fangs kit\tplastic vampire fangs\ni\tFolder Holder\tover-the-shoulder Folder Holder\ni\tcan of Rain-Doh\tempty Rain-Doh can\ni\tDiscontent&trade; Winter Garden Catalog\tpacket of winter seeds\ni\tEd the Undying exhibit crate\tThe Crown of Ed the Undying\ni\tPack of Every Card\tDeck of Every Card\ni\tDIY protonic accelerator kit\tprotonic accelerator pack\ni\tDear Past Self Package\tTime-Spinner\ni\tGranny Tood's Thanksgarden Catalog\tpacket of thanksgarden seeds\ni\tsuspicious package\tKremlin's Greatest Briefcase\ni\tLI-11 Motor Pool voucher\tAsdon Martin keyfob (on ring)\ni\tGrumpy Bumpkin's Pumpkin Seed Catalog\tpacket of pumpkin seeds\ni\tMint Salton Pepper's Peppermint Seed Catalog\tPeppermint Pip Packet\ni\tPete & Jackie's Dragon Tooth Emporium Catalog\tpacket of dragon's teeth\ni\tPocket Meteor Guide\tPocket Meteor Guide (well-thumbed)\ni\tcorked genie bottle\tgenie bottle\ni\tpantogram\tportable pantogram\ni\tlocked mumming trunk\tmumming trunk\ni\tJanuary's Garbage Tote (unopened)\tJanuary's Garbage Tote\ni\tPok&eacute;fam Guide to Capturing All of Them\tpacket of tall grass seeds\ni\tSongBoom&trade; BoomBox Box\tSongBoom&trade; BoomBox\ni\tBastille Battalion control rig crate\tBastille Battalion control rig\ni\tlatte lovers club card\tlatte lovers member's mug\ni\tKramco Industries packing carton\tKramco Sausage-o-Matic&trade;\ni\tmint condition Lil' Doctor&trade; bag\tLil' Doctor&trade; bag\ni\tvampyric cloake pattern\tvampyric cloake\ni\tFourth of May Cosplay Saber kit\tFourth of May Cosplay Saber\ni\trune-strewn spoon cocoon\thewn moon-rune spoon\ni\tBeach Comb Box\tBeach Comb\ni\tUnopened Eight Days a Week Pill Keeper\tEight Days a Week Pill Keeper\ni\tunopened diabolic pizza cube box\tdiabolic pizza cube\ni\tunopened Bird-a-Day calendar\tBird-a-Day calendar\ni\tmint-in-box Powerful Glove\tPowerful Glove\ni\tBetter Shrooms and Gardens catalog\tpacket of mushroom spores\ni\tGuzzlr application\tGuzzlr tablet\ni\tbag of Iunion stones\tIunion Crown\ni\tpackaged SpinMaster&trade; lathe\tSpinMaster&trade; lathe\ni\tBagged Cargo Cultist Shorts\tCargo Cultist Shorts\ni\tComprehensive Cartographic Compendium\tComprehensive Cartographic Compendium (well-read)\ni\tpackaged knock-off retro superhero cape\tunwrapped knock-off retro superhero cape\ni\tpackaged miniature crystal ball\tminiature crystal ball\ni\temotion chip\tspinal-fluid-covered emotion chip\ni\tpower seed\tpotted power plant\ni\tpackaged backup camera\tbackup camera\ni\tpackaged familiar scrapbook\tfamiliar scrapbook\ni\tpackaged industrial fire extinguisher\tindustrial fire extinguisher\ni\tPackaged Daylight Shavings Helmet\tDaylight Shavings Helmet\ni\tPackaged cold medicine cabinet\tCold medicine cabinet\ni\tbox o' ghosts\tgregarious ghostling\ni\tGordon Beer's Beer Garden Catalog\tPacket of beer seeds\ni\tMint condition magnifying glass\tcursed magnifying glass\ni\tAntique pair of blue jeans\tEllsbury's journal (used)\ni\twarehouse key\tmime army insignia (cryonics)\ni\twarehouse key\tmime army insignia (morale)\ni\twarehouse key\tmime army insignia (psychological warfare)\ni\twarehouse key\tmime army insignia (pyrotechnics)\ni\twarehouse key\tmime army insignia (sanitation)\ni\twarehouse key\tmime army insignia (espionage)\ni\twarehouse key\tmime army insignia (infantry)\ni\twarehouse key\tmime army insignia (intelligence)\ni\twarehouse key\tmime army infiltration glove\ni\twarehouse key\tmime army challenge coin\ni\twarehouse key\tmime army shotglass\ni\twarehouse key\tmiming corduroys\ni\twarehouse key\tmiming beret\ni\twarehouse key\tmiming gloves\ni\twarehouse key\tmiming boots\ni\twarehouse key\tmiming shirt\ni\tcombat lover's locket lockbox\tcombat lover's locket\ni\tundamaged Unbreakable Umbrella\tUnbreakable umbrella\ni\tpackaged June cleaver\tJune cleaver\ni\tdesigner sweatpants (new old stock)\tDesigner sweatpants\ni\tunopened tiny stillsuit\ttiny stillsuit\ni\tpackaged Jurassic Parka\tJurassic Parka\ni\tpackaged model train set\tmodel train set\ni\tChibiBuddy™ (off)\tChibiBuddy™ (on)\ni\tRock Garden Guide\tpacket of rock seeds\ni\tS.I.T. Course Voucher\tS.I.T. Course Completion Certificate\ni\tClosed-circuit phone system\tClosed-circuit pay phone\ni\tCursed monkey glove\tcursed monkey's paw\ni\tshrink-wrapped Cincho de Mayo\tCincho de Mayo\ni\tshrink-wrapped 2002 Mr. Store Catalog\t2002 Mr. Store Catalog\ni\tboxed august scepter\taugust scepter\ni\tbook of facts\tbook of facts (dog-eared)\ni\tcrated wardrobe-o-matic\twardrobe-o-matic\ni\twrapped candy cane sword cane\tcandy cane sword cane\ni\tin-the-box spring shoes\tspring shoes\ni\tpackaged Everfull Dart Holster\tEverfull Dart Holster\ni\tBoxed Apriling band helmet\tApriling band helmet\ni\tboxed Mayam Calendar\tMayam Calendar\ni\tpackaged Roman Candelabra\tRoman Candelabra\ni\tuntorn tearaway pants package\ttearaway pants\ni\tBoxed Sept-Ember Censer\tSept-Ember Censer\ni\tboxed bat wings\tbat wings\ni\tSealed TakerSpace letter of Marque\tTakerSpace letter of Marque\ni\tMcHugeLarge deluxe ski set\tMcHugeLarge duffel bag\ni\tCyberRealm keycode\tserver room key\ni\teldritch tincture\teldritch tincture (depleted)\ni\tnew-in-box toy Cupid bow\ttoy Cupid bow\ni\tassemble-it-yourself Leprecondo\tLeprecondo\ni\tPackaged April Shower Thoughts Calendar\tApril Shower Thoughts shield\ni\tUnpeeled Peridot of Peril\tPeridot of Peril\ni\tpackaged prismatic beret\tprismatic beret\ni\tMöbius ring box\tMöbius ring\ni\tpackaged Monodent of the Sea\tMonodent of the Sea\ni\tLab-grown blood cubic zirconia\tblood cubic zirconia\ni\tshrunken head in a duffel bag\tshrunken head\ni\tseal-clubbing club loot box\tThe Eternity Codpiece\ni\tdiscreetly-wrapped Eternity Codpiece\tlegendary seal-clubbing club\ni\tboxed Heartstone\tHeartstone\ni\tBoxed Archaeologist's Spade\tArchaeologist's Spade\n\n\n\n\n# Bookshelf stuff! Start with b\nb\tTome of Snowcone Summoning\tSummon Snowcones\nb\tScratch 'n' Sniff Sticker Tome\tSummon Stickers\nb\tTome of Sugar Shummoning\tSummon Sugar Sheets\nb\tTome of Clip Art\tSummon Clip Art\nb\tTome of Rad Libs\tSummon Rad Libs\nb\tThe Smith's Tome\tSummon Smithsness\nb\tMcPhee's Grimoire of Hilarious Object Summoning\tSummon Hilarious Objects\nb\tSp'n-Zor's Grimoire of &quot;Tasteful&quot; Gifts\tSummon Tasteful Items\nb\tSorcerers of the Shore Grimoire\tSummon Alice's Army Cards\nb\tThinknerd's Grimoire of Geeky Gifts\t Summon Geeky Gifts\nb\tLibram of Candy Heart Summoning\tSummon Candy Heart\nb\tLibram of Divine Favors\tSummon Party Favor\nb\tLibram of Love Songs\tSummon Love Song\nb\tLibram of BRICKOs\tSummon BRICKOs\nb\tGygaxian Libram\tSummon Dice\nb\tLibram of Resolutions\tSummon Resolutions\nb\tLibram of Pulled Taffy\tSummon Taffy\nb\tThe Confiscator's Grimoire\tSummon Confiscated Things\n\n\n\n# Property based detection! Start with p\np\tairplane charter: Spring Break Beach\tsleazeAirportAlways&!_sleazeAirportToday\np\tairplane charter: Conspiracy Island\tspookyAirportAlways&!_spookyAirportToday\np\tairplane charter: Dinseylandfill\tstenchAirportAlways&!_stenchAirportToday\np\tairplane charter: That 70s Volcano\thotAirportAlways&!_hotAirportToday\np\tairplane charter: The Glaciest\tcoldAirportAlways&!_coldAirportToday\np\tChateau Mantegna room key\tchateauAvailable\np\tbottle of lovebug pheromones\tlovebugsUnlocked\np\tshrine to the Barrel god\tbarrelShrineUnlocked\np\tX-32-F snowman crate\tsnojoAvailable\np\tLT&T telegraph office deed\ttelegraphOfficeAvailable\np\tdetective school application\thasDetectiveSchool\np\tBuild-a-City Gingerbread kit\tgingerbreadCityAvailable&!_gingerbreadCityToday\np\theart-shaped crate\tloveTunnelAvailable&!_loveTunnelUsed\np\tSpacegate access badge\tspacegateAlways&!_spacegateToday\np\tFantasyRealm membership packet\tfrAlways&!_frToday\np\tHorsery contract\thorseryAvailable\np\tNeverending Party invitation envelope\tneverendingPartyAlways&!_neverendingPartyToday\np\tvoter registration form\tvoteAlways&!_voteToday\np\tBoxing Day care package\tdaycareOpen&!_daycareToday\np\tPirateRealm membership packet\tprAlways&!_prToday\np\tDistant Woods Getaway Brochure\tgetawayCampsiteUnlocked\np\tUndrilled cosmic bowling ball\thasCosmicBowlingBall\np\tMayDay™ contract\thasMaydayContract\np\tboxed autumn-aton\thasAutumnaton\np\tdeed to Oliver's Place\townsSpeakeasy\n\n\n\n# Eudoras! Start with e\ne\tMy Own Pen Pal kit\tPen Pal\ne\tGameInformPowerDailyPro subscription card\tGameInformPowerDailyPro Magazine\ne\tXi Receiver Unit\tXi Receiver Unit\ne\tNew-You Club Membership Form\tNew-You Club\ne\tOur Daily Candles™ order form\tOur Daily Candles\ne\tBlack and White Apron Enrollment Form\tBlack & White Apron\n\n\n\n# visit_url contains... Start with v\n\n\n\n# eval(function) => boolean! Starts with s for script\ns\tOrder of the Green Thumb Order Form\trequire(\"kolmafia\").floristAvailable()\n\n\n\n# campground items! Starts with c\nc\tHaunted Doghouse\nc\tWitchess Set\nc\tSource terminal\nc\tpotted tea tree\nc\tA Guide to Burning Leaves\n\n\n\n# Gardens\ng\tpacket of pumpkin seeds\tpumpkin\t\ng\tPeppermint Pip Packet\tpeppermint\ng\tpacket of dragon's teeth\tskeleton\ng\tPacket of beer seeds\tbeer\ng\tpacket of winter seeds\twinter\ng\tpacket of thanksgarden seeds\tthanksgarden\ng\tpacket of tall grass seeds\tgrass\ng\tpacket of mushroom spores\tmushroom\ng\tpacket of rock seeds\trock\n\n\n# Items that are dependent on the value of another as they're no-trade\n# Item | Check Against | X of our item = 1 of that item\nt\tChibiBuddy™ (on)\tChibiBuddy™ (off)\t1\nt\tdistilled resin\tinflammable leaf\t50\nt\tRethinking Candy\tKnucklebone\t2750\n\n\n# Items that are a coinmaster currency, and is dynamically priced because there's no solid metric\n# The price is resolved at runtime\nt\tfat loot token\nt\tCop dollar\nt\tDriplet\nt\tChroner\nt\tFreddy Kruegerand\nt\tGuzzlrbuck\nt\tBeach Buck\nt\tVolcoino\nt\tFunFunds™\nt\tCoinspiracy\nt\tWal-Mart gift certificate\nt\tRubee™\nt\tbuffalo dime\nt\tSpacegate Research\n\n# Items that are best valued at a hardcoded value, although you may not get that value...\nh\tmeat paste\t10\nh\tmeat stack\t100\nh\tnest egg\t150\nh\tDungeon dragon chest\t500\nh\tMeat globe\t700\nh\tdense meat stack\t1000\nh\tLoose Meats\t2300\nh\tchest of the Bonerdagon\t3000\nh\tDuct tape wallet\t3050\nh\tStock Certificate\t5000\nh\tEnvelope full of Meat\t30000\nh\tDiscount Telescope Warehouse gift certificate\t100000";
 
 /***/ },
 
