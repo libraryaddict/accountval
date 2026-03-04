@@ -1,15 +1,4 @@
-import {
-  autosellPrice,
-  historicalAge,
-  historicalPrice,
-  mallPrice,
-  print,
-  Item,
-  fileToBuffer,
-  toInt,
-  getRelated,
-  visitUrl,
-} from "kolmafia";
+import { autosellPrice, Item, getRelated } from "kolmafia";
 import { PricingSettings } from "./AccountValSettings";
 import { AccValTiming } from "./AccountValTimings";
 import { ItemPrice, PriceType, PriceVolunteer } from "./types";
@@ -44,6 +33,10 @@ export class PriceResolver {
     this.fillSpecialCase();
   }
 
+  addSpecialCase(item: Item, meat: number) {
+    this.specialCase.set(item, meat);
+  }
+
   private fillSpecialCase() {
     this.specialCase.set(Item.get("Meat Paste"), 10);
     this.specialCase.set(Item.get("Meat Stack"), 100);
@@ -68,11 +61,15 @@ export class PriceResolver {
     const checked: Item[] = [];
 
     for (const item of items) {
-      if (checked.includes(item)) continue;
+      if (checked.includes(item)) {
+        continue;
+      }
 
       const foldables = Object.keys(getRelated(item, "fold"));
 
-      if (foldables == null || foldables.length <= 1) continue;
+      if (foldables == null || foldables.length <= 1) {
+        continue;
+      }
 
       const items = foldables
         .map((s) => Item.get(s))
@@ -90,7 +87,7 @@ export class PriceResolver {
     ignoreFold: boolean = false,
     forcePricing: PriceType = null,
     doSuperFast: boolean = false,
-    doEstimates: boolean = false,
+    doEstimates: boolean = false
   ): ItemPrice {
     if (this.settings.globalSettings.pricegun) {
       ignoreFold = true;
@@ -113,8 +110,8 @@ export class PriceResolver {
                   true,
                   forcePricing,
                   doSuperFast,
-                  doEstimates,
-                ),
+                  doEstimates
+                )
               )
               .filter((p) => p != null);
 
@@ -123,7 +120,7 @@ export class PriceResolver {
                 ? f1.item.tradeable
                   ? -1
                   : 1
-                : f1.price - f2.price,
+                : f1.price - f2.price
             );
 
             const compare = foldPrices.find((f) => f.item == item);
@@ -154,7 +151,7 @@ export class PriceResolver {
           item,
           this.specialCase.get(item),
           PriceType.MALL,
-          0,
+          0
         );
       }
 

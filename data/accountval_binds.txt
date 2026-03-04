@@ -112,6 +112,7 @@ i	shrunken head in a duffel bag	shrunken head
 i	seal-clubbing club loot box	The Eternity Codpiece
 i	discreetly-wrapped Eternity Codpiece	legendary seal-clubbing club
 i	boxed Heartstone	Heartstone
+i	Boxed Archaeologist's Spade	Archaeologist's Spade
 
 
 
@@ -230,3 +231,17 @@ t	Wal-Mart gift certificate
 t	Rubee™
 t	buffalo dime
 t	Spacegate Research
+
+# Items that are best valued at a hardcoded value, although you may not get that value...
+h	meat paste	10
+h	meat stack	100
+h	nest egg	150
+h	Dungeon dragon chest	500
+h	Meat globe	700
+h	dense meat stack	1000
+h	Loose Meats	2300
+h	chest of the Bonerdagon	3000
+h	Duct tape wallet	3050
+h	Stock Certificate	5000
+h	Envelope full of Meat	30000
+h	Discount Telescope Warehouse gift certificate	100000

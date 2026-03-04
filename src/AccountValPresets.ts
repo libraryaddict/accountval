@@ -11,7 +11,7 @@ import {
   myLevel,
   mySpleenUse,
   spleenLimit,
-  toSlot,
+  toSlot
 } from "kolmafia";
 import { ValItem } from "./AccountValLogic";
 
@@ -38,7 +38,7 @@ presets.push({
 
   desc: function (): string {
     return "Show only consumables";
-  },
+  }
 });
 
 for (const type of ["food", "booze", "spleen"]) {
@@ -53,7 +53,7 @@ for (const type of ["food", "booze", "spleen"]) {
 
     desc: function (): string {
       return "Show only " + type;
-    },
+    }
   });
 }
 
@@ -68,7 +68,7 @@ presets.push({
 
   desc: function (): string {
     return "Show only beverage";
-  },
+  }
 });
 
 presets.push({
@@ -89,7 +89,7 @@ presets.push({
 
   desc: function (): string {
     return "Show only food you can fit in stomach";
-  },
+  }
 });
 
 presets.push({
@@ -110,7 +110,7 @@ presets.push({
 
   desc: function (): string {
     return "Show only booze you can fit in liver";
-  },
+  }
 });
 
 presets.push({
@@ -131,7 +131,7 @@ presets.push({
 
   desc: function (): string {
     return "Show only spleen items you can fit in spleen";
-  },
+  }
 });
 
 presets.push({
@@ -145,7 +145,7 @@ presets.push({
 
   desc: function (): string {
     return "Show only items that can be equipped";
-  },
+  }
 });
 
 presets.push({
@@ -159,7 +159,7 @@ presets.push({
 
   desc: function (): string {
     return "Show only items that can be stolen";
-  },
+  }
 });
 
 presets.push({
@@ -173,7 +173,7 @@ presets.push({
 
   desc: function (): string {
     return "Show only items that can turn into familiars";
-  },
+  }
 });
 
 presets.push({
@@ -193,7 +193,7 @@ presets.push({
 
   desc: function (): string {
     return "Show only items that sell at mall min";
-  },
+  }
 });
 
 const autoselluseItems: Item[] = [
@@ -218,6 +218,23 @@ const autoselluseItems: Item[] = [
   "Stolen meatpouch",
   "Warm Subject gift certificate",
   "Envelope full of Meat",
+  "chest of the Bonerdagon",
+  "cursed piece of thirteen",
+  "Discount Telescope Warehouse gift certificate",
+  "dungeon dragon chest",
+  "fat stack of cash",
+  "flytrap pellet",
+  "Gratitude chocolate (Meat-filled)",
+  "handful of tips",
+  "kobold treasure hoard",
+  "loose Meats",
+  "meat globe",
+  "Mr. Big's Wallet",
+  //"nest egg", This is a collectible, don't show it incase someone makes a whoopsie
+  "pixel coin",
+  "pixellated moneybag",
+  "smut orc keepsake box",
+  "Stock Certificate"
 ].map((s) => Item.get(s));
 
 presets.push({
@@ -231,7 +248,7 @@ presets.push({
 
   desc: function (): string {
     return "Show only (some) usable items that could make you some meat";
-  },
+  }
 });
 
 presets.forEach((preset) => {

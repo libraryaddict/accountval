@@ -69,8 +69,8 @@ export class ItemResolver {
   prices: PriceResolver;
 
   constructor(prices: PriceResolver) {
-    this.accValStuff = this.loadAccountValStuff();
     this.prices = prices;
+    this.accValStuff = this.loadAccountValStuff();
   }
 
   loadCache() {
@@ -330,7 +330,7 @@ export class ItemResolver {
     const buffer = accountvalBinds;
     const values: AccValStuff[] = [];
 
-    for (const line of buffer.split(/(\n|\r)+/)) {
+    loop: for (const line of buffer.split(/(\n|\r)+/)) {
       if (line.startsWith("#") || line.length == 0) {
         continue;
       }
@@ -353,36 +353,34 @@ export class ItemResolver {
         continue;
       }
 
-      let e: ItemType;
-
       switch (spl[0]) {
         case "i":
-          e = ItemType.UNTRADEABLE_ITEM;
+          v.itemType = ItemType.UNTRADEABLE_ITEM;
           v.untradeableItem = Item.get(spl[2]);
           break;
         case "b":
-          e = ItemType.BOOK;
+          v.itemType = ItemType.BOOK;
           v.skill = Skill.get(spl[2]);
           break;
         case "p":
-          e = ItemType.PROPERTY;
+          v.itemType = ItemType.PROPERTY;
           v.userSetting = spl[2];
           break;
         case "e":
-          e = ItemType.EUDORA;
+          v.itemType = ItemType.EUDORA;
           v.correspondence = spl[2];
           break;
         case "v":
-          e = ItemType.VISIT_URL_CHECK;
+          v.itemType = ItemType.VISIT_URL_CHECK;
           v.visitUrlLink = spl[2];
           v.visitUrlIncludes = spl[3];
           break;
         case "g":
-          e = ItemType.GARDEN;
+          v.itemType = ItemType.GARDEN;
           v.garden = spl[2];
           break;
         case "t":
-          e = ItemType.CURRENCY;
+          v.itemType = ItemType.CURRENCY;
 
           // Some currencies are resolved later
           if (spl.length > 2) {
@@ -392,11 +390,15 @@ export class ItemResolver {
 
           break;
         case "c":
-          e = ItemType.CAMPGROUND;
+          v.itemType = ItemType.CAMPGROUND;
           break;
         case "s":
-          e = ItemType.SCRIPT;
+          v.itemType = ItemType.SCRIPT;
           v.script = spl[2];
+          break;
+        case "h":
+          this.prices.addSpecialCase(v.actualItem, parseInt(spl[2]));
+          continue loop;
           break;
         default:
           print(
@@ -406,7 +408,6 @@ export class ItemResolver {
           continue;
       }
 
-      v.itemType = e;
       values.push(v);
     }
 
