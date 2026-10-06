@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { provider } from "./apiSupplier";
 
 export type DataType = "large_persist" | "small_persist" | "transient";
@@ -82,6 +84,9 @@ export interface KoLAPI {
   print(message: string, color?: string): void;
   printHtml(message: string): void;
   abort(message: string): void;
+  /**
+   * Visits an url via 'GET'
+   */
   visitUrl(url: string): string;
   checkOutdated(): void;
   myId(): string;

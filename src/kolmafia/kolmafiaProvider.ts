@@ -78,7 +78,7 @@ export class KolmafiaProvider implements KoLAPI {
 
   resolveAllMallPrices(previous: MallPricesOutcome): MallPricesOutcome {
     if (previous != "not_loaded" && previous != "unsure") {
-      throw `Illegal mall loaded state: ${previous}`;
+      throw new Error(`Illegal mall loaded state: ${previous}`);
     }
 
     if (previous == "not_loaded" && gitExists("loathers-mall-check")) {

@@ -42,7 +42,7 @@ export class MallPricing implements PriceVolunteer {
 
   loadMallPrices() {
     if (this.loadedAllMallItems == "loaded") {
-      throw `Mall prices failed to load, check that loathers/mall-check (mallcheck.js) is installed and working, set '${this.ignoreKey}=true' to ignore this error`;
+      throw new Error(`Mall prices failed to load, check that loathers/mall-check (mallcheck.js) is installed and working, set '${this.ignoreKey}=true' to ignore this error`);
     } else if (this.loadedAllMallItems == "unsure") {
       provider().print(
         `Mall prices didn't resolve properly, please make sure that mallcheck.js from loathers/mall-check is installed, now falling back to manually searching.`,

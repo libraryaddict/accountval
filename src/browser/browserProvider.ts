@@ -147,14 +147,17 @@ export class BrowserProvider implements KoLAPI {
   }
 
   getStorage(): Map<KoLItem, number> {
+    // TODO Get storage, but filter out everything that's free and nopull
     throw new Error("Method not implemented.");
   }
 
   getFreePulls(): Map<KoLItem, number> {
+    // TODO Return the free pulls of storage
     throw new Error("Method not implemented.");
   }
 
   getNoPulls(): Map<KoLItem, number> {
+    // TODO Return the no pulls of storage
     throw new Error("Method not implemented.");
   }
 
@@ -171,7 +174,7 @@ export class BrowserProvider implements KoLAPI {
   }
 
   mySessionItems(): Map<KoLItem, number> {
-    throw new Error("Method not implemented.");
+    throw new Error("Not available in non-kolmafia.");
   }
 
   getCampground(): Map<KoLItem, number> {
@@ -454,10 +457,71 @@ const noFam: Familiar = {
   equipment: noItem,
 };
 
+const cache = new PageCache();
+
+// TODO
+cache.load(
+  `https://raw.githubusercontent.com/kolmafia/kolmafia/refs/heads/main/src/main/resources/data/items.txt`,
+  `https://raw.githubusercontent.com/kolmafia/kolmafia/refs/heads/main/src/main/resources/data/classskills.txt`,
+  `https://raw.githubusercontent.com/kolmafia/kolmafia/refs/heads/main/src/main/resources/data/familiars.txt`,
+  `https://raw.githubusercontent.com/kolmafia/kolmafia/refs/heads/main/src/main/resources/data/foldgroups.txt`,
+  `https://raw.githubusercontent.com/kolmafia/kolmafia/refs/heads/main/src/main/resources/data/outfits.txt`,
+  `https://kolmafia.us/scripts/updateprices.php?action=getmap`,
+  // One of these?  `https://raw.githubusercontent.com/kolmafia/kolmafia/refs/heads/main/src/data/coinmasters.txt`,`https://github.com/kolmafia/kolmafia/raw/refs/heads/main/src/data/npcstores.txt`,
+);
+
 function loadItems() {
-  // TODO
+  // https://raw.githubusercontent.com/kolmafia/kolmafia/refs/heads/main/src/data/items.txt
+  // # id \t name \t descid \t image \t use \t access \t autosell \t plural
 }
 
-function loadSkills() {}
+function loadSkills() {
+  // https://github.com/kolmafia/kolmafia/raw/refs/heads/main/src/data/classskills.txt
+  // id \t name \t image \t tags \t cost \t duration & attributes
+}
 
-function loadFamiliars() {}
+function loadFamiliars() {
+  // https://github.com/kolmafia/kolmafia/raw/refs/heads/main/src/data/familiars.txt
+  // id \t name \t image \t type \t item \t stuff we dont care about
+}
+
+function loadFoldables() {
+  // https://github.com/kolmafia/kolmafia/raw/refs/heads/main/src/data/foldgroups.txt
+  // hp (ignored) \t [\t seperated items]
+}
+
+async function loadData() {
+  await cache.resolve();
+  loadItems();
+  loadSkills();
+  loadFamiliars();
+  loadFoldables();
+}
+
+function makeSyncRequest(
+  method: "GET" | "POST",
+  url: string,
+  cookies?: string,
+  payload: string | null = null,
+): string {
+  const xhr: XMLHttpRequest = new XMLHttpRequest();
+
+  // Set the third argument to 'false' to force synchronous execution
+  xhr.open(method, url, false);
+
+  if (cookies) {
+    xhr.setRequestHeader("Cookie", cookies);
+  }
+
+  if (method === "POST" && payload) {
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  }
+
+  xhr.send(payload);
+
+  if (xhr.status >= 200 && xhr.status < 300) {
+    return xhr.responseText;
+  } else {
+    throw new Error(`Sync Request Failed: ${xhr.status} - ${xhr.statusText}`);
+  }
+}

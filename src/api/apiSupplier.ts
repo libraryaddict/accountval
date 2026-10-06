@@ -4,7 +4,7 @@ let api: KoLAPI;
 
 export function provider(): KoLAPI {
   if (!api) {
-    throw `Trying to access api provider before setting it`;
+    throw new Error(`Trying to access api provider before setting it`);
   }
 
   return api;

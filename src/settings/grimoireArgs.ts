@@ -92,7 +92,7 @@ export class Args {
     // Check that the default value actually appears in the options.
     if ("default" in spec && raw_options) {
       if (!raw_options.includes(spec.default)) {
-        throw `Invalid default value ${spec.default}`;
+        throw new Error(`Invalid default value ${spec.default}`);
       }
     }
 
@@ -160,7 +160,7 @@ export class Args {
     if ("default" in spec && raw_options) {
       for (const default_entry of spec.default) {
         if (!raw_options.includes(default_entry)) {
-          throw `Invalid default value ${spec.default}`;
+          throw new Error(`Invalid default value ${spec.default}`);
         }
       }
     }
@@ -346,7 +346,7 @@ export class Args {
   ): ParsedArgs<T> & { help: boolean } {
     traverse(args, (keySpec, key) => {
       if (key === "help" || keySpec.key === "help") {
-        throw `help is a reserved argument name`;
+        throw new Error(`help is a reserved argument name`);
       }
     });
 
@@ -374,7 +374,7 @@ export class Args {
 
       for (const arg of options.positionalArgs) {
         if (!keys.includes(arg)) {
-          throw `Unknown key for positional arg: ${arg}`;
+          throw new Error(`Unknown key for positional arg: ${arg}`);
         }
       }
     }
@@ -412,7 +412,7 @@ export class Args {
           // Duplicate arg key 'X' is already aliased to 'Y'
           // Duplicate arg key 'X' (alias for 'Y') is not allowed
           // Duplicate arg key 'X' (alias for 'Y') is already aliased to 'Y'
-          throw `Duplicate arg key '${n}' ${n !== name ? `(alias for '${name}') ` : ""}is ${aliased.has(lower) ? `already aliased to '${aliased.get(lower)}'` : "not allowed"}`;
+          throw new Error(`Duplicate arg key '${n}' ${n !== name ? `(alias for '${name}') ` : ""}is ${aliased.has(lower) ? `already aliased to '${aliased.get(lower)}'` : "not allowed"}`);
         }
 
         if (n !== name) {
@@ -709,11 +709,11 @@ function parseAndValidate<T>(
   }
 
   if (parsed_value === undefined) {
-    throw `${source} expected ${arg.valueHelpName} but could not parse ${value}`;
+    throw new Error(`${source} expected ${arg.valueHelpName} but could not parse ${value}`);
   }
 
   if (parsed_value instanceof ParseError) {
-    throw `${source} ${parsed_value.message}`;
+    throw new Error(`${source} ${parsed_value.message}`);
   }
 
   return parsed_value;
@@ -935,7 +935,7 @@ class CommandParser {
         this.flags.get(lowerKey) ?? this.keys.get(lowerKey) ?? lowerKey;
 
       if (result.has(resolvedKey)) {
-        throw `Duplicate key ${key} (first set to ${result.get(resolvedKey) ?? ""})`;
+        throw new Error(`Duplicate key ${key} (first set to ${result.get(resolvedKey) ?? ""})`);
       }
 
       if (this.flags.has(lowerKey)) {
@@ -1009,9 +1009,9 @@ class CommandParser {
         }
 
         if (result.has(positionalKey)) {
-          throw `Cannot assign ${value} to ${positionalKey} (positionally) since ${positionalKey} was already set to ${
+          throw new Error(`Cannot assign ${value} to ${positionalKey} (positionally) since ${positionalKey} was already set to ${
             result.get(positionalKey) ?? ""
-          }`;
+          }`);
         }
 
         result.set(
@@ -1021,9 +1021,9 @@ class CommandParser {
       } else {
         // Key not found; include a better error message if it is possible for quotes to have been missed
         if (this.prevUnquotedKey && this.peek() !== "=") {
-          throw `Unknown argument: ${key} (if this should have been parsed as part of ${this.prevUnquotedKey}, you should surround the entire value in quotes)`;
+          throw new Error(`Unknown argument: ${key} (if this should have been parsed as part of ${this.prevUnquotedKey}, you should surround the entire value in quotes)`);
         } else {
-          throw `Unknown argument: ${key}`;
+          throw new Error(`Unknown argument: ${key}`);
         }
       }
     }
@@ -1072,7 +1072,7 @@ class CommandParser {
    */
   private consume(allowed: string[]) {
     if (this.finished()) {
-      throw `Expected ${allowed}`;
+      throw new Error(`Expected ${allowed}`);
     }
 
     if (allowed.includes(this.peek() ?? "")) {
@@ -1177,6 +1177,6 @@ class CommandParser {
       this.index++;
     }
 
-    throw `No closing ${quote} found for ${quote}${out}`;
+    throw new Error(`No closing ${quote} found for ${quote}${out}`);
   }
 }

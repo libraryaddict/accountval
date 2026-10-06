@@ -96,13 +96,13 @@ export class PriceResolver {
     }
 
     if (!ignoreFold) {
-      AccValTiming.start(timingsKey + "Check Foldable", true);
+      AccValTiming.start(`${timingsKey}Check Foldable`, true);
 
       try {
         const foldables = provider().getFoldables(item, "fold");
 
         if (foldables.length) {
-          AccValTiming.start(timingsKey + "Deeper Foldable Check", true);
+          AccValTiming.start(`${timingsKey}Deeper Foldable Check`, true);
 
           try {
             const foldPrices = foldables
@@ -130,15 +130,15 @@ export class PriceResolver {
 
             return foldPrices[0];
           } finally {
-            AccValTiming.stop(timingsKey + "Deeper Foldable Check");
+            AccValTiming.stop(`${timingsKey}Deeper Foldable Check`);
           }
         }
       } finally {
-        AccValTiming.stop(timingsKey + "Check Foldable");
+        AccValTiming.stop(`${timingsKey}Check Foldable`);
       }
     }
 
-    AccValTiming.start(timingsKey + "Check Pricing Misc", true);
+    AccValTiming.start(`${timingsKey}Check Pricing Misc`, true);
 
     try {
       if (this.specialCase.has(item)) {
@@ -159,10 +159,10 @@ export class PriceResolver {
         );
       }
     } finally {
-      AccValTiming.stop(timingsKey + "Check Pricing Misc");
+      AccValTiming.stop(`${timingsKey}Check Pricing Misc`);
     }
 
-    AccValTiming.start(timingsKey + "Final Pricing Check", true);
+    AccValTiming.start(`${timingsKey}Final Pricing Check`, true);
 
     try {
       for (const resolver of this.resolvers) {
@@ -175,9 +175,9 @@ export class PriceResolver {
         return price;
       }
     } finally {
-      AccValTiming.stop(timingsKey + "Final Pricing Check");
+      AccValTiming.stop(`${timingsKey}Final Pricing Check`);
     }
 
-    throw "Failed to resolve price for " + item;
+    throw new Error(`Failed to resolve price for ${item}`);
   }
 }

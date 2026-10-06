@@ -34,11 +34,13 @@ export class AccValTiming {
 
   start() {
     if (this.totalTimeTaken == null) {
-      throw this.getName() + " was not configured as a total time timings";
+      throw new Error(
+        `${this.getName()} was not configured as a total time timings`,
+      );
     }
 
     if (this.stepStarted != null) {
-      throw this.getName() + " was not stopped properly";
+      throw new Error(`${this.getName()} was not stopped properly`);
     }
 
     this.stepStarted = Date.now();
@@ -50,7 +52,7 @@ export class AccValTiming {
 
   stop(print: boolean = false): AccValTiming {
     if (this.stopped != null && this.stepStarted == null) {
-      throw "The timing for " + this.getName() + " was already stopped";
+      throw new Error(`The timing for ${this.getName()} was already stopped`);
     }
 
     this.stopped = Date.now();
@@ -74,12 +76,9 @@ export class AccValTiming {
   }
 
   getTimeStr(): string {
-    return (
-      AccountValUtils.getNumber(this.getTime()) +
-      "ms" +
-      (this.stopped == null ? " (never stopped)" : "") +
-      (this.stepStarted != null ? " (step never stopped)" : "")
-    );
+    return `${AccountValUtils.getNumber(this.getTime())}ms${
+      this.stopped == null ? " (never stopped)" : ""
+    }${this.stepStarted != null ? " (step never stopped)" : ""}`;
   }
 
   static start(name: string, withSteps: boolean = false): AccValTiming {
@@ -94,7 +93,7 @@ export class AccValTiming {
       existing != null &&
       (existing.totalTimeTaken == null || existing.stepStarted != null)
     ) {
-      throw "The timing for " + name + " was already started";
+      throw new Error(`The timing for ${name} was already started`);
     }
 
     if (existing == null) {
@@ -123,7 +122,7 @@ export class AccValTiming {
     const existing = this.trackingMap.get(name);
 
     if (existing == null) {
-      throw "There was no time tracking created for " + name;
+      throw new Error(`There was no time tracking created for ${name}`);
     }
 
     let lastStopIndex = -1;

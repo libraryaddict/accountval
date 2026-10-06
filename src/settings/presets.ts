@@ -41,7 +41,7 @@ export function getPresets(): AccountValPreset[] {
         return provider().itemType(item).replace(" item", "") == type;
       },
       desc: function (): string {
-        return "Show only " + type;
+        return `Show only ${type}`;
       },
     });
   }
@@ -222,18 +222,18 @@ export function getPresets(): AccountValPreset[] {
 
   presets.forEach((preset) => {
     if (preset.isProcessed == null && preset.isShown == null) {
-      throw (
-        "The preset " +
-        preset.name()[0] +
-        " must have one of isProcessed or isShown defined!"
+      throw new Error(
+        `The preset ${
+          preset.name()[0]
+        } must have one of isProcessed or isShown defined!`,
       );
     }
 
     if (preset.isProcessed != null && preset.isShown != null) {
-      throw (
-        "The preset " +
-        preset.name()[0] +
-        " can only have one of isProcessed and isShown defined!"
+      throw new Error(
+        `The preset ${
+          preset.name()[0]
+        } can only have one of isProcessed and isShown defined!`,
       );
     }
   });
