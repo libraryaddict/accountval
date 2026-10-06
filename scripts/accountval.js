@@ -15,7 +15,7 @@ var api;
 
 function provider() {
   if (!api) {
-    throw `Trying to access api provider before setting it`;
+    throw new Error(`Trying to access api provider before setting it`);
   }
 
   return api;
@@ -37,7 +37,9 @@ function setProvider(provider) {
 /* harmony export */   hG: () => (/* binding */ KoLSlot)
 /* harmony export */ });
 /* harmony import */ var _apiSupplier__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(654);
-function _classCallCheck(a, n) {if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");}function _defineProperties(e, r) {for (var t = 0; t < r.length; t++) {var o = r[t];o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o);}}function _createClass(e, r, t) {return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e;}function _toPropertyKey(t) {var i = _toPrimitive(t, "string");return "symbol" == typeof i ? i : i + "";}function _toPrimitive(t, r) {if ("object" != typeof t || !t) return t;var e = t[Symbol.toPrimitive];if (void 0 !== e) {var i = e.call(t, r || "default");if ("object" != typeof i) return i;throw new TypeError("@@toPrimitive must return a primitive value.");}return ("string" === r ? String : Number)(t);}
+function _classCallCheck(a, n) {if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");}function _defineProperties(e, r) {for (var t = 0; t < r.length; t++) {var o = r[t];o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o);}}function _createClass(e, r, t) {return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e;}function _toPropertyKey(t) {var i = _toPrimitive(t, "string");return "symbol" == typeof i ? i : i + "";}function _toPrimitive(t, r) {if ("object" != typeof t || !t) return t;var e = t[Symbol.toPrimitive];if (void 0 !== e) {var i = e.call(t, r || "default");if ("object" != typeof i) return i;throw new TypeError("@@toPrimitive must return a primitive value.");}return ("string" === r ? String : Number)(t);} /* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
+
 
 
 
@@ -1304,11 +1306,13 @@ var AccValTiming = /*#__PURE__*/function () {
 
     function start() {
       if (this.totalTimeTaken == null) {
-        throw this.getName() + " was not configured as a total time timings";
+        throw new Error(
+          `${this.getName()} was not configured as a total time timings`
+        );
       }
 
       if (this.stepStarted != null) {
-        throw this.getName() + " was not stopped properly";
+        throw new Error(`${this.getName()} was not stopped properly`);
       }
 
       this.stepStarted = Date.now();
@@ -1320,7 +1324,7 @@ var AccValTiming = /*#__PURE__*/function () {
 
     function stop() {var print = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
       if (this.stopped != null && this.stepStarted == null) {
-        throw "The timing for " + this.getName() + " was already stopped";
+        throw new Error(`The timing for ${this.getName()} was already stopped`);
       }
 
       this.stopped = Date.now();
@@ -1344,12 +1348,9 @@ var AccValTiming = /*#__PURE__*/function () {
     } }, { key: "getTimeStr", value:
 
     function getTimeStr() {
-      return (
-        utils/* AccountValUtils */.E.getNumber(this.getTime()) +
-        "ms" + (
-        this.stopped == null ? " (never stopped)" : "") + (
-        this.stepStarted != null ? " (step never stopped)" : ""));
-
+      return `${utils/* AccountValUtils */.E.getNumber(this.getTime())}ms${
+      this.stopped == null ? " (never stopped)" : ""}${
+      this.stepStarted != null ? " (step never stopped)" : ""}`;
     } }], [{ key: "printHtml", value: function printHtml(line) {if (apiSupplier/* provider */.M == null) {(0,external_kolmafia_namespaceObject.printHtml)(line);} else {(0,apiSupplier/* provider */.M)().printHtml(line);}} }, { key: "start", value:
 
     function start(name) {var withSteps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
@@ -1364,7 +1365,7 @@ var AccValTiming = /*#__PURE__*/function () {
       existing != null && (
       existing.totalTimeTaken == null || existing.stepStarted != null))
       {
-        throw "The timing for " + name + " was already started";
+        throw new Error(`The timing for ${name} was already started`);
       }
 
       if (existing == null) {
@@ -1393,7 +1394,7 @@ var AccValTiming = /*#__PURE__*/function () {
       var existing = this.trackingMap.get(name);
 
       if (existing == null) {
-        throw "There was no time tracking created for " + name;
+        throw new Error(`There was no time tracking created for ${name}`);
       }
 
       var lastStopIndex = -1;
@@ -1520,7 +1521,7 @@ var MallPricing = /*#__PURE__*/function () {
 
     function loadMallPrices() {
       if (this.loadedAllMallItems == "loaded") {
-        throw `Mall prices failed to load, check that loathers/mall-check (mallcheck.js) is installed and working, set '${this.ignoreKey}=true' to ignore this error`;
+        throw new Error(`Mall prices failed to load, check that loathers/mall-check (mallcheck.js) is installed and working, set '${this.ignoreKey}=true' to ignore this error`);
       } else if (this.loadedAllMallItems == "unsure") {
         (0,apiSupplier/* provider */.M)().print(
           `Mall prices didn't resolve properly, please make sure that mallcheck.js from loathers/mall-check is installed, now falling back to manually searching.`,
@@ -2075,13 +2076,13 @@ var PriceResolver = /*#__PURE__*/function () {
       }
 
       if (!ignoreFold) {
-        AccValTiming.start(timingsKey + "Check Foldable", true);
+        AccValTiming.start(`${timingsKey}Check Foldable`, true);
 
         try {
           var foldables = (0,apiSupplier/* provider */.M)().getFoldables(item, "fold");
 
           if (foldables.length) {
-            AccValTiming.start(timingsKey + "Deeper Foldable Check", true);
+            AccValTiming.start(`${timingsKey}Deeper Foldable Check`, true);
 
             try {
               var foldPrices = foldables.
@@ -2109,15 +2110,15 @@ var PriceResolver = /*#__PURE__*/function () {
 
               return foldPrices[0];
             } finally {
-              AccValTiming.stop(timingsKey + "Deeper Foldable Check");
+              AccValTiming.stop(`${timingsKey}Deeper Foldable Check`);
             }
           }
         } finally {
-          AccValTiming.stop(timingsKey + "Check Foldable");
+          AccValTiming.stop(`${timingsKey}Check Foldable`);
         }
       }
 
-      AccValTiming.start(timingsKey + "Check Pricing Misc", true);
+      AccValTiming.start(`${timingsKey}Check Pricing Misc`, true);
 
       try {
         if (this.specialCase.has(item)) {
@@ -2138,10 +2139,10 @@ var PriceResolver = /*#__PURE__*/function () {
           );
         }
       } finally {
-        AccValTiming.stop(timingsKey + "Check Pricing Misc");
+        AccValTiming.stop(`${timingsKey}Check Pricing Misc`);
       }
 
-      AccValTiming.start(timingsKey + "Final Pricing Check", true);
+      AccValTiming.start(`${timingsKey}Final Pricing Check`, true);
 
       try {var _iterator4 = priceResolver_createForOfIteratorHelper(
             this.resolvers),_step4;try {for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {var resolver = _step4.value;
@@ -2154,10 +2155,10 @@ var PriceResolver = /*#__PURE__*/function () {
             return price;
           }} catch (err) {_iterator4.e(err);} finally {_iterator4.f();}
       } finally {
-        AccValTiming.stop(timingsKey + "Final Pricing Check");
+        AccValTiming.stop(`${timingsKey}Final Pricing Check`);
       }
 
-      throw "Failed to resolve price for " + item;
+      throw new Error(`Failed to resolve price for ${item}`);
     } }]);}();
 ;// ./src/core/logic.ts
 function logic_slicedToArray(r, e) {return logic_arrayWithHoles(r) || logic_iterableToArrayLimit(r, e) || logic_unsupportedIterableToArray(r, e) || logic_nonIterableRest();}function logic_nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function logic_iterableToArrayLimit(r, l) {var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];if (null != t) {var e,n,i,u,a = [],f = !0,o = !1;try {if (i = (t = t.call(r)).next, 0 === l) {if (Object(t) !== t) return;f = !1;} else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);} catch (r) {o = !0, n = r;} finally {try {if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;} finally {if (o) throw n;}}return a;}}function logic_arrayWithHoles(r) {if (Array.isArray(r)) return r;}function logic_toConsumableArray(r) {return logic_arrayWithoutHoles(r) || logic_iterableToArray(r) || logic_unsupportedIterableToArray(r) || logic_nonIterableSpread();}function logic_nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function logic_iterableToArray(r) {if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);}function logic_arrayWithoutHoles(r) {if (Array.isArray(r)) return logic_arrayLikeToArray(r);}function logic_createForOfIteratorHelper(r, e) {var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];if (!t) {if (Array.isArray(r) || (t = logic_unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) {t && (r = t);var _n = 0,F = function F() {};return { s: F, n: function n() {return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] };}, e: function e(r) {throw r;}, f: F };}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}var o,a = !0,u = !1;return { s: function s() {t = t.call(r);}, n: function n() {var r = t.next();return a = r.done, r;}, e: function e(r) {u = !0, o = r;}, f: function f() {try {a || null == t.return || t.return();} finally {if (u) throw o;}} };}function logic_unsupportedIterableToArray(r, a) {if (r) {if ("string" == typeof r) return logic_arrayLikeToArray(r, a);var t = {}.toString.call(r).slice(8, -1);return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? logic_arrayLikeToArray(r, a) : void 0;}}function logic_arrayLikeToArray(r, a) {(null == a || a > r.length) && (a = r.length);for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];return n;}function logic_classCallCheck(a, n) {if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");}function logic_defineProperties(e, r) {for (var t = 0; t < r.length; t++) {var o = r[t];o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, logic_toPropertyKey(o.key), o);}}function logic_createClass(e, r, t) {return r && logic_defineProperties(e.prototype, r), t && logic_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e;}function logic_defineProperty(e, r, t) {return (r = logic_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e;}function logic_toPropertyKey(t) {var i = logic_toPrimitive(t, "string");return "symbol" == typeof i ? i : i + "";}function logic_toPrimitive(t, r) {if ("object" != typeof t || !t) return t;var e = t[Symbol.toPrimitive];if (void 0 !== e) {var i = e.call(t, r || "default");if ("object" != typeof i) return i;throw new TypeError("@@toPrimitive must return a primitive value.");}return ("string" === r ? String : Number)(t);}
@@ -2829,7 +2830,7 @@ function getPresets() {
         return (0,apiSupplier/* provider */.M)().itemType(item).replace(" item", "") == type;
       },
       desc: function desc() {
-        return "Show only " + type;
+        return `Show only ${type}`;
       }
     });
   };for (var _i = 0, _arr = ["food", "booze", "spleen"]; _i < _arr.length; _i++) {_loop();}
@@ -3010,19 +3011,19 @@ function getPresets() {
 
   presets.forEach((preset) => {
     if (preset.isProcessed == null && preset.isShown == null) {
-      throw (
-        "The preset " +
-        preset.name()[0] +
-        " must have one of isProcessed or isShown defined!");
+      throw new Error(
+        `The preset ${
+        preset.name()[0]} must have one of isProcessed or isShown defined!`
 
+      );
     }
 
     if (preset.isProcessed != null && preset.isShown != null) {
-      throw (
-        "The preset " +
-        preset.name()[0] +
-        " can only have one of isProcessed and isShown defined!");
+      throw new Error(
+        `The preset ${
+        preset.name()[0]} can only have one of isProcessed and isShown defined!`
 
+      );
     }
   });
 
@@ -3127,7 +3128,7 @@ var Args = /*#__PURE__*/function () {function Args() {grimoireArgs_classCallChec
       // Check that the default value actually appears in the options.
       if ("default" in spec && raw_options) {
         if (!raw_options.includes(spec.default)) {
-          throw `Invalid default value ${spec.default}`;
+          throw new Error(`Invalid default value ${spec.default}`);
         }
       }
 
@@ -3195,7 +3196,7 @@ var Args = /*#__PURE__*/function () {function Args() {grimoireArgs_classCallChec
       if ("default" in spec && raw_options) {var _iterator = grimoireArgs_createForOfIteratorHelper(
             spec.default),_step;try {for (_iterator.s(); !(_step = _iterator.n()).done;) {var default_entry = _step.value;
             if (!raw_options.includes(default_entry)) {
-              throw `Invalid default value ${spec.default}`;
+              throw new Error(`Invalid default value ${spec.default}`);
             }
           }} catch (err) {_iterator.e(err);} finally {_iterator.f();}
       }
@@ -3381,7 +3382,7 @@ var Args = /*#__PURE__*/function () {function Args() {grimoireArgs_classCallChec
     {
       _traverse(args, (keySpec, key) => {
         if (key === "help" || keySpec.key === "help") {
-          throw `help is a reserved argument name`;
+          throw new Error(`help is a reserved argument name`);
         }
       });
 
@@ -3409,7 +3410,7 @@ var Args = /*#__PURE__*/function () {function Args() {grimoireArgs_classCallChec
 
             options.positionalArgs),_step2;try {for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {var arg = _step2.value;
             if (!keys.includes(arg)) {
-              throw `Unknown key for positional arg: ${arg}`;
+              throw new Error(`Unknown key for positional arg: ${arg}`);
             }
           }} catch (err) {_iterator2.e(err);} finally {_iterator2.f();}
       }
@@ -3447,7 +3448,7 @@ var Args = /*#__PURE__*/function () {function Args() {grimoireArgs_classCallChec
               // Duplicate arg key 'X' is already aliased to 'Y'
               // Duplicate arg key 'X' (alias for 'Y') is not allowed
               // Duplicate arg key 'X' (alias for 'Y') is already aliased to 'Y'
-              throw `Duplicate arg key '${n}' ${n !== name ? `(alias for '${name}') ` : ""}is ${aliased.has(lower) ? `already aliased to '${aliased.get(lower)}'` : "not allowed"}`;
+              throw new Error(`Duplicate arg key '${n}' ${n !== name ? `(alias for '${name}') ` : ""}is ${aliased.has(lower) ? `already aliased to '${aliased.get(lower)}'` : "not allowed"}`);
             }
 
             if (n !== name) {
@@ -3744,11 +3745,11 @@ value)
   }
 
   if (parsed_value === undefined) {
-    throw `${source} expected ${arg.valueHelpName} but could not parse ${value}`;
+    throw new Error(`${source} expected ${arg.valueHelpName} but could not parse ${value}`);
   }
 
   if (parsed_value instanceof ParseError) {
-    throw `${source} ${parsed_value.message}`;
+    throw new Error(`${source} ${parsed_value.message}`);
   }
 
   return parsed_value;
@@ -3970,7 +3971,7 @@ CommandParser = /*#__PURE__*/function () {
         this.flags.get(lowerKey) ?? this.keys.get(lowerKey) ?? lowerKey;
 
         if (result.has(resolvedKey)) {
-          throw `Duplicate key ${_key} (first set to ${result.get(resolvedKey) ?? ""})`;
+          throw new Error(`Duplicate key ${_key} (first set to ${result.get(resolvedKey) ?? ""})`);
         }
 
         if (this.flags.has(lowerKey)) {
@@ -4044,9 +4045,9 @@ CommandParser = /*#__PURE__*/function () {
           }
 
           if (result.has(positionalKey)) {
-            throw `Cannot assign ${_value4} to ${positionalKey} (positionally) since ${positionalKey} was already set to ${
-            result.get(positionalKey) ?? ""}`;
-
+            throw new Error(`Cannot assign ${_value4} to ${positionalKey} (positionally) since ${positionalKey} was already set to ${
+            result.get(positionalKey) ?? ""}`
+            );
           }
 
           result.set(
@@ -4056,9 +4057,9 @@ CommandParser = /*#__PURE__*/function () {
         } else {
           // Key not found; include a better error message if it is possible for quotes to have been missed
           if (this.prevUnquotedKey && this.peek() !== "=") {
-            throw `Unknown argument: ${_key} (if this should have been parsed as part of ${this.prevUnquotedKey}, you should surround the entire value in quotes)`;
+            throw new Error(`Unknown argument: ${_key} (if this should have been parsed as part of ${this.prevUnquotedKey}, you should surround the entire value in quotes)`);
           } else {
-            throw `Unknown argument: ${_key}`;
+            throw new Error(`Unknown argument: ${_key}`);
           }
         }
       }
@@ -4107,7 +4108,7 @@ CommandParser = /*#__PURE__*/function () {
      */ }, { key: "consume", value:
     function consume(allowed) {
       if (this.finished()) {
-        throw `Expected ${allowed}`;
+        throw new Error(`Expected ${allowed}`);
       }
 
       if (allowed.includes(this.peek() ?? "")) {
@@ -4212,7 +4213,7 @@ CommandParser = /*#__PURE__*/function () {
         this.index++;
       }
 
-      throw `No closing ${quote} found for ${quote}${out}`;
+      throw new Error(`No closing ${quote} found for ${quote}${out}`);
     } }]);}();
 ;// ./src/settings/settings.ts
 function settings_slicedToArray(r, e) {return settings_arrayWithHoles(r) || settings_iterableToArrayLimit(r, e) || settings_unsupportedIterableToArray(r, e) || settings_nonIterableRest();}function settings_nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function settings_iterableToArrayLimit(r, l) {var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];if (null != t) {var e,n,i,u,a = [],f = !0,o = !1;try {if (i = (t = t.call(r)).next, 0 === l) {if (Object(t) !== t) return;f = !1;} else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);} catch (r) {o = !0, n = r;} finally {try {if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;} finally {if (o) throw n;}}return a;}}function settings_arrayWithHoles(r) {if (Array.isArray(r)) return r;}function settings_classCallCheck(a, n) {if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");}function settings_defineProperties(e, r) {for (var t = 0; t < r.length; t++) {var o = r[t];o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, settings_toPropertyKey(o.key), o);}}function settings_createClass(e, r, t) {return r && settings_defineProperties(e.prototype, r), t && settings_defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e;}function settings_toConsumableArray(r) {return settings_arrayWithoutHoles(r) || settings_iterableToArray(r) || settings_unsupportedIterableToArray(r) || settings_nonIterableSpread();}function settings_nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function settings_iterableToArray(r) {if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);}function settings_arrayWithoutHoles(r) {if (Array.isArray(r)) return settings_arrayLikeToArray(r);}function settings_ownKeys(e, r) {var t = Object.keys(e);if (Object.getOwnPropertySymbols) {var o = Object.getOwnPropertySymbols(e);r && (o = o.filter(function (r) {return Object.getOwnPropertyDescriptor(e, r).enumerable;})), t.push.apply(t, o);}return t;}function settings_objectSpread(e) {for (var r = 1; r < arguments.length; r++) {var t = null != arguments[r] ? arguments[r] : {};r % 2 ? settings_ownKeys(Object(t), !0).forEach(function (r) {settings_defineProperty(e, r, t[r]);}) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : settings_ownKeys(Object(t)).forEach(function (r) {Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));});}return e;}function settings_defineProperty(e, r, t) {return (r = settings_toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e;}function settings_toPropertyKey(t) {var i = settings_toPrimitive(t, "string");return "symbol" == typeof i ? i : i + "";}function settings_toPrimitive(t, r) {if ("object" != typeof t || !t) return t;var e = t[Symbol.toPrimitive];if (void 0 !== e) {var i = e.call(t, r || "default");if ("object" != typeof i) return i;throw new TypeError("@@toPrimitive must return a primitive value.");}return ("string" === r ? String : Number)(t);}function settings_createForOfIteratorHelper(r, e) {var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];if (!t) {if (Array.isArray(r) || (t = settings_unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) {t && (r = t);var _n = 0,F = function F() {};return { s: F, n: function n() {return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] };}, e: function e(r) {throw r;}, f: F };}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}var o,a = !0,u = !1;return { s: function s() {t = t.call(r);}, n: function n() {var r = t.next();return a = r.done, r;}, e: function e(r) {u = !0, o = r;}, f: function f() {try {a || null == t.return || t.return();} finally {if (u) throw o;}} };}function settings_unsupportedIterableToArray(r, a) {if (r) {if ("string" == typeof r) return settings_arrayLikeToArray(r, a);var t = {}.toString.call(r).slice(8, -1);return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? settings_arrayLikeToArray(r, a) : void 0;}}function settings_arrayLikeToArray(r, a) {(null == a || a > r.length) && (a = r.length);for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];return n;}
@@ -5493,15 +5494,31 @@ function kolmafiaProvider_createForOfIteratorHelper(r, e) {var t = "undefined" !
 
 
 var requiredRevision = 28933;
+var mallSearchesDone = 0;
 
 var KolmafiaProvider = /*#__PURE__*/function () {function KolmafiaProvider() {kolmafiaProvider_classCallCheck(this, KolmafiaProvider);}return kolmafiaProvider_createClass(KolmafiaProvider, [{ key: "mallPrice", value:
     function mallPrice(item) {
-      return (0,external_kolmafia_namespaceObject.mallPrice)(item);
+      if (mallSearchesDone > 30) {
+        (0,external_kolmafia_namespaceObject.abort)(
+          `We've done ${mallSearchesDone} actual mall searches and that is bad. Something went wrong somewhere.`
+        );
+      }
+
+      var age = (0,external_kolmafia_namespaceObject.historicalAge)(item);
+
+      try {
+        return (0,external_kolmafia_namespaceObject.mallPrice)(item);
+      } finally {
+        // If the price age has dropped instead of increasing
+        if (age > (0,external_kolmafia_namespaceObject.historicalAge)(item)) {
+          mallSearchesDone++;
+        }
+      }
     } }, { key: "resolveAllMallPrices", value:
 
     function resolveAllMallPrices(previous) {
       if (previous != "not_loaded" && previous != "unsure") {
-        throw `Illegal mall loaded state: ${previous}`;
+        throw new Error(`Illegal mall loaded state: ${previous}`);
       }
 
       if (previous == "not_loaded" && (0,external_kolmafia_namespaceObject.gitExists)("loathers-mall-check")) {
