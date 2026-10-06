@@ -70,10 +70,26 @@ import * as kolmafia from "kolmafia";
 import { DataType, KoLAPI, MallPricesOutcome } from "../api/supplierTypings";
 
 const requiredRevision = 28933;
+let mallSearchesDone = 0;
 
 export class KolmafiaProvider implements KoLAPI {
   mallPrice(item: Item): number {
-    return mallPrice(item);
+    if (mallSearchesDone > 30) {
+      abort(
+        `We've done ${mallSearchesDone} actual mall searches and that is bad. Something went wrong somewhere.`,
+      );
+    }
+
+    const age = historicalAge(item);
+
+    try {
+      return mallPrice(item);
+    } finally {
+      // If the price age has dropped instead of increasing
+      if (age > historicalAge(item)) {
+        mallSearchesDone++;
+      }
+    }
   }
 
   resolveAllMallPrices(previous: MallPricesOutcome): MallPricesOutcome {
