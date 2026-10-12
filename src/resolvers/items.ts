@@ -54,7 +54,7 @@ export class ItemResolver {
   saveCache() {
     const values: string[] = [];
     this.accountValCache.forEach((val, key) =>
-      values.push(key.id + ":" + (val ? "t" : "f")),
+      values.push(`${key.id}:${val ? "t" : "f"}`),
     );
     values.sort((v1, v2) => v1.localeCompare(v2));
 
@@ -202,7 +202,9 @@ export class ItemResolver {
           s.actualItem,
           item.name,
           item.plural,
-          v.bound == null || v.bound == ItemStatus.NO_TRADE
+          v.bound == null ||
+            v.bound == ItemStatus.NO_TRADE ||
+            v.bound == ItemStatus.IN_USE
             ? s.itemType == ItemType.UNTRADEABLE_ITEM
               ? ItemStatus.BOUND
               : ItemStatus.NO_TRADE
@@ -212,7 +214,7 @@ export class ItemResolver {
         );
       } catch (e) {
         provider().print(
-          "You probably need to update mafia! Got an error! " + e,
+          `You probably need to update mafia! Got an error! ${e}`,
           AccountValColors.attentionGrabbingWarning,
         );
       }
@@ -295,7 +297,7 @@ export class ItemResolver {
         v.actualItem = KoLItem.get(spl[1]);
       } catch (e) {
         provider().print(
-          "Error! Update mafia? " + e,
+          `Error! Update mafia? ${e}`,
           AccountValColors.attentionGrabbingWarning,
         );
         continue;
@@ -349,7 +351,7 @@ export class ItemResolver {
           break;
         default:
           provider().print(
-            "Found line '" + line + "' which I can't handle!",
+            `Found line '${line}' which I can't handle!`,
             AccountValColors.attentionGrabbingWarning,
           );
           continue;
@@ -384,7 +386,7 @@ export class ItemResolver {
       }
 
       provider().print(
-        "Missing a tradeable item for " + v.actualItem,
+        `Missing a tradeable item for ${v.actualItem}`,
         AccountValColors.attentionGrabbingWarning,
       );
     }
