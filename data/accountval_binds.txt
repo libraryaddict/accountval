@@ -118,6 +118,7 @@ i	Pasta wand loot box	legendary pasta wand
 i	shrink-wrapped Cup of 13s	Cup of 13s
 i	Allied Radio Backpack Pack	Allied Radio Backpack
 i	Packaged Portable Laughing Stock	Portable Laughing Stock
+i	black rosebud	black garden rose
 
 
 
@@ -212,6 +213,7 @@ g	packet of thanksgarden seeds	thanksgarden
 g	packet of tall grass seeds	grass
 g	packet of mushroom spores	mushroom
 g	packet of rock seeds	rock
+g	black garden rose	black_rose
 
 
 # Items that are dependent on the value of another as they're no-trade

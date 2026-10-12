@@ -69,7 +69,7 @@ import {
 import * as kolmafia from "kolmafia";
 import { DataType, KoLAPI, MallPricesOutcome } from "../api/supplierTypings";
 
-const requiredRevision = 28933;
+const requiredRevision = 29360;
 let mallSearchesDone = 0;
 
 export class KolmafiaProvider implements KoLAPI {
