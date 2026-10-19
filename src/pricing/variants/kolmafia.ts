@@ -2,7 +2,6 @@ import { provider } from "../../api/apiSupplier";
 import { ItemPrice, PriceType } from "../../models/typings";
 import { PriceVolunteer } from "../priceInterface";
 import { KoLItem, MallPricesOutcome } from "../../api/supplierTypings";
-import { getProperty } from "kolmafia";
 
 export class MallPricing implements PriceVolunteer {
   sessionKey = "accountval_loadedAllMallItems";
@@ -29,7 +28,7 @@ export class MallPricing implements PriceVolunteer {
   }
 
   resetStateMaybe() {
-    if (getProperty(this.ignoreKey) != "true") {
+    if (provider().retrieveCache(this.ignoreKey, "small_persist") != "true") {
       return;
     }
 

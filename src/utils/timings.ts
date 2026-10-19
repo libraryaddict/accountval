@@ -1,6 +1,5 @@
 import { provider } from "../api/apiSupplier";
 import { AccountValUtils } from "./utils";
-import { printHtml } from "kolmafia";
 
 export class AccValTiming {
   static tracking: ["STARTED" | "STOPPED", AccValTiming][] = [];
@@ -25,11 +24,7 @@ export class AccValTiming {
   }
 
   static printHtml(line: string) {
-    if (provider == null) {
-      printHtml(line);
-    } else {
-      provider().printHtml(line);
-    }
+    provider().printHtml(line);
   }
 
   start() {

@@ -7,7 +7,7 @@ import { getPresets } from "./presets";
 import { ValItem, SortBy, PresetSetting } from "../models/typings";
 import { ParseError, Args } from "./grimoireArgs";
 import { provider } from "../api/apiSupplier";
-import { Item } from "kolmafia";
+import { KoLItem } from "../api/supplierTypings";
 import { AccValTiming } from "../utils/timings";
 
 const sortBys: SortBy[] = [
@@ -413,7 +413,7 @@ const staticAccountValSpec = {
   mallPrice: Args.boolean({
     key: "mallPrice",
     help: [
-      `Has accountval calculate prices from mallprice, it will load (and cache) ${Math.ceil(Item.all().filter((i) => i.tradeable).length / 30)} pages of items if needed.`,
+      `Has accountval calculate prices from mallprice, it will load (and cache) ${Math.ceil(KoLItem.all().filter((i) => i.tradeable).length / 30)} pages of items if needed.`,
       `Beware that although this is cached, you should avoid using this setting if you're going to be running accountval a dozen times, restarting after each or something,`,
       `as that many mall searches can't be differnated from mall abuse by TPTB`,
     ].join(" "),
