@@ -21,7 +21,7 @@ export class CoinmasterResolver {
 
   load() {
     for (const item of KoLItem.all()) {
-      if (!item.tradeable || item.gift || item.quest || item.seller == null) {
+      if (!item.tradeable || item.gift || item.quest || item.seller === undefined) {
         continue;
       }
 

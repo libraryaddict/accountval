@@ -32,7 +32,7 @@ export default defineConfig(
       "block-scoped-var": "error",
       curly: ["error", "multi-line"],
       "eol-last": "error",
-      eqeqeq: ["error", "always", { null: "ignore" }],
+      eqeqeq: "error",
       "no-trailing-spaces": "error",
       "no-var": "error",
       "prefer-arrow-callback": "error",

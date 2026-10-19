@@ -49,12 +49,12 @@ async function download(url) {
 async function cached(url) {
   const entry = cache.get(url);
 
-  if (entry != null && Date.now() - entry.fetched < CACHE_MS) {
+  if (entry !== undefined && Date.now() - entry.fetched < CACHE_MS) {
     return entry;
   }
 
   if (Date.now() - (failures.get(url) ?? 0) < RETRY_MS) {
-    if (entry != null) {
+    if (entry !== undefined) {
       return entry;
     }
 
@@ -77,7 +77,7 @@ async function cached(url) {
     failures.set(url, Date.now());
 
     // An expired copy is better than an error while the upstream is down
-    if (entry != null) {
+    if (entry !== undefined) {
       return entry;
     }
 
@@ -141,7 +141,7 @@ createServer(async (req, res) => {
     const isScript = url.pathname === "/accountval.js";
     const target = isScript ? scriptUrl : routes.get(url.pathname);
 
-    if (target == null) {
+    if (target === undefined) {
       res.writeHead(404).end();
 
       return;

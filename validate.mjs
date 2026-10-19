@@ -73,7 +73,7 @@ function checkItem(name, line) {
 }
 
 const currencies = binds.filter(
-  ([type, , untradeable]) => type === "t" && untradeable == null,
+  ([type, , untradeable]) => type === "t" && untradeable === undefined,
 );
 const shopTokens = new Set(
   binds.filter(([type]) => type === "m").map(([, token]) => key(token)),
@@ -99,9 +99,9 @@ for (const line of binds) {
     problems.push(`Unknown skill "${rest[0]}" in: ${line.join("\t")}`);
   } else if (type === "p" && !["coolitem", "page"].includes(rest[1])) {
     problems.push(`No browser check for property line: ${line.join("\t")}`);
-  } else if (type === "c" && rest[0] == null) {
+  } else if (type === "c" && rest[0] === undefined) {
     problems.push(`No campground image for: ${line.join("\t")}`);
-  } else if (type === "g" && rest[1] == null) {
+  } else if (type === "g" && rest[1] === undefined) {
     problems.push(`No campground text for garden: ${line.join("\t")}`);
   } else if (type === "m") {
     for (const shop of rest.filter((shop) => !shops.has(shop))) {

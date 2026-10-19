@@ -344,7 +344,6 @@ export class AccountValLogic {
         const i = provider().getWorkshed();
 
         if (
-          i != null &&
           i !== KoLItem.none &&
           (i.tradeable ? this.settings.doTradeables : this.settings.doBound)
         ) {

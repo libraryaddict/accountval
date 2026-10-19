@@ -174,7 +174,7 @@ export class PageResolver {
       items.push({
         item: KoLItem.get(AccountValUtils.toInt(match[1])),
         amount: AccountValUtils.toInt(match[2]),
-        limit: match[3] == null ? 0 : AccountValUtils.toInt(match[3]),
+        limit: match[3] ? AccountValUtils.toInt(match[3]) : 0,
         price: AccountValUtils.toInt(match[4]),
       });
     }
@@ -218,7 +218,7 @@ export class PageResolver {
 
       map.set(
         { item: item, shelf: lastShelf },
-        match[3] == null ? 1 : AccountValUtils.toInt(match[3]),
+        match[3] ? AccountValUtils.toInt(match[3]) : 1,
       );
     }
 

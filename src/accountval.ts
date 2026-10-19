@@ -29,7 +29,7 @@ class AccountVal {
       return false;
     }
 
-    if (command == null) {
+    if (!command) {
       this.out.printLine(
         "To fine tune what we check, including to tradeables only.. Provide the parameter 'help' for more info",
         "plain",

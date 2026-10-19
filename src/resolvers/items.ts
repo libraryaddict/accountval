@@ -252,7 +252,7 @@ export class ItemResolver {
 
       const item = provider().familiarEquippedEquipment(fam);
 
-      if (item == null || item === KoLItem.none) {
+      if (item === KoLItem.none) {
         continue;
       }
 
