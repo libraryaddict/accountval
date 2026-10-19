@@ -14,7 +14,7 @@
     "declaration": false,
     "noEmit": true,
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
     "target": "esnext",
     "useDefineForClassFields": true,
     // Ensure that Babel can safely transpile files in the TypeScript project

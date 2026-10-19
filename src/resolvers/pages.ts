@@ -63,7 +63,7 @@ export class PageResolver {
     const linkRegex =
       /class='(perm|hcperm|fam_run_90|fam_have|fam_run_100)'.*?<a href="[^"]+" rel="noreferrer">(?:.*?>)?([^>]*?)<\/a>/;
     let match: string[];
-    const has = [];
+    const has: (KoLFamiliar | KoLSkill | KoLItem | [KoLItem, number])[] = [];
 
     while ((match = page.match(tdRegex)) !== null) {
       page = page.substring(page.indexOf(match[0]) + match[0].length);

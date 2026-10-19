@@ -509,8 +509,8 @@ export class AccountValSettings {
     this.resolveFetchSources();
 
     if (this.settings) {
-      for (const setting of Object.keys(this)) {
-        provider().print(`${setting} = ${this[setting]}`);
+      for (const [setting, value] of Object.entries(this)) {
+        provider().print(`${setting} = ${value}`);
       }
     }
 
