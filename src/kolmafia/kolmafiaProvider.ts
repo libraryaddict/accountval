@@ -233,7 +233,7 @@ export class KolmafiaProvider implements KoLAPI {
     if (dataType == "large_persist") {
       return fileToBuffer(key);
     } else if (dataType == "small_persist") {
-      return getProperty(dataType);
+      return getProperty(key);
     }
 
     return sessionStorage.getItem(key) ?? "";
