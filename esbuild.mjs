@@ -28,7 +28,6 @@ await esbuild.build({
   entryPoints: ["src/browser/index.ts"],
   bundle: true,
   format: "iife",
-  globalName: "accountval",
   outfile: "built/browser/accountval.js",
   loader: { ".txt": "text" },
 });

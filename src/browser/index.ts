@@ -53,7 +53,7 @@ async function runCommand(output: HTMLElement, input: HTMLInputElement) {
   }
 }
 
-export function main() {
+function main() {
   const frame = window.top?.mainpane ?? window;
   const doc = frame.document;
 
@@ -81,3 +81,5 @@ export function main() {
   });
   input.focus();
 }
+
+main();

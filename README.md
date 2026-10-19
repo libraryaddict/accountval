@@ -40,16 +40,18 @@ Accountval can also run in the browser without requiring KoLMafia. It replaces t
 
 **You should be aware that this is not sane, or a good idea in general. This is the same setup someone would do for a remote code exploit, and you are executing it blindly. In this case, the code isn't going to do anything bad, but it's still very unsafe. Although it is cool to see, it's very cursed. Your data is not uploaded anywhere, it stays in the browser. The unsafe part is running code that someone gave you, because that code may be doing something you didn't expect.**
 
-To run this without KoLMafia, paste this into KoL's chat while logged in, or save it as a chat macro. This will load the script from a backend and execute it.
+To run this without KoLMafia, paste this into KoL's chat while logged in, or save it as a chat macro. This will load the script from GitHub and execute it.
+
+You can view the JS that will be executed here: https://raw.githubusercontent.com/libraryaddict/accountval/browser/accountval.js
 
 ```text
-/goto '?'' :function(){s=document.createElement('script');s.src='https://accountval.lib.co.nz/accountval.js';s.onload=function(){accountval.main()};document.head.append(s);throw{};}();z='
+/goto '?'' :function(){fetch('https://raw.githubusercontent.com/libraryaddict/accountval/browser/accountval.js').then(function(r){return r.text()}).then(eval);throw{};}();z='
 ```
 
 Alternatively, save this as a bookmark and click the bookmark while logged in to KoL.
 
 ```text
-javascript:(()=>{if(window.accountval)return accountval.main();const s=document.createElement("script");s.src="https://accountval.lib.co.nz/accountval.js";s.onload=()=>accountval.main();document.head.append(s)})()
+javascript:void fetch("https://raw.githubusercontent.com/libraryaddict/accountval/browser/accountval.js").then(r=>r.text()).then(eval)
 ```
 
 Some things only KoLmafia knows about, so the browser version can't do them.
