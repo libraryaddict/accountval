@@ -3901,8 +3901,15 @@
   // src/browser/gameData.ts
   init_binds();
   var PROXY = "https://accountval.lib.co.nz";
-  var MAFIA_DATA = `${PROXY}/data/`;
-  var IRRAT_PRICES = `${PROXY}/prices/live`;
+  var PROXY_TIMEOUT_MS = 20 * 1e3;
+  var MAFIA_DATA = [
+    `${PROXY}/data/`,
+    "https://raw.githubusercontent.com/kolmafia/kolmafia/main/src/main/resources/data/"
+  ];
+  var IRRAT_PRICES = [
+    `${PROXY}/prices/live`,
+    "https://kolprices.lib.co.nz/file/live"
+  ];
   var mafiaFiles = [
     "items",
     "fullness",
@@ -4172,8 +4179,8 @@
       }
     }
   };
-  async function fetchText(url) {
-    const response = await fetch(url);
+  async function fetchText(url, init) {
+    const response = await fetch(url, init);
     if (!response.ok) {
       throw new Error(
         `Failed to load ${url}: ${response.status} ${response.statusText}`
@@ -4181,10 +4188,15 @@
     }
     return response.text();
   }
+  async function fetchEither([url, fallback], suffix = "") {
+    return fetchText(url + suffix, {
+      signal: AbortSignal.timeout(PROXY_TIMEOUT_MS)
+    }).catch(() => fetchText(fallback + suffix));
+  }
   async function loadGameData() {
     const [irratPrices, ...files] = await Promise.all([
-      fetchText(IRRAT_PRICES),
-      ...mafiaFiles.map((file) => fetchText(`${MAFIA_DATA}${file}.txt`))
+      fetchEither(IRRAT_PRICES),
+      ...mafiaFiles.map((file) => fetchEither(MAFIA_DATA, `${file}.txt`))
     ]);
     return new GameData(
       Object.fromEntries(mafiaFiles.map((file, i) => [file, files[i]])),
@@ -4758,7 +4770,11 @@
     doc.close();
     const output = doc.getElementById("output");
     const input = doc.getElementById("command");
-    appendLine(output, "Accountval loaded, awaiting command...", "gray");
+    appendLine(
+      output,
+      "Salutations and welcome to accountval. Use input at the bottom of the page to run a command.",
+      "gray"
+    );
     doc.getElementById("cli").addEventListener("submit", (event) => {
       event.preventDefault();
       runCommand(output, input);
