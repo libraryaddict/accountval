@@ -33,3 +33,26 @@ If you have accountval.ash installed, use
 ```text
 accountval.js
 ```
+
+## Running in the browser
+
+Accountval can also run in the browser without requiring KoLMafia. It replaces the main pane with a commandline replica which will act the same as KoLMafia's gCLI, featuring jawdropping commands such as `trade` or `help`.
+
+Paste this into KoL's chat while logged in, or save it as a chat macro. This will load the script from a backend and execute it.
+
+```text
+/goto '?'' :function(){s=document.createElement('script');s.src='https://accountval.lib.co.nz/accountval.js';s.onload=function(){accountval.main()};document.head.append(s);throw{};}();z='
+```
+
+Alternatively, save this as a bookmark and click the bookmark while logged in to KoL.
+
+```text
+javascript:(()=>{if(window.accountval)return accountval.main();const s=document.createElement("script");s.src="https://accountval.lib.co.nz/accountval.js";s.onload=()=>accountval.main();document.head.append(s)})()
+```
+
+Some things only KoLmafia knows about, so the browser version can't do them.
+
+- Mall searching (`mallPrice`), `session`, `jsfilter`, and a few item presets.
+- KoLmafia's historical prices. Items not in https://kolprices.lib.co.nz/ are unable to be valued.
+- Your workshed item, lovebugs, and whether an IotM is permanent or a temporary day pass.
+- av-snapshot isn't able to be requested.

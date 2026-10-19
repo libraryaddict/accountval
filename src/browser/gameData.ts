@@ -5,9 +5,9 @@ import {
   KoLSkill,
 } from "../api/supplierTypings";
 
-const MAFIA_DATA =
-  "https://cdn.jsdelivr.net/gh/kolmafia/kolmafia@main/src/main/resources/data/";
-const IRRAT_PRICES = "https://kolprices.lib.co.nz/file/live";
+const PROXY = "https://accountval.lib.co.nz";
+const MAFIA_DATA = `${PROXY}/data/`;
+const IRRAT_PRICES = `${PROXY}/prices/live`;
 
 const mafiaFiles = [
   "items",

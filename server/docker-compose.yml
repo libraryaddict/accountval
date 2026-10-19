@@ -1,0 +1,17 @@
+services:
+  accountval:
+    image: ghcr.io/libraryaddict/accountval-proxy:latest
+    container_name: accountval
+    restart: unless-stopped
+    env_file: .env
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 256m
+    networks:
+      - internal_network
+
+networks:
+  internal_network:
+    external: true
+    name: tunnel_network
