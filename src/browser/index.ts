@@ -75,6 +75,8 @@ function main() {
   const output = doc.getElementById("output")!;
   const input = doc.getElementById("command") as HTMLInputElement;
 
+  appendLine(output, "Accountval loaded, awaiting command...", "gray");
+
   doc.getElementById("cli")!.addEventListener("submit", (event) => {
     event.preventDefault();
     runCommand(output, input);
