@@ -1,4 +1,5 @@
-var accountval = (() => {
+"use strict";
+(() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames = Object.getOwnPropertyNames;
@@ -38,6 +39,68 @@ var accountval = (() => {
   var api;
   var init_apiSupplier = __esm({
     "src/api/apiSupplier.ts"() {
+      "use strict";
+    }
+  });
+
+  // data/accountval_binds.txt
+  var accountval_binds_default;
+  var init_accountval_binds = __esm({
+    "data/accountval_binds.txt"() {
+      accountval_binds_default = "# Original data taken from https://github.com/soolar/accountval.ash\n# Item Containers! Start with i\ni	packet of mayfly bait	mayfly bait necklace\ni	Clan VIP Lounge invitation	Clan VIP Lounge key\ni	Make-Your-Own-Vampire-Fangs kit	plastic vampire fangs\ni	Folder Holder	over-the-shoulder Folder Holder\ni	can of Rain-Doh	empty Rain-Doh can\ni	Discontent&trade; Winter Garden Catalog	packet of winter seeds\ni	Ed the Undying exhibit crate	The Crown of Ed the Undying\ni	Pack of Every Card	Deck of Every Card\ni	DIY protonic accelerator kit	protonic accelerator pack\ni	Dear Past Self Package	Time-Spinner\ni	Granny Tood's Thanksgarden Catalog	packet of thanksgarden seeds\ni	suspicious package	Kremlin's Greatest Briefcase\ni	LI-11 Motor Pool voucher	Asdon Martin keyfob (on ring)\ni	Grumpy Bumpkin's Pumpkin Seed Catalog	packet of pumpkin seeds\ni	Mint Salton Pepper's Peppermint Seed Catalog	Peppermint Pip Packet\ni	Pete & Jackie's Dragon Tooth Emporium Catalog	packet of dragon's teeth\ni	Pocket Meteor Guide	Pocket Meteor Guide (well-thumbed)\ni	corked genie bottle	genie bottle\ni	pantogram	portable pantogram\ni	locked mumming trunk	mumming trunk\ni	January's Garbage Tote (unopened)	January's Garbage Tote\ni	Pok&eacute;fam Guide to Capturing All of Them	packet of tall grass seeds\ni	SongBoom&trade; BoomBox Box	SongBoom&trade; BoomBox\ni	Bastille Battalion control rig crate	Bastille Battalion control rig\ni	latte lovers club card	latte lovers member's mug\ni	Kramco Industries packing carton	Kramco Sausage-o-Matic&trade;\ni	mint condition Lil' Doctor&trade; bag	Lil' Doctor&trade; bag\ni	vampyric cloake pattern	vampyric cloake\ni	Fourth of May Cosplay Saber kit	Fourth of May Cosplay Saber\ni	rune-strewn spoon cocoon	hewn moon-rune spoon\ni	Beach Comb Box	Beach Comb\ni	Unopened Eight Days a Week Pill Keeper	Eight Days a Week Pill Keeper\ni	unopened diabolic pizza cube box	diabolic pizza cube\ni	unopened Bird-a-Day calendar	Bird-a-Day calendar\ni	mint-in-box Powerful Glove	Powerful Glove\ni	Better Shrooms and Gardens catalog	packet of mushroom spores\ni	Guzzlr application	Guzzlr tablet\ni	bag of Iunion stones	Iunion Crown\ni	packaged SpinMaster&trade; lathe	SpinMaster&trade; lathe\ni	Bagged Cargo Cultist Shorts	Cargo Cultist Shorts\ni	Comprehensive Cartographic Compendium	Comprehensive Cartographic Compendium (well-read)\ni	packaged knock-off retro superhero cape	unwrapped knock-off retro superhero cape\ni	packaged miniature crystal ball	miniature crystal ball\ni	emotion chip	spinal-fluid-covered emotion chip\ni	power seed	potted power plant\ni	packaged backup camera	backup camera\ni	packaged familiar scrapbook	familiar scrapbook\ni	packaged industrial fire extinguisher	industrial fire extinguisher\ni	Packaged Daylight Shavings Helmet	Daylight Shavings Helmet\ni	Packaged cold medicine cabinet	Cold medicine cabinet\ni	box o' ghosts	gregarious ghostling\ni	Gordon Beer's Beer Garden Catalog	Packet of beer seeds\ni	Mint condition magnifying glass	cursed magnifying glass\ni	Antique pair of blue jeans	Ellsbury's journal (used)\ni	warehouse key	mime army insignia (cryonics)\ni	warehouse key	mime army insignia (morale)\ni	warehouse key	mime army insignia (psychological warfare)\ni	warehouse key	mime army insignia (pyrotechnics)\ni	warehouse key	mime army insignia (sanitation)\ni	warehouse key	mime army insignia (espionage)\ni	warehouse key	mime army insignia (infantry)\ni	warehouse key	mime army insignia (intelligence)\ni	warehouse key	mime army infiltration glove\ni	warehouse key	mime army challenge coin\ni	warehouse key	mime army shotglass\ni	warehouse key	miming corduroys\ni	warehouse key	miming beret\ni	warehouse key	miming gloves\ni	warehouse key	miming boots\ni	warehouse key	miming shirt\ni	combat lover's locket lockbox	combat lover's locket\ni	undamaged Unbreakable Umbrella	Unbreakable umbrella\ni	packaged June cleaver	June cleaver\ni	designer sweatpants (new old stock)	Designer sweatpants\ni	unopened tiny stillsuit	tiny stillsuit\ni	packaged Jurassic Parka	Jurassic Parka\ni	packaged model train set	model train set\ni	ChibiBuddy\u2122 (off)	ChibiBuddy\u2122 (on)\ni	Rock Garden Guide	packet of rock seeds\ni	S.I.T. Course Voucher	S.I.T. Course Completion Certificate\ni	Closed-circuit phone system	Closed-circuit pay phone\ni	Cursed monkey glove	cursed monkey's paw\ni	shrink-wrapped Cincho de Mayo	Cincho de Mayo\ni	shrink-wrapped 2002 Mr. Store Catalog	2002 Mr. Store Catalog\ni	boxed august scepter	august scepter\ni	book of facts	book of facts (dog-eared)\ni	crated wardrobe-o-matic	wardrobe-o-matic\ni	wrapped candy cane sword cane	candy cane sword cane\ni	in-the-box spring shoes	spring shoes\ni	packaged Everfull Dart Holster	Everfull Dart Holster\ni	Boxed Apriling band helmet	Apriling band helmet\ni	boxed Mayam Calendar	Mayam Calendar\ni	packaged Roman Candelabra	Roman Candelabra\ni	untorn tearaway pants package	tearaway pants\ni	Boxed Sept-Ember Censer	Sept-Ember Censer\ni	boxed bat wings	bat wings\ni	Sealed TakerSpace letter of Marque	TakerSpace letter of Marque\ni	McHugeLarge deluxe ski set	McHugeLarge duffel bag\ni	CyberRealm keycode	server room key\ni	eldritch tincture	eldritch tincture (depleted)\ni	new-in-box toy Cupid bow	toy Cupid bow\ni	assemble-it-yourself Leprecondo	Leprecondo\ni	Packaged April Shower Thoughts Calendar	April Shower Thoughts shield\ni	Unpeeled Peridot of Peril	Peridot of Peril\ni	packaged prismatic beret	prismatic beret\ni	M\xF6bius ring box	M\xF6bius ring\ni	packaged Monodent of the Sea	Monodent of the Sea\ni	Lab-grown blood cubic zirconia	blood cubic zirconia\ni	seal-clubbing club loot box	legendary seal-clubbing club\ni	discreetly-wrapped Eternity Codpiece	The Eternity Codpiece\ni	boxed Heartstone	Heartstone\ni	Boxed Archaeologist's Spade	Archaeologist's Spade\ni	wrapped Baseball Diamond	Baseball Diamond\ni	Pasta wand loot box	legendary pasta wand\ni	shrink-wrapped Cup of 13s	Cup of 13s\ni	Allied Radio Backpack Pack	Allied Radio Backpack\ni	Packaged Portable Laughing Stock	Portable Laughing Stock\ni	black rosebud	black garden rose\n\n\n\n\n# Bookshelf stuff! Start with b\nb	Tome of Snowcone Summoning	Summon Snowcones\nb	Scratch 'n' Sniff Sticker Tome	Summon Stickers\nb	Tome of Sugar Shummoning	Summon Sugar Sheets\nb	Tome of Clip Art	Summon Clip Art\nb	Tome of Rad Libs	Summon Rad Libs\nb	The Smith's Tome	Summon Smithsness\nb	McPhee's Grimoire of Hilarious Object Summoning	Summon Hilarious Objects\nb	Sp'n-Zor's Grimoire of &quot;Tasteful&quot; Gifts	Summon Tasteful Items\nb	Sorcerers of the Shore Grimoire	Summon Alice's Army Cards\nb	Thinknerd's Grimoire of Geeky Gifts	Summon Geeky Gifts\nb	Libram of Candy Heart Summoning	Summon Candy Heart\nb	Libram of Divine Favors	Summon Party Favor\nb	Libram of Love Songs	Summon Love Song\nb	Libram of BRICKOs	Summon BRICKOs\nb	Gygaxian Libram	Summon Dice\nb	Libram of Resolutions	Summon Resolutions\nb	Libram of Pulled Taffy	Summon Taffy\nb	The Confiscator's Grimoire	Summon Confiscated Things\n\n\n\n# Property based detection! Start with p\n# 3rd and 4th params are either 'coolitem' and their name, or 'page' with the url and text to look for.\np	airplane charter: Spring Break Beach	sleazeAirportAlways&!_sleazeAirportToday	coolitem	airport1\np	airplane charter: Conspiracy Island	spookyAirportAlways&!_spookyAirportToday	coolitem	airport2\np	airplane charter: Dinseylandfill	stenchAirportAlways&!_stenchAirportToday	coolitem	airport3\np	airplane charter: That 70s Volcano	hotAirportAlways&!_hotAirportToday	coolitem	airport4\np	airplane charter: The Glaciest	coldAirportAlways&!_coldAirportToday	coolitem	airport5\np	Chateau Mantegna room key	chateauAvailable	page	place.php?whichplace=mountains	chateau\np	bottle of lovebug pheromones	lovebugsUnlocked\np	shrine to the Barrel god	barrelShrineUnlocked	page	da.php	bgshrine.gif\np	X-32-F snowman crate	snojoAvailable	page	place.php?whichplace=mountains	snojo\np	LT&T telegraph office deed	telegraphOfficeAvailable&!_telegraphOfficeToday	coolitem	ltt\np	detective school application	hasDetectiveSchool	page	place.php?whichplace=town_wrong	Precinct\np	Build-a-City Gingerbread kit	gingerbreadCityAvailable&!_gingerbreadCityToday	coolitem	gingerbreadcity\np	heart-shaped crate	loveTunnelAvailable&!_loveTunnelToday	coolitem	tunnelofloveiotm\np	Spacegate access badge	spacegateAlways&!_spacegateToday	coolitem	spacegate\np	FantasyRealm membership packet	frAlways&!_frToday	coolitem	fantasyrealm\np	Horsery contract	horseryAvailable	page	place.php?whichplace=town_right	Horsery\np	Neverending Party invitation envelope	neverendingPartyAlways&!_neverendingPartyToday	coolitem	neverendingparty\np	voter registration form	voteAlways&!_voteToday	coolitem	voterregistered\np	Boxing Day care package	daycareOpen&!_daycareToday	coolitem	boxingdaycare\np	PirateRealm membership packet	prAlways&!_prToday	coolitem	piraterealm\np	CyberRealm keycode	crAlways&!_crToday	coolitem	cyberrealm\np	Distant Woods Getaway Brochure	getawayCampsiteUnlocked	page	place.php?whichplace=woods	campaway\np	Undrilled cosmic bowling ball	hasCosmicBowlingBall	coolitem	hascosmicball\np	MayDay\u2122 contract	hasMaydayContract	coolitem	maydaykit\np	boxed autumn-aton	hasAutumnaton	coolitem	autumnaton\np	deed to Oliver's Place	ownsSpeakeasy	page	place.php?whichplace=town_wrong	Speakeasy\np	Interesting Coin Inheritance Letter	hasInterestingCoin	coolitem	interesting\np	Order of the Green Thumb Order Form	ownsFloristFriar	coolitem	floristfriar\np	shrunken head in a duffel bag	hasShrunkenHead	coolitem	shrunkenhead\n\n\n\n# Eudoras! Start with e\ne	My Own Pen Pal kit	Pen Pal\ne	GameInformPowerDailyPro subscription card	GameInformPowerDailyPro Magazine\ne	Xi Receiver Unit	Xi Receiver Unit\ne	New-You Club Membership Form	New-You Club\ne	Our Daily Candles\u2122 order form	Our Daily Candles\ne	Black and White Apron Enrollment Form	Black & White Apron\n\n\n\n# campground items! Starts with c, followed by the text to look for\nc	Haunted Doghouse	doghouse.gif\nc	Witchess Set	chesstable.gif\nc	Source terminal	campterminal.gif\nc	potted tea tree	teatree\nc	A Guide to Burning Leaves	campground/leaves\n\n\n\n# Gardens, followed by the text to look for\ng	packet of pumpkin seeds	pumpkin	pumpkinpatch_\ng	Peppermint Pip Packet	peppermint	pepperpatch_\ng	packet of dragon's teeth	skeleton	bonegarden\ng	Packet of beer seeds	beer	beergarden\ng	packet of winter seeds	winter	wintergarden\ng	packet of thanksgarden seeds	thanksgarden	thanksgarden\ng	packet of tall grass seeds	grass	grassgarden\ng	packet of mushroom spores	mushroom	mushgarden.gif\ng	packet of rock seeds	rock	/rockgarden/\ng	black garden rose	black_rose	Black Rose Garden (\n\n\n# Items that are dependent on the value of another as they're no-trade\n# Item | Check Against | X of our item = 1 of that item\nt	ChibiBuddy\u2122 (on)	ChibiBuddy\u2122 (off)	1\nt	distilled resin	inflammable leaf	50\nt	Rethinking Candy	Knucklebone	2750\n\n\n# Items that are a coinmaster currency, and is dynamically priced because there's no solid metric\n# The price is resolved at runtime\nt	fat loot token\nt	Cop dollar\nt	Driplet\nt	Chroner\nt	Freddy Kruegerand\nt	Guzzlrbuck\nt	Beach Buck\nt	Volcoino\nt	FunFunds\u2122\nt	Coinspiracy\nt	Wal-Mart gift certificate\nt	Rubee\u2122\nt	buffalo dime\nt	Spacegate Research\n\n# Coinmaster shops for each currency, as named in coinmasters.txt. Only the browser uses these\nm	fat loot token	Vending Machine\nm	Driplet	Drip Institute Armory\nm	Chroner	The Neandermall	Ni&ntilde;a Store\nm	Freddy Kruegerand	The Terrified Eagle Inn\nm	Guzzlrbuck	Guzzlr Company Store Website\nm	Beach Buck	Buff Jimmy's Souvenir Shop	The Frozen Brogurt Stand	Taco Dan's Taco Stand\nm	Volcoino	Disco GiftCo\nm	FunFunds&trade;	The Dinsey Company Store\nm	Coinspiracy	The Armory	The Canteen	The SHAWARMA Initiative\nm	Wal-Mart gift certificate	Wal-Mart\nm	Rubee&trade;	FantasyRealm Rubee&trade; Store\nm	buffalo dime	LT&T Gift Shop\nm	Spacegate Research	Spacegate Fabrication Facility\n\n# Items that are best valued at a hardcoded value, although you may not get that value...\nh	meat paste	10\nh	meat stack	100\nh	nest egg	150\nh	Dungeon dragon chest	500\nh	Meat globe	700\nh	dense meat stack	1000\nh	Loose Meats	2300\nh	chest of the Bonerdagon	3000\nh	Duct tape wallet	3050\nh	Stock Certificate	5000\nh	Envelope full of Meat	30000\nh	Discount Telescope Warehouse gift certificate	100000";
+    }
+  });
+
+  // src/core/binds.ts
+  function parse(line) {
+    const [type, item, ...rest] = line.split("	");
+    switch (type) {
+      case "i":
+        return { type: "untradeable", item, untradeable: rest[0] };
+      case "b":
+        return { type: "book", item, skill: rest[0] };
+      case "p": {
+        const [property, check, ...args] = rest;
+        return {
+          type: "property",
+          item,
+          property,
+          coolItem: check === "coolitem" ? args[0] : void 0,
+          page: check === "page" ? { url: args[0], text: args[1] } : void 0
+        };
+      }
+      case "e":
+        return { type: "eudora", item, correspondence: rest[0] };
+      case "g":
+        return { type: "garden", item, garden: rest[0], text: rest[1] };
+      case "t":
+        return rest.length > 0 ? {
+          type: "currency",
+          item,
+          untradeable: rest[0],
+          amount: parseInt(rest[1])
+        } : { type: "currency", item };
+      case "c":
+        return { type: "campground", item, text: rest[0] };
+      case "h":
+        return { type: "price", item, price: parseInt(rest[0]) };
+      case "m":
+        return { type: "coinmaster", item, shops: rest };
+      default:
+        throw new Error(`Found line '${line}' which I can't handle!`);
+    }
+  }
+  function bindsOf(type) {
+    return binds.filter(
+      (bind) => bind.type === type
+    );
+  }
+  var binds;
+  var init_binds = __esm({
+    "src/core/binds.ts"() {
+      "use strict";
+      init_accountval_binds();
+      binds = accountval_binds_default.split(/\r?\n/).filter((line) => line.length > 0 && !line.startsWith("#")).map(parse);
     }
   });
 
@@ -45,6 +108,7 @@ var accountval = (() => {
   var KoLItem, KoLFamiliar, KoLSlot, KoLSkill;
   var init_supplierTypings = __esm({
     "src/api/supplierTypings.ts"() {
+      "use strict";
       init_apiSupplier();
       KoLItem = class {
         static get(key) {
@@ -83,24 +147,25 @@ var accountval = (() => {
 
   // src/utils/colors.ts
   function loadAccountvalColors(name) {
-    if (name == "default") {
+    if (name === "default") {
       name = provider().isDarkMode() ? "dark" : "light";
     }
-    if (!map.has(name)) {
+    const colors = map.get(name);
+    if (colors === void 0) {
       return false;
     }
-    AccountValColors = map.get(name);
+    AccountValColors = colors;
     return true;
   }
   function getAccountvalColors() {
     return ["default", ...map.keys()];
   }
   function showAccountvalColors(name) {
-    if (!map.has(name)) {
+    const colors = map.get(name);
+    if (colors === void 0) {
       provider().print("Can't find any colors by that name", "red");
       return;
     }
-    const colors = map.get(name);
     for (const [k, v] of Object.entries(colors)) {
       provider().printHtml(`<font color='${v}'>${k}</font>`);
     }
@@ -114,6 +179,7 @@ var accountval = (() => {
   var AccountValColors, map;
   var init_colors = __esm({
     "src/utils/colors.ts"() {
+      "use strict";
       init_apiSupplier();
       map = /* @__PURE__ */ new Map();
       map.set("light", {
@@ -145,6 +211,7 @@ var accountval = (() => {
   var AccountValUtils;
   var init_utils = __esm({
     "src/utils/utils.ts"() {
+      "use strict";
       AccountValUtils = class {
         static getNumber(number, trimAt = 2) {
           const str = number.toString().split(".");
@@ -177,22 +244,17 @@ var accountval = (() => {
   });
 
   // src/resolvers/pages.ts
-  var StoreItem, PageResolver;
+  var PageResolver;
   var init_pages = __esm({
     "src/resolvers/pages.ts"() {
+      "use strict";
       init_apiSupplier();
       init_supplierTypings();
       init_colors();
       init_utils();
-      StoreItem = class {
-        item;
-        amount;
-        limit;
-        price;
-      };
       PageResolver = class {
         getSnapshot(username) {
-          const items2 = new Map(
+          const items = new Map(
             KoLItem.all().map((i) => {
               let name = i.name;
               while (name.match(/<\/?i>/)) {
@@ -202,9 +264,9 @@ var accountval = (() => {
             })
           );
           const skills = new Map(
-            KoLSkill.all().map((s2) => [
-              provider().entityDecode(s2.name).toLowerCase(),
-              s2
+            KoLSkill.all().map((s) => [
+              provider().entityDecode(s.name).toLowerCase(),
+              s
             ])
           );
           const fams = new Map(
@@ -215,12 +277,12 @@ var accountval = (() => {
           );
           ignore.push(
             ...Object.values(provider().allNormalOutfits()).map(
-              (s2) => s2.toLowerCase()
+              (s) => s.toLowerCase()
             )
           );
           ignore.push("miming regalia");
           let page = provider().visitUrl(
-            "https://api.aventuristo.net/av-snapshot?u=" + username
+            `https://api.aventuristo.net/av-snapshot?u=${username}`
           );
           if (!page.includes("<p>Snapshot for <b>")) {
             return [];
@@ -230,10 +292,10 @@ var accountval = (() => {
           const linkRegex = /class='(perm|hcperm|fam_run_90|fam_have|fam_run_100)'.*?<a href="[^"]+" rel="noreferrer">(?:.*?>)?([^>]*?)<\/a>/;
           let match;
           const has = [];
-          while ((match = page.match(tdRegex)) != null) {
+          while ((match = page.match(tdRegex)) !== null) {
             page = page.substring(page.indexOf(match[0]) + match[0].length);
             const link = match[1].match(linkRegex);
-            if (link == null) {
+            if (link === null) {
               continue;
             }
             let name = provider().entityDecode(link[2]).toLowerCase();
@@ -243,11 +305,12 @@ var accountval = (() => {
             const type = link[1];
             const isFam = !type.includes("perm");
             if (isFam) {
-              if (fams.has(name)) {
-                has.push(fams.get(name));
+              const familiar = fams.get(name);
+              if (familiar !== void 0) {
+                has.push(familiar);
               } else {
                 provider().print(
-                  "Unable to resolve the familiar '" + name + "' from av-snapshot",
+                  `Unable to resolve the familiar '${name}' from av-snapshot`,
                   AccountValColors.attentionGrabbingWarning
                 );
               }
@@ -260,12 +323,14 @@ var accountval = (() => {
             } else if (name.match(/ \d+\/\d+$/)) {
               continue;
             }
-            if (skills.has(name)) {
-              has.push(skills.get(name));
+            const skill = skills.get(name);
+            if (skill !== void 0) {
+              has.push(skill);
               continue;
             }
-            if (items2.has(name)) {
-              has.push(items2.get(name));
+            const exactItem = items.get(name);
+            if (exactItem !== void 0) {
+              has.push(exactItem);
               continue;
             }
             let count = 1;
@@ -275,76 +340,77 @@ var accountval = (() => {
               );
               name = name.substring(0, name.lastIndexOf(" "));
             }
-            if (!items2.has(name)) {
+            const item = items.get(name);
+            if (item === void 0) {
               provider().print(
-                "Unable to resolve the item '" + name + "' from av-snapshot",
+                `Unable to resolve the item '${name}' from av-snapshot`,
                 AccountValColors.attentionGrabbingWarning
               );
               continue;
             }
-            has.push([items2.get(name), count]);
+            has.push([item, count]);
           }
           return has;
         }
         getFamiliars(userId) {
-          let page = provider().visitUrl("showfamiliars.php?who=" + userId);
+          let page = provider().visitUrl(`showfamiliars.php?who=${userId}`);
           const regex = /onClick='fam\((\d+)\)'/;
           let match;
           const familiars = [];
-          while ((match = page.match(regex)) != null) {
+          while ((match = page.match(regex)) !== null) {
             page = page.replace(match[0], "");
             familiars.push(provider().toFamiliar(AccountValUtils.toInt(match[1])));
           }
           return familiars;
         }
         getStore(userId) {
-          const items2 = [];
-          const page = provider().visitUrl("mallstore.php?whichstore=" + userId);
-          for (const s2 of page.split("<tr>")) {
-            const match = s2.match(
+          const items = [];
+          const page = provider().visitUrl(`mallstore.php?whichstore=${userId}`);
+          for (const s of page.split("<tr>")) {
+            const match = s.match(
               /selecteditem=(\d+).+?<b>.+?<\/b> \(([\d,]+)\) +(?:\(Limit ([\d,]+) \/ day\))?<\/td><td>((?:\d|,)+) Meat<\/td>/
             );
-            if (match == null) {
+            if (match === null) {
               continue;
             }
-            const item = new StoreItem();
-            item.item = KoLItem.get(AccountValUtils.toInt(match[1]));
-            item.amount = AccountValUtils.toInt(match[2]);
-            item.limit = match[3] == null ? 0 : AccountValUtils.toInt(match[3]);
-            item.price = AccountValUtils.toInt(match[4]);
-            items2.push(item);
+            items.push({
+              item: KoLItem.get(AccountValUtils.toInt(match[1])),
+              amount: AccountValUtils.toInt(match[2]),
+              limit: match[3] ? AccountValUtils.toInt(match[3]) : 0,
+              price: AccountValUtils.toInt(match[4])
+            });
           }
-          return items2;
+          return items;
         }
         getDisplaycase(userId) {
           const map2 = /* @__PURE__ */ new Map();
           const descs = new Map(
             KoLItem.all().map((i) => [i.descid, i])
           );
-          const page = provider().visitUrl("displaycollection.php?who=" + userId);
+          const page = provider().visitUrl(`displaycollection.php?who=${userId}`);
           let lastShelf;
           const itemRegex = /<td width=30 height=30><img src=".+?" class=hand onClick='descitem\((\d+),(\d+)\)'><\/td><td valign=center><b>.+?<\/b>(?: \(((?:\d|,)+)\))?<\/td><\/tr>/;
           const shelfRegex = /<font color=white>([^<]+)<\/font>/;
-          for (const s2 of page.split("<tr>")) {
-            const shelfMatch = s2.match(shelfRegex);
-            if (shelfMatch != null) {
+          for (const s of page.split("<tr>")) {
+            const shelfMatch = s.match(shelfRegex);
+            if (shelfMatch !== null) {
               lastShelf = provider().entityDecode(shelfMatch[1]);
             }
-            const match = s2.match(itemRegex);
-            if (match == null) {
+            const match = s.match(itemRegex);
+            if (match === null) {
               continue;
             }
             const item = descs.get(match[1]);
-            if (item == null) {
+            if (item === void 0) {
               provider().print(
-                "Unknown item description: " + match[1] + ", update mafia?",
+                `Unknown item description: ${match[1]}, update mafia?`,
                 AccountValColors.attentionGrabbingWarning
               );
               continue;
             }
             map2.set(
               { item, shelf: lastShelf },
-              match[3] == null ? 1 : AccountValUtils.toInt(match[3])
+              match[3] ? AccountValUtils.toInt(match[3]) : 1
             );
           }
           return map2;
@@ -357,6 +423,7 @@ var accountval = (() => {
   var ValItem, ItemPrice;
   var init_typings = __esm({
     "src/models/typings.ts"() {
+      "use strict";
       ValItem = class {
         name;
         pluralName;
@@ -364,10 +431,10 @@ var accountval = (() => {
         actualItem;
         tradeableItem;
         bound;
-        shopWorth;
+        shopWorth = 0;
         worthMultiplier = 1;
         snapshotSource;
-        sortValue;
+        sortValue = 0;
         constructor(actualItem, item = actualItem, name = item.name, pluralName = item.plural, bound, snapshotSource) {
           this.actualItem = actualItem;
           this.name = name;
@@ -375,7 +442,7 @@ var accountval = (() => {
           this.tradeableItem = item;
           this.bound = bound;
           this.snapshotSource = snapshotSource;
-          if (this.bound == null && !item.tradeable) {
+          if (this.bound === void 0 && !item.tradeable) {
             this.bound = 1 /* NO_TRADE */;
           }
         }
@@ -384,25 +451,25 @@ var accountval = (() => {
           return this;
         }
         getBound() {
-          if (this.bound == 0 /* BOUND */) {
+          if (this.bound === 0 /* BOUND */) {
             return "Bound";
           }
-          if (this.bound == 2 /* FAMILIAR */) {
+          if (this.bound === 2 /* FAMILIAR */) {
             return "Familiar";
           }
-          if (this.bound == 3 /* IN_USE */) {
+          if (this.bound === 3 /* IN_USE */) {
             return "In Use";
           }
-          if (this.bound == 1 /* NO_TRADE */) {
+          if (this.bound === 1 /* NO_TRADE */) {
             return "Untradeable";
           }
-          return null;
+          return void 0;
         }
         isBound() {
-          return this.bound == 0 /* BOUND */ || this.bound == 2 /* FAMILIAR */;
+          return this.bound === 0 /* BOUND */ || this.bound === 2 /* FAMILIAR */;
         }
         isTradeable() {
-          return this.bound == null || this.bound == 3 /* IN_USE */ || this.bound == 4 /* SHOP_WORTH */;
+          return this.bound === void 0 || this.bound === 3 /* IN_USE */ || this.bound === 4 /* SHOP_WORTH */;
         }
       };
       ItemPrice = class {
@@ -424,410 +491,11 @@ var accountval = (() => {
     }
   });
 
-  // src/resolvers/coinmaster.ts
-  var CoinmasterResolver;
-  var init_coinmaster = __esm({
-    "src/resolvers/coinmaster.ts"() {
-      init_apiSupplier();
-      init_supplierTypings();
-      CoinmasterResolver = class {
-        items = [];
-        prices;
-        constructor(prices) {
-          this.prices = prices;
-        }
-        load() {
-          for (const item of KoLItem.all()) {
-            if (!item.tradeable || item.gift || item.quest || item.seller == null) {
-              continue;
-            }
-            const token = item.seller.item;
-            if (token == KoLItem.none) {
-              continue;
-            }
-            const price = provider().sellPrice(item.seller, item);
-            if (price <= 0) {
-              continue;
-            }
-            this.items.push({
-              item,
-              coinmaster: item.seller,
-              currencyCost: price,
-              currency: token
-            });
-          }
-          this.prices.bulkLoad(this.items.map((i) => i.item));
-        }
-        getHighestCoinmaster(currency) {
-          let highest = null;
-          for (const item of this.items) {
-            if (item.currency != currency) {
-              continue;
-            }
-            if (item.price == null) {
-              const itemPrice = this.prices.itemPrice(item.item);
-              if (itemPrice == null) {
-                return null;
-              }
-              item.price = itemPrice.price;
-              item.priceEach = item.price / item.currencyCost;
-            }
-            if (highest != null && highest.priceEach > item.priceEach) {
-              continue;
-            }
-            highest = item;
-          }
-          return highest;
-        }
-      };
-    }
-  });
-
-  // data/accountval_binds.txt
-  var accountval_binds_default;
-  var init_accountval_binds = __esm({
-    "data/accountval_binds.txt"() {
-      accountval_binds_default = "# Original data taken from https://github.com/soolar/accountval.ash\n# Item Containers! Start with i\ni	packet of mayfly bait	mayfly bait necklace\ni	Clan VIP Lounge invitation	Clan VIP Lounge key\ni	Make-Your-Own-Vampire-Fangs kit	plastic vampire fangs\ni	Folder Holder	over-the-shoulder Folder Holder\ni	can of Rain-Doh	empty Rain-Doh can\ni	Discontent&trade; Winter Garden Catalog	packet of winter seeds\ni	Ed the Undying exhibit crate	The Crown of Ed the Undying\ni	Pack of Every Card	Deck of Every Card\ni	DIY protonic accelerator kit	protonic accelerator pack\ni	Dear Past Self Package	Time-Spinner\ni	Granny Tood's Thanksgarden Catalog	packet of thanksgarden seeds\ni	suspicious package	Kremlin's Greatest Briefcase\ni	LI-11 Motor Pool voucher	Asdon Martin keyfob (on ring)\ni	Grumpy Bumpkin's Pumpkin Seed Catalog	packet of pumpkin seeds\ni	Mint Salton Pepper's Peppermint Seed Catalog	Peppermint Pip Packet\ni	Pete & Jackie's Dragon Tooth Emporium Catalog	packet of dragon's teeth\ni	Pocket Meteor Guide	Pocket Meteor Guide (well-thumbed)\ni	corked genie bottle	genie bottle\ni	pantogram	portable pantogram\ni	locked mumming trunk	mumming trunk\ni	January's Garbage Tote (unopened)	January's Garbage Tote\ni	Pok&eacute;fam Guide to Capturing All of Them	packet of tall grass seeds\ni	SongBoom&trade; BoomBox Box	SongBoom&trade; BoomBox\ni	Bastille Battalion control rig crate	Bastille Battalion control rig\ni	latte lovers club card	latte lovers member's mug\ni	Kramco Industries packing carton	Kramco Sausage-o-Matic&trade;\ni	mint condition Lil' Doctor&trade; bag	Lil' Doctor&trade; bag\ni	vampyric cloake pattern	vampyric cloake\ni	Fourth of May Cosplay Saber kit	Fourth of May Cosplay Saber\ni	rune-strewn spoon cocoon	hewn moon-rune spoon\ni	Beach Comb Box	Beach Comb\ni	Unopened Eight Days a Week Pill Keeper	Eight Days a Week Pill Keeper\ni	unopened diabolic pizza cube box	diabolic pizza cube\ni	unopened Bird-a-Day calendar	Bird-a-Day calendar\ni	mint-in-box Powerful Glove	Powerful Glove\ni	Better Shrooms and Gardens catalog	packet of mushroom spores\ni	Guzzlr application	Guzzlr tablet\ni	bag of Iunion stones	Iunion Crown\ni	packaged SpinMaster&trade; lathe	SpinMaster&trade; lathe\ni	Bagged Cargo Cultist Shorts	Cargo Cultist Shorts\ni	Comprehensive Cartographic Compendium	Comprehensive Cartographic Compendium (well-read)\ni	packaged knock-off retro superhero cape	unwrapped knock-off retro superhero cape\ni	packaged miniature crystal ball	miniature crystal ball\ni	emotion chip	spinal-fluid-covered emotion chip\ni	power seed	potted power plant\ni	packaged backup camera	backup camera\ni	packaged familiar scrapbook	familiar scrapbook\ni	packaged industrial fire extinguisher	industrial fire extinguisher\ni	Packaged Daylight Shavings Helmet	Daylight Shavings Helmet\ni	Packaged cold medicine cabinet	Cold medicine cabinet\ni	box o' ghosts	gregarious ghostling\ni	Gordon Beer's Beer Garden Catalog	Packet of beer seeds\ni	Mint condition magnifying glass	cursed magnifying glass\ni	Antique pair of blue jeans	Ellsbury's journal (used)\ni	warehouse key	mime army insignia (cryonics)\ni	warehouse key	mime army insignia (morale)\ni	warehouse key	mime army insignia (psychological warfare)\ni	warehouse key	mime army insignia (pyrotechnics)\ni	warehouse key	mime army insignia (sanitation)\ni	warehouse key	mime army insignia (espionage)\ni	warehouse key	mime army insignia (infantry)\ni	warehouse key	mime army insignia (intelligence)\ni	warehouse key	mime army infiltration glove\ni	warehouse key	mime army challenge coin\ni	warehouse key	mime army shotglass\ni	warehouse key	miming corduroys\ni	warehouse key	miming beret\ni	warehouse key	miming gloves\ni	warehouse key	miming boots\ni	warehouse key	miming shirt\ni	combat lover's locket lockbox	combat lover's locket\ni	undamaged Unbreakable Umbrella	Unbreakable umbrella\ni	packaged June cleaver	June cleaver\ni	designer sweatpants (new old stock)	Designer sweatpants\ni	unopened tiny stillsuit	tiny stillsuit\ni	packaged Jurassic Parka	Jurassic Parka\ni	packaged model train set	model train set\ni	ChibiBuddy\u2122 (off)	ChibiBuddy\u2122 (on)\ni	Rock Garden Guide	packet of rock seeds\ni	S.I.T. Course Voucher	S.I.T. Course Completion Certificate\ni	Closed-circuit phone system	Closed-circuit pay phone\ni	Cursed monkey glove	cursed monkey's paw\ni	shrink-wrapped Cincho de Mayo	Cincho de Mayo\ni	shrink-wrapped 2002 Mr. Store Catalog	2002 Mr. Store Catalog\ni	boxed august scepter	august scepter\ni	book of facts	book of facts (dog-eared)\ni	crated wardrobe-o-matic	wardrobe-o-matic\ni	wrapped candy cane sword cane	candy cane sword cane\ni	in-the-box spring shoes	spring shoes\ni	packaged Everfull Dart Holster	Everfull Dart Holster\ni	Boxed Apriling band helmet	Apriling band helmet\ni	boxed Mayam Calendar	Mayam Calendar\ni	packaged Roman Candelabra	Roman Candelabra\ni	untorn tearaway pants package	tearaway pants\ni	Boxed Sept-Ember Censer	Sept-Ember Censer\ni	boxed bat wings	bat wings\ni	Sealed TakerSpace letter of Marque	TakerSpace letter of Marque\ni	McHugeLarge deluxe ski set	McHugeLarge duffel bag\ni	CyberRealm keycode	server room key\ni	eldritch tincture	eldritch tincture (depleted)\ni	new-in-box toy Cupid bow	toy Cupid bow\ni	assemble-it-yourself Leprecondo	Leprecondo\ni	Packaged April Shower Thoughts Calendar	April Shower Thoughts shield\ni	Unpeeled Peridot of Peril	Peridot of Peril\ni	packaged prismatic beret	prismatic beret\ni	M\xF6bius ring box	M\xF6bius ring\ni	packaged Monodent of the Sea	Monodent of the Sea\ni	Lab-grown blood cubic zirconia	blood cubic zirconia\ni	shrunken head in a duffel bag	shrunken head\ni	seal-clubbing club loot box	legendary seal-clubbing club\ni	discreetly-wrapped Eternity Codpiece	The Eternity Codpiece\ni	boxed Heartstone	Heartstone\ni	Boxed Archaeologist's Spade	Archaeologist's Spade\ni	wrapped Baseball Diamond	Baseball Diamond\ni	Pasta wand loot box	legendary pasta wand\ni	shrink-wrapped Cup of 13s	Cup of 13s\ni	Allied Radio Backpack Pack	Allied Radio Backpack\ni	Packaged Portable Laughing Stock	Portable Laughing Stock\ni	black rosebud	black garden rose\n\n\n\n\n# Bookshelf stuff! Start with b\nb	Tome of Snowcone Summoning	Summon Snowcones\nb	Scratch 'n' Sniff Sticker Tome	Summon Stickers\nb	Tome of Sugar Shummoning	Summon Sugar Sheets\nb	Tome of Clip Art	Summon Clip Art\nb	Tome of Rad Libs	Summon Rad Libs\nb	The Smith's Tome	Summon Smithsness\nb	McPhee's Grimoire of Hilarious Object Summoning	Summon Hilarious Objects\nb	Sp'n-Zor's Grimoire of &quot;Tasteful&quot; Gifts	Summon Tasteful Items\nb	Sorcerers of the Shore Grimoire	Summon Alice's Army Cards\nb	Thinknerd's Grimoire of Geeky Gifts	Summon Geeky Gifts\nb	Libram of Candy Heart Summoning	Summon Candy Heart\nb	Libram of Divine Favors	Summon Party Favor\nb	Libram of Love Songs	Summon Love Song\nb	Libram of BRICKOs	Summon BRICKOs\nb	Gygaxian Libram	Summon Dice\nb	Libram of Resolutions	Summon Resolutions\nb	Libram of Pulled Taffy	Summon Taffy\nb	The Confiscator's Grimoire	Summon Confiscated Things\n\n\n\n# Property based detection! Start with p\np	airplane charter: Spring Break Beach	sleazeAirportAlways&!_sleazeAirportToday\np	airplane charter: Conspiracy Island	spookyAirportAlways&!_spookyAirportToday\np	airplane charter: Dinseylandfill	stenchAirportAlways&!_stenchAirportToday\np	airplane charter: That 70s Volcano	hotAirportAlways&!_hotAirportToday\np	airplane charter: The Glaciest	coldAirportAlways&!_coldAirportToday\np	Chateau Mantegna room key	chateauAvailable\np	bottle of lovebug pheromones	lovebugsUnlocked\np	shrine to the Barrel god	barrelShrineUnlocked\np	X-32-F snowman crate	snojoAvailable\np	LT&T telegraph office deed	telegraphOfficeAvailable\np	detective school application	hasDetectiveSchool\np	Build-a-City Gingerbread kit	gingerbreadCityAvailable&!_gingerbreadCityToday\np	heart-shaped crate	loveTunnelAvailable&!_loveTunnelUsed\np	Spacegate access badge	spacegateAlways&!_spacegateToday\np	FantasyRealm membership packet	frAlways&!_frToday\np	Horsery contract	horseryAvailable\np	Neverending Party invitation envelope	neverendingPartyAlways&!_neverendingPartyToday\np	voter registration form	voteAlways&!_voteToday\np	Boxing Day care package	daycareOpen&!_daycareToday\np	PirateRealm membership packet	prAlways&!_prToday\np	Distant Woods Getaway Brochure	getawayCampsiteUnlocked\np	Undrilled cosmic bowling ball	hasCosmicBowlingBall\np	MayDay\u2122 contract	hasMaydayContract\np	boxed autumn-aton	hasAutumnaton\np	deed to Oliver's Place	ownsSpeakeasy\np	Interesting Coin Inheritance Letter	hasInterestingCoin\np	Order of the Green Thumb Order Form	ownsFloristFriar\n\n\n\n# Eudoras! Start with e\ne	My Own Pen Pal kit	Pen Pal\ne	GameInformPowerDailyPro subscription card	GameInformPowerDailyPro Magazine\ne	Xi Receiver Unit	Xi Receiver Unit\ne	New-You Club Membership Form	New-You Club\ne	Our Daily Candles\u2122 order form	Our Daily Candles\ne	Black and White Apron Enrollment Form	Black & White Apron\n\n\n\n# visit_url contains... Start with v\n\n\n\n# eval(function) => boolean! Starts with s for script\n\n\n\n# campground items! Starts with c\nc	Haunted Doghouse\nc	Witchess Set\nc	Source terminal\nc	potted tea tree\nc	A Guide to Burning Leaves\n\n\n\n# Gardens\ng	packet of pumpkin seeds	pumpkin	\ng	Peppermint Pip Packet	peppermint\ng	packet of dragon's teeth	skeleton\ng	Packet of beer seeds	beer\ng	packet of winter seeds	winter\ng	packet of thanksgarden seeds	thanksgarden\ng	packet of tall grass seeds	grass\ng	packet of mushroom spores	mushroom\ng	packet of rock seeds	rock\ng	black garden rose	black_rose\n\n\n# Items that are dependent on the value of another as they're no-trade\n# Item | Check Against | X of our item = 1 of that item\nt	ChibiBuddy\u2122 (on)	ChibiBuddy\u2122 (off)	1\nt	distilled resin	inflammable leaf	50\nt	Rethinking Candy	Knucklebone	2750\n\n\n# Items that are a coinmaster currency, and is dynamically priced because there's no solid metric\n# The price is resolved at runtime\nt	fat loot token\nt	Cop dollar\nt	Driplet\nt	Chroner\nt	Freddy Kruegerand\nt	Guzzlrbuck\nt	Beach Buck\nt	Volcoino\nt	FunFunds\u2122\nt	Coinspiracy\nt	Wal-Mart gift certificate\nt	Rubee\u2122\nt	buffalo dime\nt	Spacegate Research\n\n# Items that are best valued at a hardcoded value, although you may not get that value...\nh	meat paste	10\nh	meat stack	100\nh	nest egg	150\nh	Dungeon dragon chest	500\nh	Meat globe	700\nh	dense meat stack	1000\nh	Loose Meats	2300\nh	chest of the Bonerdagon	3000\nh	Duct tape wallet	3050\nh	Stock Certificate	5000\nh	Envelope full of Meat	30000\nh	Discount Telescope Warehouse gift certificate	100000";
-    }
-  });
-
-  // src/resolvers/items.ts
-  var AccValStuff, ItemResolver;
-  var init_items = __esm({
-    "src/resolvers/items.ts"() {
-      init_apiSupplier();
-      init_supplierTypings();
-      init_typings();
-      init_colors();
-      init_coinmaster();
-      init_accountval_binds();
-      init_utils();
-      AccValStuff = class {
-        itemType;
-        actualItem;
-        skill;
-        untradeableItem;
-        garden;
-        script;
-        userSetting;
-        visitUrlLink;
-        visitUrlIncludes;
-        correspondence;
-        currencyAmount;
-      };
-      ItemResolver = class {
-        visitCache = /* @__PURE__ */ new Map();
-        accValStuff;
-        accountValCache = /* @__PURE__ */ new Map();
-        accountValVisitCachePropName = "_accountValVisitCache";
-        prices;
-        constructor(prices) {
-          this.prices = prices;
-          this.accValStuff = this.loadAccountValStuff();
-        }
-        loadCache() {
-          const prop = provider().retrieveCache(this.accountValVisitCachePropName, "transient").split(",");
-          for (const p of prop) {
-            if (!p.includes(":")) {
-              continue;
-            }
-            const spl = p.split(":");
-            this.accountValCache.set(
-              KoLItem.get(AccountValUtils.toInt(spl[0])),
-              spl[1].startsWith("t")
-            );
-          }
-        }
-        saveCache() {
-          const values = [];
-          this.accountValCache.forEach(
-            (val2, key) => values.push(`${key.id}:${val2 ? "t" : "f"}`)
-          );
-          values.sort((v1, v2) => v1.localeCompare(v2));
-          const val = values.join(",");
-          if (provider().retrieveCache(
-            this.accountValVisitCachePropName,
-            "transient"
-          ) == val) {
-            return;
-          }
-          provider().storeCache(
-            this.accountValVisitCachePropName,
-            values.join(","),
-            "transient"
-          );
-        }
-        getUrledItems() {
-          const items = [];
-          const origSize = this.accountValCache.size;
-          for (const s of this.accValStuff) {
-            if (s.itemType == 1 /* BOOK */) {
-              if (provider().haveSkill(s.skill)) {
-                items.push([s.actualItem, 0 /* BOUND */]);
-              }
-            } else if (s.itemType == 3 /* EUDORA */) {
-              if (this.visitCheck(
-                s.actualItem,
-                "account.php?tab=correspondence",
-                s.correspondence
-              )) {
-                items.push([s.actualItem, 0 /* BOUND */]);
-              }
-            } else if (s.itemType == 2 /* PROPERTY */) {
-              if (this.testProperty(s.userSetting)) {
-                items.push([s.actualItem, 0 /* BOUND */]);
-              }
-            } else if (s.itemType == 5 /* VISIT_URL_CHECK */) {
-              if (this.visitCheck(s.actualItem, s.visitUrlLink, s.visitUrlIncludes)) {
-                items.push([s.actualItem, 0 /* BOUND */]);
-              }
-            } else if (s.itemType == 4 /* GARDEN */) {
-              if (provider().myGardenType() == s.garden) {
-                items.push([s.actualItem, 3 /* IN_USE */]);
-              }
-            } else if (s.itemType == 6 /* SKILL */) {
-              if (provider().getPermedSkills()[s.skill.name]) {
-                items.push([s.actualItem, 0 /* BOUND */]);
-              }
-            } else if (s.itemType == 8 /* CAMPGROUND */) {
-              if (provider().getCampground().has(s.actualItem)) {
-                items.push([s.actualItem, 0 /* BOUND */]);
-              }
-            } else if (s.itemType == 9 /* SCRIPT */) {
-              if (eval(s.script)) {
-                items.push([s.actualItem, 0 /* BOUND */]);
-              }
-            }
-          }
-          if (origSize != this.accountValCache.size) {
-            this.saveCache();
-          }
-          return items;
-        }
-        testProperty(property) {
-          let result = true;
-          for (const prop of property.split("&")) {
-            const isTrue = AccountValUtils.toBoolean(
-              provider().retrieveCache(prop.replace("!", ""), "small_persist")
-            );
-            const isNotNegated = !prop.includes("!");
-            result = result && isTrue == isNotNegated;
-          }
-          return result;
-        }
-        addItem(ownedItems, actualItem, item, name, plural, bound, count = 1, worthMultiplier = 1) {
-          const v = new ValItem(actualItem, item, name, plural, bound);
-          v.worthMultiplier = worthMultiplier;
-          ownedItems.set(v, (ownedItems.get(v) | 0) + count);
-        }
-        resolveBoundToTradeables(copy, ownedItems, resolve) {
-          let coinmaster;
-          for (const s2 of this.accValStuff) {
-            if (!resolve.includes(s2.itemType)) {
-              continue;
-            }
-            try {
-              if (s2.itemType == 7 /* CURRENCY */ && s2.untradeableItem == null) {
-                if (coinmaster == null) {
-                  coinmaster = new CoinmasterResolver(this.prices);
-                  coinmaster.load();
-                }
-                const item2 = coinmaster.getHighestCoinmaster(s2.actualItem);
-                if (item2 == null) {
-                  continue;
-                }
-                s2.currencyAmount = item2.currencyCost;
-                s2.untradeableItem = item2.currency;
-                s2.actualItem = item2.item;
-              }
-              const item = s2.untradeableItem;
-              const pair = copy[item.name];
-              if (pair == null) {
-                continue;
-              }
-              const v = pair[0];
-              this.addItem(
-                ownedItems,
-                item,
-                s2.actualItem,
-                item.name,
-                item.plural,
-                v.bound == null || v.bound == 1 /* NO_TRADE */ || v.bound == 3 /* IN_USE */ ? s2.itemType == 0 /* UNTRADEABLE_ITEM */ ? 0 /* BOUND */ : 1 /* NO_TRADE */ : v.bound,
-                pair[1],
-                s2.currencyAmount ?? 1
-              );
-            } catch (e) {
-              provider().print(
-                `You probably need to update mafia! Got an error! ${e}`,
-                AccountValColors.attentionGrabbingWarning
-              );
-            }
-          }
-        }
-        resolveFamiliars(familiars, ownedItems) {
-          for (const fam of familiars) {
-            if (!fam.hatchling.tradeable) {
-              continue;
-            }
-            this.addItem(
-              ownedItems,
-              fam.hatchling,
-              fam.hatchling,
-              fam.toString(),
-              fam.toString(),
-              2 /* FAMILIAR */
-            );
-          }
-        }
-        resolveFamiliarItems() {
-          const famEquipped = /* @__PURE__ */ new Map();
-          for (const fam of KoLFamiliar.all()) {
-            if (!provider().haveFamiliar(fam) || provider().myFamiliar() == fam) {
-              continue;
-            }
-            const item = provider().familiarEquippedEquipment(fam);
-            if (item == null || item == KoLItem.none) {
-              continue;
-            }
-            famEquipped.set(item, (famEquipped.get(item) | 0) + 1);
-          }
-          return famEquipped;
-        }
-        visitCheck(item, url, find) {
-          if (this.accountValCache.has(item)) {
-            return this.accountValCache.get(item);
-          }
-          let page = this.visitCache.get(url);
-          if (page == null) {
-            page = provider().visitUrl(url);
-            this.visitCache.set(url, page);
-          }
-          const result = page.includes(find);
-          this.accountValCache.set(item, result);
-          return result;
-        }
-        loadAccountValStuff() {
-          const buffer = accountval_binds_default;
-          const values = [];
-          loop: for (const line of buffer.split(/(\n|\r)+/)) {
-            if (line.startsWith("#") || line.length == 0) {
-              continue;
-            }
-            const spl = line.split("	");
-            if (spl.length < 2) {
-              continue;
-            }
-            const v = new AccValStuff();
-            try {
-              v.actualItem = KoLItem.get(spl[1]);
-            } catch (e) {
-              provider().print(
-                `Error! Update mafia? ${e}`,
-                AccountValColors.attentionGrabbingWarning
-              );
-              continue;
-            }
-            switch (spl[0]) {
-              case "i":
-                v.itemType = 0 /* UNTRADEABLE_ITEM */;
-                v.untradeableItem = KoLItem.get(spl[2]);
-                break;
-              case "b":
-                v.itemType = 1 /* BOOK */;
-                v.skill = KoLSkill.get(spl[2]);
-                break;
-              case "p":
-                v.itemType = 2 /* PROPERTY */;
-                v.userSetting = spl[2];
-                break;
-              case "e":
-                v.itemType = 3 /* EUDORA */;
-                v.correspondence = spl[2];
-                break;
-              case "v":
-                v.itemType = 5 /* VISIT_URL_CHECK */;
-                v.visitUrlLink = spl[2];
-                v.visitUrlIncludes = spl[3];
-                break;
-              case "g":
-                v.itemType = 4 /* GARDEN */;
-                v.garden = spl[2];
-                break;
-              case "t":
-                v.itemType = 7 /* CURRENCY */;
-                if (spl.length > 2) {
-                  v.untradeableItem = KoLItem.get(spl[2]);
-                  v.currencyAmount = parseInt(spl[3]);
-                }
-                break;
-              case "c":
-                v.itemType = 8 /* CAMPGROUND */;
-                break;
-              case "s":
-                v.itemType = 9 /* SCRIPT */;
-                v.script = spl[2];
-                break;
-              case "h":
-                this.prices.addSpecialCase(v.actualItem, parseInt(spl[2]));
-                continue loop;
-                break;
-              default:
-                provider().print(
-                  `Found line '${line}' which I can't handle!`,
-                  AccountValColors.attentionGrabbingWarning
-                );
-                continue;
-            }
-            values.push(v);
-          }
-          this.loadSkills(values);
-          loop: for (const v of values) {
-            if (v.actualItem.tradeable || v.itemType == 7 /* CURRENCY */ && v.untradeableItem == null) {
-              continue;
-            }
-            for (const v1 of values) {
-              if (v1.itemType != 0 /* UNTRADEABLE_ITEM */ && v1.itemType != 7 /* CURRENCY */) {
-                continue;
-              }
-              if (v1.untradeableItem != v.actualItem) {
-                continue;
-              }
-              continue loop;
-            }
-            provider().print(
-              `Missing a tradeable item for ${v.actualItem}`,
-              AccountValColors.attentionGrabbingWarning
-            );
-          }
-          this.loadCache();
-          return values;
-        }
-        loadSkills(values) {
-          const itemsSkills = new Map(
-            KoLItem.all().map((i) => [i, provider().associatedSkill(i)]).filter(
-              ([i, skill]) => !i.reusable && !i.quest && !i.gift && skill != KoLSkill.none
-            )
-          );
-          const alreadyNoted = values.map((v) => v.actualItem);
-          for (const [i, skill] of itemsSkills) {
-            if (!i.tradeable || alreadyNoted.includes(i)) {
-              continue;
-            }
-            const v = new AccValStuff();
-            v.itemType = 6 /* SKILL */;
-            v.actualItem = i;
-            v.skill = skill;
-            values.push(v);
-          }
-        }
-      };
-    }
-  });
-
   // src/utils/timings.ts
   var AccValTiming;
   var init_timings = __esm({
     "src/utils/timings.ts"() {
+      "use strict";
       init_apiSupplier();
       init_utils();
       AccValTiming = class _AccValTiming {
@@ -840,7 +508,7 @@ var accountval = (() => {
         stopped;
         depth = 0;
         stepStarted;
-        totalTimeTaken = null;
+        totalTimeTaken;
         constructor(name, isSteps = false) {
           this.name = name;
           if (isSteps) {
@@ -852,12 +520,12 @@ var accountval = (() => {
           provider().printHtml(line);
         }
         start() {
-          if (this.totalTimeTaken == null) {
+          if (this.totalTimeTaken === void 0) {
             throw new Error(
               `${this.getName()} was not configured as a total time timings`
             );
           }
-          if (this.stepStarted != null) {
+          if (this.stepStarted !== void 0) {
             throw new Error(`${this.getName()} was not stopped properly`);
           }
           this.stepStarted = Date.now();
@@ -866,7 +534,7 @@ var accountval = (() => {
           return this.name;
         }
         stop(print = false) {
-          if (this.stopped != null && this.stepStarted == null) {
+          if (this.stopped !== void 0 && this.stepStarted === void 0) {
             throw new Error(`The timing for ${this.getName()} was already stopped`);
           }
           this.stopped = Date.now();
@@ -875,9 +543,9 @@ var accountval = (() => {
               `<font color='blue'>${this.getName()}<font color='green'> time taken: </font>${this.getTimeStr()}</font>`
             );
           }
-          if (this.totalTimeTaken != null) {
+          if (this.totalTimeTaken !== void 0) {
             this.totalTimeTaken += Date.now() - this.stepStarted;
-            this.stepStarted = null;
+            this.stepStarted = void 0;
           }
           return this;
         }
@@ -885,37 +553,36 @@ var accountval = (() => {
           return this.totalTimeTaken ?? (this.stopped ?? Date.now()) - this.started;
         }
         getTimeStr() {
-          return `${AccountValUtils.getNumber(this.getTime())}ms${this.stopped == null ? " (never stopped)" : ""}${this.stepStarted != null ? " (step never stopped)" : ""}`;
+          return `${AccountValUtils.getNumber(this.getTime())}ms${this.stopped === void 0 ? " (never stopped)" : ""}${this.stepStarted !== void 0 ? " (step never stopped)" : ""}`;
         }
         static start(name, withSteps = false) {
           if (!this.enabled) {
-            return null;
+            return;
           }
           const started = Date.now();
           let existing = this.trackingMap.get(name);
-          if (existing != null && (existing.totalTimeTaken == null || existing.stepStarted != null)) {
+          if (existing !== void 0 && (existing.totalTimeTaken === void 0 || existing.stepStarted !== void 0)) {
             throw new Error(`The timing for ${name} was already started`);
           }
-          if (existing == null) {
+          if (existing === void 0) {
             existing = new _AccValTiming(name, withSteps);
             this.trackingMap.set(name, existing);
             this.tracking.push(["STARTED", existing]);
             existing.depth = this.tracking.filter(
-              ([state, t]) => t.stopped == null && state == "STARTED"
+              ([state, t]) => t.stopped === void 0 && state === "STARTED"
             ).length - 1;
           } else {
             existing.start();
           }
           this.timingsSlowdown += Date.now() - started;
-          return existing;
         }
         static stop(name, print = false) {
           if (!this.enabled) {
-            return null;
+            return;
           }
           const started = Date.now();
           const existing = this.trackingMap.get(name);
-          if (existing == null) {
+          if (existing === void 0) {
             throw new Error(`There was no time tracking created for ${name}`);
           }
           let lastStopIndex = -1;
@@ -931,7 +598,6 @@ var accountval = (() => {
           this.tracking.push(["STOPPED", existing]);
           existing.stop(print);
           this.timingsSlowdown += Date.now() - started;
-          return existing;
         }
         static printTracked(method) {
           if (!this.enabled) {
@@ -941,21 +607,21 @@ var accountval = (() => {
             ...this.tracking
           ];
           this.tracking.forEach(([state, t]) => {
-            if (t.stopped == null) {
+            if (t.stopped === void 0) {
               sortedTimes.push(["STOPPED", t]);
             }
           });
           for (const [state, timing] of sortedTimes) {
             const depthStr = `<font color='gray'>${">&nbsp;".repeat(timing.depth)}</font>`;
-            if (method == "PRINT_JUST_ONCE") {
-              if (state != "STARTED") {
+            if (method === "PRINT_JUST_ONCE") {
+              if (state !== "STARTED") {
                 continue;
               }
               this.printHtml(
                 `${depthStr}<font color='blue'>${timing.getName()} <font color='green'>time taken:</font> ${timing.getTimeStr()}</font>`
               );
-            } else if (method == "PRINT_START_AND_END") {
-              if (state == "STARTED") {
+            } else if (method === "PRINT_START_AND_END") {
+              if (state === "STARTED") {
                 this.printHtml(
                   `${depthStr}<font color='blue'>${timing.getName()}</font> <font color='green'>started</font>`
                 );
@@ -964,8 +630,8 @@ var accountval = (() => {
                   `${depthStr}<font color='blue'>${timing.getName()}<font color='green'> stopped, time taken: </font>${timing.getTimeStr()}</font>`
                 );
               }
-            } else if (method == "PRINT_JUST_END") {
-              if (state == "STARTED") {
+            } else if (method === "PRINT_JUST_END") {
+              if (state === "STARTED") {
                 continue;
               }
               this.printHtml(
@@ -981,94 +647,11 @@ var accountval = (() => {
     }
   });
 
-  // src/pricing/variants/kolmafia.ts
-  var MallPricing, HistoricalPricing;
-  var init_kolmafia = __esm({
-    "src/pricing/variants/kolmafia.ts"() {
-      init_apiSupplier();
-      init_typings();
-      MallPricing = class {
-        sessionKey = "accountval_loadedAllMallItems";
-        ignoreKey = "_accountval_force_mallprices";
-        loadedAllMallItems = "not_loaded";
-        constructor() {
-          this.loadLastState();
-          if (this.loadedAllMallItems == "not_loaded") {
-            this.loadMallPrices();
-          }
-        }
-        loadLastState() {
-          const prop = provider().retrieveCache(this.sessionKey, "transient");
-          if (!prop) {
-            return;
-          }
-          this.loadedAllMallItems = prop;
-        }
-        resetStateMaybe() {
-          if (provider().retrieveCache(this.ignoreKey, "small_persist") != "true") {
-            return;
-          }
-          if (this.loadedAllMallItems == "not_loaded") {
-            this.loadedAllMallItems = "unsure";
-          }
-        }
-        loadMallPrices() {
-          if (this.loadedAllMallItems == "loaded") {
-            throw new Error(`Mall prices failed to load, check that loathers/mall-check (mallcheck.js) is installed and working, set '${this.ignoreKey}=true' to ignore this error`);
-          } else if (this.loadedAllMallItems == "unsure") {
-            provider().print(
-              `Mall prices didn't resolve properly, please make sure that mallcheck.js from loathers/mall-check is installed, now falling back to manually searching.`,
-              "red"
-            );
-          }
-          this.loadedAllMallItems = provider().resolveAllMallPrices(
-            this.loadedAllMallItems
-          );
-          provider().storeCache(
-            this.sessionKey,
-            this.loadedAllMallItems,
-            "transient"
-          );
-        }
-        isViable() {
-          return true;
-        }
-        resolve(item) {
-          const prevAge = provider().historicalAge(item);
-          const price = provider().mallPrice(item);
-          if (provider().historicalAge(item) < prevAge && // If the new malled price is not valid, then it was an item that can't be found in mall, which explains why the cached mall prices didn't work
-          price >= 100 && price < 999999999999) {
-            this.resetStateMaybe();
-            this.loadMallPrices();
-          }
-          return new ItemPrice(
-            item,
-            price,
-            2 /* MALL */,
-            provider().historicalAge(item)
-          );
-        }
-      };
-      HistoricalPricing = class {
-        isViable() {
-          return true;
-        }
-        resolve(item) {
-          return new ItemPrice(
-            item,
-            provider().historicalPrice(item),
-            1 /* HISTORICAL */,
-            provider().historicalAge(item)
-          );
-        }
-      };
-    }
-  });
-
   // src/pricing/variants/flatfile.ts
   var FlatfilePrices;
   var init_flatfile = __esm({
     "src/pricing/variants/flatfile.ts"() {
+      "use strict";
       init_typings();
       FlatfilePrices = class {
         constructor(settings) {
@@ -1079,8 +662,8 @@ var accountval = (() => {
         lastUpdated;
         resolve(item) {
           const price = this.prices[item.id];
-          if (price == null) {
-            return null;
+          if (price === void 0) {
+            return void 0;
           }
           return new ItemPrice(
             item,
@@ -1101,7 +684,7 @@ var accountval = (() => {
               continue;
             }
             const spl2 = spl.split("	");
-            if (spl2.length == 2 && spl2[0] == "Last Updated:") {
+            if (spl2.length === 2 && spl2[0] === "Last Updated:") {
               this.lastUpdated = parseInt(spl2[1]);
               continue;
             }
@@ -1109,9 +692,6 @@ var accountval = (() => {
               continue;
             }
             const result = this.loadDataItem(spl2);
-            if (result == null) {
-              continue;
-            }
             this.prices[result[0]] = result[1];
           }
         }
@@ -1123,12 +703,13 @@ var accountval = (() => {
   var IrratPrices;
   var init_irratprices = __esm({
     "src/pricing/variants/irratprices.ts"() {
+      "use strict";
       init_apiSupplier();
       init_flatfile();
       IrratPrices = class extends FlatfilePrices {
         ofThePast = false;
         doWarning() {
-          if (this.prices == null || this.ofThePast || this.lastUpdated == null) {
+          if (this.prices === void 0 || this.ofThePast || this.lastUpdated === void 0) {
             return false;
           }
           const aWeekIsThisManyMillis = 7 * 24 * 60 * 60 * 1e3;
@@ -1138,13 +719,13 @@ var accountval = (() => {
           return true;
         }
         isViable() {
-          if (this.prices == null) {
+          if (this.prices === void 0) {
             return false;
           }
           if (this.ofThePast) {
             return true;
           }
-          if (this.lastUpdated == null) {
+          if (this.lastUpdated === void 0) {
             return false;
           }
           const irratDedAtWeek = 3;
@@ -1156,7 +737,7 @@ var accountval = (() => {
         }
         loadDataFile() {
           const toFetch = this.settings.dateToFetch;
-          if (toFetch == null) {
+          if (toFetch === void 0) {
             return provider().retrieveCache(
               "irrats_item_prices.txt",
               "large_persist"
@@ -1236,13 +817,99 @@ var accountval = (() => {
     }
   });
 
+  // src/pricing/variants/kolmafia.ts
+  var MallPricing, HistoricalPricing;
+  var init_kolmafia = __esm({
+    "src/pricing/variants/kolmafia.ts"() {
+      "use strict";
+      init_apiSupplier();
+      init_typings();
+      MallPricing = class {
+        sessionKey = "accountval_loadedAllMallItems";
+        ignoreKey = "_accountval_force_mallprices";
+        loadedAllMallItems = "not_loaded";
+        constructor() {
+          this.loadLastState();
+          if (this.loadedAllMallItems === "not_loaded") {
+            this.loadMallPrices();
+          }
+        }
+        loadLastState() {
+          const prop = provider().retrieveCache(this.sessionKey, "transient");
+          if (!prop) {
+            return;
+          }
+          this.loadedAllMallItems = prop;
+        }
+        resetStateMaybe() {
+          if (provider().retrieveCache(this.ignoreKey, "small_persist") !== "true") {
+            return;
+          }
+          if (this.loadedAllMallItems === "not_loaded") {
+            this.loadedAllMallItems = "unsure";
+          }
+        }
+        loadMallPrices() {
+          if (this.loadedAllMallItems === "loaded") {
+            throw new Error(`Mall prices failed to load, check that loathers/mall-check (mallcheck.js) is installed and working, set '${this.ignoreKey}=true' to ignore this error`);
+          } else if (this.loadedAllMallItems === "unsure") {
+            provider().print(
+              `Mall prices didn't resolve properly, please make sure that mallcheck.js from loathers/mall-check is installed, now falling back to manually searching.`,
+              "red"
+            );
+          }
+          this.loadedAllMallItems = provider().resolveAllMallPrices(
+            this.loadedAllMallItems
+          );
+          provider().storeCache(
+            this.sessionKey,
+            this.loadedAllMallItems,
+            "transient"
+          );
+        }
+        isViable() {
+          return true;
+        }
+        resolve(item) {
+          const prevAge = provider().historicalAge(item);
+          const price = provider().mallPrice(item);
+          if (provider().historicalAge(item) < prevAge && // If the new malled price is not valid, then it was an item that can't be found in mall, which explains why the cached mall prices didn't work
+          price >= 100 && price < 999999999999) {
+            this.resetStateMaybe();
+            this.loadMallPrices();
+          }
+          return new ItemPrice(
+            item,
+            price,
+            2 /* MALL */,
+            provider().historicalAge(item)
+          );
+        }
+      };
+      HistoricalPricing = class {
+        isViable() {
+          return true;
+        }
+        resolve(item) {
+          return new ItemPrice(
+            item,
+            provider().historicalPrice(item),
+            1 /* HISTORICAL */,
+            provider().historicalAge(item)
+          );
+        }
+      };
+    }
+  });
+
   // src/pricing/variants/pricegun.ts
   var PricegunResolver;
   var init_pricegun = __esm({
     "src/pricing/variants/pricegun.ts"() {
+      "use strict";
       init_apiSupplier();
-      init_typings();
       init_supplierTypings();
+      init_typings();
       PricegunResolver = class {
         constructor(settings) {
           this.settings = settings;
@@ -1291,16 +958,16 @@ var accountval = (() => {
             retrieved: Math.floor(Date.now() / 1e3)
           });
         }
-        bulkResolve(items2) {
-          const missing = items2.filter((i) => !this.items.has(i.id));
+        bulkResolve(items) {
+          const missing = items.filter((i) => !this.items.has(i.id));
           if (missing.length) {
             this.fetch(missing);
           }
           const now = Math.floor(Date.now() / 1e3);
-          return items2.map((i) => {
+          return items.map((i) => {
             const price = this.items.get(i.id);
             if (!price || price.volume < 0) {
-              return null;
+              return void 0;
             }
             return new ItemPrice(
               i,
@@ -1311,16 +978,16 @@ var accountval = (() => {
             );
           });
         }
-        fetch(items2) {
+        fetch(items) {
           const MAX_AMOUNT = this.settings.pricegunBatchSize;
           const now = Math.floor(Date.now() / 1e3);
-          for (let start = 0; start < items2.length; start += MAX_AMOUNT) {
-            const batch = items2.slice(
+          for (let start = 0; start < items.length; start += MAX_AMOUNT) {
+            const batch = items.slice(
               start,
-              Math.min(start + MAX_AMOUNT, items2.length)
+              Math.min(start + MAX_AMOUNT, items.length)
             );
             provider().print(
-              `Pricegun progress: ${start + batch.length} / ${items2.length}`
+              `Pricegun progress: ${start + batch.length} / ${items.length}`
             );
             const ignoredItem = batch.length + 3 < MAX_AMOUNT && !batch.some((b) => b.id === 1);
             if (ignoredItem) {
@@ -1364,7 +1031,7 @@ var accountval = (() => {
           }
         }
         resolve(item) {
-          return this.bulkResolve([item])[1];
+          return this.bulkResolve([item])[0];
         }
         isViable() {
           return true;
@@ -1377,13 +1044,13 @@ var accountval = (() => {
   var PriceResolver;
   var init_priceResolver = __esm({
     "src/pricing/priceResolver.ts"() {
+      "use strict";
       init_apiSupplier();
-      init_timings();
       init_typings();
-      init_kolmafia();
+      init_timings();
       init_irratprices();
+      init_kolmafia();
       init_pricegun();
-      init_supplierTypings();
       PriceResolver = class {
         constructor(settings) {
           this.settings = settings;
@@ -1400,18 +1067,12 @@ var accountval = (() => {
           }
           this.resolvers.push(specialResolver);
           this.resolvers.push(new HistoricalPricing());
-          this.fillSpecialCase();
         }
         settings;
         specialCase = /* @__PURE__ */ new Map();
         resolvers = [];
         addSpecialCase(item, meat) {
           this.specialCase.set(item, meat);
-        }
-        fillSpecialCase() {
-          this.specialCase.set(KoLItem.get("Meat Paste"), 10);
-          this.specialCase.set(KoLItem.get("Meat Stack"), 100);
-          this.specialCase.set(KoLItem.get("Dense meat stack"), 1e3);
         }
         doWarning() {
           if (this.resolvers[0] instanceof IrratPrices) {
@@ -1422,11 +1083,11 @@ var accountval = (() => {
         stop() {
           this.resolvers.forEach((r) => r.stop && r.stop());
         }
-        bulkLoad(items2) {
+        bulkLoad(items) {
           if (!this.resolvers[0].bulkResolve) {
             return;
           }
-          const toCheck = new Set(items2);
+          const toCheck = new Set(items);
           const checked = /* @__PURE__ */ new Set();
           for (const item of toCheck) {
             if (checked.has(item)) {
@@ -1443,7 +1104,7 @@ var accountval = (() => {
           }
           this.resolvers[0].bulkResolve(Array.from(toCheck));
         }
-        itemPrice(item, ignoreFold = false, forcePricing = null, doSuperFast = false, doEstimates = false, timingsKey = "") {
+        itemPrice(item, ignoreFold = false, forcePricing, doSuperFast = false, doEstimates = false, timingsKey = "") {
           if (this.settings.pricegun) {
             ignoreFold = true;
           }
@@ -1456,11 +1117,11 @@ var accountval = (() => {
                 try {
                   const foldPrices = foldables.map(
                     (f) => this.itemPrice(f, true, forcePricing, doSuperFast, doEstimates)
-                  ).filter((p) => p != null);
+                  ).filter((p) => p !== void 0);
                   foldPrices.sort(
-                    (f1, f2) => f1.item.tradeable != f2.item.tradeable ? f1.item.tradeable ? -1 : 1 : f1.price - f2.price
+                    (f1, f2) => f1.item.tradeable !== f2.item.tradeable ? f1.item.tradeable ? -1 : 1 : f1.price - f2.price
                   );
-                  const compare = foldPrices.find((f) => f.item == item);
+                  const compare = foldPrices.find((f) => f.item === item);
                   for (const f of foldPrices) {
                     if (f.daysOutdated > compare.daysOutdated * 3) {
                       continue;
@@ -1478,10 +1139,11 @@ var accountval = (() => {
           }
           AccValTiming.start(`${timingsKey}Check Pricing Misc`, true);
           try {
-            if (this.specialCase.has(item)) {
+            const specialPrice = this.specialCase.get(item);
+            if (specialPrice !== void 0) {
               return new ItemPrice(
                 item,
-                this.specialCase.get(item),
+                specialPrice,
                 2 /* MALL */,
                 0
               );
@@ -1501,7 +1163,7 @@ var accountval = (() => {
           try {
             for (const resolver of this.resolvers) {
               const price = resolver.resolve(item);
-              if (price == null && this.settings.dateToFetch == null) {
+              if (price === void 0 && this.settings.dateToFetch === void 0) {
                 continue;
               }
               return price;
@@ -1515,18 +1177,364 @@ var accountval = (() => {
     }
   });
 
+  // src/resolvers/coinmaster.ts
+  var CoinmasterResolver;
+  var init_coinmaster = __esm({
+    "src/resolvers/coinmaster.ts"() {
+      "use strict";
+      init_apiSupplier();
+      init_supplierTypings();
+      CoinmasterResolver = class {
+        items = [];
+        prices;
+        constructor(prices) {
+          this.prices = prices;
+        }
+        load() {
+          for (const item of KoLItem.all()) {
+            if (!item.tradeable || item.gift || item.quest || item.seller === void 0) {
+              continue;
+            }
+            const token = item.seller.item;
+            if (token === KoLItem.none) {
+              continue;
+            }
+            const price = provider().sellPrice(item.seller, item);
+            if (price <= 0) {
+              continue;
+            }
+            this.items.push({
+              item,
+              coinmaster: item.seller,
+              currencyCost: price,
+              currency: token
+            });
+          }
+          this.prices.bulkLoad(this.items.map((i) => i.item));
+        }
+        getHighestCoinmaster(currency) {
+          let highest;
+          for (const item of this.items) {
+            if (item.currency !== currency) {
+              continue;
+            }
+            if (item.price === void 0) {
+              const itemPrice = this.prices.itemPrice(item.item);
+              if (itemPrice === void 0) {
+                return void 0;
+              }
+              item.price = itemPrice.price;
+              item.priceEach = item.price / item.currencyCost;
+            }
+            if (highest !== void 0 && highest.priceEach > item.priceEach) {
+              continue;
+            }
+            highest = item;
+          }
+          return highest;
+        }
+      };
+    }
+  });
+
+  // src/resolvers/items.ts
+  var AccValStuff, ItemResolver;
+  var init_items = __esm({
+    "src/resolvers/items.ts"() {
+      "use strict";
+      init_apiSupplier();
+      init_supplierTypings();
+      init_binds();
+      init_typings();
+      init_colors();
+      init_utils();
+      init_coinmaster();
+      AccValStuff = class {
+        constructor(bind, actualItem) {
+          this.bind = bind;
+          this.actualItem = actualItem;
+        }
+        bind;
+        actualItem;
+        untradeableItem;
+        skill;
+        currencyAmount;
+      };
+      ItemResolver = class {
+        visitCache = /* @__PURE__ */ new Map();
+        accValStuff;
+        accountValCache = /* @__PURE__ */ new Map();
+        accountValVisitCachePropName = "_accountValVisitCache";
+        prices;
+        constructor(prices) {
+          this.prices = prices;
+          this.accValStuff = this.loadAccountValStuff();
+        }
+        loadCache() {
+          const prop = provider().retrieveCache(this.accountValVisitCachePropName, "transient").split(",");
+          for (const p of prop) {
+            if (!p.includes(":")) {
+              continue;
+            }
+            const spl = p.split(":");
+            this.accountValCache.set(
+              KoLItem.get(AccountValUtils.toInt(spl[0])),
+              spl[1].startsWith("t")
+            );
+          }
+        }
+        saveCache() {
+          const values = [];
+          this.accountValCache.forEach(
+            (val2, key) => values.push(`${key.id}:${val2 ? "t" : "f"}`)
+          );
+          values.sort((v1, v2) => v1.localeCompare(v2));
+          const val = values.join(",");
+          if (provider().retrieveCache(
+            this.accountValVisitCachePropName,
+            "transient"
+          ) === val) {
+            return;
+          }
+          provider().storeCache(
+            this.accountValVisitCachePropName,
+            values.join(","),
+            "transient"
+          );
+        }
+        getUrledItems() {
+          const items = [];
+          const origSize = this.accountValCache.size;
+          for (const s of this.accValStuff) {
+            const { bind } = s;
+            switch (bind.type) {
+              case "book":
+                if (provider().haveSkill(s.skill)) {
+                  items.push([s.actualItem, 0 /* BOUND */]);
+                }
+                break;
+              case "eudora":
+                if (this.visitCheck(
+                  s.actualItem,
+                  "account.php?tab=correspondence",
+                  bind.correspondence
+                )) {
+                  items.push([s.actualItem, 0 /* BOUND */]);
+                }
+                break;
+              case "property":
+                if (this.testProperty(bind.property)) {
+                  items.push([s.actualItem, 0 /* BOUND */]);
+                }
+                break;
+              case "garden":
+                if (provider().myGardenType() === bind.garden) {
+                  items.push([s.actualItem, 3 /* IN_USE */]);
+                }
+                break;
+              case "skill":
+                if (provider().getPermedSkills()[s.skill.name]) {
+                  items.push([s.actualItem, 0 /* BOUND */]);
+                }
+                break;
+              case "campground":
+                if (provider().getCampground().has(s.actualItem)) {
+                  items.push([s.actualItem, 0 /* BOUND */]);
+                }
+                break;
+            }
+          }
+          if (origSize !== this.accountValCache.size) {
+            this.saveCache();
+          }
+          return items;
+        }
+        testProperty(property) {
+          let result = true;
+          for (const prop of property.split("&")) {
+            const isTrue = AccountValUtils.toBoolean(
+              provider().retrieveCache(prop.replace("!", ""), "small_persist")
+            );
+            const isNotNegated = !prop.includes("!");
+            result = result && isTrue === isNotNegated;
+          }
+          return result;
+        }
+        addItem(ownedItems, actualItem, item, name, plural, bound, count = 1, worthMultiplier = 1) {
+          const v = new ValItem(actualItem, item, name, plural, bound);
+          v.worthMultiplier = worthMultiplier;
+          ownedItems.set(v, (ownedItems.get(v) ?? 0) + count);
+        }
+        resolveBoundToTradeables(copy, ownedItems, resolve) {
+          let coinmaster;
+          for (const s of this.accValStuff) {
+            if (!resolve.includes(s.bind.type)) {
+              continue;
+            }
+            try {
+              if (s.bind.type === "currency" && s.untradeableItem === void 0) {
+                if (coinmaster === void 0) {
+                  coinmaster = new CoinmasterResolver(this.prices);
+                  coinmaster.load();
+                }
+                const item2 = coinmaster.getHighestCoinmaster(s.actualItem);
+                if (item2 === void 0) {
+                  continue;
+                }
+                s.currencyAmount = item2.currencyCost;
+                s.untradeableItem = item2.currency;
+                s.actualItem = item2.item;
+              }
+              const item = s.untradeableItem;
+              const pair = copy[item.name];
+              if (pair === void 0) {
+                continue;
+              }
+              const v = pair[0];
+              this.addItem(
+                ownedItems,
+                item,
+                s.actualItem,
+                item.name,
+                item.plural,
+                v.bound === void 0 || v.bound === 1 /* NO_TRADE */ || v.bound === 3 /* IN_USE */ ? s.bind.type === "untradeable" ? 0 /* BOUND */ : 1 /* NO_TRADE */ : v.bound,
+                pair[1],
+                s.currencyAmount ?? 1
+              );
+            } catch (e) {
+              provider().print(
+                `You probably need to update mafia! Got an error! ${e}`,
+                AccountValColors.attentionGrabbingWarning
+              );
+            }
+          }
+        }
+        resolveFamiliars(familiars, ownedItems) {
+          for (const fam of familiars) {
+            if (!fam.hatchling.tradeable) {
+              continue;
+            }
+            this.addItem(
+              ownedItems,
+              fam.hatchling,
+              fam.hatchling,
+              fam.toString(),
+              fam.toString(),
+              2 /* FAMILIAR */
+            );
+          }
+        }
+        resolveFamiliarItems() {
+          const famEquipped = /* @__PURE__ */ new Map();
+          for (const fam of KoLFamiliar.all()) {
+            if (!provider().haveFamiliar(fam) || provider().myFamiliar() === fam) {
+              continue;
+            }
+            const item = provider().familiarEquippedEquipment(fam);
+            if (item === KoLItem.none) {
+              continue;
+            }
+            famEquipped.set(item, (famEquipped.get(item) ?? 0) + 1);
+          }
+          return famEquipped;
+        }
+        visitCheck(item, url, find) {
+          if (this.accountValCache.has(item)) {
+            return this.accountValCache.get(item);
+          }
+          let page = this.visitCache.get(url);
+          if (page === void 0) {
+            page = provider().visitUrl(url);
+            this.visitCache.set(url, page);
+          }
+          const result = page.includes(find);
+          this.accountValCache.set(item, result);
+          return result;
+        }
+        loadAccountValStuff() {
+          for (const { item, price } of bindsOf("price")) {
+            try {
+              this.prices.addSpecialCase(KoLItem.get(item), price);
+            } catch (e) {
+              provider().print(
+                `Error! Update mafia? ${e}`,
+                AccountValColors.attentionGrabbingWarning
+              );
+            }
+          }
+          const values = [];
+          for (const bind of binds) {
+            if (bind.type === "price" || bind.type === "coinmaster") {
+              continue;
+            }
+            try {
+              const v = new AccValStuff(bind, KoLItem.get(bind.item));
+              if (bind.type === "untradeable") {
+                v.untradeableItem = KoLItem.get(bind.untradeable);
+              } else if (bind.type === "book") {
+                v.skill = KoLSkill.get(bind.skill);
+              } else if (bind.type === "currency" && bind.untradeable !== void 0) {
+                v.untradeableItem = KoLItem.get(bind.untradeable);
+                v.currencyAmount = bind.amount;
+              }
+              values.push(v);
+            } catch (e) {
+              provider().print(
+                `Error! Update mafia? ${e}`,
+                AccountValColors.attentionGrabbingWarning
+              );
+            }
+          }
+          this.loadSkills(values);
+          const tradeableSources = new Set(values.map((v) => v.untradeableItem));
+          for (const v of values) {
+            if (v.actualItem.tradeable || tradeableSources.has(v.actualItem) || v.bind.type === "currency" && v.untradeableItem === void 0) {
+              continue;
+            }
+            provider().print(
+              `Missing a tradeable item for ${v.actualItem}`,
+              AccountValColors.attentionGrabbingWarning
+            );
+          }
+          this.loadCache();
+          return values;
+        }
+        loadSkills(values) {
+          const itemsSkills = new Map(
+            KoLItem.all().map((i) => [i, provider().associatedSkill(i)]).filter(
+              ([i, skill]) => !i.reusable && !i.quest && !i.gift && skill !== KoLSkill.none
+            )
+          );
+          const alreadyNoted = values.map((v) => v.actualItem);
+          for (const [i, skill] of itemsSkills) {
+            if (!i.tradeable || alreadyNoted.includes(i)) {
+              continue;
+            }
+            const v = new AccValStuff(
+              { type: "skill", item: i.name, skill: skill.name },
+              i
+            );
+            v.skill = skill;
+            values.push(v);
+          }
+        }
+      };
+    }
+  });
+
   // src/core/logic.ts
   var AccountValLogic;
   var init_logic = __esm({
     "src/core/logic.ts"() {
+      "use strict";
       init_apiSupplier();
       init_supplierTypings();
+      init_typings();
+      init_priceResolver();
       init_items();
       init_pages();
-      init_priceResolver();
       init_colors();
       init_timings();
-      init_typings();
       init_utils();
       AccountValLogic = class {
         constructor(settings) {
@@ -1542,7 +1550,7 @@ var accountval = (() => {
         categoryOrder = [];
         jsFilter;
         addItem(item, count = 1) {
-          this.ownedItems.set(item, (this.ownedItems.get(item) | 0) + count);
+          this.ownedItems.set(item, (this.ownedItems.get(item) ?? 0) + count);
         }
         loadItems() {
           AccValTiming.start("Load JS Filter");
@@ -1557,11 +1565,11 @@ var accountval = (() => {
           this.loadSelfItems();
         }
         loadJsFilter() {
-          if (this.settings.javascriptFilter == "") {
+          if (this.settings.javascriptFilter === "") {
             return;
           }
           provider().print(
-            "JS Filter has been set to: " + this.settings.javascriptFilter,
+            `JS Filter has been set to: ${this.settings.javascriptFilter}`,
             AccountValColors.minorNote
           );
           try {
@@ -1578,8 +1586,8 @@ var accountval = (() => {
         loadPageItems() {
           const pager = new PageResolver();
           if (this.settings.fetchShop) {
-            const items2 = pager.getStore(this.settings.playerId);
-            items2.forEach((i) => {
+            const items = pager.getStore(this.settings.playerId);
+            items.forEach((i) => {
               const item = new ValItem(i.item);
               if (this.settings.shopWorth) {
                 item.bound = 4 /* SHOP_WORTH */;
@@ -1589,36 +1597,36 @@ var accountval = (() => {
             });
           }
           if (this.settings.fetchDisplaycase) {
-            const items2 = pager.getDisplaycase(this.settings.playerId);
-            items2.forEach((v, k) => {
-              if (!this.categoryOrder.includes(k.shelf)) {
+            const items = pager.getDisplaycase(this.settings.playerId);
+            items.forEach((v, k) => {
+              if (k.shelf !== void 0 && !this.categoryOrder.includes(k.shelf)) {
                 this.categoryOrder.push(k.shelf);
               }
               this.addItem(new ValItem(k.item).withCategory(k.shelf), v);
             });
           }
           let resolvedFamiliars = false;
-          if (this.settings.fetchFamiliars != false) {
+          if (this.settings.fetchFamiliars !== false) {
             const familiars = pager.getFamiliars(this.settings.playerId);
             resolvedFamiliars = familiars.length > 0;
             this.resolver.resolveFamiliars(familiars, this.ownedItems);
           }
-          if (this.settings.fetchSnapshot == true) {
+          if (this.settings.fetchSnapshot === true) {
             const snapshot = pager.getSnapshot(
               provider().getPlayerName(this.settings.playerId)
             );
             const familiars = [];
             const skills = [];
-            const items2 = /* @__PURE__ */ new Map();
+            const items = /* @__PURE__ */ new Map();
             for (const item of snapshot) {
               if ("hatchling" in item) {
                 familiars.push(item);
               } else if ("name" in item && !("tradeable" in item)) {
                 skills.push(item);
               } else if ("tradeable" in item) {
-                items2.set(item, 1);
+                items.set(item, 1);
               } else {
-                items2.set(
+                items.set(
                   item[0],
                   item[1]
                 );
@@ -1629,7 +1637,7 @@ var accountval = (() => {
             }
             if (this.settings.doBound && this.settings.fetchingNonItems) {
               for (const item of this.resolver.accValStuff.filter(
-                (s2) => s2.itemType == 6 /* SKILL */ && skills.includes(s2.skill)
+                (s) => s.bind.type === "skill" && s.skill !== void 0 && skills.includes(s.skill)
               )) {
                 this.addItem(
                   new ValItem(
@@ -1645,28 +1653,28 @@ var accountval = (() => {
             const owned = new Map(
               [...this.ownedItems].map(([k, v]) => [k.tradeableItem, [k, v]])
             );
-            items2.forEach((v, k) => {
+            items.forEach((v, k) => {
               const boundItem = this.resolver.accValStuff.find(
-                (i) => i.actualItem == k
+                (i) => i.actualItem === k
               );
-              if (boundItem == null) {
-                v -= owned.has(k) ? owned.get(k)[1] : 0;
+              if (boundItem === void 0) {
+                v -= owned.get(k)?.[1] ?? 0;
                 if (v <= 0) {
                   return;
                 }
                 this.addItem(new ValItem(k), v);
                 return;
-              } else if (owned.has(k) && owned.get(k)[0].isBound()) {
+              } else if (owned.get(k)?.[0].isBound()) {
                 return;
-              } else if (boundItem.untradeableItem != null && owned.has(boundItem.untradeableItem)) {
+              } else if (boundItem.untradeableItem !== void 0 && owned.has(boundItem.untradeableItem)) {
                 return;
               }
               let actualItem = k;
               let name = k.name;
               let plural = k.plural;
-              if (boundItem.itemType == 0 /* UNTRADEABLE_ITEM */) {
+              if (boundItem.bind.type === "untradeable") {
                 const untradeable = boundItem.untradeableItem;
-                v -= owned.has(k) ? owned.get(k)[1] : 0;
+                v -= owned.get(k)?.[1] ?? 0;
                 if (v <= 0) {
                   return;
                 }
@@ -1727,11 +1735,11 @@ var accountval = (() => {
             if (this.settings.doCategories) {
               AccValTiming.start("Resolve and Add Display Case with Shelves");
               const pager = new PageResolver();
-              const items2 = pager.getDisplaycase(
+              const items = pager.getDisplaycase(
                 AccountValUtils.toInt(provider().myId())
               );
-              items2.forEach((v, k) => {
-                if (!this.categoryOrder.includes(k.shelf)) {
+              items.forEach((v, k) => {
+                if (k.shelf !== void 0 && !this.categoryOrder.includes(k.shelf)) {
                   this.categoryOrder.push(k.shelf);
                 }
                 megaExtra.set(k.item, { shelf: k.shelf, count: v });
@@ -1744,9 +1752,9 @@ var accountval = (() => {
             }
           }
           AccValTiming.start("Resolve Shop");
-          const shop = this.settings.fetchShop ? provider().getShop() : null;
+          const shop = this.settings.fetchShop ? provider().getShop() : void 0;
           AccValTiming.stop("Resolve Shop");
-          if (this.settings.fetchShop && !this.settings.shopWorth) {
+          if (shop !== void 0 && !this.settings.shopWorth) {
             AccValTiming.start("Add Shop");
             add(shop);
             AccValTiming.stop("Add Shop");
@@ -1760,25 +1768,26 @@ var accountval = (() => {
             if (this.settings.fetchInventory) {
               amount += provider().equippedAmount(item) + (famItems.get(item) ?? 0);
             }
-            let category;
-            if (megaExtra.has(item)) {
-              amount += megaExtra.get(item).count;
-              category = megaExtra.get(item).shelf;
+            const extra = megaExtra.get(item);
+            const category = extra?.shelf;
+            if (extra !== void 0) {
+              amount += extra.count;
             }
-            if (this.settings.shopWorth && (shop.get(item) ?? 0) > 0) {
+            const shopAmount = shop?.get(item) ?? 0;
+            if (this.settings.shopWorth && shopAmount > 0) {
               const i = new ValItem(item).withCategory(category);
               i.bound = 4 /* SHOP_WORTH */;
               i.shopWorth = provider().shopPrice(item);
-              this.ownedItems.set(i, shop.get(item));
+              this.ownedItems.set(i, shopAmount);
               continue;
             }
-            if (amount == 0) {
+            if (amount === 0) {
               continue;
             }
             this.ownedItems.set(new ValItem(item).withCategory(category), amount);
           }
           AccValTiming.stop("Process All Items");
-          if (this.settings.fetchFamiliars != false) {
+          if (this.settings.fetchFamiliars !== false) {
             AccValTiming.start("Resolve Familiars");
             this.resolver.resolveFamiliars(
               KoLFamiliar.all().filter((f) => provider().haveFamiliar(f)),
@@ -1790,7 +1799,7 @@ var accountval = (() => {
             AccValTiming.start("Resolve Workshed");
             if (this.settings.doBound || this.settings.doTradeables) {
               const i = provider().getWorkshed();
-              if (i != null && i != KoLItem.none && (i.tradeable ? this.settings.doTradeables : this.settings.doBound)) {
+              if (i !== KoLItem.none && (i.tradeable ? this.settings.doTradeables : this.settings.doBound)) {
                 this.addItem(new ValItem(i, i, i.name, i.plural, 3 /* IN_USE */));
               }
             }
@@ -1799,7 +1808,7 @@ var accountval = (() => {
           if (this.settings.doBound && this.settings.fetchingNonItems) {
             AccValTiming.start("Resolve Urled Items");
             for (const [item, status] of this.resolver.getUrledItems()) {
-              if (item.tradeable && (status == 2 /* FAMILIAR */ || status != 0 /* BOUND */) ? !this.settings.doTradeables : !this.settings.doBound) {
+              if (item.tradeable && (status === 2 /* FAMILIAR */ || status !== 0 /* BOUND */) ? !this.settings.doTradeables : !this.settings.doBound) {
                 continue;
               }
               this.addItem(new ValItem(item, item, item.name, item.plural, status));
@@ -1815,31 +1824,35 @@ var accountval = (() => {
           this.ownedItems.forEach((v, k) => {
             copy[k.tradeableItem.name] = [k, v];
           });
-          if (this.settings.doBound || this.settings.doNonTradeables) {
-            this.resolver.resolveBoundToTradeables(copy, this.ownedItems, [
-              this.settings.doBound ? 0 /* UNTRADEABLE_ITEM */ : null,
-              this.settings.doNonTradeables ? 7 /* CURRENCY */ : null
-            ]);
+          const resolve = [];
+          if (this.settings.doBound) {
+            resolve.push("untradeable");
+          }
+          if (this.settings.doNonTradeables) {
+            resolve.push("currency");
+          }
+          if (resolve.length > 0) {
+            this.resolver.resolveBoundToTradeables(copy, this.ownedItems, resolve);
           }
           const skipJsFilter = this.settings.doesJSFilterUsePriceOrSales();
-          for (const item of this.ownedItems.keys()) {
-            if (!skipJsFilter && this.jsFilter != null && !this.jsFilter(item.tradeableItem, this.ownedItems.get(item))) {
+          for (const [item, amount] of this.ownedItems) {
+            if (!skipJsFilter && this.jsFilter && !this.jsFilter(item.tradeableItem, amount)) {
               this.ownedItems.delete(item);
               continue;
             }
-            if (!item.isBound() && (!item.tradeableItem.tradeable || item.tradeableItem.gift) && provider().autosellPrice(item.tradeableItem) == 0) {
+            if (!item.isBound() && (!item.tradeableItem.tradeable || item.tradeableItem.gift) && provider().autosellPrice(item.tradeableItem) === 0) {
               this.ownedItems.delete(item);
               continue;
             }
-            if (this.ownedItems.get(item) < this.settings.minimumAmount) {
+            if (amount < this.settings.minimumAmount) {
               this.ownedItems.delete(item);
               continue;
             }
-            if (!this.settings.doBound && item.isBound() && item.bound != 2 /* FAMILIAR */) {
+            if (!this.settings.doBound && item.isBound() && item.bound !== 2 /* FAMILIAR */) {
               this.ownedItems.delete(item);
               continue;
             }
-            if (item.bound == 2 /* FAMILIAR */ && (this.settings.fetchFamiliars == false || this.settings.fetchFamiliars == null && !this.settings.doBound)) {
+            if (item.bound === 2 /* FAMILIAR */ && (this.settings.fetchFamiliars === false || this.settings.fetchFamiliars === void 0 && !this.settings.doBound)) {
               this.ownedItems.delete(item);
               continue;
             }
@@ -1851,7 +1864,7 @@ var accountval = (() => {
               this.ownedItems.delete(item);
               continue;
             }
-            if (item.isBound() && this.ownedItems.get(item) > 1) {
+            if (item.isBound() && amount > 1) {
               this.ownedItems.set(item, 1);
             }
           }
@@ -1891,15 +1904,15 @@ var accountval = (() => {
             const price = this.priceResolver.itemPrice(
               item.tradeableItem,
               false,
-              this.settings.doSuperFast ? 1 /* HISTORICAL */ : this.settings.useLastSold ? 3 /* MALL_SALES */ : null,
+              this.settings.doSuperFast ? 1 /* HISTORICAL */ : this.settings.useLastSold ? 3 /* MALL_SALES */ : void 0,
               this.settings.doSuperFast,
               true,
               "Logic Item Prices - "
             );
             AccValTiming.stop("Price Item");
-            if (price == null) {
+            if (price === void 0) {
               continue;
-            } else if (price.price > 0 || price.accuracy == 0 /* NEW_PRICES */) {
+            } else if (price.price > 0 || price.accuracy === 0 /* NEW_PRICES */) {
               AccValTiming.start("Add Item Price", true);
               addPrice(item, price);
               AccValTiming.stop("Add Item Price");
@@ -1919,10 +1932,10 @@ var accountval = (() => {
             AccValTiming.start("Check Remaining Logic Item Prices");
             for (const check of toCheck) {
               const i = check[0];
-              if (++checked % 20 == 0 && lastPrinted + 1e3 < Date.now()) {
+              if (++checked % 20 === 0 && lastPrinted + 1e3 < Date.now()) {
                 lastPrinted = Date.now();
                 provider().print(
-                  "Checking value of " + i.name + " (" + checked + " / " + toCheck.length + ")",
+                  `Checking value of ${i.name} (${checked} / ${toCheck.length})`,
                   AccountValColors.helpfulStateInfo
                 );
               }
@@ -1934,7 +1947,7 @@ var accountval = (() => {
                 void 0,
                 "Remaining Logic Item Prices - "
               );
-              if (price == null) {
+              if (price === void 0) {
                 continue;
               }
               addPrice(i, price);
@@ -1946,9 +1959,10 @@ var accountval = (() => {
           AccValTiming.stop("Sort Price List");
         }
         doSort() {
-          if (!this.settings.sortBy.fallback) {
+          const { assignValue, fallback } = this.settings.sortBy;
+          if (assignValue) {
             for (const [v, p] of this.prices) {
-              this.settings.sortBy.assignValue(
+              assignValue(
                 v,
                 p,
                 this.ownedItems,
@@ -1956,17 +1970,17 @@ var accountval = (() => {
               );
             }
           }
-          const sorter = (v1, v2) => this.settings.sortBy.fallback ? this.settings.sortBy.fallback(v1[0], v2[0]) : v1[0].sortValue - v2[0].sortValue;
-          if (this.settings.doCategories && this.categoryOrder != null) {
+          const sorter = (v1, v2) => fallback ? fallback(v1[0], v2[0]) : v1[0].sortValue - v2[0].sortValue;
+          if (this.settings.doCategories) {
             this.prices.sort((v1, v2) => {
               const c1 = v1[0].category ?? "";
               const c2 = v2[0].category ?? "";
-              if (c1 == c2) {
+              if (c1 === c2) {
                 return sorter(v1, v2);
               }
               const i1 = this.categoryOrder.indexOf(c1);
               const i2 = this.categoryOrder.indexOf(c2);
-              if (i1 == i2) {
+              if (i1 === i2) {
                 return sorter(v1, v2);
               }
               return i1 - i2;
@@ -1979,211 +1993,6 @@ var accountval = (() => {
           }
         }
       };
-    }
-  });
-
-  // src/settings/presets.ts
-  function getPresets() {
-    if (presets != null) {
-      return presets;
-    }
-    presets = [];
-    presets.push({
-      name() {
-        return ["consumables", "consumable", "diet", "consume", "consumeable"];
-      },
-      isProcessed: function(item, worth) {
-        return ["food", "booze", "spleen item"].includes(
-          provider().itemType(item)
-        );
-      },
-      desc: function() {
-        return "Show only consumables";
-      }
-    });
-    for (const type of ["food", "booze", "spleen"]) {
-      presets.push({
-        name() {
-          return [type];
-        },
-        isProcessed: function(item) {
-          return provider().itemType(item).replace(" item", "") == type;
-        },
-        desc: function() {
-          return `Show only ${type}`;
-        }
-      });
-    }
-    presets.push({
-      name() {
-        return ["beverage"];
-      },
-      isProcessed: function(item, worth) {
-        return item.notes.includes("BEVERAGE");
-      },
-      desc: function() {
-        return "Show only beverage";
-      }
-    });
-    presets.push({
-      name() {
-        return ["hungry"];
-      },
-      isProcessed: function(item, worth) {
-        if (provider().myFullness() + item.fullness >= provider().fullnessLimit() || item.levelreq < provider().myLevel()) {
-          return false;
-        }
-        return provider().itemType(item) == "food";
-      },
-      desc: function() {
-        return "Show only food you can fit in stomach";
-      }
-    });
-    presets.push({
-      name() {
-        return ["thirsty"];
-      },
-      isProcessed: function(item, worth) {
-        if (provider().myInebriety() + item.inebriety >= provider().inebrietyLimit() || item.levelreq < provider().myLevel()) {
-          return false;
-        }
-        return provider().itemType(item) == "booze";
-      },
-      desc: function() {
-        return "Show only booze you can fit in liver";
-      }
-    });
-    presets.push({
-      name() {
-        return ["munchy"];
-      },
-      isProcessed: function(item, worth) {
-        if (provider().mySpleenUse() + item.spleen >= provider().spleenLimit() || item.levelreq < provider().myLevel()) {
-          return false;
-        }
-        return provider().itemType(item) == "spleen item";
-      },
-      desc: function() {
-        return "Show only spleen items you can fit in spleen";
-      }
-    });
-    presets.push({
-      name() {
-        return ["equip", "equips", "equipment", "gear"];
-      },
-      isProcessed: function(item) {
-        return provider().toSlot(item) != KoLSlot.none;
-      },
-      desc: function() {
-        return "Show only items that can be equipped";
-      }
-    });
-    presets.push({
-      name() {
-        return ["pvpable", "pvp", "stealable"];
-      },
-      isShown(item, worth) {
-        return item.isTradeable() && item.actualItem.discardable;
-      },
-      desc: function() {
-        return "Show only items that can be stolen";
-      }
-    });
-    presets.push({
-      name() {
-        return ["hatchling", "hatchlings", "larva"];
-      },
-      isProcessed: function(item, worth) {
-        return provider().itemType(item) == "familiar larva";
-      },
-      desc: function() {
-        return "Show only items that can turn into familiars";
-      }
-    });
-    presets.push({
-      name() {
-        return ["autosell", "junk"];
-      },
-      isShown(item, worth) {
-        if (item.isBound() || !item.actualItem.discardable) {
-          return false;
-        }
-        return provider().autosellPrice(item.actualItem) * 2 >= worth;
-      },
-      desc: function() {
-        return "Show only items that sell at mall min";
-      }
-    });
-    const autoselluseItems = [
-      "Bag of park garbage",
-      "ancient vinyl coin purse",
-      "Black pension check",
-      "Briefcase",
-      "Collection of tiny spooky objects",
-      "CSA discount card",
-      "Duct tape wallet",
-      "Fat Wallet",
-      "Gathered Meat-Clip",
-      "LOLmec statuette",
-      "Orcish meat locker",
-      "Old coin purse",
-      "Old leather wallet",
-      "Penultimate Fantasy chest",
-      "Roll of meat",
-      "Shiny stones",
-      "SMOOCH bottlecap",
-      "Solid gold jewel",
-      "Stolen meatpouch",
-      "Warm Subject gift certificate",
-      "Envelope full of Meat",
-      "chest of the Bonerdagon",
-      "cursed piece of thirteen",
-      "Discount Telescope Warehouse gift certificate",
-      "dungeon dragon chest",
-      "fat stacks of cash",
-      "flytrap pellet",
-      "Gratitude chocolate (Meat-filled)",
-      "handful of tips",
-      "kobold treasure hoard",
-      "loose Meats",
-      "meat globe",
-      "Mr. Big's Wallet",
-      "pixel coin",
-      "pixellated moneybag",
-      "smut orc keepsake box",
-      "Stock Certificate"
-    ].map((s2) => KoLItem.get(s2));
-    presets.push({
-      name: function() {
-        return ["autouse"];
-      },
-      isProcessed: function(item) {
-        return autoselluseItems.includes(item);
-      },
-      desc: function() {
-        return "Show only (some) usable items that could make you some meat";
-      }
-    });
-    presets.forEach((preset) => {
-      if (preset.isProcessed == null && preset.isShown == null) {
-        throw new Error(
-          `The preset ${preset.name()[0]} must have one of isProcessed or isShown defined!`
-        );
-      }
-      if (preset.isProcessed != null && preset.isShown != null) {
-        throw new Error(
-          `The preset ${preset.name()[0]} can only have one of isProcessed and isShown defined!`
-        );
-      }
-    });
-    return presets;
-  }
-  var presets;
-  var init_presets = __esm({
-    "src/settings/presets.ts"() {
-      init_apiSupplier();
-      init_supplierTypings();
-      presets = null;
     }
   });
 
@@ -2259,6 +2068,7 @@ var accountval = (() => {
   var Args, ParseError, specSymbol, scriptSymbol, scriptHelpSymbol, optionsSymbol, WrappedArgMetadata, CommandParser;
   var init_grimoireArgs = __esm({
     "src/settings/grimoireArgs.ts"() {
+      "use strict";
       init_apiSupplier();
       Args = class _Args {
         static custom(spec, parser, valueHelpName) {
@@ -2290,10 +2100,11 @@ var accountval = (() => {
         }
         static arrayFromArg(spec, argFromSpec) {
           const spec_without_default = { ...spec };
-          if ("default" in spec_without_default) {
-            delete spec_without_default["default"];
-          }
-          const arg = argFromSpec.call(this, spec_without_default);
+          delete spec_without_default.default;
+          const arg = argFromSpec.call(
+            this,
+            spec_without_default
+          );
           const raw_options = spec.options?.map((option) => option[0]);
           if ("default" in spec && raw_options) {
             for (const default_entry of spec.default) {
@@ -2861,6 +2672,211 @@ var accountval = (() => {
     }
   });
 
+  // src/settings/presets.ts
+  function getPresets() {
+    if (presets !== void 0) {
+      return presets;
+    }
+    presets = [];
+    presets.push({
+      name() {
+        return ["consumables", "consumable", "diet", "consume", "consumeable"];
+      },
+      isProcessed: function(item, worth) {
+        return ["food", "booze", "spleen item"].includes(
+          provider().itemType(item)
+        );
+      },
+      desc: function() {
+        return "Show only consumables";
+      }
+    });
+    for (const type of ["food", "booze", "spleen"]) {
+      presets.push({
+        name() {
+          return [type];
+        },
+        isProcessed: function(item) {
+          return provider().itemType(item).replace(" item", "") === type;
+        },
+        desc: function() {
+          return `Show only ${type}`;
+        }
+      });
+    }
+    presets.push({
+      name() {
+        return ["beverage"];
+      },
+      isProcessed: function(item, worth) {
+        return item.notes.includes("BEVERAGE");
+      },
+      desc: function() {
+        return "Show only beverage";
+      }
+    });
+    presets.push({
+      name() {
+        return ["hungry"];
+      },
+      isProcessed: function(item, worth) {
+        if (provider().myFullness() + item.fullness >= provider().fullnessLimit() || item.levelreq < provider().myLevel()) {
+          return false;
+        }
+        return provider().itemType(item) === "food";
+      },
+      desc: function() {
+        return "Show only food you can fit in stomach";
+      }
+    });
+    presets.push({
+      name() {
+        return ["thirsty"];
+      },
+      isProcessed: function(item, worth) {
+        if (provider().myInebriety() + item.inebriety >= provider().inebrietyLimit() || item.levelreq < provider().myLevel()) {
+          return false;
+        }
+        return provider().itemType(item) === "booze";
+      },
+      desc: function() {
+        return "Show only booze you can fit in liver";
+      }
+    });
+    presets.push({
+      name() {
+        return ["munchy"];
+      },
+      isProcessed: function(item, worth) {
+        if (provider().mySpleenUse() + item.spleen >= provider().spleenLimit() || item.levelreq < provider().myLevel()) {
+          return false;
+        }
+        return provider().itemType(item) === "spleen item";
+      },
+      desc: function() {
+        return "Show only spleen items you can fit in spleen";
+      }
+    });
+    presets.push({
+      name() {
+        return ["equip", "equips", "equipment", "gear"];
+      },
+      isProcessed: function(item) {
+        return provider().toSlot(item) !== KoLSlot.none;
+      },
+      desc: function() {
+        return "Show only items that can be equipped";
+      }
+    });
+    presets.push({
+      name() {
+        return ["pvpable", "pvp", "stealable"];
+      },
+      isShown(item, worth) {
+        return item.isTradeable() && item.actualItem.discardable;
+      },
+      desc: function() {
+        return "Show only items that can be stolen";
+      }
+    });
+    presets.push({
+      name() {
+        return ["hatchling", "hatchlings", "larva"];
+      },
+      isProcessed: function(item, worth) {
+        return provider().itemType(item) === "familiar larva";
+      },
+      desc: function() {
+        return "Show only items that can turn into familiars";
+      }
+    });
+    presets.push({
+      name() {
+        return ["autosell", "junk"];
+      },
+      isShown(item, worth) {
+        if (item.isBound() || !item.actualItem.discardable) {
+          return false;
+        }
+        return provider().autosellPrice(item.actualItem) * 2 >= worth;
+      },
+      desc: function() {
+        return "Show only items that sell at mall min";
+      }
+    });
+    const autoselluseItems = [
+      "Bag of park garbage",
+      "ancient vinyl coin purse",
+      "Black pension check",
+      "Briefcase",
+      "Collection of tiny spooky objects",
+      "CSA discount card",
+      "Duct tape wallet",
+      "Fat Wallet",
+      "Gathered Meat-Clip",
+      "LOLmec statuette",
+      "Orcish meat locker",
+      "Old coin purse",
+      "Old leather wallet",
+      "Penultimate Fantasy chest",
+      "Roll of meat",
+      "Shiny stones",
+      "SMOOCH bottlecap",
+      "Solid gold jewel",
+      "Stolen meatpouch",
+      "Warm Subject gift certificate",
+      "Envelope full of Meat",
+      "chest of the Bonerdagon",
+      "cursed piece of thirteen",
+      "Discount Telescope Warehouse gift certificate",
+      "dungeon dragon chest",
+      "fat stacks of cash",
+      "flytrap pellet",
+      "Gratitude chocolate (Meat-filled)",
+      "handful of tips",
+      "kobold treasure hoard",
+      "loose Meats",
+      "meat globe",
+      "Mr. Big's Wallet",
+      "pixel coin",
+      "pixellated moneybag",
+      "smut orc keepsake box",
+      "Stock Certificate"
+    ].map((s) => KoLItem.get(s));
+    presets.push({
+      name: function() {
+        return ["autouse"];
+      },
+      isProcessed: function(item) {
+        return autoselluseItems.includes(item);
+      },
+      desc: function() {
+        return "Show only (some) usable items that could make you some meat";
+      }
+    });
+    presets.forEach((preset) => {
+      if (preset.isProcessed === void 0 && preset.isShown === void 0) {
+        throw new Error(
+          `The preset ${preset.name()[0]} must have one of isProcessed or isShown defined!`
+        );
+      }
+      if (preset.isProcessed !== void 0 && preset.isShown !== void 0) {
+        throw new Error(
+          `The preset ${preset.name()[0]} can only have one of isProcessed and isShown defined!`
+        );
+      }
+    });
+    return presets;
+  }
+  var presets;
+  var init_presets = __esm({
+    "src/settings/presets.ts"() {
+      "use strict";
+      init_apiSupplier();
+      init_supplierTypings();
+    }
+  });
+
   // src/settings/settings.ts
   function numberParser(arg) {
     let cleaned = arg;
@@ -2868,18 +2884,18 @@ var accountval = (() => {
       cleaned = cleaned.replace(/[,_]/g, "");
     }
     const match = cleaned.match(/^((?:\d+)|(?:\d*\.\d+))([mkbt]?)$/i);
-    if (match == null) {
+    if (match === null) {
       return new ParseError("Invalid number format");
     }
     let num = parseFloat(match[1]);
     const mod = match[2]?.toLowerCase();
-    if (mod == "t") {
+    if (mod === "t") {
       num *= 1e12;
-    } else if (mod == "b") {
+    } else if (mod === "b") {
       num *= 1e9;
-    } else if (mod == "m") {
+    } else if (mod === "m") {
       num *= 1e6;
-    } else if (mod == "k") {
+    } else if (mod === "k") {
       num *= 1e3;
     }
     return num;
@@ -2898,18 +2914,19 @@ var accountval = (() => {
     const neg = /^[-!]/.test(arg);
     const v = arg.toLowerCase().replace("_", "").substring(neg ? 1 : 0);
     for (const sort of sortBys) {
-      if (sort.name.toLowerCase().replace("_", "") != v && !sort.aliases.some((a) => a.toLowerCase().replace("_", "") == v)) {
+      if (sort.name.toLowerCase().replace("_", "") !== v && !sort.aliases.some((a) => a.toLowerCase().replace("_", "") === v)) {
         continue;
       }
       if (neg) {
+        const { assignValue, fallback } = sort;
         return {
           ...sort,
-          assignValue: sort.assignValue ? (item, price, owned, maxPrice) => {
-            sort.assignValue(item, price, owned, maxPrice);
+          assignValue: assignValue ? (item, price, owned, maxPrice) => {
+            assignValue(item, price, owned, maxPrice);
             item.sortValue = -item.sortValue;
           } : void 0,
-          fallback: sort.fallback ? (item1, item2) => {
-            return -sort.fallback(item1, item2);
+          fallback: fallback ? (item1, item2) => {
+            return -fallback(item1, item2);
           } : void 0
         };
       }
@@ -2934,12 +2951,13 @@ var accountval = (() => {
   var sortBys, defaultMaxNaturalPrice, staticAccountValSpec, AccountValSettings;
   var init_settings = __esm({
     "src/settings/settings.ts"() {
-      init_colors();
-      init_presets();
-      init_grimoireArgs();
+      "use strict";
       init_apiSupplier();
       init_supplierTypings();
+      init_colors();
       init_timings();
+      init_grimoireArgs();
+      init_presets();
       sortBys = [
         {
           name: "TOTAL_PRICE",
@@ -2965,7 +2983,6 @@ var accountval = (() => {
         {
           name: "NAME",
           aliases: [],
-          assignValue: void 0,
           fallback: (v1, v2) => v1.name.localeCompare(v2.name)
         },
         {
@@ -3113,7 +3130,7 @@ var accountval = (() => {
           {
             key: "sort",
             aliases: ["sortby", "sorted"],
-            help: `What we should sort the results by, prefix with ! or - to reverse sort. Supports: ${sortBys.map((s2) => `${s2.name} (${s2.aliases.join(", ")})`).join(", ").toUpperCase()}`,
+            help: `What we should sort the results by, prefix with ! or - to reverse sort. Supports: ${sortBys.map((s) => `${s.name} (${s.aliases.join(", ")})`).join(", ").toUpperCase()}`,
             default: sortByParser("TOTAL_PRICE")
           },
           sortByParser,
@@ -3161,9 +3178,9 @@ var accountval = (() => {
           {
             key: "color",
             aliases: ["colors", "colorscheme", "scheme"],
-            help: "What color schemes to use, set `accountvalColorScheme` pref to change the default. Supports: " + getAccountvalColors().join(", "),
+            help: `What color schemes to use, set \`accountvalColorScheme\` pref to change the default. Supports: ${getAccountvalColors().join(", ")}`,
             default: "default",
-            options: ["default", ...getAccountvalColors()].map((s2) => [s2])
+            options: ["default", ...getAccountvalColors()].map((s) => [s])
           },
           colorSchemeParser,
           "COLOR_SCHEME"
@@ -3254,10 +3271,10 @@ var accountval = (() => {
         fetchingEverywhereish = true;
         fetchingNonItems = true;
         presets = [];
+        presetFilters;
         expensivePricesAt = 4e7;
         cheapTotalsLessThan = 2e7;
         cheapPricesLessThan = 2e6;
-        maxPriceAge;
         doSettings(command) {
           const errors = [];
           const presetSpec = {};
@@ -3287,7 +3304,7 @@ var accountval = (() => {
               Args.parse("accountval", scriptHelp.join("\n"), fullSpec, command)
             );
           } catch (e) {
-            errors.push(e.message || e.toString());
+            errors.push(e instanceof Error ? e.message : String(e));
             return errors;
           }
           AccValTiming.enabled = this.timings;
@@ -3301,8 +3318,8 @@ var accountval = (() => {
           }
           this.resolveFetchSources();
           if (this.settings) {
-            for (const setting of Object.keys(this)) {
-              provider().print(`${setting} = ${this[setting]}`);
+            for (const [setting, value] of Object.entries(this)) {
+              provider().print(`${setting} = ${value}`);
             }
           }
           return errors;
@@ -3320,7 +3337,7 @@ var accountval = (() => {
             "fetchSnapshot"
           ];
           const wasSet = Object.entries(this).filter(([k, v]) => v !== void 0).map(([k]) => k);
-          this.fetchingEverywhereish = !this.fetchSession && !this.fetchClan && fetchSources.find((v) => wasSet.includes(v) && this[v]) == null;
+          this.fetchingEverywhereish = !this.fetchSession && !this.fetchClan && fetchSources.find((v) => wasSet.includes(v) && this[v]) === void 0;
           this.fetchClan = this.fetchClan ?? false;
           this.fetchSession = this.fetchSession ?? false;
           if (!wasSet.includes("doTradeables")) {
@@ -3346,11 +3363,11 @@ var accountval = (() => {
           this.fetchingNonItems = this.fetchingEverywhereish;
         }
         doesJSFilterUsePriceOrSales() {
-          return this.javascriptFilter != null && this.javascriptFilter.split("=>")[0].split(",").length >= 3;
+          return this.javascriptFilter !== void 0 && this.javascriptFilter.split("=>")[0].split(",").length >= 3;
         }
         isShown(item, worth) {
           return this.presets.every(
-            (pre) => (pre.preset.isShown != null ? pre.preset.isShown(item, worth) : pre.preset.isProcessed(item.actualItem, worth)) != pre.negated
+            (pre) => (pre.preset.isShown !== void 0 ? pre.preset.isShown(item, worth) : pre.preset.isProcessed(item.actualItem, worth)) !== pre.negated
           );
         }
         getMaxPriceAge(price, amount) {
@@ -3380,6 +3397,7 @@ var accountval = (() => {
   var ReportOutput;
   var init_output = __esm({
     "src/ui/output.ts"() {
+      "use strict";
       init_apiSupplier();
       ReportOutput = class {
         output;
@@ -3388,27 +3406,25 @@ var accountval = (() => {
           this.settings = settings;
         }
         printLine(line, textType, color) {
-          if (this.settings.logOutputAs == "plain" && textType == "html") {
+          if (this.settings.logOutputAs === "plain" && textType === "html") {
             line = line.replace(/<[^>]*>/g, "");
             textType = "plain";
           }
           if (this.settings.logOutputTo) {
-            if (this.output == null) {
-              if (line != null) {
-                line = line.trim();
-              }
-              if (line == null || line == "") {
+            if (this.output === void 0) {
+              line = line.trim();
+              if (line === "") {
                 return;
               }
               this.output = [];
             }
-            if (textType == "plain" && this.settings.logOutputTo.endsWith(".html")) {
+            if (textType === "plain" && this.settings.logOutputTo.endsWith(".html")) {
               line = provider().entityEncode(line);
             }
             this.output.push(line);
-          } else if (textType == "html") {
+          } else if (textType === "html") {
             provider().printHtml(line);
-          } else if (color != null) {
+          } else if (color !== void 0) {
             provider().print(line, color);
           } else {
             provider().print(line);
@@ -3418,7 +3434,7 @@ var accountval = (() => {
           return provider().entityDecode(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
         stop() {
-          if (this.output == null || this.output.length == 0) {
+          if (this.output === void 0 || this.output.length === 0) {
             return;
           }
           provider().storeCache(
@@ -3438,12 +3454,13 @@ var accountval = (() => {
   var ValuationReport;
   var init_valuation = __esm({
     "src/ui/valuation.ts"() {
+      "use strict";
       init_apiSupplier();
-      init_settings();
-      init_utils();
-      init_colors();
-      init_typings();
       init_supplierTypings();
+      init_typings();
+      init_settings();
+      init_colors();
+      init_utils();
       ValuationReport = class {
         netvalue = 0;
         aWorth;
@@ -3451,7 +3468,7 @@ var accountval = (() => {
         mallExtinct = [];
         shopNetValue = 0;
         shopPricedAt = 0;
-        lastCategory = null;
+        lastCategory;
         shelfValue = 0;
         exceededMax = false;
         pronoun;
@@ -3465,37 +3482,37 @@ var accountval = (() => {
           this.aWorth = this.logic.priceResolver.itemPrice(
             KoLItem.get("Mr. Accessory")
           ).price;
-          this.pronoun = this.settings.fetchClan ? "The clan stash is" : !this.settings.playerId || this.settings.playerId == AccountValUtils.toInt(provider().myId()) ? this.settings.fetchSession ? "Your session is" : "You are" : provider().getPlayerName(this.settings.playerId) + " is";
+          this.pronoun = this.settings.fetchClan ? "The clan stash is" : !this.settings.playerId || this.settings.playerId === AccountValUtils.toInt(provider().myId()) ? this.settings.fetchSession ? "Your session is" : "You are" : `${provider().getPlayerName(this.settings.playerId)} is`;
         }
         run() {
           const resolved = this.filterAndResolveItems();
           for (const res of resolved) {
             this.formatResolvedItem(res);
           }
-          this.onShelfName(null, 0);
+          this.onShelfName(void 0, 0);
           this.printLinesAndExtinct(resolved.length);
           this.printSummary();
         }
         filterAndResolveItems() {
-          const useJsFilter = this.logic.jsFilter != null && this.settings.doesJSFilterUsePriceOrSales();
+          const jsFilter = this.settings.doesJSFilterUsePriceOrSales() ? this.logic.jsFilter : void 0;
           const resolved = [];
           for (let no = this.logic.prices.length - 1; no >= 0; no--) {
             const item = this.logic.prices[no][0];
             const price = this.logic.prices[no][1];
             const worthEach = Math.min(
               this.settings.maxNaturalPrice + 1,
-              price.price <= 0 && item.worthMultiplier == 1 ? -1 : price.price * (1 / item.worthMultiplier)
+              price.price <= 0 && item.worthMultiplier === 1 ? -1 : price.price * (1 / item.worthMultiplier)
             );
             const count = this.logic.ownedItems.get(item);
-            if (isNaN(count)) {
+            if (count === void 0 || isNaN(count)) {
               this.out.printLine(
-                "Unable to handle the item '" + item.name + "', skipping..",
+                `Unable to handle the item '${item.name}', skipping..`,
                 "plain",
                 AccountValColors.attentionGrabbingWarning
               );
               continue;
             }
-            if (useJsFilter && !this.logic.jsFilter(item.actualItem, count, worthEach, price.volume)) {
+            if (jsFilter && !jsFilter(item.actualItem, count, worthEach, price.volume)) {
               continue;
             }
             resolved.push({ item, price, worthEach, count });
@@ -3503,11 +3520,11 @@ var accountval = (() => {
           return resolved;
         }
         onShelfName(name, worth) {
-          if (!this.settings.doCategories || name == this.lastCategory) {
+          if (!this.settings.doCategories || name === this.lastCategory) {
             this.shelfValue += worth;
             return;
           }
-          if (this.lastCategory != null) {
+          if (this.lastCategory !== void 0) {
             this.lines.push(
               `<u><b>DC Shelf:</b> ${this.out.escapeHTML(this.lastCategory)}<font color='${AccountValColors.minorNote}'>, worth ${AccountValUtils.getNumber(this.shelfValue)} meat</font></u>`
             );
@@ -3524,7 +3541,7 @@ var accountval = (() => {
             return;
           }
           let title = [];
-          if (item.name != item.tradeableItem.name && item.worthMultiplier != 1) {
+          if (item.name !== item.tradeableItem.name && item.worthMultiplier !== 1) {
             title.push(`=== ${this.out.escapeHTML(item.name)} ===`);
             title.push("");
             title.push(
@@ -3538,9 +3555,9 @@ var accountval = (() => {
           if (price.price < 0) {
             tradeableWorth = " as mall extinct.";
           }
-          const accName = price.accuracy == 0 /* NEW_PRICES */ ? "Last malled" : price.accuracy == 3 /* MALL_SALES */ ? "Last sold" : price.accuracy == 4 /* AUTOSELL */ ? "Autosell" : "Last mafia malled";
+          const accName = price.accuracy === 0 /* NEW_PRICES */ ? "Last malled" : price.accuracy === 3 /* MALL_SALES */ ? "Last sold" : price.accuracy === 4 /* AUTOSELL */ ? "Autosell" : "Last mafia malled";
           title.push(accName + tradeableWorth);
-          if (price.price2 > 0 && price.accuracy == 0 /* NEW_PRICES */) {
+          if (price.price2 > 0 && price.accuracy === 0 /* NEW_PRICES */) {
             title.push(
               `Last sold @ ${AccountValUtils.getNumber(price.price2)} meat.`
             );
@@ -3553,10 +3570,10 @@ var accountval = (() => {
           if (count > 1 && this.settings.showSingleItemWorth) {
             title.push(`Worth a total of ${AccountValUtils.getNumber(totalWorth)}`);
           }
-          if (price.accuracy != 4 /* AUTOSELL */) {
+          if (price.accuracy !== 4 /* AUTOSELL */) {
             title.push("");
             title.push(
-              `Price valid as of ${AccountValUtils.getNumber(price.daysOutdated, 1)} day${price.daysOutdated != 1 ? "s" : ""} ago.`
+              `Price valid as of ${AccountValUtils.getNumber(price.daysOutdated, 1)} day${price.daysOutdated !== 1 ? "s" : ""} ago.`
             );
           }
           if (price.volume >= 0) {
@@ -3565,14 +3582,14 @@ var accountval = (() => {
               `${AccountValUtils.getNumber(price.volume)} sold in the last week.`
             );
           }
-          if (item.snapshotSource != null) {
+          if (item.snapshotSource !== void 0) {
             title = [`Owns in ${item.snapshotSource}.`, ...title];
           }
           let name = this.out.escapeHTML(item.name);
-          if (item.bound != null) {
+          if (item.bound !== void 0) {
             let boundInfo;
             let color = AccountValColors.shopPricesOverpriced;
-            if (item.bound == 4 /* SHOP_WORTH */) {
+            if (item.bound === 4 /* SHOP_WORTH */) {
               const overpricedPerc = item.shopWorth / worthEach;
               if (item.shopWorth < 999999e3) {
                 this.shopPricedAt += item.shopWorth * count;
@@ -3598,7 +3615,7 @@ var accountval = (() => {
           }
           if (worthEach <= 0 || worthEach > this.settings.maxNaturalPrice) {
             if (count > 1) {
-              this.mallExtinct.push([count + " @ " + name, title.join("&#010;")]);
+              this.mallExtinct.push([`${count} @ ${name}`, title.join("&#010;")]);
             } else {
               this.mallExtinct.push([name, title.join("&#010;")]);
             }
@@ -3612,7 +3629,7 @@ var accountval = (() => {
             text += ` worth a total of ${AccountValUtils.getNumber(totalWorth)}`;
           }
           this.lines.push(
-            "<font title='" + this.out.escapeHTML(title.join("&#010;")) + "'>" + text + "</font>"
+            `<font title='${this.out.escapeHTML(title.join("&#010;"))}'>${text}</font>`
           );
         }
         printLinesAndExtinct(totalResolved) {
@@ -3629,7 +3646,7 @@ var accountval = (() => {
             if (this.lines.length > 0) {
               this.lines.push("");
             }
-            if (this.lines[0] == "") {
+            if (this.lines[0] === "") {
               this.lines.shift();
             }
             for (const line of this.lines) {
@@ -3641,10 +3658,10 @@ var accountval = (() => {
                 AccountValColors.mallExtinctColor2
               ];
               const extinct = this.mallExtinct.map(
-                ([name, title], i) => "<font color='" + colors[i % 2] + "' title='" + title + "'>" + name + "</font>"
+                ([name, title], i) => `<font color='${colors[i % 2]}' title='${title}'>${name}</font>`
               );
               this.out.printLine(
-                "There were " + extinct.length + " mall extinct items! Items: " + extinct.join(", "),
+                `There were ${extinct.length} mall extinct items! Items: ${extinct.join(", ")}`,
                 "html"
               );
             }
@@ -3653,11 +3670,11 @@ var accountval = (() => {
         printSummary() {
           let mrAMeat = this.netvalue;
           this.out.printLine(
-            this.pronoun + " worth " + AccountValUtils.getNumber(this.netvalue) + " meat!",
+            `${this.pronoun} worth ${AccountValUtils.getNumber(this.netvalue)} meat!`,
             "plain",
             AccountValColors.helpfulStateInfo
           );
-          if (this.settings.fetchSession && provider().mySessionMeat() != 0) {
+          if (this.settings.fetchSession && provider().mySessionMeat() !== 0) {
             mrAMeat = this.netvalue + provider().mySessionMeat();
             this.out.printLine(
               `Add meat from session, that's ${AccountValUtils.getNumber(mrAMeat)} meat!`,
@@ -3695,7 +3712,7 @@ var accountval = (() => {
           this.printMeat();
           if (this.exceededMax) {
             this.out.printLine(
-              `<font color='${AccountValColors.minorNote}' title="The max natural price is currently set to ${AccountValUtils.getNumber(this.settings.maxNaturalPrice)}. (${this.settings.maxNaturalPrice == AccountValSettings.defaultMaxNaturalPrice ? "default" : `default is ${AccountValUtils.getNumber(AccountValSettings.defaultMaxNaturalPrice)}`})&#010;&#010;You can change this by using 'max=3b' as an arg.&#010;You can also set the property 'accountval_maxNaturalPrice' to a number (3b, 5,000,000, 3m1k, etc), this cap increases by 2b every year to account for meatflation">Some items were expensive and were marked as mall extinct. Hover for details.</font>`,
+              `<font color='${AccountValColors.minorNote}' title="The max natural price is currently set to ${AccountValUtils.getNumber(this.settings.maxNaturalPrice)}. (${this.settings.maxNaturalPrice === AccountValSettings.defaultMaxNaturalPrice ? "default" : `default is ${AccountValUtils.getNumber(AccountValSettings.defaultMaxNaturalPrice)}`})&#010;&#010;You can change this by using 'max=3b' as an arg.&#010;You can also set the property 'accountval_maxNaturalPrice' to a number (3b, 5,000,000, 3m1k, etc), this cap increases by 2b every year to account for meatflation">Some items were expensive and were marked as mall extinct. Hover for details.</font>`,
               "html"
             );
           }
@@ -3717,27 +3734,27 @@ var accountval = (() => {
           }
           let meat = 0;
           const meatSources = [];
-          if (this.settings.fetchInventory && provider().myMeat() != 0) {
+          if (this.settings.fetchInventory && provider().myMeat() !== 0) {
             meat += provider().myMeat();
             meatSources.push(
-              AccountValUtils.getNumber(provider().myMeat()) + " meat in inventory"
+              `${AccountValUtils.getNumber(provider().myMeat())} meat in inventory`
             );
           }
-          if (this.settings.fetchCloset && provider().myClosetMeat() != 0) {
+          if (this.settings.fetchCloset && provider().myClosetMeat() !== 0) {
             meat += provider().myClosetMeat();
             meatSources.push(
-              AccountValUtils.getNumber(provider().myClosetMeat()) + " meat in closet"
+              `${AccountValUtils.getNumber(provider().myClosetMeat())} meat in closet`
             );
           }
-          if (this.settings.fetchStorage && provider().myStorageMeat() != 0) {
+          if (this.settings.fetchStorage && provider().myStorageMeat() !== 0) {
             meat += provider().myStorageMeat();
             meatSources.push(
-              AccountValUtils.getNumber(provider().myStorageMeat()) + " meat in storage"
+              `${AccountValUtils.getNumber(provider().myStorageMeat())} meat in storage`
             );
           }
-          if (meat > 0 && this.settings.playerId == 0) {
+          if (meat > 0 && this.settings.playerId === 0) {
             this.out.printLine(
-              "<font title='" + meatSources.join(", ") + "'>This doesn't include your " + AccountValUtils.getNumber(meat) + " meat!</font>",
+              `<font title='${meatSources.join(", ")}'>This doesn't include your ${AccountValUtils.getNumber(meat)} meat!</font>`,
               "html"
             );
           }
@@ -3765,13 +3782,14 @@ var accountval = (() => {
   var AccountVal;
   var init_accountval = __esm({
     "src/accountval.ts"() {
+      "use strict";
       init_logic();
+      init_grimoireArgs();
       init_settings();
-      init_colors();
-      init_timings();
       init_output();
       init_valuation();
-      init_grimoireArgs();
+      init_colors();
+      init_timings();
       AccountVal = class {
         logic;
         settings;
@@ -3782,11 +3800,11 @@ var accountval = (() => {
         load(command) {
           this.settings = new AccountValSettings();
           this.out = new ReportOutput(this.settings);
-          if (command == "test") {
+          if (command === "test") {
             this.runTests();
             return false;
           }
-          if (command == null) {
+          if (!command) {
             this.out.printLine(
               "To fine tune what we check, including to tradeables only.. Provide the parameter 'help' for more info",
               "plain",
@@ -3811,7 +3829,7 @@ var accountval = (() => {
                 }
               },
               (g, k) => {
-                if (k != "presetFilters") {
+                if (k !== "presetFilters") {
                   return;
                 }
                 Args.showGroupHelp(meta, g, k);
@@ -3819,12 +3837,12 @@ var accountval = (() => {
             );
           }
           if (this.settings.help || this.settings.showPresetFilters) {
-            return;
+            return false;
           }
           if (unknown.length > 0) {
             unknown.forEach(
-              (s2) => this.out.printLine(
-                `<font color='${AccountValColors.attentionGrabbingWarning}'>${s2}</font>`,
+              (s) => this.out.printLine(
+                `<font color='${AccountValColors.attentionGrabbingWarning}'>${s}</font>`,
                 "html"
               )
             );
@@ -3858,7 +3876,7 @@ var accountval = (() => {
           this.load(args);
           for (const [key, value] of Object.entries(verify)) {
             const setTo = this.settings[key];
-            if (setTo == value) {
+            if (setTo === value) {
               continue;
             }
             this.out.printLine(
@@ -3873,17 +3891,15 @@ var accountval = (() => {
   });
 
   // src/browser/index.ts
-  var index_exports = {};
-  __export(index_exports, {
-    main: () => main
-  });
   init_apiSupplier();
 
   // src/browser/browserProvider.ts
+  init_binds();
   init_pages();
   init_utils();
 
   // src/browser/gameData.ts
+  init_binds();
   var PROXY = "https://accountval.lib.co.nz";
   var MAFIA_DATA = `${PROXY}/data/`;
   var IRRAT_PRICES = `${PROXY}/prices/live`;
@@ -3899,26 +3915,6 @@ var accountval = (() => {
     "outfits",
     "coinmasters"
   ];
-  var coinmasterTokens = {
-    "Vending Machine": "fat loot token",
-    "Drip Institute Armory": "Driplet",
-    "The Neandermall": "Chroner",
-    "Ni&ntilde;a Store": "Chroner",
-    "The Terrified Eagle Inn": "Freddy Kruegerand",
-    "Guzzlr Company Store Website": "Guzzlrbuck",
-    "Buff Jimmy's Souvenir Shop": "Beach Buck",
-    "The Frozen Brogurt Stand": "Beach Buck",
-    "Taco Dan's Taco Stand": "Beach Buck",
-    "Disco GiftCo": "Volcoino",
-    "The Dinsey Company Store": "FunFunds&trade;",
-    "The Armory": "Coinspiracy",
-    "The Canteen": "Coinspiracy",
-    "The SHAWARMA Initiative": "Coinspiracy",
-    "Wal-Mart": "Wal-Mart gift certificate",
-    "FantasyRealm Rubee&trade; Store": "Rubee&trade;",
-    "LT&T Gift Shop": "buffalo dime",
-    "Spacegate Fabrication Facility": "Spacegate Research"
-  };
   var BrowserSkill = class {
     constructor(id, name) {
       this.id = id;
@@ -4045,28 +4041,28 @@ var accountval = (() => {
     skillsByName = /* @__PURE__ */ new Map();
     findItem(name) {
       const id = name.match(/^\[(\d+)\]/);
-      if (id != null) {
+      if (id !== null) {
         return this.itemsById.get(parseInt(id[1]));
       }
       return this.itemsByName.get(name.toLowerCase());
     }
     getItem(name) {
       const item = this.findItem(name);
-      if (item == null) {
+      if (item === void 0) {
         throw new Error(`Bad item value: "${name}"`);
       }
       return item;
     }
     getSkill(name) {
       const skill = this.skillsByName.get(name.toLowerCase());
-      if (skill == null) {
+      if (skill === void 0) {
         throw new Error(`Bad skill value: "${name}"`);
       }
       return skill;
     }
     getFamiliar(name) {
       return this.familiars.find(
-        (f) => f.name.toLowerCase() == name.toLowerCase()
+        (f) => f.name.toLowerCase() === name.toLowerCase()
       );
     }
     loadItems(file) {
@@ -4088,7 +4084,7 @@ var accountval = (() => {
     loadConsumables(file, organ) {
       for (const columns of rows(file)) {
         const item = this.findItem(columns[0]);
-        if (item == null || columns.length < 3) {
+        if (item === void 0 || columns.length < 3) {
           continue;
         }
         item[organ] = parseInt(columns[1]);
@@ -4098,7 +4094,7 @@ var accountval = (() => {
     }
     loadSkills(file) {
       for (const [id, name] of rows(file)) {
-        if (name == null) {
+        if (name === void 0) {
           continue;
         }
         const skill = new BrowserSkill(parseInt(id), name);
@@ -4111,19 +4107,19 @@ var accountval = (() => {
     loadSkillItems(file) {
       for (const [type, name, modifiers] of rows(file)) {
         const skillName = modifiers?.match(/(?:^|, )Skill: "(.+?)"/)?.[1];
-        if (type != "Item" || skillName == null) {
+        if (type !== "Item" || skillName === void 0) {
           continue;
         }
         const item = this.findItem(name);
         const skill = this.skillsByName.get(skillName.toLowerCase());
-        if (item != null && skill != null) {
+        if (item !== void 0 && skill !== void 0) {
           item.skill = skill;
         }
       }
     }
     loadFamiliars(file) {
       for (const [id, name, , , hatchling] of rows(file)) {
-        if (hatchling == null) {
+        if (hatchling === void 0) {
           continue;
         }
         const familiar = new BrowserFamiliar(
@@ -4137,7 +4133,7 @@ var accountval = (() => {
     }
     loadFolds(file) {
       for (const [, ...names] of rows(file)) {
-        const group = names.map((name) => this.findItem(name)).filter((item) => item != null);
+        const group = names.map((name) => this.findItem(name)).filter((item) => item !== void 0);
         for (const item of group) {
           this.folds.set(item, group);
         }
@@ -4145,26 +4141,32 @@ var accountval = (() => {
     }
     loadOutfits(file) {
       for (const [, name] of rows(file)) {
-        if (name != null) {
+        if (name !== void 0) {
           this.outfits.push(name);
         }
       }
     }
     loadCoinmasters(file) {
       const coinmasters = /* @__PURE__ */ new Map();
+      const tokens = new Map(
+        bindsOf("coinmaster").flatMap(
+          ({ item, shops }) => shops.map((shop) => [shop, item])
+        )
+      );
       for (const [shop, action, cost, name] of rows(file)) {
-        const token = coinmasterTokens[shop];
-        if (action != "buy" || token == null) {
+        const token = tokens.get(shop);
+        if (action !== "buy" || token === void 0) {
           continue;
         }
         const item = this.findItem(name.replace(/ \(\d+\)$/, ""));
-        if (item == null) {
+        if (item === void 0) {
           continue;
         }
-        if (!coinmasters.has(shop)) {
-          coinmasters.set(shop, new BrowserCoinmaster(shop, this.getItem(token)));
+        let coinmaster = coinmasters.get(shop);
+        if (coinmaster === void 0) {
+          coinmaster = new BrowserCoinmaster(shop, this.getItem(token));
+          coinmasters.set(shop, coinmaster);
         }
-        const coinmaster = coinmasters.get(shop);
         coinmaster.prices.set(item, parseInt(cost));
         item.seller ??= coinmaster;
       }
@@ -4192,57 +4194,6 @@ var accountval = (() => {
 
   // src/browser/browserProvider.ts
   var KEY_PREFIX = "kol-accountval-";
-  var coolItemProperties = {
-    sleazeAirportAlways: "airport1",
-    spookyAirportAlways: "airport2",
-    stenchAirportAlways: "airport3",
-    hotAirportAlways: "airport4",
-    coldAirportAlways: "airport5",
-    gingerbreadCityAvailable: "gingerbreadcity",
-    spacegateAlways: "spacegate",
-    frAlways: "fantasyrealm",
-    prAlways: "piraterealm",
-    crAlways: "cyberrealm",
-    neverendingPartyAlways: "neverendingparty",
-    voteAlways: "voterregistered",
-    daycareOpen: "boxingdaycare",
-    hasCosmicBowlingBall: "hascosmicball",
-    hasMaydayContract: "maydaykit",
-    hasAutumnaton: "autumnaton",
-    hasShrunkenHead: "shrunkenhead",
-    hasInterestingCoin: "interesting",
-    loveTunnelAvailable: "tunnelofloveiotm",
-    telegraphOfficeAvailable: "ltt",
-    ownsFloristFriar: "floristfriar"
-  };
-  var pageProperties = {
-    chateauAvailable: ["place.php?whichplace=mountains", "chateau"],
-    snojoAvailable: ["place.php?whichplace=mountains", "snojo"],
-    getawayCampsiteUnlocked: ["place.php?whichplace=woods", "campaway"],
-    horseryAvailable: ["place.php?whichplace=town_right", "Horsery"],
-    hasDetectiveSchool: ["place.php?whichplace=town_wrong", "Precinct"],
-    ownsSpeakeasy: ["place.php?whichplace=town_wrong", "Speakeasy"],
-    barrelShrineUnlocked: ["da.php", "bgshrine.gif"]
-  };
-  var campgroundItems = [
-    ["doghouse.gif", "Haunted Doghouse"],
-    ["chesstable.gif", "Witchess Set"],
-    ["campterminal.gif", "Source terminal"],
-    ["teatree", "potted tea tree"],
-    ["campground/leaves", "A Guide to Burning Leaves"]
-  ];
-  var gardenImages = [
-    ["pumpkinpatch_", "pumpkin"],
-    ["pepperpatch_", "peppermint"],
-    ["bonegarden", "skeleton"],
-    ["beergarden", "beer"],
-    ["wintergarden", "winter"],
-    ["thanksgarden", "thanksgarden"],
-    ["grassgarden", "grass"],
-    ["mushgarden.gif", "mushroom"],
-    ["/rockgarden/", "rock"]
-  ];
-  var blackRoseGarden = /Black Rose Garden \(\d+ days?'?s? growth\)/;
   var itemTypes = {
     food: "food",
     drink: "booze",
@@ -4290,9 +4241,9 @@ var accountval = (() => {
   }
   function isHardcorePermed(link) {
     let hardcore;
-    for (let node = link.nextSibling; node != null; node = node.nextSibling) {
-      const text = node.textContent;
-      if (node.nodeType == Node.TEXT_NODE) {
+    for (let node = link.nextSibling; node !== null; node = node.nextSibling) {
+      const text = node.textContent ?? "";
+      if (node.nodeType === Node.TEXT_NODE) {
         if (text.includes("(HP)")) {
           hardcore = true;
         } else if (text.includes("(P)")) {
@@ -4300,7 +4251,7 @@ var accountval = (() => {
         }
         continue;
       }
-      if (node.nodeName == "B") {
+      if (node.nodeName === "B") {
         if (text.includes("HP")) {
           hardcore = true;
         } else if (text.includes("P")) {
@@ -4315,14 +4266,19 @@ var accountval = (() => {
     constructor(data, output) {
       this.data = data;
       this.output = output;
-      for (const [property, coolItem] of Object.entries(coolItemProperties)) {
-        this.properties.set(
-          property,
-          () => (this.status().coolitems ?? "").split(",").includes(coolItem)
-        );
-      }
-      for (const [property, [url, text]] of Object.entries(pageProperties)) {
-        this.properties.set(property, () => this.visitCached(url).includes(text));
+      for (const { property, coolItem, page } of bindsOf("property")) {
+        const name = property.split("&")[0];
+        if (coolItem !== void 0) {
+          this.properties.set(
+            name,
+            () => (this.status().coolitems ?? "").split(",").includes(coolItem)
+          );
+        } else if (page !== void 0) {
+          this.properties.set(
+            name,
+            () => this.visitCached(page.url).includes(page.text)
+          );
+        }
       }
     }
     data;
@@ -4339,16 +4295,18 @@ var accountval = (() => {
       const request = new XMLHttpRequest();
       request.open("GET", new URL(url, location.origin).href, false);
       request.send();
-      if (request.status != 200) {
+      if (request.status !== 200) {
         throw new Error(`Visiting ${url} failed with status ${request.status}`);
       }
       return request.responseText;
     }
     visitCached(url) {
-      if (!this.pages.has(url)) {
-        this.pages.set(url, this.request(url));
+      let page = this.pages.get(url);
+      if (page === void 0) {
+        page = this.request(url);
+        this.pages.set(url, page);
       }
-      return this.pages.get(url);
+      return page;
     }
     parse(url) {
       return new DOMParser().parseFromString(this.request(url), "text/html");
@@ -4365,17 +4323,17 @@ var accountval = (() => {
       return this.api().status;
     }
     apiItems(what) {
-      const items2 = /* @__PURE__ */ new Map();
+      const items = /* @__PURE__ */ new Map();
       for (const [id, amount] of Object.entries(this.api()[what])) {
         const item = this.data.itemsById.get(parseInt(id));
-        if (item != null) {
-          items2.set(item, Number(amount));
+        if (item !== void 0) {
+          items.set(item, Number(amount));
         }
       }
-      return items2;
+      return items;
     }
     charSheet() {
-      if (this.skills != null) {
+      if (this.skills !== void 0) {
         return this.skills;
       }
       this.skills = { available: /* @__PURE__ */ new Set(), permed: /* @__PURE__ */ new Map() };
@@ -4383,47 +4341,50 @@ var accountval = (() => {
         "a[onclick*=skill]"
       )) {
         const match = link.getAttribute("onclick").match(/\bwhichskill=(\d+)|\bskill\((\d+)\)/);
-        if (match == null) {
+        if (match === null) {
           continue;
         }
         let id = parseInt(match[1] ?? match[2]);
-        if (id == 17 && link.textContent.trim() == "Summon Hilarious Objects") {
+        if (id === 17 && link.textContent.trim() === "Summon Hilarious Objects") {
           id = 7226;
         }
         const skill = this.data.skillsById.get(id);
-        if (skill == null) {
+        if (skill === void 0) {
           continue;
         }
-        if (link.closest("#permskills") == null) {
+        if (link.closest("#permskills") === null) {
           this.skills.available.add(skill);
         }
         const hardcore = isHardcorePermed(link);
-        if (hardcore != null) {
+        if (hardcore !== void 0) {
           this.skills.permed.set(skill, hardcore);
         }
       }
       return this.skills;
     }
     familiars() {
-      if (this.terrarium != null) {
+      if (this.terrarium !== void 0) {
         return this.terrarium;
       }
       this.terrarium = /* @__PURE__ */ new Map();
       for (const row of this.parse("familiar.php").querySelectorAll("tr.frow")) {
         const id = row.querySelector("input[name=newfam]")?.getAttribute("value") ?? row.querySelector("[onclick*='fam(']")?.getAttribute("onclick").match(/fam\((\d+)\)/)?.[1];
+        if (id === void 0) {
+          continue;
+        }
         const descid = row.querySelector("[onclick*='descitem(']")?.getAttribute("onclick").match(/descitem\((\d+)\)/)?.[1];
         const familiar = this.data.familiarsById.get(parseInt(id));
-        if (familiar != null) {
+        if (familiar !== void 0) {
           this.terrarium.set(
             familiar,
-            this.data.itemsByDescid.get(descid) ?? noItem
+            descid === void 0 ? noItem : this.data.itemsByDescid.get(descid) ?? noItem
           );
         }
       }
       return this.terrarium;
     }
     shop() {
-      if (this.store != null) {
+      if (this.store !== void 0) {
         return this.store;
       }
       this.store = /* @__PURE__ */ new Map();
@@ -4434,7 +4395,7 @@ var accountval = (() => {
         const item = this.data.itemsById.get(
           parseInt(price.name.match(/\d+/)[0])
         );
-        if (item != null) {
+        if (item !== void 0) {
           this.store.set(item, {
             amount: AccountValUtils.toInt(row.cells[2].textContent),
             price: AccountValUtils.toInt(price.value)
@@ -4461,17 +4422,18 @@ var accountval = (() => {
       throw notAvailable("Mall searching");
     }
     storeCache(key, value, dataType) {
-      const storage = dataType == "transient" ? sessionStorage : localStorage;
+      const storage = dataType === "transient" ? sessionStorage : localStorage;
       storage.setItem(KEY_PREFIX + key, value);
     }
     retrieveCache(key, dataType) {
-      if (dataType == "large_persist" && key == "irrats_item_prices.txt") {
+      if (dataType === "large_persist" && key === "irrats_item_prices.txt") {
         return this.data.irratPrices;
       }
-      if (dataType == "small_persist" && this.properties.has(key)) {
-        return String(this.properties.get(key)());
+      const property = this.properties.get(key);
+      if (dataType === "small_persist" && property !== void 0) {
+        return String(property());
       }
-      const storage = dataType == "transient" ? sessionStorage : localStorage;
+      const storage = dataType === "transient" ? sessionStorage : localStorage;
       return storage.getItem(KEY_PREFIX + key) ?? "";
     }
     print(message, color) {
@@ -4555,26 +4517,26 @@ var accountval = (() => {
       return this.apiItems("storage");
     }
     getStash() {
-      const items2 = /* @__PURE__ */ new Map();
+      const items = /* @__PURE__ */ new Map();
       for (const option of this.parse("clan_stash.php").querySelectorAll(
         "form[name=takegoodies] option"
       )) {
         const item = this.data.itemsById.get(
-          parseInt(option.getAttribute("value"))
+          parseInt(option.getAttribute("value") ?? "")
         );
         const amount = option.textContent.match(/\(([\d,]+)\)(?: \(-[\d,]*\))?$/);
-        if (item != null) {
-          items2.set(item, amount ? AccountValUtils.toInt(amount[1]) : 1);
+        if (item !== void 0) {
+          items.set(item, amount ? AccountValUtils.toInt(amount[1]) : 1);
         }
       }
-      return items2;
+      return items;
     }
     getDisplay() {
-      const items2 = /* @__PURE__ */ new Map();
+      const items = /* @__PURE__ */ new Map();
       new PageResolver().getDisplaycase(parseInt(this.myId())).forEach(
-        (amount, { item }) => items2.set(item, (items2.get(item) ?? 0) + amount)
+        (amount, { item }) => items.set(item, (items.get(item) ?? 0) + amount)
       );
-      return items2;
+      return items;
     }
     getShop() {
       return new Map(
@@ -4590,7 +4552,7 @@ var accountval = (() => {
     getCampground() {
       const page = this.visitCached("campground.php");
       return new Map(
-        campgroundItems.filter(([image]) => page.includes(image)).map(([, name]) => [this.data.getItem(name), 1])
+        bindsOf("campground").filter(({ text }) => page.includes(text)).map(({ item }) => [this.data.getItem(item), 1])
       );
     }
     getFoldables(item) {
@@ -4600,7 +4562,7 @@ var accountval = (() => {
       return this.data.itemsById.get(val) ?? noItem;
     }
     toFamiliar(val) {
-      if (typeof val == "number") {
+      if (typeof val === "number") {
         return this.data.familiarsById.get(val) ?? noFamiliar;
       }
       return this.data.getFamiliar(val) ?? noFamiliar;
@@ -4628,24 +4590,36 @@ var accountval = (() => {
     historicalAge() {
       return 0;
     }
-    addEquipped(item, amount) {
-      if (item != null) {
-        this.equipped.set(item, (this.equipped.get(item) ?? 0) + amount);
+    addEquipped(equipped, item, amount) {
+      if (item !== void 0) {
+        equipped.set(item, (equipped.get(item) ?? 0) + amount);
       }
     }
     equippedAmount(item) {
-      if (this.equipped == null) {
+      if (this.equipped === void 0) {
         const { equipment, stickers } = this.status();
         this.equipped = /* @__PURE__ */ new Map();
         for (const [slot, value] of Object.entries(equipment)) {
-          if (slot == "fakehands") {
-            this.addEquipped(this.data.getItem("fake hand"), Number(value));
+          if (slot === "fakehands") {
+            this.addEquipped(
+              this.equipped,
+              this.data.getItem("fake hand"),
+              Number(value)
+            );
           } else {
-            this.addEquipped(this.data.itemsById.get(Number(value)), 1);
+            this.addEquipped(
+              this.equipped,
+              this.data.itemsById.get(Number(value)),
+              1
+            );
           }
         }
         for (const sticker of stickers ?? []) {
-          this.addEquipped(this.data.itemsById.get(Number(sticker)), 1);
+          this.addEquipped(
+            this.equipped,
+            this.data.itemsById.get(Number(sticker)),
+            1
+          );
         }
       }
       return this.equipped.get(item) ?? 0;
@@ -4657,7 +4631,7 @@ var accountval = (() => {
       return this.toFamiliar(Number(this.status().familiar));
     }
     haveFamiliar(fam) {
-      return fam == this.myFamiliar() || this.familiars().has(fam);
+      return fam === this.myFamiliar() || this.familiars().has(fam);
     }
     haveSkill(skill) {
       return this.charSheet().available.has(skill);
@@ -4675,11 +4649,8 @@ var accountval = (() => {
     }
     myGardenType() {
       const page = this.visitCached("campground.php");
-      const garden = gardenImages.find(([image]) => page.includes(image));
-      if (garden != null) {
-        return garden[1];
-      }
-      return blackRoseGarden.test(page) ? "black_rose" : "none";
+      const garden = bindsOf("garden").find(({ text }) => page.includes(text));
+      return garden?.garden ?? "none";
     }
     getWorkshed() {
       return noItem;
@@ -4691,11 +4662,11 @@ var accountval = (() => {
       return itemTypes[item.use] ?? "";
     }
     getItem(name) {
-      if (typeof name == "string") {
+      if (typeof name === "string") {
         return this.data.getItem(name);
       }
       const item = this.data.itemsById.get(name);
-      if (item == null) {
+      if (item === void 0) {
         throw new Error(`Bad item value: "${name}"`);
       }
       return item;
@@ -4757,7 +4728,7 @@ var accountval = (() => {
       );
       const { run: run2 } = (init_accountval(), __toCommonJS(accountval_exports));
       status.remove();
-      run2(command == "" ? void 0 : command);
+      run2(command === "" ? void 0 : command);
     } catch (e) {
       console.error(e);
       status.remove();
@@ -4769,7 +4740,7 @@ var accountval = (() => {
     }
   }
   function main() {
-    const frame = window.top.mainpane ?? window;
+    const frame = window.top?.mainpane ?? window;
     const doc = frame.document;
     doc.open();
     doc.write(
@@ -4787,11 +4758,12 @@ var accountval = (() => {
     doc.close();
     const output = doc.getElementById("output");
     const input = doc.getElementById("command");
+    appendLine(output, "Accountval loaded, awaiting command...", "gray");
     doc.getElementById("cli").addEventListener("submit", (event) => {
       event.preventDefault();
       runCommand(output, input);
     });
     input.focus();
   }
-  return __toCommonJS(index_exports);
+  main();
 })();
