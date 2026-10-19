@@ -112,7 +112,7 @@ export class ItemResolver {
           items.push([s.actualItem, ItemStatus.BOUND]);
         }
       } else if (s.itemType == ItemType.CAMPGROUND) {
-        if (provider().getCampground()[s.actualItem.name] != null) {
+        if (provider().getCampground().has(s.actualItem)) {
           items.push([s.actualItem, ItemStatus.BOUND]);
         }
       } else if (s.itemType == ItemType.SCRIPT) {
