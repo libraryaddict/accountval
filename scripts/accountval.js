@@ -1,3 +1,4 @@
+"use strict";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -47,6 +48,7 @@ function setProvider(provider2) {
 var api;
 var init_apiSupplier = __esm({
   "src/api/apiSupplier.ts"() {
+    "use strict";
   }
 });
 
@@ -80,6 +82,7 @@ function _toPrimitive2(t, e) {
 var KoLItem, KoLFamiliar, KoLSlot, KoLSkill;
 var init_supplierTypings = __esm({
   "src/api/supplierTypings.ts"() {
+    "use strict";
     init_apiSupplier();
     KoLItem = /* @__PURE__ */ (function() {
       function KoLItem2() {
@@ -154,9 +157,10 @@ function _toPrimitive3(t, e) {
   }
   return ("string" === e ? String : Number)(t);
 }
-var ItemStatus, ItemType, PriceType, ValItem, ItemPrice;
+var ItemStatus, PriceType, ValItem, ItemPrice;
 var init_typings = __esm({
   "src/models/typings.ts"() {
+    "use strict";
     ItemStatus = /* @__PURE__ */ (function(ItemStatus2) {
       ItemStatus2[ItemStatus2["BOUND"] = 0] = "BOUND";
       ItemStatus2[ItemStatus2["NO_TRADE"] = 1] = "NO_TRADE";
@@ -164,19 +168,6 @@ var init_typings = __esm({
       ItemStatus2[ItemStatus2["IN_USE"] = 3] = "IN_USE";
       ItemStatus2[ItemStatus2["SHOP_WORTH"] = 4] = "SHOP_WORTH";
       return ItemStatus2;
-    })({});
-    ItemType = /* @__PURE__ */ (function(ItemType2) {
-      ItemType2[ItemType2["UNTRADEABLE_ITEM"] = 0] = "UNTRADEABLE_ITEM";
-      ItemType2[ItemType2["BOOK"] = 1] = "BOOK";
-      ItemType2[ItemType2["PROPERTY"] = 2] = "PROPERTY";
-      ItemType2[ItemType2["EUDORA"] = 3] = "EUDORA";
-      ItemType2[ItemType2["GARDEN"] = 4] = "GARDEN";
-      ItemType2[ItemType2["VISIT_URL_CHECK"] = 5] = "VISIT_URL_CHECK";
-      ItemType2[ItemType2["SKILL"] = 6] = "SKILL";
-      ItemType2[ItemType2["CURRENCY"] = 7] = "CURRENCY";
-      ItemType2[ItemType2["CAMPGROUND"] = 8] = "CAMPGROUND";
-      ItemType2[ItemType2["SCRIPT"] = 9] = "SCRIPT";
-      return ItemType2;
     })({});
     PriceType = /* @__PURE__ */ (function(PriceType2) {
       PriceType2[PriceType2["NEW_PRICES"] = 0] = "NEW_PRICES";
@@ -194,14 +185,16 @@ var init_typings = __esm({
         var bound = arguments.length > 4 ? arguments[4] : void 0;
         var snapshotSource = arguments.length > 5 ? arguments[5] : void 0;
         _classCallCheck3(this, ValItem2);
+        _defineProperty(this, "shopWorth", 0);
         _defineProperty(this, "worthMultiplier", 1);
+        _defineProperty(this, "sortValue", 0);
         this.actualItem = actualItem;
         this.name = name;
         this.pluralName = pluralName;
         this.tradeableItem = item;
         this.bound = bound;
         this.snapshotSource = snapshotSource;
-        if (this.bound == null && !item.tradeable) {
+        if (this.bound === void 0 && !item.tradeable) {
           this.bound = ItemStatus.NO_TRADE;
         }
       }
@@ -209,23 +202,23 @@ var init_typings = __esm({
         this.category = category;
         return this;
       } }, { key: "getBound", value: function getBound() {
-        if (this.bound == ItemStatus.BOUND) {
+        if (this.bound === ItemStatus.BOUND) {
           return "Bound";
         }
-        if (this.bound == ItemStatus.FAMILIAR) {
+        if (this.bound === ItemStatus.FAMILIAR) {
           return "Familiar";
         }
-        if (this.bound == ItemStatus.IN_USE) {
+        if (this.bound === ItemStatus.IN_USE) {
           return "In Use";
         }
-        if (this.bound == ItemStatus.NO_TRADE) {
+        if (this.bound === ItemStatus.NO_TRADE) {
           return "Untradeable";
         }
-        return null;
+        return void 0;
       } }, { key: "isBound", value: function isBound() {
-        return this.bound == ItemStatus.BOUND || this.bound == ItemStatus.FAMILIAR;
+        return this.bound === ItemStatus.BOUND || this.bound === ItemStatus.FAMILIAR;
       } }, { key: "isTradeable", value: function isTradeable() {
-        return this.bound == null || this.bound == ItemStatus.IN_USE || this.bound == ItemStatus.SHOP_WORTH;
+        return this.bound === void 0 || this.bound === ItemStatus.IN_USE || this.bound === ItemStatus.SHOP_WORTH;
       } }]);
     })();
     ItemPrice = /* @__PURE__ */ _createClass3(
@@ -244,165 +237,7 @@ var init_typings = __esm({
   }
 });
 
-// src/utils/colors.ts
-function _slicedToArray2(r, e) {
-  return _arrayWithHoles2(r) || _iterableToArrayLimit2(r, e) || _unsupportedIterableToArray2(r, e) || _nonIterableRest2();
-}
-function _nonIterableRest2() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _iterableToArrayLimit2(r, l) {
-  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-  if (null != t) {
-    var e, n, i, u, a = [], f = true, o = false;
-    try {
-      if (i = (t = t.call(r)).next, 0 === l) {
-        if (Object(t) !== t) return;
-        f = false;
-      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = true) ;
-    } catch (r2) {
-      o = true, n = r2;
-    } finally {
-      try {
-        if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;
-      } finally {
-        if (o) throw n;
-      }
-    }
-    return a;
-  }
-}
-function _arrayWithHoles2(r) {
-  if (Array.isArray(r)) return r;
-}
-function _toConsumableArray(r) {
-  return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray2(r) || _nonIterableSpread();
-}
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray2(r, a) {
-  if (r) {
-    if ("string" == typeof r) return _arrayLikeToArray2(r, a);
-    var t = {}.toString.call(r).slice(8, -1);
-    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray2(r, a) : void 0;
-  }
-}
-function _iterableToArray(r) {
-  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
-}
-function _arrayWithoutHoles(r) {
-  if (Array.isArray(r)) return _arrayLikeToArray2(r);
-}
-function _arrayLikeToArray2(r, a) {
-  (null == a || a > r.length) && (a = r.length);
-  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
-  return n;
-}
-function loadAccountvalColors(name) {
-  if (name == "default") {
-    name = provider().isDarkMode() ? "dark" : "light";
-  }
-  if (!map.has(name)) {
-    return false;
-  }
-  AccountValColors = map.get(name);
-  return true;
-}
-function getAccountvalColors() {
-  return ["default"].concat(_toConsumableArray(map.keys()));
-}
-function showAccountvalColors(name) {
-  if (!map.has(name)) {
-    provider().print("Can't find any colors by that name", "red");
-    return;
-  }
-  var colors = map.get(name);
-  for (var _i = 0, _Object$entries = Object.entries(colors); _i < _Object$entries.length; _i++) {
-    var _Object$entries$_i = _slicedToArray2(_Object$entries[_i], 2), k = _Object$entries$_i[0], v = _Object$entries$_i[1];
-    provider().printHtml(`<font color='${v}'>${k}</font>`);
-  }
-}
-function initAccountValColors() {
-  var def = provider().isDarkMode() ? "dark" : "default";
-  loadAccountvalColors(
-    provider().retrieveCache("accountvalColorScheme", "small_persist") ? provider().retrieveCache("accountvalColorScheme", "small_persist") : def
-  );
-}
-var AccountValColors, map;
-var init_colors = __esm({
-  "src/utils/colors.ts"() {
-    init_apiSupplier();
-    map = /* @__PURE__ */ new Map();
-    map.set("light", {
-      attentionGrabbingWarning: "red",
-      failedToParseSettings: "purple",
-      minorNote: "gray",
-      helpfulStateInfo: "blue",
-      mallExtinctColor1: "#4f5893",
-      mallExtinctColor2: "#934f4f",
-      shopPricedOk: "#196f3d",
-      shopPricesOverpriced: "#db2525",
-      noteUntradeable: "red"
-    });
-    map.set("dark", {
-      attentionGrabbingWarning: "red",
-      failedToParseSettings: "purple",
-      minorNote: "gray",
-      helpfulStateInfo: "#3ccabb",
-      mallExtinctColor1: "#6b7ade",
-      mallExtinctColor2: "#d76d6d",
-      shopPricedOk: "#269f59",
-      shopPricesOverpriced: "#dd4040",
-      noteUntradeable: "red"
-    });
-  }
-});
-
-// src/resolvers/coinmaster.ts
-function _createForOfIteratorHelper2(r, e) {
-  var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-  if (!t) {
-    if (Array.isArray(r) || (t = _unsupportedIterableToArray3(r)) || e && r && "number" == typeof r.length) {
-      t && (r = t);
-      var _n = 0, F = function F2() {
-      };
-      return { s: F, n: function n() {
-        return _n >= r.length ? { done: true } : { done: false, value: r[_n++] };
-      }, e: function e2(r2) {
-        throw r2;
-      }, f: F };
-    }
-    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-  var o, a = true, u = false;
-  return { s: function s2() {
-    t = t.call(r);
-  }, n: function n() {
-    var r2 = t.next();
-    return a = r2.done, r2;
-  }, e: function e2(r2) {
-    u = true, o = r2;
-  }, f: function f() {
-    try {
-      a || null == t.return || t.return();
-    } finally {
-      if (u) throw o;
-    }
-  } };
-}
-function _unsupportedIterableToArray3(r, a) {
-  if (r) {
-    if ("string" == typeof r) return _arrayLikeToArray3(r, a);
-    var t = {}.toString.call(r).slice(8, -1);
-    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray3(r, a) : void 0;
-  }
-}
-function _arrayLikeToArray3(r, a) {
-  (null == a || a > r.length) && (a = r.length);
-  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
-  return n;
-}
+// src/utils/utils.ts
 function _classCallCheck4(a, n) {
   if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
 }
@@ -414,9 +249,6 @@ function _defineProperties4(e, r) {
 }
 function _createClass4(e, r, t) {
   return r && _defineProperties4(e.prototype, r), t && _defineProperties4(e, t), Object.defineProperty(e, "prototype", { writable: false }), e;
-}
-function _defineProperty2(e, r, t) {
-  return (r = _toPropertyKey4(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: true, configurable: true, writable: true }) : e[r] = t, e;
 }
 function _toPropertyKey4(t) {
   var i = _toPrimitive4(t, "string");
@@ -432,126 +264,15 @@ function _toPrimitive4(t, e) {
   }
   return ("string" === e ? String : Number)(t);
 }
-var CoinmasterResolver;
-var init_coinmaster = __esm({
-  "src/resolvers/coinmaster.ts"() {
-    init_apiSupplier();
-    init_supplierTypings();
-    CoinmasterResolver = /* @__PURE__ */ (function() {
-      function CoinmasterResolver2(prices) {
-        _classCallCheck4(this, CoinmasterResolver2);
-        _defineProperty2(this, "items", []);
-        this.prices = prices;
-      }
-      return _createClass4(CoinmasterResolver2, [{ key: "load", value: function load() {
-        var _iterator = _createForOfIteratorHelper2(
-          KoLItem.all()
-        ), _step;
-        try {
-          for (_iterator.s(); !(_step = _iterator.n()).done; ) {
-            var item = _step.value;
-            if (!item.tradeable || item.gift || item.quest || item.seller == null) {
-              continue;
-            }
-            var token = item.seller.item;
-            if (token == KoLItem.none) {
-              continue;
-            }
-            var price = provider().sellPrice(item.seller, item);
-            if (price <= 0) {
-              continue;
-            }
-            this.items.push({
-              item,
-              coinmaster: item.seller,
-              currencyCost: price,
-              currency: token
-            });
-          }
-        } catch (err) {
-          _iterator.e(err);
-        } finally {
-          _iterator.f();
-        }
-        this.prices.bulkLoad(this.items.map((i) => i.item));
-      } }, { key: "getHighestCoinmaster", value: function getHighestCoinmaster(currency) {
-        var highest = null;
-        var _iterator22 = _createForOfIteratorHelper2(
-          this.items
-        ), _step22;
-        try {
-          for (_iterator22.s(); !(_step22 = _iterator22.n()).done; ) {
-            var item = _step22.value;
-            if (item.currency != currency) {
-              continue;
-            }
-            if (item.price == null) {
-              var itemPrice = this.prices.itemPrice(item.item);
-              if (itemPrice == null) {
-                return null;
-              }
-              item.price = itemPrice.price;
-              item.priceEach = item.price / item.currencyCost;
-            }
-            if (highest != null && highest.priceEach > item.priceEach) {
-              continue;
-            }
-            highest = item;
-          }
-        } catch (err) {
-          _iterator22.e(err);
-        } finally {
-          _iterator22.f();
-        }
-        return highest;
-      } }]);
-    })();
-  }
-});
-
-// data/accountval_binds.txt
-var accountval_binds_default;
-var init_accountval_binds = __esm({
-  "data/accountval_binds.txt"() {
-    accountval_binds_default = "# Original data taken from https://github.com/soolar/accountval.ash\n# Item Containers! Start with i\ni	packet of mayfly bait	mayfly bait necklace\ni	Clan VIP Lounge invitation	Clan VIP Lounge key\ni	Make-Your-Own-Vampire-Fangs kit	plastic vampire fangs\ni	Folder Holder	over-the-shoulder Folder Holder\ni	can of Rain-Doh	empty Rain-Doh can\ni	Discontent&trade; Winter Garden Catalog	packet of winter seeds\ni	Ed the Undying exhibit crate	The Crown of Ed the Undying\ni	Pack of Every Card	Deck of Every Card\ni	DIY protonic accelerator kit	protonic accelerator pack\ni	Dear Past Self Package	Time-Spinner\ni	Granny Tood's Thanksgarden Catalog	packet of thanksgarden seeds\ni	suspicious package	Kremlin's Greatest Briefcase\ni	LI-11 Motor Pool voucher	Asdon Martin keyfob (on ring)\ni	Grumpy Bumpkin's Pumpkin Seed Catalog	packet of pumpkin seeds\ni	Mint Salton Pepper's Peppermint Seed Catalog	Peppermint Pip Packet\ni	Pete & Jackie's Dragon Tooth Emporium Catalog	packet of dragon's teeth\ni	Pocket Meteor Guide	Pocket Meteor Guide (well-thumbed)\ni	corked genie bottle	genie bottle\ni	pantogram	portable pantogram\ni	locked mumming trunk	mumming trunk\ni	January's Garbage Tote (unopened)	January's Garbage Tote\ni	Pok&eacute;fam Guide to Capturing All of Them	packet of tall grass seeds\ni	SongBoom&trade; BoomBox Box	SongBoom&trade; BoomBox\ni	Bastille Battalion control rig crate	Bastille Battalion control rig\ni	latte lovers club card	latte lovers member's mug\ni	Kramco Industries packing carton	Kramco Sausage-o-Matic&trade;\ni	mint condition Lil' Doctor&trade; bag	Lil' Doctor&trade; bag\ni	vampyric cloake pattern	vampyric cloake\ni	Fourth of May Cosplay Saber kit	Fourth of May Cosplay Saber\ni	rune-strewn spoon cocoon	hewn moon-rune spoon\ni	Beach Comb Box	Beach Comb\ni	Unopened Eight Days a Week Pill Keeper	Eight Days a Week Pill Keeper\ni	unopened diabolic pizza cube box	diabolic pizza cube\ni	unopened Bird-a-Day calendar	Bird-a-Day calendar\ni	mint-in-box Powerful Glove	Powerful Glove\ni	Better Shrooms and Gardens catalog	packet of mushroom spores\ni	Guzzlr application	Guzzlr tablet\ni	bag of Iunion stones	Iunion Crown\ni	packaged SpinMaster&trade; lathe	SpinMaster&trade; lathe\ni	Bagged Cargo Cultist Shorts	Cargo Cultist Shorts\ni	Comprehensive Cartographic Compendium	Comprehensive Cartographic Compendium (well-read)\ni	packaged knock-off retro superhero cape	unwrapped knock-off retro superhero cape\ni	packaged miniature crystal ball	miniature crystal ball\ni	emotion chip	spinal-fluid-covered emotion chip\ni	power seed	potted power plant\ni	packaged backup camera	backup camera\ni	packaged familiar scrapbook	familiar scrapbook\ni	packaged industrial fire extinguisher	industrial fire extinguisher\ni	Packaged Daylight Shavings Helmet	Daylight Shavings Helmet\ni	Packaged cold medicine cabinet	Cold medicine cabinet\ni	box o' ghosts	gregarious ghostling\ni	Gordon Beer's Beer Garden Catalog	Packet of beer seeds\ni	Mint condition magnifying glass	cursed magnifying glass\ni	Antique pair of blue jeans	Ellsbury's journal (used)\ni	warehouse key	mime army insignia (cryonics)\ni	warehouse key	mime army insignia (morale)\ni	warehouse key	mime army insignia (psychological warfare)\ni	warehouse key	mime army insignia (pyrotechnics)\ni	warehouse key	mime army insignia (sanitation)\ni	warehouse key	mime army insignia (espionage)\ni	warehouse key	mime army insignia (infantry)\ni	warehouse key	mime army insignia (intelligence)\ni	warehouse key	mime army infiltration glove\ni	warehouse key	mime army challenge coin\ni	warehouse key	mime army shotglass\ni	warehouse key	miming corduroys\ni	warehouse key	miming beret\ni	warehouse key	miming gloves\ni	warehouse key	miming boots\ni	warehouse key	miming shirt\ni	combat lover's locket lockbox	combat lover's locket\ni	undamaged Unbreakable Umbrella	Unbreakable umbrella\ni	packaged June cleaver	June cleaver\ni	designer sweatpants (new old stock)	Designer sweatpants\ni	unopened tiny stillsuit	tiny stillsuit\ni	packaged Jurassic Parka	Jurassic Parka\ni	packaged model train set	model train set\ni	ChibiBuddy\u2122 (off)	ChibiBuddy\u2122 (on)\ni	Rock Garden Guide	packet of rock seeds\ni	S.I.T. Course Voucher	S.I.T. Course Completion Certificate\ni	Closed-circuit phone system	Closed-circuit pay phone\ni	Cursed monkey glove	cursed monkey's paw\ni	shrink-wrapped Cincho de Mayo	Cincho de Mayo\ni	shrink-wrapped 2002 Mr. Store Catalog	2002 Mr. Store Catalog\ni	boxed august scepter	august scepter\ni	book of facts	book of facts (dog-eared)\ni	crated wardrobe-o-matic	wardrobe-o-matic\ni	wrapped candy cane sword cane	candy cane sword cane\ni	in-the-box spring shoes	spring shoes\ni	packaged Everfull Dart Holster	Everfull Dart Holster\ni	Boxed Apriling band helmet	Apriling band helmet\ni	boxed Mayam Calendar	Mayam Calendar\ni	packaged Roman Candelabra	Roman Candelabra\ni	untorn tearaway pants package	tearaway pants\ni	Boxed Sept-Ember Censer	Sept-Ember Censer\ni	boxed bat wings	bat wings\ni	Sealed TakerSpace letter of Marque	TakerSpace letter of Marque\ni	McHugeLarge deluxe ski set	McHugeLarge duffel bag\ni	CyberRealm keycode	server room key\ni	eldritch tincture	eldritch tincture (depleted)\ni	new-in-box toy Cupid bow	toy Cupid bow\ni	assemble-it-yourself Leprecondo	Leprecondo\ni	Packaged April Shower Thoughts Calendar	April Shower Thoughts shield\ni	Unpeeled Peridot of Peril	Peridot of Peril\ni	packaged prismatic beret	prismatic beret\ni	M\xF6bius ring box	M\xF6bius ring\ni	packaged Monodent of the Sea	Monodent of the Sea\ni	Lab-grown blood cubic zirconia	blood cubic zirconia\ni	shrunken head in a duffel bag	shrunken head\ni	seal-clubbing club loot box	legendary seal-clubbing club\ni	discreetly-wrapped Eternity Codpiece	The Eternity Codpiece\ni	boxed Heartstone	Heartstone\ni	Boxed Archaeologist's Spade	Archaeologist's Spade\ni	wrapped Baseball Diamond	Baseball Diamond\ni	Pasta wand loot box	legendary pasta wand\ni	shrink-wrapped Cup of 13s	Cup of 13s\ni	Allied Radio Backpack Pack	Allied Radio Backpack\ni	Packaged Portable Laughing Stock	Portable Laughing Stock\ni	black rosebud	black garden rose\n\n\n\n\n# Bookshelf stuff! Start with b\nb	Tome of Snowcone Summoning	Summon Snowcones\nb	Scratch 'n' Sniff Sticker Tome	Summon Stickers\nb	Tome of Sugar Shummoning	Summon Sugar Sheets\nb	Tome of Clip Art	Summon Clip Art\nb	Tome of Rad Libs	Summon Rad Libs\nb	The Smith's Tome	Summon Smithsness\nb	McPhee's Grimoire of Hilarious Object Summoning	Summon Hilarious Objects\nb	Sp'n-Zor's Grimoire of &quot;Tasteful&quot; Gifts	Summon Tasteful Items\nb	Sorcerers of the Shore Grimoire	Summon Alice's Army Cards\nb	Thinknerd's Grimoire of Geeky Gifts	Summon Geeky Gifts\nb	Libram of Candy Heart Summoning	Summon Candy Heart\nb	Libram of Divine Favors	Summon Party Favor\nb	Libram of Love Songs	Summon Love Song\nb	Libram of BRICKOs	Summon BRICKOs\nb	Gygaxian Libram	Summon Dice\nb	Libram of Resolutions	Summon Resolutions\nb	Libram of Pulled Taffy	Summon Taffy\nb	The Confiscator's Grimoire	Summon Confiscated Things\n\n\n\n# Property based detection! Start with p\np	airplane charter: Spring Break Beach	sleazeAirportAlways&!_sleazeAirportToday\np	airplane charter: Conspiracy Island	spookyAirportAlways&!_spookyAirportToday\np	airplane charter: Dinseylandfill	stenchAirportAlways&!_stenchAirportToday\np	airplane charter: That 70s Volcano	hotAirportAlways&!_hotAirportToday\np	airplane charter: The Glaciest	coldAirportAlways&!_coldAirportToday\np	Chateau Mantegna room key	chateauAvailable\np	bottle of lovebug pheromones	lovebugsUnlocked\np	shrine to the Barrel god	barrelShrineUnlocked\np	X-32-F snowman crate	snojoAvailable\np	LT&T telegraph office deed	telegraphOfficeAvailable\np	detective school application	hasDetectiveSchool\np	Build-a-City Gingerbread kit	gingerbreadCityAvailable&!_gingerbreadCityToday\np	heart-shaped crate	loveTunnelAvailable&!_loveTunnelUsed\np	Spacegate access badge	spacegateAlways&!_spacegateToday\np	FantasyRealm membership packet	frAlways&!_frToday\np	Horsery contract	horseryAvailable\np	Neverending Party invitation envelope	neverendingPartyAlways&!_neverendingPartyToday\np	voter registration form	voteAlways&!_voteToday\np	Boxing Day care package	daycareOpen&!_daycareToday\np	PirateRealm membership packet	prAlways&!_prToday\np	Distant Woods Getaway Brochure	getawayCampsiteUnlocked\np	Undrilled cosmic bowling ball	hasCosmicBowlingBall\np	MayDay\u2122 contract	hasMaydayContract\np	boxed autumn-aton	hasAutumnaton\np	deed to Oliver's Place	ownsSpeakeasy\np	Interesting Coin Inheritance Letter	hasInterestingCoin\np	Order of the Green Thumb Order Form	ownsFloristFriar\n\n\n\n# Eudoras! Start with e\ne	My Own Pen Pal kit	Pen Pal\ne	GameInformPowerDailyPro subscription card	GameInformPowerDailyPro Magazine\ne	Xi Receiver Unit	Xi Receiver Unit\ne	New-You Club Membership Form	New-You Club\ne	Our Daily Candles\u2122 order form	Our Daily Candles\ne	Black and White Apron Enrollment Form	Black & White Apron\n\n\n\n# visit_url contains... Start with v\n\n\n\n# eval(function) => boolean! Starts with s for script\n\n\n\n# campground items! Starts with c\nc	Haunted Doghouse\nc	Witchess Set\nc	Source terminal\nc	potted tea tree\nc	A Guide to Burning Leaves\n\n\n\n# Gardens\ng	packet of pumpkin seeds	pumpkin	\ng	Peppermint Pip Packet	peppermint\ng	packet of dragon's teeth	skeleton\ng	Packet of beer seeds	beer\ng	packet of winter seeds	winter\ng	packet of thanksgarden seeds	thanksgarden\ng	packet of tall grass seeds	grass\ng	packet of mushroom spores	mushroom\ng	packet of rock seeds	rock\ng	black garden rose	black_rose\n\n\n# Items that are dependent on the value of another as they're no-trade\n# Item | Check Against | X of our item = 1 of that item\nt	ChibiBuddy\u2122 (on)	ChibiBuddy\u2122 (off)	1\nt	distilled resin	inflammable leaf	50\nt	Rethinking Candy	Knucklebone	2750\n\n\n# Items that are a coinmaster currency, and is dynamically priced because there's no solid metric\n# The price is resolved at runtime\nt	fat loot token\nt	Cop dollar\nt	Driplet\nt	Chroner\nt	Freddy Kruegerand\nt	Guzzlrbuck\nt	Beach Buck\nt	Volcoino\nt	FunFunds\u2122\nt	Coinspiracy\nt	Wal-Mart gift certificate\nt	Rubee\u2122\nt	buffalo dime\nt	Spacegate Research\n\n# Items that are best valued at a hardcoded value, although you may not get that value...\nh	meat paste	10\nh	meat stack	100\nh	nest egg	150\nh	Dungeon dragon chest	500\nh	Meat globe	700\nh	dense meat stack	1000\nh	Loose Meats	2300\nh	chest of the Bonerdagon	3000\nh	Duct tape wallet	3050\nh	Stock Certificate	5000\nh	Envelope full of Meat	30000\nh	Discount Telescope Warehouse gift certificate	100000";
-  }
-});
-
-// src/utils/utils.ts
-function _classCallCheck5(a, n) {
-  if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
-}
-function _defineProperties5(e, r) {
-  for (var t = 0; t < r.length; t++) {
-    var o = r[t];
-    o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, _toPropertyKey5(o.key), o);
-  }
-}
-function _createClass5(e, r, t) {
-  return r && _defineProperties5(e.prototype, r), t && _defineProperties5(e, t), Object.defineProperty(e, "prototype", { writable: false }), e;
-}
-function _toPropertyKey5(t) {
-  var i = _toPrimitive5(t, "string");
-  return "symbol" == typeof i ? i : i + "";
-}
-function _toPrimitive5(t, e) {
-  if ("object" != typeof t || !t) return t;
-  var r;
-  if ("undefined" != typeof Symbol && void 0 !== (r = t[Symbol.toPrimitive])) {
-    var i = r.call(t, e || "default");
-    if ("object" != typeof i) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === e ? String : Number)(t);
-}
 var AccountValUtils;
 var init_utils = __esm({
   "src/utils/utils.ts"() {
+    "use strict";
     AccountValUtils = /* @__PURE__ */ (function() {
       function AccountValUtils2() {
-        _classCallCheck5(this, AccountValUtils2);
+        _classCallCheck4(this, AccountValUtils2);
       }
-      return _createClass5(AccountValUtils2, null, [{ key: "getNumber", value: function getNumber(number) {
+      return _createClass4(AccountValUtils2, null, [{ key: "getNumber", value: function getNumber(number) {
         var trimAt = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 2;
         var str = number.toString().split(".");
         if (str.length > 1 && str[1].length > trimAt) {
@@ -578,12 +299,429 @@ var init_utils = __esm({
   }
 });
 
-// src/resolvers/items.ts
+// src/utils/timings.ts
+function _createForOfIteratorHelper2(r, e) {
+  var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (!t) {
+    if (Array.isArray(r) || (t = _unsupportedIterableToArray2(r)) || e && r && "number" == typeof r.length) {
+      t && (r = t);
+      var _n = 0, F = function F2() {
+      };
+      return { s: F, n: function n() {
+        return _n >= r.length ? { done: true } : { done: false, value: r[_n++] };
+      }, e: function e2(r2) {
+        throw r2;
+      }, f: F };
+    }
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+  var o, a = true, u = false;
+  return { s: function s() {
+    t = t.call(r);
+  }, n: function n() {
+    var r2 = t.next();
+    return a = r2.done, r2;
+  }, e: function e2(r2) {
+    u = true, o = r2;
+  }, f: function f() {
+    try {
+      a || null == t.return || t.return();
+    } finally {
+      if (u) throw o;
+    }
+  } };
+}
+function _toConsumableArray(r) {
+  return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray2(r) || _nonIterableSpread();
+}
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _iterableToArray(r) {
+  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
+}
+function _arrayWithoutHoles(r) {
+  if (Array.isArray(r)) return _arrayLikeToArray2(r);
+}
+function _slicedToArray2(r, e) {
+  return _arrayWithHoles2(r) || _iterableToArrayLimit2(r, e) || _unsupportedIterableToArray2(r, e) || _nonIterableRest2();
+}
+function _nonIterableRest2() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray2(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray2(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray2(r, a) : void 0;
+  }
+}
+function _arrayLikeToArray2(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
+}
+function _iterableToArrayLimit2(r, l) {
+  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (null != t) {
+    var e, n, i, u, a = [], f = true, o = false;
+    try {
+      if (i = (t = t.call(r)).next, 0 === l) {
+        if (Object(t) !== t) return;
+        f = false;
+      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = true) ;
+    } catch (r2) {
+      o = true, n = r2;
+    } finally {
+      try {
+        if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;
+      } finally {
+        if (o) throw n;
+      }
+    }
+    return a;
+  }
+}
+function _arrayWithHoles2(r) {
+  if (Array.isArray(r)) return r;
+}
+function _classCallCheck5(a, n) {
+  if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
+}
+function _defineProperties5(e, r) {
+  for (var t = 0; t < r.length; t++) {
+    var o = r[t];
+    o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, _toPropertyKey5(o.key), o);
+  }
+}
+function _createClass5(e, r, t) {
+  return r && _defineProperties5(e.prototype, r), t && _defineProperties5(e, t), Object.defineProperty(e, "prototype", { writable: false }), e;
+}
+function _defineProperty2(e, r, t) {
+  return (r = _toPropertyKey5(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: true, configurable: true, writable: true }) : e[r] = t, e;
+}
+function _toPropertyKey5(t) {
+  var i = _toPrimitive5(t, "string");
+  return "symbol" == typeof i ? i : i + "";
+}
+function _toPrimitive5(t, e) {
+  if ("object" != typeof t || !t) return t;
+  var r;
+  if ("undefined" != typeof Symbol && void 0 !== (r = t[Symbol.toPrimitive])) {
+    var i = r.call(t, e || "default");
+    if ("object" != typeof i) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === e ? String : Number)(t);
+}
+var AccValTiming;
+var init_timings = __esm({
+  "src/utils/timings.ts"() {
+    "use strict";
+    init_apiSupplier();
+    init_utils();
+    AccValTiming = /* @__PURE__ */ (function() {
+      function AccValTiming2(name) {
+        var isSteps = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : false;
+        _classCallCheck5(this, AccValTiming2);
+        _defineProperty2(this, "started", Date.now());
+        _defineProperty2(this, "depth", 0);
+        this.name = name;
+        if (isSteps) {
+          this.totalTimeTaken = 0;
+          this.start();
+        }
+      }
+      return _createClass5(AccValTiming2, [{ key: "start", value: function start() {
+        if (this.totalTimeTaken === void 0) {
+          throw new Error(
+            `${this.getName()} was not configured as a total time timings`
+          );
+        }
+        if (this.stepStarted !== void 0) {
+          throw new Error(`${this.getName()} was not stopped properly`);
+        }
+        this.stepStarted = Date.now();
+      } }, { key: "getName", value: function getName() {
+        return this.name;
+      } }, { key: "stop", value: function stop() {
+        var print = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : false;
+        if (this.stopped !== void 0 && this.stepStarted === void 0) {
+          throw new Error(`The timing for ${this.getName()} was already stopped`);
+        }
+        this.stopped = Date.now();
+        if (print) {
+          AccValTiming2.printHtml(
+            `<font color='blue'>${this.getName()}<font color='green'> time taken: </font>${this.getTimeStr()}</font>`
+          );
+        }
+        if (this.totalTimeTaken !== void 0) {
+          this.totalTimeTaken += Date.now() - this.stepStarted;
+          this.stepStarted = void 0;
+        }
+        return this;
+      } }, { key: "getTime", value: function getTime() {
+        return this.totalTimeTaken ?? (this.stopped ?? Date.now()) - this.started;
+      } }, { key: "getTimeStr", value: function getTimeStr() {
+        return `${AccountValUtils.getNumber(this.getTime())}ms${this.stopped === void 0 ? " (never stopped)" : ""}${this.stepStarted !== void 0 ? " (step never stopped)" : ""}`;
+      } }], [{ key: "printHtml", value: function printHtml(line) {
+        provider().printHtml(line);
+      } }, { key: "start", value: function start(name) {
+        var withSteps = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : false;
+        if (!this.enabled) {
+          return;
+        }
+        var started = Date.now();
+        var existing = this.trackingMap.get(name);
+        if (existing !== void 0 && (existing.totalTimeTaken === void 0 || existing.stepStarted !== void 0)) {
+          throw new Error(`The timing for ${name} was already started`);
+        }
+        if (existing === void 0) {
+          existing = new AccValTiming2(name, withSteps);
+          this.trackingMap.set(name, existing);
+          this.tracking.push(["STARTED", existing]);
+          existing.depth = this.tracking.filter(
+            (_ref) => {
+              var _ref2 = _slicedToArray2(_ref, 2), state = _ref2[0], t = _ref2[1];
+              return t.stopped === void 0 && state === "STARTED";
+            }
+          ).length - 1;
+        } else {
+          existing.start();
+        }
+        this.timingsSlowdown += Date.now() - started;
+      } }, { key: "stop", value: function stop(name) {
+        var print = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : false;
+        if (!this.enabled) {
+          return;
+        }
+        var started = Date.now();
+        var existing = this.trackingMap.get(name);
+        if (existing === void 0) {
+          throw new Error(`There was no time tracking created for ${name}`);
+        }
+        var lastStopIndex = -1;
+        for (var i = this.tracking.length - 1; i >= 0; i--) {
+          if (this.tracking[i][0] === "STOPPED" && this.tracking[i][1] === existing) {
+            lastStopIndex = i;
+            break;
+          }
+        }
+        if (lastStopIndex !== -1) {
+          this.tracking.splice(lastStopIndex, 1);
+        }
+        this.tracking.push(["STOPPED", existing]);
+        existing.stop(print);
+        this.timingsSlowdown += Date.now() - started;
+      } }, { key: "printTracked", value: function printTracked(method) {
+        if (!this.enabled) {
+          return;
+        }
+        var sortedTimes = _toConsumableArray(
+          this.tracking
+        );
+        this.tracking.forEach((_ref3) => {
+          var _ref4 = _slicedToArray2(_ref3, 2), state2 = _ref4[0], t = _ref4[1];
+          if (t.stopped === void 0) {
+            sortedTimes.push(["STOPPED", t]);
+          }
+        });
+        var _iterator = _createForOfIteratorHelper2(
+          sortedTimes
+        ), _step;
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done; ) {
+            var _step$value = _slicedToArray2(_step.value, 2), state = _step$value[0], timing = _step$value[1];
+            var depthStr = `<font color='gray'>${">&nbsp;".repeat(timing.depth)}</font>`;
+            if (method === "PRINT_JUST_ONCE") {
+              if (state !== "STARTED") {
+                continue;
+              }
+              this.printHtml(
+                `${depthStr}<font color='blue'>${timing.getName()} <font color='green'>time taken:</font> ${timing.getTimeStr()}</font>`
+              );
+            } else if (method === "PRINT_START_AND_END") {
+              if (state === "STARTED") {
+                this.printHtml(
+                  `${depthStr}<font color='blue'>${timing.getName()}</font> <font color='green'>started</font>`
+                );
+              } else {
+                this.printHtml(
+                  `${depthStr}<font color='blue'>${timing.getName()}<font color='green'> stopped, time taken: </font>${timing.getTimeStr()}</font>`
+                );
+              }
+            } else if (method === "PRINT_JUST_END") {
+              if (state === "STARTED") {
+                continue;
+              }
+              this.printHtml(
+                `${depthStr}<font color='blue'>${timing.getName()}<font color='green'> time taken: </font>${timing.getTimeStr()}</font>`
+              );
+            }
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+        this.printHtml(
+          `<font color='green'>The usage of timings took an extra: </font><font color='blue'>${AccountValUtils.getNumber(this.timingsSlowdown)}ms</font>`
+        );
+      } }]);
+    })();
+    _defineProperty2(AccValTiming, "tracking", []);
+    _defineProperty2(AccValTiming, "trackingMap", /* @__PURE__ */ new Map());
+    _defineProperty2(AccValTiming, "timingsSlowdown", 0);
+    _defineProperty2(AccValTiming, "enabled", false);
+  }
+});
+
+// src/pricing/variants/flatfile.ts
+function _createForOfIteratorHelper3(r, e) {
+  var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (!t) {
+    if (Array.isArray(r) || (t = _unsupportedIterableToArray3(r)) || e && r && "number" == typeof r.length) {
+      t && (r = t);
+      var _n = 0, F = function F2() {
+      };
+      return { s: F, n: function n() {
+        return _n >= r.length ? { done: true } : { done: false, value: r[_n++] };
+      }, e: function e2(r2) {
+        throw r2;
+      }, f: F };
+    }
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+  var o, a = true, u = false;
+  return { s: function s() {
+    t = t.call(r);
+  }, n: function n() {
+    var r2 = t.next();
+    return a = r2.done, r2;
+  }, e: function e2(r2) {
+    u = true, o = r2;
+  }, f: function f() {
+    try {
+      a || null == t.return || t.return();
+    } finally {
+      if (u) throw o;
+    }
+  } };
+}
+function _unsupportedIterableToArray3(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray3(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray3(r, a) : void 0;
+  }
+}
+function _arrayLikeToArray3(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
+}
+function _classCallCheck6(a, n) {
+  if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
+}
+function _defineProperties6(e, r) {
+  for (var t = 0; t < r.length; t++) {
+    var o = r[t];
+    o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, _toPropertyKey6(o.key), o);
+  }
+}
+function _createClass6(e, r, t) {
+  return r && _defineProperties6(e.prototype, r), t && _defineProperties6(e, t), Object.defineProperty(e, "prototype", { writable: false }), e;
+}
+function _toPropertyKey6(t) {
+  var i = _toPrimitive6(t, "string");
+  return "symbol" == typeof i ? i : i + "";
+}
+function _toPrimitive6(t, e) {
+  if ("object" != typeof t || !t) return t;
+  var r;
+  if ("undefined" != typeof Symbol && void 0 !== (r = t[Symbol.toPrimitive])) {
+    var i = r.call(t, e || "default");
+    if ("object" != typeof i) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === e ? String : Number)(t);
+}
+var FlatfilePrices;
+var init_flatfile = __esm({
+  "src/pricing/variants/flatfile.ts"() {
+    "use strict";
+    init_typings();
+    FlatfilePrices = /* @__PURE__ */ (function() {
+      function FlatfilePrices2(settings) {
+        _classCallCheck6(this, FlatfilePrices2);
+        this.settings = settings;
+      }
+      return _createClass6(FlatfilePrices2, [{ key: "resolve", value: function resolve(item) {
+        var price = this.prices[item.id];
+        if (price === void 0) {
+          return void 0;
+        }
+        return new ItemPrice(
+          item,
+          price.price,
+          PriceType.NEW_PRICES,
+          Math.round((Date.now() / 1e3 - price.updated) / (60 * 60 * 24)),
+          price.volume
+        );
+      } }, { key: "loadLastState", value: function loadLastState() {
+        var buffer = this.loadDataFile();
+        if (buffer.length <= 10) {
+          return;
+        }
+        this.prices = [];
+        var _iterator = _createForOfIteratorHelper3(
+          buffer.split(/[\n\r]+/)
+        ), _step;
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done; ) {
+            var spl = _step.value;
+            if (spl.startsWith("#")) {
+              continue;
+            }
+            var spl2 = spl.split("	");
+            if (spl2.length === 2 && spl2[0] === "Last Updated:") {
+              this.lastUpdated = parseInt(spl2[1]);
+              continue;
+            }
+            if (spl2.length < 3) {
+              continue;
+            }
+            var result = this.loadDataItem(spl2);
+            this.prices[result[0]] = result[1];
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+      } }]);
+    })();
+  }
+});
+
+// src/pricing/variants/irratprices.ts
 function _slicedToArray3(r, e) {
   return _arrayWithHoles3(r) || _iterableToArrayLimit3(r, e) || _unsupportedIterableToArray4(r, e) || _nonIterableRest3();
 }
 function _nonIterableRest3() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray4(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray4(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray4(r, a) : void 0;
+  }
+}
+function _arrayLikeToArray4(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
 }
 function _iterableToArrayLimit3(r, l) {
   var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
@@ -609,540 +747,8 @@ function _iterableToArrayLimit3(r, l) {
 function _arrayWithHoles3(r) {
   if (Array.isArray(r)) return r;
 }
-function _createForOfIteratorHelper3(r, e) {
-  var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-  if (!t) {
-    if (Array.isArray(r) || (t = _unsupportedIterableToArray4(r)) || e && r && "number" == typeof r.length) {
-      t && (r = t);
-      var _n = 0, F = function F2() {
-      };
-      return { s: F, n: function n() {
-        return _n >= r.length ? { done: true } : { done: false, value: r[_n++] };
-      }, e: function e2(r2) {
-        throw r2;
-      }, f: F };
-    }
-    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-  var o, a = true, u = false;
-  return { s: function s2() {
-    t = t.call(r);
-  }, n: function n() {
-    var r2 = t.next();
-    return a = r2.done, r2;
-  }, e: function e2(r2) {
-    u = true, o = r2;
-  }, f: function f() {
-    try {
-      a || null == t.return || t.return();
-    } finally {
-      if (u) throw o;
-    }
-  } };
-}
-function _unsupportedIterableToArray4(r, a) {
-  if (r) {
-    if ("string" == typeof r) return _arrayLikeToArray4(r, a);
-    var t = {}.toString.call(r).slice(8, -1);
-    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray4(r, a) : void 0;
-  }
-}
-function _arrayLikeToArray4(r, a) {
-  (null == a || a > r.length) && (a = r.length);
-  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
-  return n;
-}
-function _defineProperty3(e, r, t) {
-  return (r = _toPropertyKey6(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: true, configurable: true, writable: true }) : e[r] = t, e;
-}
-function _defineProperties6(e, r) {
-  for (var t = 0; t < r.length; t++) {
-    var o = r[t];
-    o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, _toPropertyKey6(o.key), o);
-  }
-}
-function _createClass6(e, r, t) {
-  return r && _defineProperties6(e.prototype, r), t && _defineProperties6(e, t), Object.defineProperty(e, "prototype", { writable: false }), e;
-}
-function _toPropertyKey6(t) {
-  var i = _toPrimitive6(t, "string");
-  return "symbol" == typeof i ? i : i + "";
-}
-function _toPrimitive6(t, e) {
-  if ("object" != typeof t || !t) return t;
-  var r;
-  if ("undefined" != typeof Symbol && void 0 !== (r = t[Symbol.toPrimitive])) {
-    var i = r.call(t, e || "default");
-    if ("object" != typeof i) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === e ? String : Number)(t);
-}
-function _classCallCheck6(a, n) {
+function _classCallCheck7(a, n) {
   if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
-}
-var AccValStuff, ItemResolver2;
-var init_items = __esm({
-  "src/resolvers/items.ts"() {
-    init_apiSupplier();
-    init_supplierTypings();
-    init_typings();
-    init_colors();
-    init_coinmaster();
-    init_accountval_binds();
-    init_utils();
-    AccValStuff = /* @__PURE__ */ _createClass6(function AccValStuff2() {
-      _classCallCheck6(this, AccValStuff2);
-    });
-    ItemResolver2 = /* @__PURE__ */ (function() {
-      function ItemResolver(prices) {
-        _classCallCheck6(this, ItemResolver);
-        _defineProperty3(this, "visitCache", /* @__PURE__ */ new Map());
-        _defineProperty3(this, "accountValCache", /* @__PURE__ */ new Map());
-        _defineProperty3(this, "accountValVisitCachePropName", "_accountValVisitCache");
-        this.prices = prices;
-        this.accValStuff = this.loadAccountValStuff();
-      }
-      return _createClass6(ItemResolver, [{ key: "loadCache", value: function loadCache() {
-        var prop = provider().retrieveCache(this.accountValVisitCachePropName, "transient").split(",");
-        var _iterator = _createForOfIteratorHelper3(
-          prop
-        ), _step;
-        try {
-          for (_iterator.s(); !(_step = _iterator.n()).done; ) {
-            var p = _step.value;
-            if (!p.includes(":")) {
-              continue;
-            }
-            var spl = p.split(":");
-            this.accountValCache.set(
-              KoLItem.get(AccountValUtils.toInt(spl[0])),
-              spl[1].startsWith("t")
-            );
-          }
-        } catch (err) {
-          _iterator.e(err);
-        } finally {
-          _iterator.f();
-        }
-      } }, { key: "saveCache", value: function saveCache() {
-        var values = [];
-        this.accountValCache.forEach(
-          (val2, key) => values.push(`${key.id}:${val2 ? "t" : "f"}`)
-        );
-        values.sort((v1, v2) => v1.localeCompare(v2));
-        var val = values.join(",");
-        if (provider().retrieveCache(
-          this.accountValVisitCachePropName,
-          "transient"
-        ) == val) {
-          return;
-        }
-        provider().storeCache(
-          this.accountValVisitCachePropName,
-          values.join(","),
-          "transient"
-        );
-      } }, { key: "getUrledItems", value: function getUrledItems() {
-        var items = [];
-        var origSize = this.accountValCache.size;
-        var _iterator2 = _createForOfIteratorHelper3(
-          this.accValStuff
-        ), _step2;
-        try {
-          for (_iterator2.s(); !(_step2 = _iterator2.n()).done; ) {
-            var s = _step2.value;
-            if (s.itemType == ItemType.BOOK) {
-              if (provider().haveSkill(s.skill)) {
-                items.push([s.actualItem, ItemStatus.BOUND]);
-              }
-            } else if (s.itemType == ItemType.EUDORA) {
-              if (this.visitCheck(
-                s.actualItem,
-                "account.php?tab=correspondence",
-                s.correspondence
-              )) {
-                items.push([s.actualItem, ItemStatus.BOUND]);
-              }
-            } else if (s.itemType == ItemType.PROPERTY) {
-              if (this.testProperty(s.userSetting)) {
-                items.push([s.actualItem, ItemStatus.BOUND]);
-              }
-            } else if (s.itemType == ItemType.VISIT_URL_CHECK) {
-              if (this.visitCheck(s.actualItem, s.visitUrlLink, s.visitUrlIncludes)) {
-                items.push([s.actualItem, ItemStatus.BOUND]);
-              }
-            } else if (s.itemType == ItemType.GARDEN) {
-              if (provider().myGardenType() == s.garden) {
-                items.push([s.actualItem, ItemStatus.IN_USE]);
-              }
-            } else if (s.itemType == ItemType.SKILL) {
-              if (provider().getPermedSkills()[s.skill.name]) {
-                items.push([s.actualItem, ItemStatus.BOUND]);
-              }
-            } else if (s.itemType == ItemType.CAMPGROUND) {
-              if (provider().getCampground().has(s.actualItem)) {
-                items.push([s.actualItem, ItemStatus.BOUND]);
-              }
-            } else if (s.itemType == ItemType.SCRIPT) {
-              if (eval(s.script)) {
-                items.push([s.actualItem, ItemStatus.BOUND]);
-              }
-            }
-          }
-        } catch (err) {
-          _iterator2.e(err);
-        } finally {
-          _iterator2.f();
-        }
-        if (origSize != this.accountValCache.size) {
-          this.saveCache();
-        }
-        return items;
-      } }, { key: "testProperty", value: function testProperty(property) {
-        var result = true;
-        var _iterator3 = _createForOfIteratorHelper3(
-          property.split("&")
-        ), _step3;
-        try {
-          for (_iterator3.s(); !(_step3 = _iterator3.n()).done; ) {
-            var prop = _step3.value;
-            var isTrue = AccountValUtils.toBoolean(
-              provider().retrieveCache(prop.replace("!", ""), "small_persist")
-            );
-            var isNotNegated = !prop.includes("!");
-            result = result && isTrue == isNotNegated;
-          }
-        } catch (err) {
-          _iterator3.e(err);
-        } finally {
-          _iterator3.f();
-        }
-        return result;
-      } }, { key: "addItem", value: function addItem(ownedItems, actualItem, item, name, plural, bound) {
-        var count = arguments.length > 6 && arguments[6] !== void 0 ? arguments[6] : 1;
-        var worthMultiplier = arguments.length > 7 && arguments[7] !== void 0 ? arguments[7] : 1;
-        var v = new ValItem(actualItem, item, name, plural, bound);
-        v.worthMultiplier = worthMultiplier;
-        ownedItems.set(v, (ownedItems.get(v) | 0) + count);
-      } }, { key: "resolveBoundToTradeables", value: function resolveBoundToTradeables(copy, ownedItems, resolve) {
-        var coinmaster;
-        var _iterator4 = _createForOfIteratorHelper3(
-          this.accValStuff
-        ), _step4;
-        try {
-          for (_iterator4.s(); !(_step4 = _iterator4.n()).done; ) {
-            var s2 = _step4.value;
-            if (!resolve.includes(s2.itemType)) {
-              continue;
-            }
-            try {
-              if (s2.itemType == ItemType.CURRENCY && s2.untradeableItem == null) {
-                if (coinmaster == null) {
-                  coinmaster = new CoinmasterResolver(this.prices);
-                  coinmaster.load();
-                }
-                var _item = coinmaster.getHighestCoinmaster(s2.actualItem);
-                if (_item == null) {
-                  continue;
-                }
-                s2.currencyAmount = _item.currencyCost;
-                s2.untradeableItem = _item.currency;
-                s2.actualItem = _item.item;
-              }
-              var item = s2.untradeableItem;
-              var pair = copy[item.name];
-              if (pair == null) {
-                continue;
-              }
-              var v = pair[0];
-              this.addItem(
-                ownedItems,
-                item,
-                s2.actualItem,
-                item.name,
-                item.plural,
-                v.bound == null || v.bound == ItemStatus.NO_TRADE || v.bound == ItemStatus.IN_USE ? s2.itemType == ItemType.UNTRADEABLE_ITEM ? ItemStatus.BOUND : ItemStatus.NO_TRADE : v.bound,
-                pair[1],
-                s2.currencyAmount ?? 1
-              );
-            } catch (e) {
-              provider().print(
-                `You probably need to update mafia! Got an error! ${e}`,
-                AccountValColors.attentionGrabbingWarning
-              );
-            }
-          }
-        } catch (err) {
-          _iterator4.e(err);
-        } finally {
-          _iterator4.f();
-        }
-      } }, { key: "resolveFamiliars", value: function resolveFamiliars(familiars, ownedItems) {
-        var _iterator5 = _createForOfIteratorHelper3(
-          familiars
-        ), _step5;
-        try {
-          for (_iterator5.s(); !(_step5 = _iterator5.n()).done; ) {
-            var fam = _step5.value;
-            if (!fam.hatchling.tradeable) {
-              continue;
-            }
-            this.addItem(
-              ownedItems,
-              fam.hatchling,
-              fam.hatchling,
-              fam.toString(),
-              fam.toString(),
-              ItemStatus.FAMILIAR
-            );
-          }
-        } catch (err) {
-          _iterator5.e(err);
-        } finally {
-          _iterator5.f();
-        }
-      } }, { key: "resolveFamiliarItems", value: function resolveFamiliarItems() {
-        var famEquipped = /* @__PURE__ */ new Map();
-        var _iterator6 = _createForOfIteratorHelper3(
-          KoLFamiliar.all()
-        ), _step6;
-        try {
-          for (_iterator6.s(); !(_step6 = _iterator6.n()).done; ) {
-            var fam = _step6.value;
-            if (!provider().haveFamiliar(fam) || provider().myFamiliar() == fam) {
-              continue;
-            }
-            var item = provider().familiarEquippedEquipment(fam);
-            if (item == null || item == KoLItem.none) {
-              continue;
-            }
-            famEquipped.set(item, (famEquipped.get(item) | 0) + 1);
-          }
-        } catch (err) {
-          _iterator6.e(err);
-        } finally {
-          _iterator6.f();
-        }
-        return famEquipped;
-      } }, { key: "visitCheck", value: function visitCheck(item, url, find) {
-        if (this.accountValCache.has(item)) {
-          return this.accountValCache.get(item);
-        }
-        var page = this.visitCache.get(url);
-        if (page == null) {
-          page = provider().visitUrl(url);
-          this.visitCache.set(url, page);
-        }
-        var result = page.includes(find);
-        this.accountValCache.set(item, result);
-        return result;
-      } }, { key: "loadAccountValStuff", value: function loadAccountValStuff() {
-        var buffer = accountval_binds_default;
-        var values = [];
-        var _iterator7 = _createForOfIteratorHelper3(
-          buffer.split(/(\n|\r)+/)
-        ), _step7;
-        try {
-          loop: for (_iterator7.s(); !(_step7 = _iterator7.n()).done; ) {
-            var line = _step7.value;
-            if (line.startsWith("#") || line.length == 0) {
-              continue;
-            }
-            var spl = line.split("	");
-            if (spl.length < 2) {
-              continue;
-            }
-            var _v = new AccValStuff();
-            try {
-              _v.actualItem = KoLItem.get(spl[1]);
-            } catch (e) {
-              provider().print(
-                `Error! Update mafia? ${e}`,
-                AccountValColors.attentionGrabbingWarning
-              );
-              continue;
-            }
-            switch (spl[0]) {
-              case "i":
-                _v.itemType = ItemType.UNTRADEABLE_ITEM;
-                _v.untradeableItem = KoLItem.get(spl[2]);
-                break;
-              case "b":
-                _v.itemType = ItemType.BOOK;
-                _v.skill = KoLSkill.get(spl[2]);
-                break;
-              case "p":
-                _v.itemType = ItemType.PROPERTY;
-                _v.userSetting = spl[2];
-                break;
-              case "e":
-                _v.itemType = ItemType.EUDORA;
-                _v.correspondence = spl[2];
-                break;
-              case "v":
-                _v.itemType = ItemType.VISIT_URL_CHECK;
-                _v.visitUrlLink = spl[2];
-                _v.visitUrlIncludes = spl[3];
-                break;
-              case "g":
-                _v.itemType = ItemType.GARDEN;
-                _v.garden = spl[2];
-                break;
-              case "t":
-                _v.itemType = ItemType.CURRENCY;
-                if (spl.length > 2) {
-                  _v.untradeableItem = KoLItem.get(spl[2]);
-                  _v.currencyAmount = parseInt(spl[3]);
-                }
-                break;
-              case "c":
-                _v.itemType = ItemType.CAMPGROUND;
-                break;
-              case "s":
-                _v.itemType = ItemType.SCRIPT;
-                _v.script = spl[2];
-                break;
-              case "h":
-                this.prices.addSpecialCase(_v.actualItem, parseInt(spl[2]));
-                continue loop;
-                break;
-              default:
-                provider().print(
-                  `Found line '${line}' which I can't handle!`,
-                  AccountValColors.attentionGrabbingWarning
-                );
-                continue;
-            }
-            values.push(_v);
-          }
-        } catch (err) {
-          _iterator7.e(err);
-        } finally {
-          _iterator7.f();
-        }
-        this.loadSkills(values);
-        loop: for (var _i = 0, _values = values; _i < _values.length; _i++) {
-          var v = _values[_i];
-          if (v.actualItem.tradeable || v.itemType == ItemType.CURRENCY && v.untradeableItem == null) {
-            continue;
-          }
-          var _iterator8 = _createForOfIteratorHelper3(
-            values
-          ), _step8;
-          try {
-            for (_iterator8.s(); !(_step8 = _iterator8.n()).done; ) {
-              var v1 = _step8.value;
-              if (v1.itemType != ItemType.UNTRADEABLE_ITEM && v1.itemType != ItemType.CURRENCY) {
-                continue;
-              }
-              if (v1.untradeableItem != v.actualItem) {
-                continue;
-              }
-              continue loop;
-            }
-          } catch (err) {
-            _iterator8.e(err);
-          } finally {
-            _iterator8.f();
-          }
-          provider().print(
-            `Missing a tradeable item for ${v.actualItem}`,
-            AccountValColors.attentionGrabbingWarning
-          );
-        }
-        this.loadCache();
-        return values;
-      } }, { key: "loadSkills", value: function loadSkills(values) {
-        var itemsSkills = new Map(
-          KoLItem.all().map((i2) => [i2, provider().associatedSkill(i2)]).filter(
-            (_ref) => {
-              var _ref2 = _slicedToArray3(_ref, 2), i2 = _ref2[0], skill2 = _ref2[1];
-              return !i2.reusable && !i2.quest && !i2.gift && skill2 != KoLSkill.none;
-            }
-          )
-        );
-        var alreadyNoted = values.map((v2) => v2.actualItem);
-        var _iterator9 = _createForOfIteratorHelper3(
-          itemsSkills
-        ), _step9;
-        try {
-          for (_iterator9.s(); !(_step9 = _iterator9.n()).done; ) {
-            var _step9$value = _slicedToArray3(_step9.value, 2), i = _step9$value[0], skill = _step9$value[1];
-            if (!i.tradeable || alreadyNoted.includes(i)) {
-              continue;
-            }
-            var v = new AccValStuff();
-            v.itemType = ItemType.SKILL;
-            v.actualItem = i;
-            v.skill = skill;
-            values.push(v);
-          }
-        } catch (err) {
-          _iterator9.e(err);
-        } finally {
-          _iterator9.f();
-        }
-      } }]);
-    })();
-  }
-});
-
-// src/resolvers/pages.ts
-function _createForOfIteratorHelper4(r, e) {
-  var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-  if (!t) {
-    if (Array.isArray(r) || (t = _unsupportedIterableToArray5(r)) || e && r && "number" == typeof r.length) {
-      t && (r = t);
-      var _n = 0, F = function F2() {
-      };
-      return { s: F, n: function n() {
-        return _n >= r.length ? { done: true } : { done: false, value: r[_n++] };
-      }, e: function e2(r2) {
-        throw r2;
-      }, f: F };
-    }
-    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-  var o, a = true, u = false;
-  return { s: function s2() {
-    t = t.call(r);
-  }, n: function n() {
-    var r2 = t.next();
-    return a = r2.done, r2;
-  }, e: function e2(r2) {
-    u = true, o = r2;
-  }, f: function f() {
-    try {
-      a || null == t.return || t.return();
-    } finally {
-      if (u) throw o;
-    }
-  } };
-}
-function _toConsumableArray2(r) {
-  return _arrayWithoutHoles2(r) || _iterableToArray2(r) || _unsupportedIterableToArray5(r) || _nonIterableSpread2();
-}
-function _nonIterableSpread2() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray5(r, a) {
-  if (r) {
-    if ("string" == typeof r) return _arrayLikeToArray5(r, a);
-    var t = {}.toString.call(r).slice(8, -1);
-    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray5(r, a) : void 0;
-  }
-}
-function _iterableToArray2(r) {
-  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
-}
-function _arrayWithoutHoles2(r) {
-  if (Array.isArray(r)) return _arrayLikeToArray5(r);
-}
-function _arrayLikeToArray5(r, a) {
-  (null == a || a > r.length) && (a = r.length);
-  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
-  return n;
 }
 function _defineProperties7(e, r) {
   for (var t = 0; t < r.length; t++) {
@@ -1152,797 +758,6 @@ function _defineProperties7(e, r) {
 }
 function _createClass7(e, r, t) {
   return r && _defineProperties7(e.prototype, r), t && _defineProperties7(e, t), Object.defineProperty(e, "prototype", { writable: false }), e;
-}
-function _toPropertyKey7(t) {
-  var i = _toPrimitive7(t, "string");
-  return "symbol" == typeof i ? i : i + "";
-}
-function _toPrimitive7(t, e) {
-  if ("object" != typeof t || !t) return t;
-  var r;
-  if ("undefined" != typeof Symbol && void 0 !== (r = t[Symbol.toPrimitive])) {
-    var i = r.call(t, e || "default");
-    if ("object" != typeof i) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === e ? String : Number)(t);
-}
-function _classCallCheck7(a, n) {
-  if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
-}
-var StoreItem, PageResolver;
-var init_pages = __esm({
-  "src/resolvers/pages.ts"() {
-    init_apiSupplier();
-    init_supplierTypings();
-    init_colors();
-    init_utils();
-    StoreItem = /* @__PURE__ */ _createClass7(function StoreItem2() {
-      _classCallCheck7(this, StoreItem2);
-    });
-    PageResolver = /* @__PURE__ */ (function() {
-      function PageResolver2() {
-        _classCallCheck7(this, PageResolver2);
-      }
-      return _createClass7(PageResolver2, [{ key: "getSnapshot", value: function getSnapshot(username) {
-        var items2 = new Map(
-          KoLItem.all().map((i) => {
-            var name2 = i.name;
-            while (name2.match(/<\/?i>/)) {
-              name2 = name2.replace(/<\/?i>/, "");
-            }
-            return [provider().entityDecode(name2).toLowerCase(), i];
-          })
-        );
-        var skills = new Map(
-          KoLSkill.all().map(
-            (s2) => [
-              provider().entityDecode(s2.name).toLowerCase(),
-              s2
-            ]
-          )
-        );
-        var fams = new Map(
-          KoLFamiliar.all().map((f) => [f.toString().toLowerCase(), f])
-        );
-        var ignore = _toConsumableArray2(fams.values()).map(
-          (f) => f.hatchling.toString().toLowerCase()
-        );
-        ignore.push.apply(
-          ignore,
-          _toConsumableArray2(
-            Object.values(provider().allNormalOutfits()).map(
-              (s2) => s2.toLowerCase()
-            )
-          )
-        );
-        ignore.push("miming regalia");
-        var page = provider().visitUrl(
-          "https://api.aventuristo.net/av-snapshot?u=" + username
-        );
-        if (!page.includes("<p>Snapshot for <b>")) {
-          return [];
-        }
-        page = page.substring(0, page.indexOf(`id='a7'>Discoveries</h1>`));
-        var tdRegex = /<td(.*?)<\/td>/m;
-        var linkRegex = /class='(perm|hcperm|fam_run_90|fam_have|fam_run_100)'.*?<a href="[^"]+" rel="noreferrer">(?:.*?>)?([^>]*?)<\/a>/;
-        var match;
-        var has = [];
-        while ((match = page.match(tdRegex)) != null) {
-          page = page.substring(page.indexOf(match[0]) + match[0].length);
-          var link = match[1].match(linkRegex);
-          if (link == null) {
-            continue;
-          }
-          var name = provider().entityDecode(link[2]).toLowerCase();
-          if (ignore.includes(name)) {
-            continue;
-          }
-          var type = link[1];
-          var isFam = !type.includes("perm");
-          if (isFam) {
-            if (fams.has(name)) {
-              has.push(fams.get(name));
-            } else {
-              provider().print(
-                "Unable to resolve the familiar '" + name + "' from av-snapshot",
-                AccountValColors.attentionGrabbingWarning
-              );
-            }
-            continue;
-          }
-          if (name.match(/: level \d+$/)) {
-            name = name.substring(0, name.lastIndexOf(":"));
-          } else if (name.match(/ \(\d+\/\d+\)$/)) {
-            name = name.substring(0, name.lastIndexOf(" "));
-          } else if (name.match(/ \d+\/\d+$/)) {
-            continue;
-          }
-          if (skills.has(name)) {
-            has.push(skills.get(name));
-            continue;
-          }
-          if (items2.has(name)) {
-            has.push(items2.get(name));
-            continue;
-          }
-          var count = 1;
-          if (name.match(/ x\d+$/)) {
-            count = AccountValUtils.toInt(
-              name.substring(name.lastIndexOf("x") + 1)
-            );
-            name = name.substring(0, name.lastIndexOf(" "));
-          }
-          if (!items2.has(name)) {
-            provider().print(
-              "Unable to resolve the item '" + name + "' from av-snapshot",
-              AccountValColors.attentionGrabbingWarning
-            );
-            continue;
-          }
-          has.push([items2.get(name), count]);
-        }
-        return has;
-      } }, { key: "getFamiliars", value: function getFamiliars(userId) {
-        var page = provider().visitUrl("showfamiliars.php?who=" + userId);
-        var regex = /onClick='fam\((\d+)\)'/;
-        var match;
-        var familiars = [];
-        while ((match = page.match(regex)) != null) {
-          page = page.replace(match[0], "");
-          familiars.push(provider().toFamiliar(AccountValUtils.toInt(match[1])));
-        }
-        return familiars;
-      } }, { key: "getStore", value: function getStore(userId) {
-        var items2 = [];
-        var page = provider().visitUrl("mallstore.php?whichstore=" + userId);
-        var _iterator = _createForOfIteratorHelper4(
-          page.split("<tr>")
-        ), _step;
-        try {
-          for (_iterator.s(); !(_step = _iterator.n()).done; ) {
-            var s2 = _step.value;
-            var match = s2.match(
-              /selecteditem=(\d+).+?<b>.+?<\/b> \(([\d,]+)\) +(?:\(Limit ([\d,]+) \/ day\))?<\/td><td>((?:\d|,)+) Meat<\/td>/
-            );
-            if (match == null) {
-              continue;
-            }
-            var item = new StoreItem();
-            item.item = KoLItem.get(AccountValUtils.toInt(match[1]));
-            item.amount = AccountValUtils.toInt(match[2]);
-            item.limit = match[3] == null ? 0 : AccountValUtils.toInt(match[3]);
-            item.price = AccountValUtils.toInt(match[4]);
-            items2.push(item);
-          }
-        } catch (err) {
-          _iterator.e(err);
-        } finally {
-          _iterator.f();
-        }
-        return items2;
-      } }, { key: "getDisplaycase", value: function getDisplaycase(userId) {
-        var map2 = /* @__PURE__ */ new Map();
-        var descs = new Map(
-          KoLItem.all().map((i) => [i.descid, i])
-        );
-        var page = provider().visitUrl("displaycollection.php?who=" + userId);
-        var lastShelf;
-        var itemRegex = /<td width=30 height=30><img src=".+?" class=hand onClick='descitem\((\d+),(\d+)\)'><\/td><td valign=center><b>.+?<\/b>(?: \(((?:\d|,)+)\))?<\/td><\/tr>/;
-        var shelfRegex = /<font color=white>([^<]+)<\/font>/;
-        var _iterator22 = _createForOfIteratorHelper4(
-          page.split("<tr>")
-        ), _step22;
-        try {
-          for (_iterator22.s(); !(_step22 = _iterator22.n()).done; ) {
-            var s2 = _step22.value;
-            var shelfMatch = s2.match(shelfRegex);
-            if (shelfMatch != null) {
-              lastShelf = provider().entityDecode(shelfMatch[1]);
-            }
-            var match = s2.match(itemRegex);
-            if (match == null) {
-              continue;
-            }
-            var item = descs.get(match[1]);
-            if (item == null) {
-              provider().print(
-                "Unknown item description: " + match[1] + ", update mafia?",
-                AccountValColors.attentionGrabbingWarning
-              );
-              continue;
-            }
-            map2.set(
-              { item, shelf: lastShelf },
-              match[3] == null ? 1 : AccountValUtils.toInt(match[3])
-            );
-          }
-        } catch (err) {
-          _iterator22.e(err);
-        } finally {
-          _iterator22.f();
-        }
-        return map2;
-      } }]);
-    })();
-  }
-});
-
-// src/utils/timings.ts
-function _createForOfIteratorHelper5(r, e) {
-  var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-  if (!t) {
-    if (Array.isArray(r) || (t = _unsupportedIterableToArray6(r)) || e && r && "number" == typeof r.length) {
-      t && (r = t);
-      var _n = 0, F = function F2() {
-      };
-      return { s: F, n: function n() {
-        return _n >= r.length ? { done: true } : { done: false, value: r[_n++] };
-      }, e: function e2(r2) {
-        throw r2;
-      }, f: F };
-    }
-    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-  var o, a = true, u = false;
-  return { s: function s2() {
-    t = t.call(r);
-  }, n: function n() {
-    var r2 = t.next();
-    return a = r2.done, r2;
-  }, e: function e2(r2) {
-    u = true, o = r2;
-  }, f: function f() {
-    try {
-      a || null == t.return || t.return();
-    } finally {
-      if (u) throw o;
-    }
-  } };
-}
-function _toConsumableArray3(r) {
-  return _arrayWithoutHoles3(r) || _iterableToArray3(r) || _unsupportedIterableToArray6(r) || _nonIterableSpread3();
-}
-function _nonIterableSpread3() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _iterableToArray3(r) {
-  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
-}
-function _arrayWithoutHoles3(r) {
-  if (Array.isArray(r)) return _arrayLikeToArray6(r);
-}
-function _slicedToArray4(r, e) {
-  return _arrayWithHoles4(r) || _iterableToArrayLimit4(r, e) || _unsupportedIterableToArray6(r, e) || _nonIterableRest4();
-}
-function _nonIterableRest4() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray6(r, a) {
-  if (r) {
-    if ("string" == typeof r) return _arrayLikeToArray6(r, a);
-    var t = {}.toString.call(r).slice(8, -1);
-    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray6(r, a) : void 0;
-  }
-}
-function _arrayLikeToArray6(r, a) {
-  (null == a || a > r.length) && (a = r.length);
-  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
-  return n;
-}
-function _iterableToArrayLimit4(r, l) {
-  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-  if (null != t) {
-    var e, n, i, u, a = [], f = true, o = false;
-    try {
-      if (i = (t = t.call(r)).next, 0 === l) {
-        if (Object(t) !== t) return;
-        f = false;
-      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = true) ;
-    } catch (r2) {
-      o = true, n = r2;
-    } finally {
-      try {
-        if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;
-      } finally {
-        if (o) throw n;
-      }
-    }
-    return a;
-  }
-}
-function _arrayWithHoles4(r) {
-  if (Array.isArray(r)) return r;
-}
-function _classCallCheck8(a, n) {
-  if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
-}
-function _defineProperties8(e, r) {
-  for (var t = 0; t < r.length; t++) {
-    var o = r[t];
-    o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, _toPropertyKey8(o.key), o);
-  }
-}
-function _createClass8(e, r, t) {
-  return r && _defineProperties8(e.prototype, r), t && _defineProperties8(e, t), Object.defineProperty(e, "prototype", { writable: false }), e;
-}
-function _defineProperty4(e, r, t) {
-  return (r = _toPropertyKey8(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: true, configurable: true, writable: true }) : e[r] = t, e;
-}
-function _toPropertyKey8(t) {
-  var i = _toPrimitive8(t, "string");
-  return "symbol" == typeof i ? i : i + "";
-}
-function _toPrimitive8(t, e) {
-  if ("object" != typeof t || !t) return t;
-  var r;
-  if ("undefined" != typeof Symbol && void 0 !== (r = t[Symbol.toPrimitive])) {
-    var i = r.call(t, e || "default");
-    if ("object" != typeof i) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === e ? String : Number)(t);
-}
-var AccValTiming;
-var init_timings = __esm({
-  "src/utils/timings.ts"() {
-    init_apiSupplier();
-    init_utils();
-    AccValTiming = /* @__PURE__ */ (function() {
-      function AccValTiming2(name) {
-        var isSteps = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : false;
-        _classCallCheck8(this, AccValTiming2);
-        _defineProperty4(this, "started", Date.now());
-        _defineProperty4(this, "depth", 0);
-        _defineProperty4(this, "totalTimeTaken", null);
-        this.name = name;
-        if (isSteps) {
-          this.totalTimeTaken = 0;
-          this.start();
-        }
-      }
-      return _createClass8(AccValTiming2, [{ key: "start", value: function start() {
-        if (this.totalTimeTaken == null) {
-          throw new Error(
-            `${this.getName()} was not configured as a total time timings`
-          );
-        }
-        if (this.stepStarted != null) {
-          throw new Error(`${this.getName()} was not stopped properly`);
-        }
-        this.stepStarted = Date.now();
-      } }, { key: "getName", value: function getName() {
-        return this.name;
-      } }, { key: "stop", value: function stop() {
-        var print = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : false;
-        if (this.stopped != null && this.stepStarted == null) {
-          throw new Error(`The timing for ${this.getName()} was already stopped`);
-        }
-        this.stopped = Date.now();
-        if (print) {
-          AccValTiming2.printHtml(
-            `<font color='blue'>${this.getName()}<font color='green'> time taken: </font>${this.getTimeStr()}</font>`
-          );
-        }
-        if (this.totalTimeTaken != null) {
-          this.totalTimeTaken += Date.now() - this.stepStarted;
-          this.stepStarted = null;
-        }
-        return this;
-      } }, { key: "getTime", value: function getTime() {
-        return this.totalTimeTaken ?? (this.stopped ?? Date.now()) - this.started;
-      } }, { key: "getTimeStr", value: function getTimeStr() {
-        return `${AccountValUtils.getNumber(this.getTime())}ms${this.stopped == null ? " (never stopped)" : ""}${this.stepStarted != null ? " (step never stopped)" : ""}`;
-      } }], [{ key: "printHtml", value: function printHtml(line) {
-        provider().printHtml(line);
-      } }, { key: "start", value: function start(name) {
-        var withSteps = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : false;
-        if (!this.enabled) {
-          return null;
-        }
-        var started = Date.now();
-        var existing = this.trackingMap.get(name);
-        if (existing != null && (existing.totalTimeTaken == null || existing.stepStarted != null)) {
-          throw new Error(`The timing for ${name} was already started`);
-        }
-        if (existing == null) {
-          existing = new AccValTiming2(name, withSteps);
-          this.trackingMap.set(name, existing);
-          this.tracking.push(["STARTED", existing]);
-          existing.depth = this.tracking.filter(
-            (_ref) => {
-              var _ref2 = _slicedToArray4(_ref, 2), state = _ref2[0], t = _ref2[1];
-              return t.stopped == null && state == "STARTED";
-            }
-          ).length - 1;
-        } else {
-          existing.start();
-        }
-        this.timingsSlowdown += Date.now() - started;
-        return existing;
-      } }, { key: "stop", value: function stop(name) {
-        var print = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : false;
-        if (!this.enabled) {
-          return null;
-        }
-        var started = Date.now();
-        var existing = this.trackingMap.get(name);
-        if (existing == null) {
-          throw new Error(`There was no time tracking created for ${name}`);
-        }
-        var lastStopIndex = -1;
-        for (var i = this.tracking.length - 1; i >= 0; i--) {
-          if (this.tracking[i][0] === "STOPPED" && this.tracking[i][1] === existing) {
-            lastStopIndex = i;
-            break;
-          }
-        }
-        if (lastStopIndex !== -1) {
-          this.tracking.splice(lastStopIndex, 1);
-        }
-        this.tracking.push(["STOPPED", existing]);
-        existing.stop(print);
-        this.timingsSlowdown += Date.now() - started;
-        return existing;
-      } }, { key: "printTracked", value: function printTracked(method) {
-        if (!this.enabled) {
-          return;
-        }
-        var sortedTimes = _toConsumableArray3(
-          this.tracking
-        );
-        this.tracking.forEach((_ref3) => {
-          var _ref4 = _slicedToArray4(_ref3, 2), state2 = _ref4[0], t = _ref4[1];
-          if (t.stopped == null) {
-            sortedTimes.push(["STOPPED", t]);
-          }
-        });
-        var _iterator = _createForOfIteratorHelper5(
-          sortedTimes
-        ), _step;
-        try {
-          for (_iterator.s(); !(_step = _iterator.n()).done; ) {
-            var _step$value = _slicedToArray4(_step.value, 2), state = _step$value[0], timing = _step$value[1];
-            var depthStr = `<font color='gray'>${">&nbsp;".repeat(timing.depth)}</font>`;
-            if (method == "PRINT_JUST_ONCE") {
-              if (state != "STARTED") {
-                continue;
-              }
-              this.printHtml(
-                `${depthStr}<font color='blue'>${timing.getName()} <font color='green'>time taken:</font> ${timing.getTimeStr()}</font>`
-              );
-            } else if (method == "PRINT_START_AND_END") {
-              if (state == "STARTED") {
-                this.printHtml(
-                  `${depthStr}<font color='blue'>${timing.getName()}</font> <font color='green'>started</font>`
-                );
-              } else {
-                this.printHtml(
-                  `${depthStr}<font color='blue'>${timing.getName()}<font color='green'> stopped, time taken: </font>${timing.getTimeStr()}</font>`
-                );
-              }
-            } else if (method == "PRINT_JUST_END") {
-              if (state == "STARTED") {
-                continue;
-              }
-              this.printHtml(
-                `${depthStr}<font color='blue'>${timing.getName()}<font color='green'> time taken: </font>${timing.getTimeStr()}</font>`
-              );
-            }
-          }
-        } catch (err) {
-          _iterator.e(err);
-        } finally {
-          _iterator.f();
-        }
-        this.printHtml(
-          `<font color='green'>The usage of timings took an extra: </font><font color='blue'>${AccountValUtils.getNumber(this.timingsSlowdown)}ms</font>`
-        );
-      } }]);
-    })();
-    _defineProperty4(AccValTiming, "tracking", []);
-    _defineProperty4(AccValTiming, "trackingMap", /* @__PURE__ */ new Map());
-    _defineProperty4(AccValTiming, "timingsSlowdown", 0);
-    _defineProperty4(AccValTiming, "enabled", false);
-  }
-});
-
-// src/pricing/variants/kolmafia.ts
-function _classCallCheck9(a, n) {
-  if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
-}
-function _defineProperties9(e, r) {
-  for (var t = 0; t < r.length; t++) {
-    var o = r[t];
-    o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, _toPropertyKey9(o.key), o);
-  }
-}
-function _createClass9(e, r, t) {
-  return r && _defineProperties9(e.prototype, r), t && _defineProperties9(e, t), Object.defineProperty(e, "prototype", { writable: false }), e;
-}
-function _defineProperty5(e, r, t) {
-  return (r = _toPropertyKey9(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: true, configurable: true, writable: true }) : e[r] = t, e;
-}
-function _toPropertyKey9(t) {
-  var i = _toPrimitive9(t, "string");
-  return "symbol" == typeof i ? i : i + "";
-}
-function _toPrimitive9(t, e) {
-  if ("object" != typeof t || !t) return t;
-  var r;
-  if ("undefined" != typeof Symbol && void 0 !== (r = t[Symbol.toPrimitive])) {
-    var i = r.call(t, e || "default");
-    if ("object" != typeof i) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === e ? String : Number)(t);
-}
-var MallPricing, HistoricalPricing;
-var init_kolmafia = __esm({
-  "src/pricing/variants/kolmafia.ts"() {
-    init_apiSupplier();
-    init_typings();
-    MallPricing = /* @__PURE__ */ (function() {
-      function MallPricing2() {
-        _classCallCheck9(this, MallPricing2);
-        _defineProperty5(this, "sessionKey", "accountval_loadedAllMallItems");
-        _defineProperty5(this, "ignoreKey", "_accountval_force_mallprices");
-        _defineProperty5(this, "loadedAllMallItems", "not_loaded");
-        this.loadLastState();
-        if (this.loadedAllMallItems == "not_loaded") {
-          this.loadMallPrices();
-        }
-      }
-      return _createClass9(MallPricing2, [{ key: "loadLastState", value: function loadLastState() {
-        var prop = provider().retrieveCache(this.sessionKey, "transient");
-        if (!prop) {
-          return;
-        }
-        this.loadedAllMallItems = prop;
-      } }, { key: "resetStateMaybe", value: function resetStateMaybe() {
-        if (provider().retrieveCache(this.ignoreKey, "small_persist") != "true") {
-          return;
-        }
-        if (this.loadedAllMallItems == "not_loaded") {
-          this.loadedAllMallItems = "unsure";
-        }
-      } }, { key: "loadMallPrices", value: function loadMallPrices() {
-        if (this.loadedAllMallItems == "loaded") {
-          throw new Error(`Mall prices failed to load, check that loathers/mall-check (mallcheck.js) is installed and working, set '${this.ignoreKey}=true' to ignore this error`);
-        } else if (this.loadedAllMallItems == "unsure") {
-          provider().print(
-            `Mall prices didn't resolve properly, please make sure that mallcheck.js from loathers/mall-check is installed, now falling back to manually searching.`,
-            "red"
-          );
-        }
-        this.loadedAllMallItems = provider().resolveAllMallPrices(
-          this.loadedAllMallItems
-        );
-        provider().storeCache(
-          this.sessionKey,
-          this.loadedAllMallItems,
-          "transient"
-        );
-      } }, { key: "isViable", value: function isViable() {
-        return true;
-      } }, { key: "resolve", value: function resolve(item) {
-        var prevAge = provider().historicalAge(item);
-        var price = provider().mallPrice(item);
-        if (provider().historicalAge(item) < prevAge && // If the new malled price is not valid, then it was an item that can't be found in mall, which explains why the cached mall prices didn't work
-        price >= 100 && price < 999999999999) {
-          this.resetStateMaybe();
-          this.loadMallPrices();
-        }
-        return new ItemPrice(
-          item,
-          price,
-          PriceType.MALL,
-          provider().historicalAge(item)
-        );
-      } }]);
-    })();
-    HistoricalPricing = /* @__PURE__ */ (function() {
-      function HistoricalPricing2() {
-        _classCallCheck9(this, HistoricalPricing2);
-      }
-      return _createClass9(HistoricalPricing2, [{ key: "isViable", value: function isViable() {
-        return true;
-      } }, { key: "resolve", value: function resolve(item) {
-        return new ItemPrice(
-          item,
-          provider().historicalPrice(item),
-          PriceType.HISTORICAL,
-          provider().historicalAge(item)
-        );
-      } }]);
-    })();
-  }
-});
-
-// src/pricing/variants/flatfile.ts
-function _createForOfIteratorHelper6(r, e) {
-  var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-  if (!t) {
-    if (Array.isArray(r) || (t = _unsupportedIterableToArray7(r)) || e && r && "number" == typeof r.length) {
-      t && (r = t);
-      var _n = 0, F = function F2() {
-      };
-      return { s: F, n: function n() {
-        return _n >= r.length ? { done: true } : { done: false, value: r[_n++] };
-      }, e: function e2(r2) {
-        throw r2;
-      }, f: F };
-    }
-    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-  var o, a = true, u = false;
-  return { s: function s2() {
-    t = t.call(r);
-  }, n: function n() {
-    var r2 = t.next();
-    return a = r2.done, r2;
-  }, e: function e2(r2) {
-    u = true, o = r2;
-  }, f: function f() {
-    try {
-      a || null == t.return || t.return();
-    } finally {
-      if (u) throw o;
-    }
-  } };
-}
-function _unsupportedIterableToArray7(r, a) {
-  if (r) {
-    if ("string" == typeof r) return _arrayLikeToArray7(r, a);
-    var t = {}.toString.call(r).slice(8, -1);
-    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray7(r, a) : void 0;
-  }
-}
-function _arrayLikeToArray7(r, a) {
-  (null == a || a > r.length) && (a = r.length);
-  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
-  return n;
-}
-function _classCallCheck10(a, n) {
-  if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
-}
-function _defineProperties10(e, r) {
-  for (var t = 0; t < r.length; t++) {
-    var o = r[t];
-    o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, _toPropertyKey10(o.key), o);
-  }
-}
-function _createClass10(e, r, t) {
-  return r && _defineProperties10(e.prototype, r), t && _defineProperties10(e, t), Object.defineProperty(e, "prototype", { writable: false }), e;
-}
-function _toPropertyKey10(t) {
-  var i = _toPrimitive10(t, "string");
-  return "symbol" == typeof i ? i : i + "";
-}
-function _toPrimitive10(t, e) {
-  if ("object" != typeof t || !t) return t;
-  var r;
-  if ("undefined" != typeof Symbol && void 0 !== (r = t[Symbol.toPrimitive])) {
-    var i = r.call(t, e || "default");
-    if ("object" != typeof i) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === e ? String : Number)(t);
-}
-var FlatfilePrices;
-var init_flatfile = __esm({
-  "src/pricing/variants/flatfile.ts"() {
-    init_typings();
-    FlatfilePrices = /* @__PURE__ */ (function() {
-      function FlatfilePrices2(settings) {
-        _classCallCheck10(this, FlatfilePrices2);
-        this.settings = settings;
-      }
-      return _createClass10(FlatfilePrices2, [{ key: "resolve", value: function resolve(item) {
-        var price = this.prices[item.id];
-        if (price == null) {
-          return null;
-        }
-        return new ItemPrice(
-          item,
-          price.price,
-          PriceType.NEW_PRICES,
-          Math.round((Date.now() / 1e3 - price.updated) / (60 * 60 * 24)),
-          price.volume
-        );
-      } }, { key: "loadLastState", value: function loadLastState() {
-        var buffer = this.loadDataFile();
-        if (buffer.length <= 10) {
-          return;
-        }
-        this.prices = [];
-        var _iterator = _createForOfIteratorHelper6(
-          buffer.split(/[\n\r]+/)
-        ), _step;
-        try {
-          for (_iterator.s(); !(_step = _iterator.n()).done; ) {
-            var spl = _step.value;
-            if (spl.startsWith("#")) {
-              continue;
-            }
-            var spl2 = spl.split("	");
-            if (spl2.length == 2 && spl2[0] == "Last Updated:") {
-              this.lastUpdated = parseInt(spl2[1]);
-              continue;
-            }
-            if (spl2.length < 3) {
-              continue;
-            }
-            var result = this.loadDataItem(spl2);
-            if (result == null) {
-              continue;
-            }
-            this.prices[result[0]] = result[1];
-          }
-        } catch (err) {
-          _iterator.e(err);
-        } finally {
-          _iterator.f();
-        }
-      } }]);
-    })();
-  }
-});
-
-// src/pricing/variants/irratprices.ts
-function _slicedToArray5(r, e) {
-  return _arrayWithHoles5(r) || _iterableToArrayLimit5(r, e) || _unsupportedIterableToArray8(r, e) || _nonIterableRest5();
-}
-function _nonIterableRest5() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _unsupportedIterableToArray8(r, a) {
-  if (r) {
-    if ("string" == typeof r) return _arrayLikeToArray8(r, a);
-    var t = {}.toString.call(r).slice(8, -1);
-    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray8(r, a) : void 0;
-  }
-}
-function _arrayLikeToArray8(r, a) {
-  (null == a || a > r.length) && (a = r.length);
-  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
-  return n;
-}
-function _iterableToArrayLimit5(r, l) {
-  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
-  if (null != t) {
-    var e, n, i, u, a = [], f = true, o = false;
-    try {
-      if (i = (t = t.call(r)).next, 0 === l) {
-        if (Object(t) !== t) return;
-        f = false;
-      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = true) ;
-    } catch (r2) {
-      o = true, n = r2;
-    } finally {
-      try {
-        if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;
-      } finally {
-        if (o) throw n;
-      }
-    }
-    return a;
-  }
-}
-function _arrayWithHoles5(r) {
-  if (Array.isArray(r)) return r;
-}
-function _classCallCheck11(a, n) {
-  if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
-}
-function _defineProperties11(e, r) {
-  for (var t = 0; t < r.length; t++) {
-    var o = r[t];
-    o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, _toPropertyKey11(o.key), o);
-  }
-}
-function _createClass11(e, r, t) {
-  return r && _defineProperties11(e.prototype, r), t && _defineProperties11(e, t), Object.defineProperty(e, "prototype", { writable: false }), e;
 }
 function _callSuper(t, o, e) {
   return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e));
@@ -1980,14 +795,14 @@ function _setPrototypeOf(t, e) {
     return t2.__proto__ = e2, t2;
   }, _setPrototypeOf(t, e);
 }
-function _defineProperty6(e, r, t) {
-  return (r = _toPropertyKey11(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: true, configurable: true, writable: true }) : e[r] = t, e;
+function _defineProperty3(e, r, t) {
+  return (r = _toPropertyKey7(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: true, configurable: true, writable: true }) : e[r] = t, e;
 }
-function _toPropertyKey11(t) {
-  var i = _toPrimitive11(t, "string");
+function _toPropertyKey7(t) {
+  var i = _toPrimitive7(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive11(t, e) {
+function _toPrimitive7(t, e) {
   if ("object" != typeof t || !t) return t;
   var r;
   if ("undefined" != typeof Symbol && void 0 !== (r = t[Symbol.toPrimitive])) {
@@ -2000,17 +815,18 @@ function _toPrimitive11(t, e) {
 var IrratPrices;
 var init_irratprices = __esm({
   "src/pricing/variants/irratprices.ts"() {
+    "use strict";
     init_apiSupplier();
     init_flatfile();
     IrratPrices = /* @__PURE__ */ (function(_FlatfilePrices) {
       function IrratPrices2() {
         var _this;
-        _classCallCheck11(this, IrratPrices2);
+        _classCallCheck7(this, IrratPrices2);
         for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
           args[_key] = arguments[_key];
         }
         _this = _callSuper(this, IrratPrices2, [].concat(args));
-        _defineProperty6(
+        _defineProperty3(
           _this,
           "ofThePast",
           false
@@ -2018,8 +834,8 @@ var init_irratprices = __esm({
         return _this;
       }
       _inherits(IrratPrices2, _FlatfilePrices);
-      return _createClass11(IrratPrices2, [{ key: "doWarning", value: function doWarning() {
-        if (this.prices == null || this.ofThePast || this.lastUpdated == null) {
+      return _createClass7(IrratPrices2, [{ key: "doWarning", value: function doWarning() {
+        if (this.prices === void 0 || this.ofThePast || this.lastUpdated === void 0) {
           return false;
         }
         var aWeekIsThisManyMillis = 7 * 24 * 60 * 60 * 1e3;
@@ -2028,13 +844,13 @@ var init_irratprices = __esm({
         }
         return true;
       } }, { key: "isViable", value: function isViable() {
-        if (this.prices == null) {
+        if (this.prices === void 0) {
           return false;
         }
         if (this.ofThePast) {
           return true;
         }
-        if (this.lastUpdated == null) {
+        if (this.lastUpdated === void 0) {
           return false;
         }
         var irratDedAtWeek = 3;
@@ -2045,7 +861,7 @@ var init_irratprices = __esm({
         return true;
       } }, { key: "loadDataFile", value: function loadDataFile() {
         var toFetch = this.settings.dateToFetch;
-        if (toFetch == null) {
+        if (toFetch === void 0) {
           return provider().retrieveCache(
             "irrats_item_prices.txt",
             "large_persist"
@@ -2056,7 +872,7 @@ var init_irratprices = __esm({
         minDate.setHours(0, 0, 0, 0);
         var absoluteDateRegex = /^\d{1,2}[-/]\d{1,2}[-/]\d{4}$/;
         if (absoluteDateRegex.test(toFetch)) {
-          var _toFetch$split$map = toFetch.split(/[-/]/).map(Number), _toFetch$split$map2 = _slicedToArray5(_toFetch$split$map, 3), day = _toFetch$split$map2[0], month = _toFetch$split$map2[1], year = _toFetch$split$map2[2];
+          var _toFetch$split$map = toFetch.split(/[-/]/).map(Number), _toFetch$split$map2 = _slicedToArray3(_toFetch$split$map, 3), day = _toFetch$split$map2[0], month = _toFetch$split$map2[1], year = _toFetch$split$map2[2];
           var parsedDate = new Date(year, month - 1, day);
           parsedDate.setHours(0, 0, 0, 0);
           if (parsedDate.getFullYear() !== year || parsedDate.getMonth() !== month - 1 || parsedDate.getDate() !== day) {
@@ -2124,18 +940,131 @@ var init_irratprices = __esm({
   }
 });
 
-// src/pricing/variants/pricegun.ts
-function _toConsumableArray4(r) {
-  return _arrayWithoutHoles4(r) || _iterableToArray4(r) || _unsupportedIterableToArray9(r) || _nonIterableSpread4();
+// src/pricing/variants/kolmafia.ts
+function _classCallCheck8(a, n) {
+  if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
 }
-function _nonIterableSpread4() {
+function _defineProperties8(e, r) {
+  for (var t = 0; t < r.length; t++) {
+    var o = r[t];
+    o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, _toPropertyKey8(o.key), o);
+  }
+}
+function _createClass8(e, r, t) {
+  return r && _defineProperties8(e.prototype, r), t && _defineProperties8(e, t), Object.defineProperty(e, "prototype", { writable: false }), e;
+}
+function _defineProperty4(e, r, t) {
+  return (r = _toPropertyKey8(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: true, configurable: true, writable: true }) : e[r] = t, e;
+}
+function _toPropertyKey8(t) {
+  var i = _toPrimitive8(t, "string");
+  return "symbol" == typeof i ? i : i + "";
+}
+function _toPrimitive8(t, e) {
+  if ("object" != typeof t || !t) return t;
+  var r;
+  if ("undefined" != typeof Symbol && void 0 !== (r = t[Symbol.toPrimitive])) {
+    var i = r.call(t, e || "default");
+    if ("object" != typeof i) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === e ? String : Number)(t);
+}
+var MallPricing, HistoricalPricing;
+var init_kolmafia = __esm({
+  "src/pricing/variants/kolmafia.ts"() {
+    "use strict";
+    init_apiSupplier();
+    init_typings();
+    MallPricing = /* @__PURE__ */ (function() {
+      function MallPricing2() {
+        _classCallCheck8(this, MallPricing2);
+        _defineProperty4(this, "sessionKey", "accountval_loadedAllMallItems");
+        _defineProperty4(this, "ignoreKey", "_accountval_force_mallprices");
+        _defineProperty4(this, "loadedAllMallItems", "not_loaded");
+        this.loadLastState();
+        if (this.loadedAllMallItems === "not_loaded") {
+          this.loadMallPrices();
+        }
+      }
+      return _createClass8(MallPricing2, [{ key: "loadLastState", value: function loadLastState() {
+        var prop = provider().retrieveCache(this.sessionKey, "transient");
+        if (!prop) {
+          return;
+        }
+        this.loadedAllMallItems = prop;
+      } }, { key: "resetStateMaybe", value: function resetStateMaybe() {
+        if (provider().retrieveCache(this.ignoreKey, "small_persist") !== "true") {
+          return;
+        }
+        if (this.loadedAllMallItems === "not_loaded") {
+          this.loadedAllMallItems = "unsure";
+        }
+      } }, { key: "loadMallPrices", value: function loadMallPrices() {
+        if (this.loadedAllMallItems === "loaded") {
+          throw new Error(`Mall prices failed to load, check that loathers/mall-check (mallcheck.js) is installed and working, set '${this.ignoreKey}=true' to ignore this error`);
+        } else if (this.loadedAllMallItems === "unsure") {
+          provider().print(
+            `Mall prices didn't resolve properly, please make sure that mallcheck.js from loathers/mall-check is installed, now falling back to manually searching.`,
+            "red"
+          );
+        }
+        this.loadedAllMallItems = provider().resolveAllMallPrices(
+          this.loadedAllMallItems
+        );
+        provider().storeCache(
+          this.sessionKey,
+          this.loadedAllMallItems,
+          "transient"
+        );
+      } }, { key: "isViable", value: function isViable() {
+        return true;
+      } }, { key: "resolve", value: function resolve(item) {
+        var prevAge = provider().historicalAge(item);
+        var price = provider().mallPrice(item);
+        if (provider().historicalAge(item) < prevAge && // If the new malled price is not valid, then it was an item that can't be found in mall, which explains why the cached mall prices didn't work
+        price >= 100 && price < 999999999999) {
+          this.resetStateMaybe();
+          this.loadMallPrices();
+        }
+        return new ItemPrice(
+          item,
+          price,
+          PriceType.MALL,
+          provider().historicalAge(item)
+        );
+      } }]);
+    })();
+    HistoricalPricing = /* @__PURE__ */ (function() {
+      function HistoricalPricing2() {
+        _classCallCheck8(this, HistoricalPricing2);
+      }
+      return _createClass8(HistoricalPricing2, [{ key: "isViable", value: function isViable() {
+        return true;
+      } }, { key: "resolve", value: function resolve(item) {
+        return new ItemPrice(
+          item,
+          provider().historicalPrice(item),
+          PriceType.HISTORICAL,
+          provider().historicalAge(item)
+        );
+      } }]);
+    })();
+  }
+});
+
+// src/pricing/variants/pricegun.ts
+function _toConsumableArray2(r) {
+  return _arrayWithoutHoles2(r) || _iterableToArray2(r) || _unsupportedIterableToArray5(r) || _nonIterableSpread2();
+}
+function _nonIterableSpread2() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _iterableToArray4(r) {
+function _iterableToArray2(r) {
   if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
 }
-function _arrayWithoutHoles4(r) {
-  if (Array.isArray(r)) return _arrayLikeToArray9(r);
+function _arrayWithoutHoles2(r) {
+  if (Array.isArray(r)) return _arrayLikeToArray5(r);
 }
 function ownKeys(e, r) {
   var t = Object.keys(e);
@@ -2151,17 +1080,17 @@ function _objectSpread(e) {
   for (var r = 1; r < arguments.length; r++) {
     var t = null != arguments[r] ? arguments[r] : {};
     r % 2 ? ownKeys(Object(t), true).forEach(function(r2) {
-      _defineProperty7(e, r2, t[r2]);
+      _defineProperty5(e, r2, t[r2]);
     }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r2) {
       Object.defineProperty(e, r2, Object.getOwnPropertyDescriptor(t, r2));
     });
   }
   return e;
 }
-function _createForOfIteratorHelper7(r, e) {
+function _createForOfIteratorHelper4(r, e) {
   var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
   if (!t) {
-    if (Array.isArray(r) || (t = _unsupportedIterableToArray9(r)) || e && r && "number" == typeof r.length) {
+    if (Array.isArray(r) || (t = _unsupportedIterableToArray5(r)) || e && r && "number" == typeof r.length) {
       t && (r = t);
       var _n = 0, F = function F2() {
       };
@@ -2174,7 +1103,7 @@ function _createForOfIteratorHelper7(r, e) {
     throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
   var o, a = true, u = false;
-  return { s: function s2() {
+  return { s: function s() {
     t = t.call(r);
   }, n: function n() {
     var r2 = t.next();
@@ -2189,38 +1118,38 @@ function _createForOfIteratorHelper7(r, e) {
     }
   } };
 }
-function _unsupportedIterableToArray9(r, a) {
+function _unsupportedIterableToArray5(r, a) {
   if (r) {
-    if ("string" == typeof r) return _arrayLikeToArray9(r, a);
+    if ("string" == typeof r) return _arrayLikeToArray5(r, a);
     var t = {}.toString.call(r).slice(8, -1);
-    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray9(r, a) : void 0;
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray5(r, a) : void 0;
   }
 }
-function _arrayLikeToArray9(r, a) {
+function _arrayLikeToArray5(r, a) {
   (null == a || a > r.length) && (a = r.length);
   for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
   return n;
 }
-function _classCallCheck12(a, n) {
+function _classCallCheck9(a, n) {
   if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
 }
-function _defineProperties12(e, r) {
+function _defineProperties9(e, r) {
   for (var t = 0; t < r.length; t++) {
     var o = r[t];
-    o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, _toPropertyKey12(o.key), o);
+    o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, _toPropertyKey9(o.key), o);
   }
 }
-function _createClass12(e, r, t) {
-  return r && _defineProperties12(e.prototype, r), t && _defineProperties12(e, t), Object.defineProperty(e, "prototype", { writable: false }), e;
+function _createClass9(e, r, t) {
+  return r && _defineProperties9(e.prototype, r), t && _defineProperties9(e, t), Object.defineProperty(e, "prototype", { writable: false }), e;
 }
-function _defineProperty7(e, r, t) {
-  return (r = _toPropertyKey12(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: true, configurable: true, writable: true }) : e[r] = t, e;
+function _defineProperty5(e, r, t) {
+  return (r = _toPropertyKey9(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: true, configurable: true, writable: true }) : e[r] = t, e;
 }
-function _toPropertyKey12(t) {
-  var i = _toPrimitive12(t, "string");
+function _toPropertyKey9(t) {
+  var i = _toPrimitive9(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive12(t, e) {
+function _toPrimitive9(t, e) {
   if ("object" != typeof t || !t) return t;
   var r;
   if ("undefined" != typeof Symbol && void 0 !== (r = t[Symbol.toPrimitive])) {
@@ -2233,16 +1162,17 @@ function _toPrimitive12(t, e) {
 var PricegunResolver;
 var init_pricegun = __esm({
   "src/pricing/variants/pricegun.ts"() {
+    "use strict";
     init_apiSupplier();
-    init_typings();
     init_supplierTypings();
+    init_typings();
     PricegunResolver = /* @__PURE__ */ (function() {
       function PricegunResolver2(settings) {
-        _classCallCheck12(this, PricegunResolver2);
-        _defineProperty7(this, "items", /* @__PURE__ */ new Map());
+        _classCallCheck9(this, PricegunResolver2);
+        _defineProperty5(this, "items", /* @__PURE__ */ new Map());
         this.settings = settings;
       }
-      return _createClass12(PricegunResolver2, [{ key: "loadLastState", value: function loadLastState() {
+      return _createClass9(PricegunResolver2, [{ key: "loadLastState", value: function loadLastState() {
         this.items.clear();
         var buffer = provider().retrieveCache(
           "pricegun_prices.txt",
@@ -2253,7 +1183,7 @@ var init_pricegun = __esm({
         }
         var cutoff = Math.floor(Date.now() / 1e3) - 24 * 60 * 60;
         try {
-          var _iterator = _createForOfIteratorHelper7(
+          var _iterator = _createForOfIteratorHelper4(
             JSON.parse(buffer)
           ), _step;
           try {
@@ -2277,7 +1207,7 @@ var init_pricegun = __esm({
         provider().storeCache(
           "pricegun_prices.txt",
           JSON.stringify(
-            _toConsumableArray4(this.items.values()).filter((i) => i.retrieved > cutoff)
+            _toConsumableArray2(this.items.values()).filter((i) => i.retrieved > cutoff)
           ),
           "large_persist"
         );
@@ -2292,16 +1222,16 @@ var init_pricegun = __esm({
           dateTime: item.dateTime ?? 0,
           retrieved: Math.floor(Date.now() / 1e3)
         });
-      } }, { key: "bulkResolve", value: function bulkResolve(items2) {
-        var missing = items2.filter((i) => !this.items.has(i.id));
+      } }, { key: "bulkResolve", value: function bulkResolve(items) {
+        var missing = items.filter((i) => !this.items.has(i.id));
         if (missing.length) {
           this.fetch(missing);
         }
         var now = Math.floor(Date.now() / 1e3);
-        return items2.map((i) => {
+        return items.map((i) => {
           var price = this.items.get(i.id);
           if (!price || price.volume < 0) {
-            return null;
+            return void 0;
           }
           return new ItemPrice(
             i,
@@ -2311,16 +1241,16 @@ var init_pricegun = __esm({
             price.volume
           );
         });
-      } }, { key: "fetch", value: function fetch(items2) {
+      } }, { key: "fetch", value: function fetch(items) {
         var MAX_AMOUNT = this.settings.pricegunBatchSize;
         var now = Math.floor(Date.now() / 1e3);
-        for (var start = 0; start < items2.length; start += MAX_AMOUNT) {
-          var batch = items2.slice(
+        for (var start = 0; start < items.length; start += MAX_AMOUNT) {
+          var batch = items.slice(
             start,
-            Math.min(start + MAX_AMOUNT, items2.length)
+            Math.min(start + MAX_AMOUNT, items.length)
           );
           provider().print(
-            `Pricegun progress: ${start + batch.length} / ${items2.length}`
+            `Pricegun progress: ${start + batch.length} / ${items.length}`
           );
           var ignoredItem = batch.length + 3 < MAX_AMOUNT && !batch.some((b) => b.id === 1);
           if (ignoredItem) {
@@ -2330,23 +1260,23 @@ var init_pricegun = __esm({
             var url = `https://pricegun.loathers.net/api/${batch.map((i2) => i2.id).join(",")}`;
             var response = JSON.parse(provider().visitUrl(url));
             var parsed = batch.length === 1 ? [response] : response;
-            var _iterator22 = _createForOfIteratorHelper7(
+            var _iterator2 = _createForOfIteratorHelper4(
               parsed
-            ), _step22;
+            ), _step2;
             try {
-              for (_iterator22.s(); !(_step22 = _iterator22.n()).done; ) {
-                var item = _step22.value;
+              for (_iterator2.s(); !(_step2 = _iterator2.n()).done; ) {
+                var item = _step2.value;
                 if (ignoredItem && item.itemId === 1) {
                   continue;
                 }
                 this.loadItemFromApi(item);
               }
             } catch (err) {
-              _iterator22.e(err);
+              _iterator2.e(err);
             } finally {
-              _iterator22.f();
+              _iterator2.f();
             }
-            var _iterator3 = _createForOfIteratorHelper7(
+            var _iterator3 = _createForOfIteratorHelper4(
               batch
             ), _step3;
             try {
@@ -2370,7 +1300,7 @@ var init_pricegun = __esm({
               _iterator3.f();
             }
           } catch (_unused2) {
-            var _iterator4 = _createForOfIteratorHelper7(
+            var _iterator4 = _createForOfIteratorHelper4(
               batch
             ), _step4;
             try {
@@ -2393,7 +1323,7 @@ var init_pricegun = __esm({
           }
         }
       } }, { key: "resolve", value: function resolve(item) {
-        return this.bulkResolve([item])[1];
+        return this.bulkResolve([item])[0];
       } }, { key: "isViable", value: function isViable() {
         return true;
       } }]);
@@ -2402,10 +1332,10 @@ var init_pricegun = __esm({
 });
 
 // src/pricing/priceResolver.ts
-function _createForOfIteratorHelper8(r, e) {
+function _createForOfIteratorHelper5(r, e) {
   var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
   if (!t) {
-    if (Array.isArray(r) || (t = _unsupportedIterableToArray10(r)) || e && r && "number" == typeof r.length) {
+    if (Array.isArray(r) || (t = _unsupportedIterableToArray6(r)) || e && r && "number" == typeof r.length) {
       t && (r = t);
       var _n = 0, F = function F2() {
       };
@@ -2418,7 +1348,7 @@ function _createForOfIteratorHelper8(r, e) {
     throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
   var o, a = true, u = false;
-  return { s: function s2() {
+  return { s: function s() {
     t = t.call(r);
   }, n: function n() {
     var r2 = t.next();
@@ -2433,38 +1363,38 @@ function _createForOfIteratorHelper8(r, e) {
     }
   } };
 }
-function _unsupportedIterableToArray10(r, a) {
+function _unsupportedIterableToArray6(r, a) {
   if (r) {
-    if ("string" == typeof r) return _arrayLikeToArray10(r, a);
+    if ("string" == typeof r) return _arrayLikeToArray6(r, a);
     var t = {}.toString.call(r).slice(8, -1);
-    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray10(r, a) : void 0;
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray6(r, a) : void 0;
   }
 }
-function _arrayLikeToArray10(r, a) {
+function _arrayLikeToArray6(r, a) {
   (null == a || a > r.length) && (a = r.length);
   for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
   return n;
 }
-function _classCallCheck13(a, n) {
+function _classCallCheck10(a, n) {
   if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
 }
-function _defineProperties13(e, r) {
+function _defineProperties10(e, r) {
   for (var t = 0; t < r.length; t++) {
     var o = r[t];
-    o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, _toPropertyKey13(o.key), o);
+    o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, _toPropertyKey10(o.key), o);
   }
 }
-function _createClass13(e, r, t) {
-  return r && _defineProperties13(e.prototype, r), t && _defineProperties13(e, t), Object.defineProperty(e, "prototype", { writable: false }), e;
+function _createClass10(e, r, t) {
+  return r && _defineProperties10(e.prototype, r), t && _defineProperties10(e, t), Object.defineProperty(e, "prototype", { writable: false }), e;
 }
-function _defineProperty8(e, r, t) {
-  return (r = _toPropertyKey13(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: true, configurable: true, writable: true }) : e[r] = t, e;
+function _defineProperty6(e, r, t) {
+  return (r = _toPropertyKey10(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: true, configurable: true, writable: true }) : e[r] = t, e;
 }
-function _toPropertyKey13(t) {
-  var i = _toPrimitive13(t, "string");
+function _toPropertyKey10(t) {
+  var i = _toPrimitive10(t, "string");
   return "symbol" == typeof i ? i : i + "";
 }
-function _toPrimitive13(t, e) {
+function _toPrimitive10(t, e) {
   if ("object" != typeof t || !t) return t;
   var r;
   if ("undefined" != typeof Symbol && void 0 !== (r = t[Symbol.toPrimitive])) {
@@ -2477,18 +1407,18 @@ function _toPrimitive13(t, e) {
 var PriceResolver;
 var init_priceResolver = __esm({
   "src/pricing/priceResolver.ts"() {
+    "use strict";
     init_apiSupplier();
-    init_timings();
     init_typings();
-    init_kolmafia();
+    init_timings();
     init_irratprices();
+    init_kolmafia();
     init_pricegun();
-    init_supplierTypings();
     PriceResolver = /* @__PURE__ */ (function() {
       function PriceResolver2(settings) {
-        _classCallCheck13(this, PriceResolver2);
-        _defineProperty8(this, "specialCase", /* @__PURE__ */ new Map());
-        _defineProperty8(this, "resolvers", []);
+        _classCallCheck10(this, PriceResolver2);
+        _defineProperty6(this, "specialCase", /* @__PURE__ */ new Map());
+        _defineProperty6(this, "resolvers", []);
         this.settings = settings;
         var specialResolver;
         if (settings.pricegun) {
@@ -2503,14 +1433,9 @@ var init_priceResolver = __esm({
         }
         this.resolvers.push(specialResolver);
         this.resolvers.push(new HistoricalPricing());
-        this.fillSpecialCase();
       }
-      return _createClass13(PriceResolver2, [{ key: "addSpecialCase", value: function addSpecialCase(item, meat) {
+      return _createClass10(PriceResolver2, [{ key: "addSpecialCase", value: function addSpecialCase(item, meat) {
         this.specialCase.set(item, meat);
-      } }, { key: "fillSpecialCase", value: function fillSpecialCase() {
-        this.specialCase.set(KoLItem.get("Meat Paste"), 10);
-        this.specialCase.set(KoLItem.get("Meat Stack"), 100);
-        this.specialCase.set(KoLItem.get("Dense meat stack"), 1e3);
       } }, { key: "doWarning", value: function doWarning() {
         if (this.resolvers[0] instanceof IrratPrices) {
           return this.resolvers[0].doWarning();
@@ -2518,13 +1443,13 @@ var init_priceResolver = __esm({
         return false;
       } }, { key: "stop", value: function stop() {
         this.resolvers.forEach((r) => r.stop && r.stop());
-      } }, { key: "bulkLoad", value: function bulkLoad(items2) {
+      } }, { key: "bulkLoad", value: function bulkLoad(items) {
         if (!this.resolvers[0].bulkResolve) {
           return;
         }
-        var toCheck = new Set(items2);
+        var toCheck = new Set(items);
         var checked = /* @__PURE__ */ new Set();
-        var _iterator = _createForOfIteratorHelper8(
+        var _iterator = _createForOfIteratorHelper5(
           toCheck
         ), _step;
         try {
@@ -2537,19 +1462,19 @@ var init_priceResolver = __esm({
             if (!folds.length) {
               continue;
             }
-            var _iterator22 = _createForOfIteratorHelper8(
+            var _iterator2 = _createForOfIteratorHelper5(
               folds
-            ), _step22;
+            ), _step2;
             try {
-              for (_iterator22.s(); !(_step22 = _iterator22.n()).done; ) {
-                var i = _step22.value;
+              for (_iterator2.s(); !(_step2 = _iterator2.n()).done; ) {
+                var i = _step2.value;
                 checked.add(i);
                 toCheck.add(i);
               }
             } catch (err) {
-              _iterator22.e(err);
+              _iterator2.e(err);
             } finally {
-              _iterator22.f();
+              _iterator2.f();
             }
           }
         } catch (err) {
@@ -2560,7 +1485,7 @@ var init_priceResolver = __esm({
         this.resolvers[0].bulkResolve(Array.from(toCheck));
       } }, { key: "itemPrice", value: function itemPrice(item) {
         var ignoreFold = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : false;
-        var forcePricing = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : null;
+        var forcePricing = arguments.length > 2 ? arguments[2] : void 0;
         var doSuperFast = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : false;
         var doEstimates = arguments.length > 4 && arguments[4] !== void 0 ? arguments[4] : false;
         var timingsKey = arguments.length > 5 && arguments[5] !== void 0 ? arguments[5] : "";
@@ -2576,12 +1501,12 @@ var init_priceResolver = __esm({
               try {
                 var foldPrices = foldables.map(
                   (f2) => this.itemPrice(f2, true, forcePricing, doSuperFast, doEstimates)
-                ).filter((p) => p != null);
+                ).filter((p) => p !== void 0);
                 foldPrices.sort(
-                  (f1, f2) => f1.item.tradeable != f2.item.tradeable ? f1.item.tradeable ? -1 : 1 : f1.price - f2.price
+                  (f1, f2) => f1.item.tradeable !== f2.item.tradeable ? f1.item.tradeable ? -1 : 1 : f1.price - f2.price
                 );
-                var compare = foldPrices.find((f2) => f2.item == item);
-                var _iterator3 = _createForOfIteratorHelper8(
+                var compare = foldPrices.find((f2) => f2.item === item);
+                var _iterator3 = _createForOfIteratorHelper5(
                   foldPrices
                 ), _step3;
                 try {
@@ -2608,10 +1533,11 @@ var init_priceResolver = __esm({
         }
         AccValTiming.start(`${timingsKey}Check Pricing Misc`, true);
         try {
-          if (this.specialCase.has(item)) {
+          var specialPrice = this.specialCase.get(item);
+          if (specialPrice !== void 0) {
             return new ItemPrice(
               item,
-              this.specialCase.get(item),
+              specialPrice,
               PriceType.MALL,
               0
             );
@@ -2629,14 +1555,14 @@ var init_priceResolver = __esm({
         }
         AccValTiming.start(`${timingsKey}Final Pricing Check`, true);
         try {
-          var _iterator4 = _createForOfIteratorHelper8(
+          var _iterator4 = _createForOfIteratorHelper5(
             this.resolvers
           ), _step4;
           try {
             for (_iterator4.s(); !(_step4 = _iterator4.n()).done; ) {
               var resolver = _step4.value;
               var price = resolver.resolve(item);
-              if (price == null && this.settings.dateToFetch == null) {
+              if (price === void 0 && this.settings.dateToFetch === void 0) {
                 continue;
               }
               return price;
@@ -2655,14 +1581,367 @@ var init_priceResolver = __esm({
   }
 });
 
-// src/core/logic.ts
-function _slicedToArray6(r, e) {
-  return _arrayWithHoles6(r) || _iterableToArrayLimit6(r, e) || _unsupportedIterableToArray11(r, e) || _nonIterableRest6();
+// data/accountval_binds.txt
+var accountval_binds_default;
+var init_accountval_binds = __esm({
+  "data/accountval_binds.txt"() {
+    accountval_binds_default = "# Original data taken from https://github.com/soolar/accountval.ash\n# Item Containers! Start with i\ni	packet of mayfly bait	mayfly bait necklace\ni	Clan VIP Lounge invitation	Clan VIP Lounge key\ni	Make-Your-Own-Vampire-Fangs kit	plastic vampire fangs\ni	Folder Holder	over-the-shoulder Folder Holder\ni	can of Rain-Doh	empty Rain-Doh can\ni	Discontent&trade; Winter Garden Catalog	packet of winter seeds\ni	Ed the Undying exhibit crate	The Crown of Ed the Undying\ni	Pack of Every Card	Deck of Every Card\ni	DIY protonic accelerator kit	protonic accelerator pack\ni	Dear Past Self Package	Time-Spinner\ni	Granny Tood's Thanksgarden Catalog	packet of thanksgarden seeds\ni	suspicious package	Kremlin's Greatest Briefcase\ni	LI-11 Motor Pool voucher	Asdon Martin keyfob (on ring)\ni	Grumpy Bumpkin's Pumpkin Seed Catalog	packet of pumpkin seeds\ni	Mint Salton Pepper's Peppermint Seed Catalog	Peppermint Pip Packet\ni	Pete & Jackie's Dragon Tooth Emporium Catalog	packet of dragon's teeth\ni	Pocket Meteor Guide	Pocket Meteor Guide (well-thumbed)\ni	corked genie bottle	genie bottle\ni	pantogram	portable pantogram\ni	locked mumming trunk	mumming trunk\ni	January's Garbage Tote (unopened)	January's Garbage Tote\ni	Pok&eacute;fam Guide to Capturing All of Them	packet of tall grass seeds\ni	SongBoom&trade; BoomBox Box	SongBoom&trade; BoomBox\ni	Bastille Battalion control rig crate	Bastille Battalion control rig\ni	latte lovers club card	latte lovers member's mug\ni	Kramco Industries packing carton	Kramco Sausage-o-Matic&trade;\ni	mint condition Lil' Doctor&trade; bag	Lil' Doctor&trade; bag\ni	vampyric cloake pattern	vampyric cloake\ni	Fourth of May Cosplay Saber kit	Fourth of May Cosplay Saber\ni	rune-strewn spoon cocoon	hewn moon-rune spoon\ni	Beach Comb Box	Beach Comb\ni	Unopened Eight Days a Week Pill Keeper	Eight Days a Week Pill Keeper\ni	unopened diabolic pizza cube box	diabolic pizza cube\ni	unopened Bird-a-Day calendar	Bird-a-Day calendar\ni	mint-in-box Powerful Glove	Powerful Glove\ni	Better Shrooms and Gardens catalog	packet of mushroom spores\ni	Guzzlr application	Guzzlr tablet\ni	bag of Iunion stones	Iunion Crown\ni	packaged SpinMaster&trade; lathe	SpinMaster&trade; lathe\ni	Bagged Cargo Cultist Shorts	Cargo Cultist Shorts\ni	Comprehensive Cartographic Compendium	Comprehensive Cartographic Compendium (well-read)\ni	packaged knock-off retro superhero cape	unwrapped knock-off retro superhero cape\ni	packaged miniature crystal ball	miniature crystal ball\ni	emotion chip	spinal-fluid-covered emotion chip\ni	power seed	potted power plant\ni	packaged backup camera	backup camera\ni	packaged familiar scrapbook	familiar scrapbook\ni	packaged industrial fire extinguisher	industrial fire extinguisher\ni	Packaged Daylight Shavings Helmet	Daylight Shavings Helmet\ni	Packaged cold medicine cabinet	Cold medicine cabinet\ni	box o' ghosts	gregarious ghostling\ni	Gordon Beer's Beer Garden Catalog	Packet of beer seeds\ni	Mint condition magnifying glass	cursed magnifying glass\ni	Antique pair of blue jeans	Ellsbury's journal (used)\ni	warehouse key	mime army insignia (cryonics)\ni	warehouse key	mime army insignia (morale)\ni	warehouse key	mime army insignia (psychological warfare)\ni	warehouse key	mime army insignia (pyrotechnics)\ni	warehouse key	mime army insignia (sanitation)\ni	warehouse key	mime army insignia (espionage)\ni	warehouse key	mime army insignia (infantry)\ni	warehouse key	mime army insignia (intelligence)\ni	warehouse key	mime army infiltration glove\ni	warehouse key	mime army challenge coin\ni	warehouse key	mime army shotglass\ni	warehouse key	miming corduroys\ni	warehouse key	miming beret\ni	warehouse key	miming gloves\ni	warehouse key	miming boots\ni	warehouse key	miming shirt\ni	combat lover's locket lockbox	combat lover's locket\ni	undamaged Unbreakable Umbrella	Unbreakable umbrella\ni	packaged June cleaver	June cleaver\ni	designer sweatpants (new old stock)	Designer sweatpants\ni	unopened tiny stillsuit	tiny stillsuit\ni	packaged Jurassic Parka	Jurassic Parka\ni	packaged model train set	model train set\ni	ChibiBuddy\u2122 (off)	ChibiBuddy\u2122 (on)\ni	Rock Garden Guide	packet of rock seeds\ni	S.I.T. Course Voucher	S.I.T. Course Completion Certificate\ni	Closed-circuit phone system	Closed-circuit pay phone\ni	Cursed monkey glove	cursed monkey's paw\ni	shrink-wrapped Cincho de Mayo	Cincho de Mayo\ni	shrink-wrapped 2002 Mr. Store Catalog	2002 Mr. Store Catalog\ni	boxed august scepter	august scepter\ni	book of facts	book of facts (dog-eared)\ni	crated wardrobe-o-matic	wardrobe-o-matic\ni	wrapped candy cane sword cane	candy cane sword cane\ni	in-the-box spring shoes	spring shoes\ni	packaged Everfull Dart Holster	Everfull Dart Holster\ni	Boxed Apriling band helmet	Apriling band helmet\ni	boxed Mayam Calendar	Mayam Calendar\ni	packaged Roman Candelabra	Roman Candelabra\ni	untorn tearaway pants package	tearaway pants\ni	Boxed Sept-Ember Censer	Sept-Ember Censer\ni	boxed bat wings	bat wings\ni	Sealed TakerSpace letter of Marque	TakerSpace letter of Marque\ni	McHugeLarge deluxe ski set	McHugeLarge duffel bag\ni	CyberRealm keycode	server room key\ni	eldritch tincture	eldritch tincture (depleted)\ni	new-in-box toy Cupid bow	toy Cupid bow\ni	assemble-it-yourself Leprecondo	Leprecondo\ni	Packaged April Shower Thoughts Calendar	April Shower Thoughts shield\ni	Unpeeled Peridot of Peril	Peridot of Peril\ni	packaged prismatic beret	prismatic beret\ni	M\xF6bius ring box	M\xF6bius ring\ni	packaged Monodent of the Sea	Monodent of the Sea\ni	Lab-grown blood cubic zirconia	blood cubic zirconia\ni	seal-clubbing club loot box	legendary seal-clubbing club\ni	discreetly-wrapped Eternity Codpiece	The Eternity Codpiece\ni	boxed Heartstone	Heartstone\ni	Boxed Archaeologist's Spade	Archaeologist's Spade\ni	wrapped Baseball Diamond	Baseball Diamond\ni	Pasta wand loot box	legendary pasta wand\ni	shrink-wrapped Cup of 13s	Cup of 13s\ni	Allied Radio Backpack Pack	Allied Radio Backpack\ni	Packaged Portable Laughing Stock	Portable Laughing Stock\ni	black rosebud	black garden rose\n\n\n\n\n# Bookshelf stuff! Start with b\nb	Tome of Snowcone Summoning	Summon Snowcones\nb	Scratch 'n' Sniff Sticker Tome	Summon Stickers\nb	Tome of Sugar Shummoning	Summon Sugar Sheets\nb	Tome of Clip Art	Summon Clip Art\nb	Tome of Rad Libs	Summon Rad Libs\nb	The Smith's Tome	Summon Smithsness\nb	McPhee's Grimoire of Hilarious Object Summoning	Summon Hilarious Objects\nb	Sp'n-Zor's Grimoire of &quot;Tasteful&quot; Gifts	Summon Tasteful Items\nb	Sorcerers of the Shore Grimoire	Summon Alice's Army Cards\nb	Thinknerd's Grimoire of Geeky Gifts	Summon Geeky Gifts\nb	Libram of Candy Heart Summoning	Summon Candy Heart\nb	Libram of Divine Favors	Summon Party Favor\nb	Libram of Love Songs	Summon Love Song\nb	Libram of BRICKOs	Summon BRICKOs\nb	Gygaxian Libram	Summon Dice\nb	Libram of Resolutions	Summon Resolutions\nb	Libram of Pulled Taffy	Summon Taffy\nb	The Confiscator's Grimoire	Summon Confiscated Things\n\n\n\n# Property based detection! Start with p\n# 3rd and 4th params are either 'coolitem' and their name, or 'page' with the url and text to look for.\np	airplane charter: Spring Break Beach	sleazeAirportAlways&!_sleazeAirportToday	coolitem	airport1\np	airplane charter: Conspiracy Island	spookyAirportAlways&!_spookyAirportToday	coolitem	airport2\np	airplane charter: Dinseylandfill	stenchAirportAlways&!_stenchAirportToday	coolitem	airport3\np	airplane charter: That 70s Volcano	hotAirportAlways&!_hotAirportToday	coolitem	airport4\np	airplane charter: The Glaciest	coldAirportAlways&!_coldAirportToday	coolitem	airport5\np	Chateau Mantegna room key	chateauAvailable	page	place.php?whichplace=mountains	chateau\np	bottle of lovebug pheromones	lovebugsUnlocked\np	shrine to the Barrel god	barrelShrineUnlocked	page	da.php	bgshrine.gif\np	X-32-F snowman crate	snojoAvailable	page	place.php?whichplace=mountains	snojo\np	LT&T telegraph office deed	telegraphOfficeAvailable&!_telegraphOfficeToday	coolitem	ltt\np	detective school application	hasDetectiveSchool	page	place.php?whichplace=town_wrong	Precinct\np	Build-a-City Gingerbread kit	gingerbreadCityAvailable&!_gingerbreadCityToday	coolitem	gingerbreadcity\np	heart-shaped crate	loveTunnelAvailable&!_loveTunnelToday	coolitem	tunnelofloveiotm\np	Spacegate access badge	spacegateAlways&!_spacegateToday	coolitem	spacegate\np	FantasyRealm membership packet	frAlways&!_frToday	coolitem	fantasyrealm\np	Horsery contract	horseryAvailable	page	place.php?whichplace=town_right	Horsery\np	Neverending Party invitation envelope	neverendingPartyAlways&!_neverendingPartyToday	coolitem	neverendingparty\np	voter registration form	voteAlways&!_voteToday	coolitem	voterregistered\np	Boxing Day care package	daycareOpen&!_daycareToday	coolitem	boxingdaycare\np	PirateRealm membership packet	prAlways&!_prToday	coolitem	piraterealm\np	CyberRealm keycode	crAlways&!_crToday	coolitem	cyberrealm\np	Distant Woods Getaway Brochure	getawayCampsiteUnlocked	page	place.php?whichplace=woods	campaway\np	Undrilled cosmic bowling ball	hasCosmicBowlingBall	coolitem	hascosmicball\np	MayDay\u2122 contract	hasMaydayContract	coolitem	maydaykit\np	boxed autumn-aton	hasAutumnaton	coolitem	autumnaton\np	deed to Oliver's Place	ownsSpeakeasy	page	place.php?whichplace=town_wrong	Speakeasy\np	Interesting Coin Inheritance Letter	hasInterestingCoin	coolitem	interesting\np	Order of the Green Thumb Order Form	ownsFloristFriar	coolitem	floristfriar\np	shrunken head in a duffel bag	hasShrunkenHead	coolitem	shrunkenhead\n\n\n\n# Eudoras! Start with e\ne	My Own Pen Pal kit	Pen Pal\ne	GameInformPowerDailyPro subscription card	GameInformPowerDailyPro Magazine\ne	Xi Receiver Unit	Xi Receiver Unit\ne	New-You Club Membership Form	New-You Club\ne	Our Daily Candles\u2122 order form	Our Daily Candles\ne	Black and White Apron Enrollment Form	Black & White Apron\n\n\n\n# campground items! Starts with c, followed by the text to look for\nc	Haunted Doghouse	doghouse.gif\nc	Witchess Set	chesstable.gif\nc	Source terminal	campterminal.gif\nc	potted tea tree	teatree\nc	A Guide to Burning Leaves	campground/leaves\n\n\n\n# Gardens, followed by the text to look for\ng	packet of pumpkin seeds	pumpkin	pumpkinpatch_\ng	Peppermint Pip Packet	peppermint	pepperpatch_\ng	packet of dragon's teeth	skeleton	bonegarden\ng	Packet of beer seeds	beer	beergarden\ng	packet of winter seeds	winter	wintergarden\ng	packet of thanksgarden seeds	thanksgarden	thanksgarden\ng	packet of tall grass seeds	grass	grassgarden\ng	packet of mushroom spores	mushroom	mushgarden.gif\ng	packet of rock seeds	rock	/rockgarden/\ng	black garden rose	black_rose	Black Rose Garden (\n\n\n# Items that are dependent on the value of another as they're no-trade\n# Item | Check Against | X of our item = 1 of that item\nt	ChibiBuddy\u2122 (on)	ChibiBuddy\u2122 (off)	1\nt	distilled resin	inflammable leaf	50\nt	Rethinking Candy	Knucklebone	2750\n\n\n# Items that are a coinmaster currency, and is dynamically priced because there's no solid metric\n# The price is resolved at runtime\nt	fat loot token\nt	Cop dollar\nt	Driplet\nt	Chroner\nt	Freddy Kruegerand\nt	Guzzlrbuck\nt	Beach Buck\nt	Volcoino\nt	FunFunds\u2122\nt	Coinspiracy\nt	Wal-Mart gift certificate\nt	Rubee\u2122\nt	buffalo dime\nt	Spacegate Research\n\n# Coinmaster shops for each currency, as named in coinmasters.txt. Only the browser uses these\nm	fat loot token	Vending Machine\nm	Driplet	Drip Institute Armory\nm	Chroner	The Neandermall	Ni&ntilde;a Store\nm	Freddy Kruegerand	The Terrified Eagle Inn\nm	Guzzlrbuck	Guzzlr Company Store Website\nm	Beach Buck	Buff Jimmy's Souvenir Shop	The Frozen Brogurt Stand	Taco Dan's Taco Stand\nm	Volcoino	Disco GiftCo\nm	FunFunds&trade;	The Dinsey Company Store\nm	Coinspiracy	The Armory	The Canteen	The SHAWARMA Initiative\nm	Wal-Mart gift certificate	Wal-Mart\nm	Rubee&trade;	FantasyRealm Rubee&trade; Store\nm	buffalo dime	LT&T Gift Shop\nm	Spacegate Research	Spacegate Fabrication Facility\n\n# Items that are best valued at a hardcoded value, although you may not get that value...\nh	meat paste	10\nh	meat stack	100\nh	nest egg	150\nh	Dungeon dragon chest	500\nh	Meat globe	700\nh	dense meat stack	1000\nh	Loose Meats	2300\nh	chest of the Bonerdagon	3000\nh	Duct tape wallet	3050\nh	Stock Certificate	5000\nh	Envelope full of Meat	30000\nh	Discount Telescope Warehouse gift certificate	100000";
+  }
+});
+
+// src/core/binds.ts
+function _toArray(r) {
+  return _arrayWithHoles4(r) || _iterableToArray3(r) || _unsupportedIterableToArray7(r) || _nonIterableRest4();
+}
+function _nonIterableRest4() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray7(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray7(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray7(r, a) : void 0;
+  }
+}
+function _arrayLikeToArray7(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
+}
+function _iterableToArray3(r) {
+  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
+}
+function _arrayWithHoles4(r) {
+  if (Array.isArray(r)) return r;
+}
+function parse(line) {
+  var _line$split = line.split("	"), _line$split2 = _toArray(_line$split), type = _line$split2[0], item = _line$split2[1], rest = _arrayLikeToArray7(_line$split2).slice(2);
+  switch (type) {
+    case "i":
+      return { type: "untradeable", item, untradeable: rest[0] };
+    case "b":
+      return { type: "book", item, skill: rest[0] };
+    case "p": {
+      var _rest = _toArray(rest), property = _rest[0], check = _rest[1], args = _arrayLikeToArray7(_rest).slice(2);
+      return {
+        type: "property",
+        item,
+        property,
+        coolItem: check === "coolitem" ? args[0] : void 0,
+        page: check === "page" ? { url: args[0], text: args[1] } : void 0
+      };
+    }
+    case "e":
+      return { type: "eudora", item, correspondence: rest[0] };
+    case "g":
+      return { type: "garden", item, garden: rest[0], text: rest[1] };
+    case "t":
+      return rest.length > 0 ? {
+        type: "currency",
+        item,
+        untradeable: rest[0],
+        amount: parseInt(rest[1])
+      } : { type: "currency", item };
+    case "c":
+      return { type: "campground", item, text: rest[0] };
+    case "h":
+      return { type: "price", item, price: parseInt(rest[0]) };
+    case "m":
+      return { type: "coinmaster", item, shops: rest };
+    default:
+      throw new Error(`Found line '${line}' which I can't handle!`);
+  }
+}
+function bindsOf(type) {
+  return binds.filter(
+    (bind) => bind.type === type
+  );
+}
+var binds;
+var init_binds = __esm({
+  "src/core/binds.ts"() {
+    "use strict";
+    init_accountval_binds();
+    binds = accountval_binds_default.split(/\r?\n/).filter((line) => line.length > 0 && !line.startsWith("#")).map(parse);
+  }
+});
+
+// src/utils/colors.ts
+function _slicedToArray4(r, e) {
+  return _arrayWithHoles5(r) || _iterableToArrayLimit4(r, e) || _unsupportedIterableToArray8(r, e) || _nonIterableRest5();
+}
+function _nonIterableRest5() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _iterableToArrayLimit4(r, l) {
+  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (null != t) {
+    var e, n, i, u, a = [], f = true, o = false;
+    try {
+      if (i = (t = t.call(r)).next, 0 === l) {
+        if (Object(t) !== t) return;
+        f = false;
+      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = true) ;
+    } catch (r2) {
+      o = true, n = r2;
+    } finally {
+      try {
+        if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;
+      } finally {
+        if (o) throw n;
+      }
+    }
+    return a;
+  }
+}
+function _arrayWithHoles5(r) {
+  if (Array.isArray(r)) return r;
+}
+function _toConsumableArray3(r) {
+  return _arrayWithoutHoles3(r) || _iterableToArray4(r) || _unsupportedIterableToArray8(r) || _nonIterableSpread3();
+}
+function _nonIterableSpread3() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _unsupportedIterableToArray8(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray8(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray8(r, a) : void 0;
+  }
+}
+function _iterableToArray4(r) {
+  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
+}
+function _arrayWithoutHoles3(r) {
+  if (Array.isArray(r)) return _arrayLikeToArray8(r);
+}
+function _arrayLikeToArray8(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
+}
+function loadAccountvalColors(name) {
+  if (name === "default") {
+    name = provider().isDarkMode() ? "dark" : "light";
+  }
+  var colors = map.get(name);
+  if (colors === void 0) {
+    return false;
+  }
+  AccountValColors = colors;
+  return true;
+}
+function getAccountvalColors() {
+  return ["default"].concat(_toConsumableArray3(map.keys()));
+}
+function showAccountvalColors(name) {
+  var colors = map.get(name);
+  if (colors === void 0) {
+    provider().print("Can't find any colors by that name", "red");
+    return;
+  }
+  for (var _i = 0, _Object$entries = Object.entries(colors); _i < _Object$entries.length; _i++) {
+    var _Object$entries$_i = _slicedToArray4(_Object$entries[_i], 2), k = _Object$entries$_i[0], v = _Object$entries$_i[1];
+    provider().printHtml(`<font color='${v}'>${k}</font>`);
+  }
+}
+function initAccountValColors() {
+  var def = provider().isDarkMode() ? "dark" : "default";
+  loadAccountvalColors(
+    provider().retrieveCache("accountvalColorScheme", "small_persist") ? provider().retrieveCache("accountvalColorScheme", "small_persist") : def
+  );
+}
+var AccountValColors, map;
+var init_colors = __esm({
+  "src/utils/colors.ts"() {
+    "use strict";
+    init_apiSupplier();
+    map = /* @__PURE__ */ new Map();
+    map.set("light", {
+      attentionGrabbingWarning: "red",
+      failedToParseSettings: "purple",
+      minorNote: "gray",
+      helpfulStateInfo: "blue",
+      mallExtinctColor1: "#4f5893",
+      mallExtinctColor2: "#934f4f",
+      shopPricedOk: "#196f3d",
+      shopPricesOverpriced: "#db2525",
+      noteUntradeable: "red"
+    });
+    map.set("dark", {
+      attentionGrabbingWarning: "red",
+      failedToParseSettings: "purple",
+      minorNote: "gray",
+      helpfulStateInfo: "#3ccabb",
+      mallExtinctColor1: "#6b7ade",
+      mallExtinctColor2: "#d76d6d",
+      shopPricedOk: "#269f59",
+      shopPricesOverpriced: "#dd4040",
+      noteUntradeable: "red"
+    });
+  }
+});
+
+// src/resolvers/coinmaster.ts
+function _createForOfIteratorHelper6(r, e) {
+  var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (!t) {
+    if (Array.isArray(r) || (t = _unsupportedIterableToArray9(r)) || e && r && "number" == typeof r.length) {
+      t && (r = t);
+      var _n = 0, F = function F2() {
+      };
+      return { s: F, n: function n() {
+        return _n >= r.length ? { done: true } : { done: false, value: r[_n++] };
+      }, e: function e2(r2) {
+        throw r2;
+      }, f: F };
+    }
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+  var o, a = true, u = false;
+  return { s: function s() {
+    t = t.call(r);
+  }, n: function n() {
+    var r2 = t.next();
+    return a = r2.done, r2;
+  }, e: function e2(r2) {
+    u = true, o = r2;
+  }, f: function f() {
+    try {
+      a || null == t.return || t.return();
+    } finally {
+      if (u) throw o;
+    }
+  } };
+}
+function _unsupportedIterableToArray9(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray9(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray9(r, a) : void 0;
+  }
+}
+function _arrayLikeToArray9(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
+}
+function _classCallCheck11(a, n) {
+  if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
+}
+function _defineProperties11(e, r) {
+  for (var t = 0; t < r.length; t++) {
+    var o = r[t];
+    o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, _toPropertyKey11(o.key), o);
+  }
+}
+function _createClass11(e, r, t) {
+  return r && _defineProperties11(e.prototype, r), t && _defineProperties11(e, t), Object.defineProperty(e, "prototype", { writable: false }), e;
+}
+function _defineProperty7(e, r, t) {
+  return (r = _toPropertyKey11(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: true, configurable: true, writable: true }) : e[r] = t, e;
+}
+function _toPropertyKey11(t) {
+  var i = _toPrimitive11(t, "string");
+  return "symbol" == typeof i ? i : i + "";
+}
+function _toPrimitive11(t, e) {
+  if ("object" != typeof t || !t) return t;
+  var r;
+  if ("undefined" != typeof Symbol && void 0 !== (r = t[Symbol.toPrimitive])) {
+    var i = r.call(t, e || "default");
+    if ("object" != typeof i) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === e ? String : Number)(t);
+}
+var CoinmasterResolver;
+var init_coinmaster = __esm({
+  "src/resolvers/coinmaster.ts"() {
+    "use strict";
+    init_apiSupplier();
+    init_supplierTypings();
+    CoinmasterResolver = /* @__PURE__ */ (function() {
+      function CoinmasterResolver2(prices) {
+        _classCallCheck11(this, CoinmasterResolver2);
+        _defineProperty7(this, "items", []);
+        this.prices = prices;
+      }
+      return _createClass11(CoinmasterResolver2, [{ key: "load", value: function load() {
+        var _iterator = _createForOfIteratorHelper6(
+          KoLItem.all()
+        ), _step;
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done; ) {
+            var item = _step.value;
+            if (!item.tradeable || item.gift || item.quest || item.seller === void 0) {
+              continue;
+            }
+            var token = item.seller.item;
+            if (token === KoLItem.none) {
+              continue;
+            }
+            var price = provider().sellPrice(item.seller, item);
+            if (price <= 0) {
+              continue;
+            }
+            this.items.push({
+              item,
+              coinmaster: item.seller,
+              currencyCost: price,
+              currency: token
+            });
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+        this.prices.bulkLoad(this.items.map((i) => i.item));
+      } }, { key: "getHighestCoinmaster", value: function getHighestCoinmaster(currency) {
+        var highest;
+        var _iterator2 = _createForOfIteratorHelper6(
+          this.items
+        ), _step2;
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done; ) {
+            var item = _step2.value;
+            if (item.currency !== currency) {
+              continue;
+            }
+            if (item.price === void 0) {
+              var itemPrice = this.prices.itemPrice(item.item);
+              if (itemPrice === void 0) {
+                return void 0;
+              }
+              item.price = itemPrice.price;
+              item.priceEach = item.price / item.currencyCost;
+            }
+            if (highest !== void 0 && highest.priceEach > item.priceEach) {
+              continue;
+            }
+            highest = item;
+          }
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
+        return highest;
+      } }]);
+    })();
+  }
+});
+
+// src/resolvers/items.ts
+function _slicedToArray5(r, e) {
+  return _arrayWithHoles6(r) || _iterableToArrayLimit5(r, e) || _unsupportedIterableToArray10(r, e) || _nonIterableRest6();
 }
 function _nonIterableRest6() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _iterableToArrayLimit6(r, l) {
+function _iterableToArrayLimit5(r, l) {
   var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
   if (null != t) {
     var e, n, i, u, a = [], f = true, o = false;
@@ -2686,19 +1965,445 @@ function _iterableToArrayLimit6(r, l) {
 function _arrayWithHoles6(r) {
   if (Array.isArray(r)) return r;
 }
-function _toConsumableArray5(r) {
-  return _arrayWithoutHoles5(r) || _iterableToArray5(r) || _unsupportedIterableToArray11(r) || _nonIterableSpread5();
+function _createForOfIteratorHelper7(r, e) {
+  var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (!t) {
+    if (Array.isArray(r) || (t = _unsupportedIterableToArray10(r)) || e && r && "number" == typeof r.length) {
+      t && (r = t);
+      var _n = 0, F = function F2() {
+      };
+      return { s: F, n: function n() {
+        return _n >= r.length ? { done: true } : { done: false, value: r[_n++] };
+      }, e: function e2(r2) {
+        throw r2;
+      }, f: F };
+    }
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+  var o, a = true, u = false;
+  return { s: function s() {
+    t = t.call(r);
+  }, n: function n() {
+    var r2 = t.next();
+    return a = r2.done, r2;
+  }, e: function e2(r2) {
+    u = true, o = r2;
+  }, f: function f() {
+    try {
+      a || null == t.return || t.return();
+    } finally {
+      if (u) throw o;
+    }
+  } };
 }
-function _nonIterableSpread5() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+function _unsupportedIterableToArray10(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray10(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray10(r, a) : void 0;
+  }
 }
-function _iterableToArray5(r) {
-  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
+function _arrayLikeToArray10(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
 }
-function _arrayWithoutHoles5(r) {
-  if (Array.isArray(r)) return _arrayLikeToArray11(r);
+function _defineProperty8(e, r, t) {
+  return (r = _toPropertyKey12(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: true, configurable: true, writable: true }) : e[r] = t, e;
 }
-function _createForOfIteratorHelper9(r, e) {
+function _defineProperties12(e, r) {
+  for (var t = 0; t < r.length; t++) {
+    var o = r[t];
+    o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, _toPropertyKey12(o.key), o);
+  }
+}
+function _createClass12(e, r, t) {
+  return r && _defineProperties12(e.prototype, r), t && _defineProperties12(e, t), Object.defineProperty(e, "prototype", { writable: false }), e;
+}
+function _toPropertyKey12(t) {
+  var i = _toPrimitive12(t, "string");
+  return "symbol" == typeof i ? i : i + "";
+}
+function _toPrimitive12(t, e) {
+  if ("object" != typeof t || !t) return t;
+  var r;
+  if ("undefined" != typeof Symbol && void 0 !== (r = t[Symbol.toPrimitive])) {
+    var i = r.call(t, e || "default");
+    if ("object" != typeof i) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === e ? String : Number)(t);
+}
+function _classCallCheck12(a, n) {
+  if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
+}
+var AccValStuff, ItemResolver;
+var init_items = __esm({
+  "src/resolvers/items.ts"() {
+    "use strict";
+    init_apiSupplier();
+    init_supplierTypings();
+    init_binds();
+    init_typings();
+    init_colors();
+    init_utils();
+    init_coinmaster();
+    AccValStuff = /* @__PURE__ */ _createClass12(
+      function AccValStuff2(bind, actualItem) {
+        _classCallCheck12(this, AccValStuff2);
+        this.bind = bind;
+        this.actualItem = actualItem;
+      }
+    );
+    ItemResolver = /* @__PURE__ */ (function() {
+      function ItemResolver2(prices) {
+        _classCallCheck12(this, ItemResolver2);
+        _defineProperty8(this, "visitCache", /* @__PURE__ */ new Map());
+        _defineProperty8(this, "accountValCache", /* @__PURE__ */ new Map());
+        _defineProperty8(this, "accountValVisitCachePropName", "_accountValVisitCache");
+        this.prices = prices;
+        this.accValStuff = this.loadAccountValStuff();
+      }
+      return _createClass12(ItemResolver2, [{ key: "loadCache", value: function loadCache() {
+        var prop = provider().retrieveCache(this.accountValVisitCachePropName, "transient").split(",");
+        var _iterator = _createForOfIteratorHelper7(
+          prop
+        ), _step;
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done; ) {
+            var p = _step.value;
+            if (!p.includes(":")) {
+              continue;
+            }
+            var spl = p.split(":");
+            this.accountValCache.set(
+              KoLItem.get(AccountValUtils.toInt(spl[0])),
+              spl[1].startsWith("t")
+            );
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+      } }, { key: "saveCache", value: function saveCache() {
+        var values = [];
+        this.accountValCache.forEach(
+          (val2, key) => values.push(`${key.id}:${val2 ? "t" : "f"}`)
+        );
+        values.sort((v1, v2) => v1.localeCompare(v2));
+        var val = values.join(",");
+        if (provider().retrieveCache(
+          this.accountValVisitCachePropName,
+          "transient"
+        ) === val) {
+          return;
+        }
+        provider().storeCache(
+          this.accountValVisitCachePropName,
+          values.join(","),
+          "transient"
+        );
+      } }, { key: "getUrledItems", value: function getUrledItems() {
+        var items = [];
+        var origSize = this.accountValCache.size;
+        var _iterator2 = _createForOfIteratorHelper7(
+          this.accValStuff
+        ), _step2;
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done; ) {
+            var s = _step2.value;
+            var _bind = s.bind;
+            switch (_bind.type) {
+              case "book":
+                if (provider().haveSkill(s.skill)) {
+                  items.push([s.actualItem, ItemStatus.BOUND]);
+                }
+                break;
+              case "eudora":
+                if (this.visitCheck(
+                  s.actualItem,
+                  "account.php?tab=correspondence",
+                  _bind.correspondence
+                )) {
+                  items.push([s.actualItem, ItemStatus.BOUND]);
+                }
+                break;
+              case "property":
+                if (this.testProperty(_bind.property)) {
+                  items.push([s.actualItem, ItemStatus.BOUND]);
+                }
+                break;
+              case "garden":
+                if (provider().myGardenType() === _bind.garden) {
+                  items.push([s.actualItem, ItemStatus.IN_USE]);
+                }
+                break;
+              case "skill":
+                if (provider().getPermedSkills()[s.skill.name]) {
+                  items.push([s.actualItem, ItemStatus.BOUND]);
+                }
+                break;
+              case "campground":
+                if (provider().getCampground().has(s.actualItem)) {
+                  items.push([s.actualItem, ItemStatus.BOUND]);
+                }
+                break;
+            }
+          }
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
+        if (origSize !== this.accountValCache.size) {
+          this.saveCache();
+        }
+        return items;
+      } }, { key: "testProperty", value: function testProperty(property) {
+        var result = true;
+        var _iterator3 = _createForOfIteratorHelper7(
+          property.split("&")
+        ), _step3;
+        try {
+          for (_iterator3.s(); !(_step3 = _iterator3.n()).done; ) {
+            var prop = _step3.value;
+            var isTrue = AccountValUtils.toBoolean(
+              provider().retrieveCache(prop.replace("!", ""), "small_persist")
+            );
+            var isNotNegated = !prop.includes("!");
+            result = result && isTrue === isNotNegated;
+          }
+        } catch (err) {
+          _iterator3.e(err);
+        } finally {
+          _iterator3.f();
+        }
+        return result;
+      } }, { key: "addItem", value: function addItem(ownedItems, actualItem, item, name, plural, bound) {
+        var count = arguments.length > 6 && arguments[6] !== void 0 ? arguments[6] : 1;
+        var worthMultiplier = arguments.length > 7 && arguments[7] !== void 0 ? arguments[7] : 1;
+        var v = new ValItem(actualItem, item, name, plural, bound);
+        v.worthMultiplier = worthMultiplier;
+        ownedItems.set(v, (ownedItems.get(v) ?? 0) + count);
+      } }, { key: "resolveBoundToTradeables", value: function resolveBoundToTradeables(copy, ownedItems, resolve) {
+        var coinmaster;
+        var _iterator4 = _createForOfIteratorHelper7(
+          this.accValStuff
+        ), _step4;
+        try {
+          for (_iterator4.s(); !(_step4 = _iterator4.n()).done; ) {
+            var s = _step4.value;
+            if (!resolve.includes(s.bind.type)) {
+              continue;
+            }
+            try {
+              if (s.bind.type === "currency" && s.untradeableItem === void 0) {
+                if (coinmaster === void 0) {
+                  coinmaster = new CoinmasterResolver(this.prices);
+                  coinmaster.load();
+                }
+                var _item = coinmaster.getHighestCoinmaster(s.actualItem);
+                if (_item === void 0) {
+                  continue;
+                }
+                s.currencyAmount = _item.currencyCost;
+                s.untradeableItem = _item.currency;
+                s.actualItem = _item.item;
+              }
+              var item = s.untradeableItem;
+              var pair = copy[item.name];
+              if (pair === void 0) {
+                continue;
+              }
+              var v = pair[0];
+              this.addItem(
+                ownedItems,
+                item,
+                s.actualItem,
+                item.name,
+                item.plural,
+                v.bound === void 0 || v.bound === ItemStatus.NO_TRADE || v.bound === ItemStatus.IN_USE ? s.bind.type === "untradeable" ? ItemStatus.BOUND : ItemStatus.NO_TRADE : v.bound,
+                pair[1],
+                s.currencyAmount ?? 1
+              );
+            } catch (e) {
+              provider().print(
+                `You probably need to update mafia! Got an error! ${e}`,
+                AccountValColors.attentionGrabbingWarning
+              );
+            }
+          }
+        } catch (err) {
+          _iterator4.e(err);
+        } finally {
+          _iterator4.f();
+        }
+      } }, { key: "resolveFamiliars", value: function resolveFamiliars(familiars, ownedItems) {
+        var _iterator5 = _createForOfIteratorHelper7(
+          familiars
+        ), _step5;
+        try {
+          for (_iterator5.s(); !(_step5 = _iterator5.n()).done; ) {
+            var fam = _step5.value;
+            if (!fam.hatchling.tradeable) {
+              continue;
+            }
+            this.addItem(
+              ownedItems,
+              fam.hatchling,
+              fam.hatchling,
+              fam.toString(),
+              fam.toString(),
+              ItemStatus.FAMILIAR
+            );
+          }
+        } catch (err) {
+          _iterator5.e(err);
+        } finally {
+          _iterator5.f();
+        }
+      } }, { key: "resolveFamiliarItems", value: function resolveFamiliarItems() {
+        var famEquipped = /* @__PURE__ */ new Map();
+        var _iterator6 = _createForOfIteratorHelper7(
+          KoLFamiliar.all()
+        ), _step6;
+        try {
+          for (_iterator6.s(); !(_step6 = _iterator6.n()).done; ) {
+            var fam = _step6.value;
+            if (!provider().haveFamiliar(fam) || provider().myFamiliar() === fam) {
+              continue;
+            }
+            var item = provider().familiarEquippedEquipment(fam);
+            if (item === KoLItem.none) {
+              continue;
+            }
+            famEquipped.set(item, (famEquipped.get(item) ?? 0) + 1);
+          }
+        } catch (err) {
+          _iterator6.e(err);
+        } finally {
+          _iterator6.f();
+        }
+        return famEquipped;
+      } }, { key: "visitCheck", value: function visitCheck(item, url, find) {
+        if (this.accountValCache.has(item)) {
+          return this.accountValCache.get(item);
+        }
+        var page = this.visitCache.get(url);
+        if (page === void 0) {
+          page = provider().visitUrl(url);
+          this.visitCache.set(url, page);
+        }
+        var result = page.includes(find);
+        this.accountValCache.set(item, result);
+        return result;
+      } }, { key: "loadAccountValStuff", value: function loadAccountValStuff() {
+        var _iterator7 = _createForOfIteratorHelper7(
+          bindsOf("price")
+        ), _step7;
+        try {
+          for (_iterator7.s(); !(_step7 = _iterator7.n()).done; ) {
+            var _step7$value = _step7.value, item = _step7$value.item, price = _step7$value.price;
+            try {
+              this.prices.addSpecialCase(KoLItem.get(item), price);
+            } catch (e) {
+              provider().print(
+                `Error! Update mafia? ${e}`,
+                AccountValColors.attentionGrabbingWarning
+              );
+            }
+          }
+        } catch (err) {
+          _iterator7.e(err);
+        } finally {
+          _iterator7.f();
+        }
+        var values = [];
+        var _iterator8 = _createForOfIteratorHelper7(
+          binds
+        ), _step8;
+        try {
+          for (_iterator8.s(); !(_step8 = _iterator8.n()).done; ) {
+            var _bind2 = _step8.value;
+            if (_bind2.type === "price" || _bind2.type === "coinmaster") {
+              continue;
+            }
+            try {
+              var _v = new AccValStuff(_bind2, KoLItem.get(_bind2.item));
+              if (_bind2.type === "untradeable") {
+                _v.untradeableItem = KoLItem.get(_bind2.untradeable);
+              } else if (_bind2.type === "book") {
+                _v.skill = KoLSkill.get(_bind2.skill);
+              } else if (_bind2.type === "currency" && _bind2.untradeable !== void 0) {
+                _v.untradeableItem = KoLItem.get(_bind2.untradeable);
+                _v.currencyAmount = _bind2.amount;
+              }
+              values.push(_v);
+            } catch (e) {
+              provider().print(
+                `Error! Update mafia? ${e}`,
+                AccountValColors.attentionGrabbingWarning
+              );
+            }
+          }
+        } catch (err) {
+          _iterator8.e(err);
+        } finally {
+          _iterator8.f();
+        }
+        this.loadSkills(values);
+        var tradeableSources = new Set(values.map((v2) => v2.untradeableItem));
+        for (var _i = 0, _values = values; _i < _values.length; _i++) {
+          var v = _values[_i];
+          if (v.actualItem.tradeable || tradeableSources.has(v.actualItem) || v.bind.type === "currency" && v.untradeableItem === void 0) {
+            continue;
+          }
+          provider().print(
+            `Missing a tradeable item for ${v.actualItem}`,
+            AccountValColors.attentionGrabbingWarning
+          );
+        }
+        this.loadCache();
+        return values;
+      } }, { key: "loadSkills", value: function loadSkills(values) {
+        var itemsSkills = new Map(
+          KoLItem.all().map((i2) => [i2, provider().associatedSkill(i2)]).filter(
+            (_ref) => {
+              var _ref2 = _slicedToArray5(_ref, 2), i2 = _ref2[0], skill2 = _ref2[1];
+              return !i2.reusable && !i2.quest && !i2.gift && skill2 !== KoLSkill.none;
+            }
+          )
+        );
+        var alreadyNoted = values.map((v2) => v2.actualItem);
+        var _iterator9 = _createForOfIteratorHelper7(
+          itemsSkills
+        ), _step9;
+        try {
+          for (_iterator9.s(); !(_step9 = _iterator9.n()).done; ) {
+            var _step9$value = _slicedToArray5(_step9.value, 2), i = _step9$value[0], skill = _step9$value[1];
+            if (!i.tradeable || alreadyNoted.includes(i)) {
+              continue;
+            }
+            var v = new AccValStuff(
+              { type: "skill", item: i.name, skill: skill.name },
+              i
+            );
+            v.skill = skill;
+            values.push(v);
+          }
+        } catch (err) {
+          _iterator9.e(err);
+        } finally {
+          _iterator9.f();
+        }
+      } }]);
+    })();
+  }
+});
+
+// src/resolvers/pages.ts
+function _createForOfIteratorHelper8(r, e) {
   var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
   if (!t) {
     if (Array.isArray(r) || (t = _unsupportedIterableToArray11(r)) || e && r && "number" == typeof r.length) {
@@ -2714,7 +2419,7 @@ function _createForOfIteratorHelper9(r, e) {
     throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
   var o, a = true, u = false;
-  return { s: function s2() {
+  return { s: function s() {
     t = t.call(r);
   }, n: function n() {
     var r2 = t.next();
@@ -2729,6 +2434,12 @@ function _createForOfIteratorHelper9(r, e) {
     }
   } };
 }
+function _toConsumableArray4(r) {
+  return _arrayWithoutHoles4(r) || _iterableToArray5(r) || _unsupportedIterableToArray11(r) || _nonIterableSpread4();
+}
+function _nonIterableSpread4() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
 function _unsupportedIterableToArray11(r, a) {
   if (r) {
     if ("string" == typeof r) return _arrayLikeToArray11(r, a);
@@ -2736,7 +2447,325 @@ function _unsupportedIterableToArray11(r, a) {
     return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray11(r, a) : void 0;
   }
 }
+function _iterableToArray5(r) {
+  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
+}
+function _arrayWithoutHoles4(r) {
+  if (Array.isArray(r)) return _arrayLikeToArray11(r);
+}
 function _arrayLikeToArray11(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
+}
+function _classCallCheck13(a, n) {
+  if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
+}
+function _defineProperties13(e, r) {
+  for (var t = 0; t < r.length; t++) {
+    var o = r[t];
+    o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, _toPropertyKey13(o.key), o);
+  }
+}
+function _createClass13(e, r, t) {
+  return r && _defineProperties13(e.prototype, r), t && _defineProperties13(e, t), Object.defineProperty(e, "prototype", { writable: false }), e;
+}
+function _toPropertyKey13(t) {
+  var i = _toPrimitive13(t, "string");
+  return "symbol" == typeof i ? i : i + "";
+}
+function _toPrimitive13(t, e) {
+  if ("object" != typeof t || !t) return t;
+  var r;
+  if ("undefined" != typeof Symbol && void 0 !== (r = t[Symbol.toPrimitive])) {
+    var i = r.call(t, e || "default");
+    if ("object" != typeof i) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === e ? String : Number)(t);
+}
+var PageResolver;
+var init_pages = __esm({
+  "src/resolvers/pages.ts"() {
+    "use strict";
+    init_apiSupplier();
+    init_supplierTypings();
+    init_colors();
+    init_utils();
+    PageResolver = /* @__PURE__ */ (function() {
+      function PageResolver2() {
+        _classCallCheck13(this, PageResolver2);
+      }
+      return _createClass13(PageResolver2, [{ key: "getSnapshot", value: function getSnapshot(username) {
+        var items = new Map(
+          KoLItem.all().map((i) => {
+            var name2 = i.name;
+            while (name2.match(/<\/?i>/)) {
+              name2 = name2.replace(/<\/?i>/, "");
+            }
+            return [provider().entityDecode(name2).toLowerCase(), i];
+          })
+        );
+        var skills = new Map(
+          KoLSkill.all().map(
+            (s) => [
+              provider().entityDecode(s.name).toLowerCase(),
+              s
+            ]
+          )
+        );
+        var fams = new Map(
+          KoLFamiliar.all().map((f) => [f.toString().toLowerCase(), f])
+        );
+        var ignore = _toConsumableArray4(fams.values()).map(
+          (f) => f.hatchling.toString().toLowerCase()
+        );
+        ignore.push.apply(
+          ignore,
+          _toConsumableArray4(
+            Object.values(provider().allNormalOutfits()).map(
+              (s) => s.toLowerCase()
+            )
+          )
+        );
+        ignore.push("miming regalia");
+        var page = provider().visitUrl(
+          `https://api.aventuristo.net/av-snapshot?u=${username}`
+        );
+        if (!page.includes("<p>Snapshot for <b>")) {
+          return [];
+        }
+        page = page.substring(0, page.indexOf(`id='a7'>Discoveries</h1>`));
+        var tdRegex = /<td(.*?)<\/td>/m;
+        var linkRegex = /class='(perm|hcperm|fam_run_90|fam_have|fam_run_100)'.*?<a href="[^"]+" rel="noreferrer">(?:.*?>)?([^>]*?)<\/a>/;
+        var match;
+        var has = [];
+        while ((match = page.match(tdRegex)) !== null) {
+          page = page.substring(page.indexOf(match[0]) + match[0].length);
+          var link = match[1].match(linkRegex);
+          if (link === null) {
+            continue;
+          }
+          var name = provider().entityDecode(link[2]).toLowerCase();
+          if (ignore.includes(name)) {
+            continue;
+          }
+          var type = link[1];
+          var isFam = !type.includes("perm");
+          if (isFam) {
+            var familiar = fams.get(name);
+            if (familiar !== void 0) {
+              has.push(familiar);
+            } else {
+              provider().print(
+                `Unable to resolve the familiar '${name}' from av-snapshot`,
+                AccountValColors.attentionGrabbingWarning
+              );
+            }
+            continue;
+          }
+          if (name.match(/: level \d+$/)) {
+            name = name.substring(0, name.lastIndexOf(":"));
+          } else if (name.match(/ \(\d+\/\d+\)$/)) {
+            name = name.substring(0, name.lastIndexOf(" "));
+          } else if (name.match(/ \d+\/\d+$/)) {
+            continue;
+          }
+          var skill = skills.get(name);
+          if (skill !== void 0) {
+            has.push(skill);
+            continue;
+          }
+          var exactItem = items.get(name);
+          if (exactItem !== void 0) {
+            has.push(exactItem);
+            continue;
+          }
+          var count = 1;
+          if (name.match(/ x\d+$/)) {
+            count = AccountValUtils.toInt(
+              name.substring(name.lastIndexOf("x") + 1)
+            );
+            name = name.substring(0, name.lastIndexOf(" "));
+          }
+          var item = items.get(name);
+          if (item === void 0) {
+            provider().print(
+              `Unable to resolve the item '${name}' from av-snapshot`,
+              AccountValColors.attentionGrabbingWarning
+            );
+            continue;
+          }
+          has.push([item, count]);
+        }
+        return has;
+      } }, { key: "getFamiliars", value: function getFamiliars(userId) {
+        var page = provider().visitUrl(`showfamiliars.php?who=${userId}`);
+        var regex = /onClick='fam\((\d+)\)'/;
+        var match;
+        var familiars = [];
+        while ((match = page.match(regex)) !== null) {
+          page = page.replace(match[0], "");
+          familiars.push(provider().toFamiliar(AccountValUtils.toInt(match[1])));
+        }
+        return familiars;
+      } }, { key: "getStore", value: function getStore(userId) {
+        var items = [];
+        var page = provider().visitUrl(`mallstore.php?whichstore=${userId}`);
+        var _iterator = _createForOfIteratorHelper8(
+          page.split("<tr>")
+        ), _step;
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done; ) {
+            var s = _step.value;
+            var match = s.match(
+              /selecteditem=(\d+).+?<b>.+?<\/b> \(([\d,]+)\) +(?:\(Limit ([\d,]+) \/ day\))?<\/td><td>((?:\d|,)+) Meat<\/td>/
+            );
+            if (match === null) {
+              continue;
+            }
+            items.push({
+              item: KoLItem.get(AccountValUtils.toInt(match[1])),
+              amount: AccountValUtils.toInt(match[2]),
+              limit: match[3] ? AccountValUtils.toInt(match[3]) : 0,
+              price: AccountValUtils.toInt(match[4])
+            });
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+        return items;
+      } }, { key: "getDisplaycase", value: function getDisplaycase(userId) {
+        var map2 = /* @__PURE__ */ new Map();
+        var descs = new Map(
+          KoLItem.all().map((i) => [i.descid, i])
+        );
+        var page = provider().visitUrl(`displaycollection.php?who=${userId}`);
+        var lastShelf;
+        var itemRegex = /<td width=30 height=30><img src=".+?" class=hand onClick='descitem\((\d+),(\d+)\)'><\/td><td valign=center><b>.+?<\/b>(?: \(((?:\d|,)+)\))?<\/td><\/tr>/;
+        var shelfRegex = /<font color=white>([^<]+)<\/font>/;
+        var _iterator2 = _createForOfIteratorHelper8(
+          page.split("<tr>")
+        ), _step2;
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done; ) {
+            var s = _step2.value;
+            var shelfMatch = s.match(shelfRegex);
+            if (shelfMatch !== null) {
+              lastShelf = provider().entityDecode(shelfMatch[1]);
+            }
+            var match = s.match(itemRegex);
+            if (match === null) {
+              continue;
+            }
+            var item = descs.get(match[1]);
+            if (item === void 0) {
+              provider().print(
+                `Unknown item description: ${match[1]}, update mafia?`,
+                AccountValColors.attentionGrabbingWarning
+              );
+              continue;
+            }
+            map2.set(
+              { item, shelf: lastShelf },
+              match[3] ? AccountValUtils.toInt(match[3]) : 1
+            );
+          }
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
+        return map2;
+      } }]);
+    })();
+  }
+});
+
+// src/core/logic.ts
+function _slicedToArray6(r, e) {
+  return _arrayWithHoles7(r) || _iterableToArrayLimit6(r, e) || _unsupportedIterableToArray12(r, e) || _nonIterableRest7();
+}
+function _nonIterableRest7() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _iterableToArrayLimit6(r, l) {
+  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (null != t) {
+    var e, n, i, u, a = [], f = true, o = false;
+    try {
+      if (i = (t = t.call(r)).next, 0 === l) {
+        if (Object(t) !== t) return;
+        f = false;
+      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = true) ;
+    } catch (r2) {
+      o = true, n = r2;
+    } finally {
+      try {
+        if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;
+      } finally {
+        if (o) throw n;
+      }
+    }
+    return a;
+  }
+}
+function _arrayWithHoles7(r) {
+  if (Array.isArray(r)) return r;
+}
+function _toConsumableArray5(r) {
+  return _arrayWithoutHoles5(r) || _iterableToArray6(r) || _unsupportedIterableToArray12(r) || _nonIterableSpread5();
+}
+function _nonIterableSpread5() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _iterableToArray6(r) {
+  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
+}
+function _arrayWithoutHoles5(r) {
+  if (Array.isArray(r)) return _arrayLikeToArray12(r);
+}
+function _createForOfIteratorHelper9(r, e) {
+  var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+  if (!t) {
+    if (Array.isArray(r) || (t = _unsupportedIterableToArray12(r)) || e && r && "number" == typeof r.length) {
+      t && (r = t);
+      var _n = 0, F = function F2() {
+      };
+      return { s: F, n: function n() {
+        return _n >= r.length ? { done: true } : { done: false, value: r[_n++] };
+      }, e: function e2(r2) {
+        throw r2;
+      }, f: F };
+    }
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+  var o, a = true, u = false;
+  return { s: function s() {
+    t = t.call(r);
+  }, n: function n() {
+    var r2 = t.next();
+    return a = r2.done, r2;
+  }, e: function e2(r2) {
+    u = true, o = r2;
+  }, f: function f() {
+    try {
+      a || null == t.return || t.return();
+    } finally {
+      if (u) throw o;
+    }
+  } };
+}
+function _unsupportedIterableToArray12(r, a) {
+  if (r) {
+    if ("string" == typeof r) return _arrayLikeToArray12(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray12(r, a) : void 0;
+  }
+}
+function _arrayLikeToArray12(r, a) {
   (null == a || a > r.length) && (a = r.length);
   for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
   return n;
@@ -2773,14 +2802,15 @@ function _toPrimitive14(t, e) {
 var AccountValLogic;
 var init_logic = __esm({
   "src/core/logic.ts"() {
+    "use strict";
     init_apiSupplier();
     init_supplierTypings();
+    init_typings();
+    init_priceResolver();
     init_items();
     init_pages();
-    init_priceResolver();
     init_colors();
     init_timings();
-    init_typings();
     init_utils();
     AccountValLogic = /* @__PURE__ */ (function() {
       function AccountValLogic2(settings) {
@@ -2790,11 +2820,11 @@ var init_logic = __esm({
         _defineProperty9(this, "categoryOrder", []);
         this.settings = settings;
         this.priceResolver = new PriceResolver(this.settings);
-        this.resolver = new ItemResolver2(this.priceResolver);
+        this.resolver = new ItemResolver(this.priceResolver);
       }
       return _createClass14(AccountValLogic2, [{ key: "addItem", value: function addItem(item) {
         var count = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 1;
-        this.ownedItems.set(item, (this.ownedItems.get(item) | 0) + count);
+        this.ownedItems.set(item, (this.ownedItems.get(item) ?? 0) + count);
       } }, { key: "loadItems", value: function loadItems() {
         AccValTiming.start("Load JS Filter");
         this.loadJsFilter();
@@ -2807,11 +2837,11 @@ var init_logic = __esm({
         }
         this.loadSelfItems();
       } }, { key: "loadJsFilter", value: function loadJsFilter() {
-        if (this.settings.javascriptFilter == "") {
+        if (this.settings.javascriptFilter === "") {
           return;
         }
         provider().print(
-          "JS Filter has been set to: " + this.settings.javascriptFilter,
+          `JS Filter has been set to: ${this.settings.javascriptFilter}`,
           AccountValColors.minorNote
         );
         try {
@@ -2827,8 +2857,8 @@ var init_logic = __esm({
       } }, { key: "loadPageItems", value: function loadPageItems() {
         var pager = new PageResolver();
         if (this.settings.fetchShop) {
-          var items2 = pager.getStore(this.settings.playerId);
-          items2.forEach((i) => {
+          var items = pager.getStore(this.settings.playerId);
+          items.forEach((i) => {
             var item2 = new ValItem(i.item);
             if (this.settings.shopWorth) {
               item2.bound = ItemStatus.SHOP_WORTH;
@@ -2840,19 +2870,19 @@ var init_logic = __esm({
         if (this.settings.fetchDisplaycase) {
           var _items = pager.getDisplaycase(this.settings.playerId);
           _items.forEach((v, k) => {
-            if (!this.categoryOrder.includes(k.shelf)) {
+            if (k.shelf !== void 0 && !this.categoryOrder.includes(k.shelf)) {
               this.categoryOrder.push(k.shelf);
             }
             this.addItem(new ValItem(k.item).withCategory(k.shelf), v);
           });
         }
         var resolvedFamiliars = false;
-        if (this.settings.fetchFamiliars != false) {
+        if (this.settings.fetchFamiliars !== false) {
           var familiars = pager.getFamiliars(this.settings.playerId);
           resolvedFamiliars = familiars.length > 0;
           this.resolver.resolveFamiliars(familiars, this.ownedItems);
         }
-        if (this.settings.fetchSnapshot == true) {
+        if (this.settings.fetchSnapshot === true) {
           var snapshot = pager.getSnapshot(
             provider().getPlayerName(this.settings.playerId)
           );
@@ -2887,14 +2917,14 @@ var init_logic = __esm({
             this.resolver.resolveFamiliars(_familiars, this.ownedItems);
           }
           if (this.settings.doBound && this.settings.fetchingNonItems) {
-            var _iterator22 = _createForOfIteratorHelper9(
+            var _iterator2 = _createForOfIteratorHelper9(
               this.resolver.accValStuff.filter(
-                (s2) => s2.itemType == ItemType.SKILL && skills.includes(s2.skill)
+                (s) => s.bind.type === "skill" && s.skill !== void 0 && skills.includes(s.skill)
               )
-            ), _step22;
+            ), _step2;
             try {
-              for (_iterator22.s(); !(_step22 = _iterator22.n()).done; ) {
-                var item = _step22.value;
+              for (_iterator2.s(); !(_step2 = _iterator2.n()).done; ) {
+                var item = _step2.value;
                 this.addItem(
                   new ValItem(
                     item.actualItem,
@@ -2906,9 +2936,9 @@ var init_logic = __esm({
                 );
               }
             } catch (err) {
-              _iterator22.e(err);
+              _iterator2.e(err);
             } finally {
-              _iterator22.f();
+              _iterator2.f();
             }
           }
           var owned = new Map(
@@ -2918,27 +2948,30 @@ var init_logic = __esm({
             })
           );
           _items2.forEach((v, k) => {
+            var _owned$get2;
             var boundItem = this.resolver.accValStuff.find(
-              (i) => i.actualItem == k
+              (i) => i.actualItem === k
             );
-            if (boundItem == null) {
-              v -= owned.has(k) ? owned.get(k)[1] : 0;
+            if (boundItem === void 0) {
+              var _owned$get;
+              v -= ((_owned$get = owned.get(k)) === null || _owned$get === void 0 ? void 0 : _owned$get[1]) ?? 0;
               if (v <= 0) {
                 return;
               }
               this.addItem(new ValItem(k), v);
               return;
-            } else if (owned.has(k) && owned.get(k)[0].isBound()) {
+            } else if ((_owned$get2 = owned.get(k)) !== null && _owned$get2 !== void 0 && _owned$get2[0].isBound()) {
               return;
-            } else if (boundItem.untradeableItem != null && owned.has(boundItem.untradeableItem)) {
+            } else if (boundItem.untradeableItem !== void 0 && owned.has(boundItem.untradeableItem)) {
               return;
             }
             var actualItem = k;
             var name = k.name;
             var plural = k.plural;
-            if (boundItem.itemType == ItemType.UNTRADEABLE_ITEM) {
+            if (boundItem.bind.type === "untradeable") {
+              var _owned$get3;
               var untradeable = boundItem.untradeableItem;
-              v -= owned.has(k) ? owned.get(k)[1] : 0;
+              v -= ((_owned$get3 = owned.get(k)) === null || _owned$get3 === void 0 ? void 0 : _owned$get3[1]) ?? 0;
               if (v <= 0) {
                 return;
               }
@@ -3008,11 +3041,11 @@ var init_logic = __esm({
           if (this.settings.doCategories) {
             AccValTiming.start("Resolve and Add Display Case with Shelves");
             var pager = new PageResolver();
-            var items2 = pager.getDisplaycase(
+            var items = pager.getDisplaycase(
               AccountValUtils.toInt(provider().myId())
             );
-            items2.forEach((v, k) => {
-              if (!this.categoryOrder.includes(k.shelf)) {
+            items.forEach((v, k) => {
+              if (k.shelf !== void 0 && !this.categoryOrder.includes(k.shelf)) {
                 this.categoryOrder.push(k.shelf);
               }
               megaExtra.set(k.item, { shelf: k.shelf, count: v });
@@ -3025,9 +3058,9 @@ var init_logic = __esm({
           }
         }
         AccValTiming.start("Resolve Shop");
-        var shop = this.settings.fetchShop ? provider().getShop() : null;
+        var shop = this.settings.fetchShop ? provider().getShop() : void 0;
         AccValTiming.stop("Resolve Shop");
-        if (this.settings.fetchShop && !this.settings.shopWorth) {
+        if (shop !== void 0 && !this.settings.shopWorth) {
           AccValTiming.start("Add Shop");
           add(shop);
           AccValTiming.stop("Add Shop");
@@ -3046,19 +3079,20 @@ var init_logic = __esm({
             if (this.settings.fetchInventory) {
               amount += provider().equippedAmount(_item2) + (famItems.get(_item2) ?? 0);
             }
-            var category = void 0;
-            if (megaExtra.has(_item2)) {
-              amount += megaExtra.get(_item2).count;
-              category = megaExtra.get(_item2).shelf;
+            var extra = megaExtra.get(_item2);
+            var category = extra === null || extra === void 0 ? void 0 : extra.shelf;
+            if (extra !== void 0) {
+              amount += extra.count;
             }
-            if (this.settings.shopWorth && (shop.get(_item2) ?? 0) > 0) {
+            var shopAmount = (shop === null || shop === void 0 ? void 0 : shop.get(_item2)) ?? 0;
+            if (this.settings.shopWorth && shopAmount > 0) {
               var _i = new ValItem(_item2).withCategory(category);
               _i.bound = ItemStatus.SHOP_WORTH;
               _i.shopWorth = provider().shopPrice(_item2);
-              this.ownedItems.set(_i, shop.get(_item2));
+              this.ownedItems.set(_i, shopAmount);
               continue;
             }
-            if (amount == 0) {
+            if (amount === 0) {
               continue;
             }
             this.ownedItems.set(new ValItem(_item2).withCategory(category), amount);
@@ -3069,7 +3103,7 @@ var init_logic = __esm({
           _iterator4.f();
         }
         AccValTiming.stop("Process All Items");
-        if (this.settings.fetchFamiliars != false) {
+        if (this.settings.fetchFamiliars !== false) {
           AccValTiming.start("Resolve Familiars");
           this.resolver.resolveFamiliars(
             KoLFamiliar.all().filter((f) => provider().haveFamiliar(f)),
@@ -3081,7 +3115,7 @@ var init_logic = __esm({
           AccValTiming.start("Resolve Workshed");
           if (this.settings.doBound || this.settings.doTradeables) {
             var i = provider().getWorkshed();
-            if (i != null && i != KoLItem.none && (i.tradeable ? this.settings.doTradeables : this.settings.doBound)) {
+            if (i !== KoLItem.none && (i.tradeable ? this.settings.doTradeables : this.settings.doBound)) {
               this.addItem(new ValItem(i, i, i.name, i.plural, ItemStatus.IN_USE));
             }
           }
@@ -3095,7 +3129,7 @@ var init_logic = __esm({
           try {
             for (_iterator5.s(); !(_step5 = _iterator5.n()).done; ) {
               var _step5$value = _slicedToArray6(_step5.value, 2), item = _step5$value[0], status = _step5$value[1];
-              if (item.tradeable && (status == ItemStatus.FAMILIAR || status != ItemStatus.BOUND) ? !this.settings.doTradeables : !this.settings.doBound) {
+              if (item.tradeable && (status === ItemStatus.FAMILIAR || status !== ItemStatus.BOUND) ? !this.settings.doTradeables : !this.settings.doBound) {
                 continue;
               }
               this.addItem(new ValItem(item, item, item.name, item.plural, status));
@@ -3115,40 +3149,40 @@ var init_logic = __esm({
         this.ownedItems.forEach((v, k) => {
           copy[k.tradeableItem.name] = [k, v];
         });
-        if (this.settings.doBound || this.settings.doNonTradeables) {
-          this.resolver.resolveBoundToTradeables(
-            copy,
-            this.ownedItems,
-            [
-              this.settings.doBound ? ItemType.UNTRADEABLE_ITEM : null,
-              this.settings.doNonTradeables ? ItemType.CURRENCY : null
-            ]
-          );
+        var resolve = [];
+        if (this.settings.doBound) {
+          resolve.push("untradeable");
+        }
+        if (this.settings.doNonTradeables) {
+          resolve.push("currency");
+        }
+        if (resolve.length > 0) {
+          this.resolver.resolveBoundToTradeables(copy, this.ownedItems, resolve);
         }
         var skipJsFilter = this.settings.doesJSFilterUsePriceOrSales();
         var _iterator6 = _createForOfIteratorHelper9(
-          this.ownedItems.keys()
+          this.ownedItems
         ), _step6;
         try {
           for (_iterator6.s(); !(_step6 = _iterator6.n()).done; ) {
-            var item = _step6.value;
-            if (!skipJsFilter && this.jsFilter != null && !this.jsFilter(item.tradeableItem, this.ownedItems.get(item))) {
+            var _step6$value = _slicedToArray6(_step6.value, 2), item = _step6$value[0], amount = _step6$value[1];
+            if (!skipJsFilter && this.jsFilter && !this.jsFilter(item.tradeableItem, amount)) {
               this.ownedItems.delete(item);
               continue;
             }
-            if (!item.isBound() && (!item.tradeableItem.tradeable || item.tradeableItem.gift) && provider().autosellPrice(item.tradeableItem) == 0) {
+            if (!item.isBound() && (!item.tradeableItem.tradeable || item.tradeableItem.gift) && provider().autosellPrice(item.tradeableItem) === 0) {
               this.ownedItems.delete(item);
               continue;
             }
-            if (this.ownedItems.get(item) < this.settings.minimumAmount) {
+            if (amount < this.settings.minimumAmount) {
               this.ownedItems.delete(item);
               continue;
             }
-            if (!this.settings.doBound && item.isBound() && item.bound != ItemStatus.FAMILIAR) {
+            if (!this.settings.doBound && item.isBound() && item.bound !== ItemStatus.FAMILIAR) {
               this.ownedItems.delete(item);
               continue;
             }
-            if (item.bound == ItemStatus.FAMILIAR && (this.settings.fetchFamiliars == false || this.settings.fetchFamiliars == null && !this.settings.doBound)) {
+            if (item.bound === ItemStatus.FAMILIAR && (this.settings.fetchFamiliars === false || this.settings.fetchFamiliars === void 0 && !this.settings.doBound)) {
               this.ownedItems.delete(item);
               continue;
             }
@@ -3160,7 +3194,7 @@ var init_logic = __esm({
               this.ownedItems.delete(item);
               continue;
             }
-            if (item.isBound() && this.ownedItems.get(item) > 1) {
+            if (item.isBound() && amount > 1) {
               this.ownedItems.set(item, 1);
             }
           }
@@ -3209,15 +3243,15 @@ var init_logic = __esm({
             var _price = this.priceResolver.itemPrice(
               item.tradeableItem,
               false,
-              this.settings.doSuperFast ? PriceType.HISTORICAL : this.settings.useLastSold ? PriceType.MALL_SALES : null,
+              this.settings.doSuperFast ? PriceType.HISTORICAL : this.settings.useLastSold ? PriceType.MALL_SALES : void 0,
               this.settings.doSuperFast,
               true,
               "Logic Item Prices - "
             );
             AccValTiming.stop("Price Item");
-            if (_price == null) {
+            if (_price === void 0) {
               continue;
-            } else if (_price.price > 0 || _price.accuracy == PriceType.NEW_PRICES) {
+            } else if (_price.price > 0 || _price.accuracy === PriceType.NEW_PRICES) {
               AccValTiming.start("Add Item Price", true);
               addPrice(item, _price);
               AccValTiming.stop("Add Item Price");
@@ -3247,10 +3281,10 @@ var init_logic = __esm({
             for (_iterator8.s(); !(_step8 = _iterator8.n()).done; ) {
               var check = _step8.value;
               var i = check[0];
-              if (++checked % 20 == 0 && lastPrinted + 1e3 < Date.now()) {
+              if (++checked % 20 === 0 && lastPrinted + 1e3 < Date.now()) {
                 lastPrinted = Date.now();
                 provider().print(
-                  "Checking value of " + i.name + " (" + checked + " / " + toCheck.length + ")",
+                  `Checking value of ${i.name} (${checked} / ${toCheck.length})`,
                   AccountValColors.helpfulStateInfo
                 );
               }
@@ -3262,7 +3296,7 @@ var init_logic = __esm({
                 void 0,
                 "Remaining Logic Item Prices - "
               );
-              if (price == null) {
+              if (price === void 0) {
                 continue;
               }
               addPrice(i, price);
@@ -3278,14 +3312,15 @@ var init_logic = __esm({
         this.doSort();
         AccValTiming.stop("Sort Price List");
       } }, { key: "doSort", value: function doSort() {
-        if (!this.settings.sortBy.fallback) {
+        var _this$settings$sortBy = this.settings.sortBy, assignValue = _this$settings$sortBy.assignValue, fallback = _this$settings$sortBy.fallback;
+        if (assignValue) {
           var _iterator9 = _createForOfIteratorHelper9(
             this.prices
           ), _step9;
           try {
             for (_iterator9.s(); !(_step9 = _iterator9.n()).done; ) {
               var _step9$value = _slicedToArray6(_step9.value, 2), v = _step9$value[0], p = _step9$value[1];
-              this.settings.sortBy.assignValue(
+              assignValue(
                 v,
                 p,
                 this.ownedItems,
@@ -3298,17 +3333,17 @@ var init_logic = __esm({
             _iterator9.f();
           }
         }
-        var sorter = (v1, v2) => this.settings.sortBy.fallback ? this.settings.sortBy.fallback(v1[0], v2[0]) : v1[0].sortValue - v2[0].sortValue;
-        if (this.settings.doCategories && this.categoryOrder != null) {
+        var sorter = (v1, v2) => fallback ? fallback(v1[0], v2[0]) : v1[0].sortValue - v2[0].sortValue;
+        if (this.settings.doCategories) {
           this.prices.sort((v1, v2) => {
             var c1 = v1[0].category ?? "";
             var c2 = v2[0].category ?? "";
-            if (c1 == c2) {
+            if (c1 === c2) {
               return sorter(v1, v2);
             }
             var i1 = this.categoryOrder.indexOf(c1);
             var i2 = this.categoryOrder.indexOf(c2);
-            if (i1 == i2) {
+            if (i1 === i2) {
               return sorter(v1, v2);
             }
             return i1 - i2;
@@ -3324,232 +3359,23 @@ var init_logic = __esm({
   }
 });
 
-// src/settings/presets.ts
-function getPresets() {
-  if (presets != null) {
-    return presets;
-  }
-  presets = [];
-  presets.push({
-    name() {
-      return ["consumables", "consumable", "diet", "consume", "consumeable"];
-    },
-    isProcessed: function isProcessed(item, worth) {
-      return ["food", "booze", "spleen item"].includes(
-        provider().itemType(item)
-      );
-    },
-    desc: function desc() {
-      return "Show only consumables";
-    }
-  });
-  var _loop = function _loop2() {
-    var type = _arr[_i];
-    presets.push({
-      name() {
-        return [type];
-      },
-      isProcessed: function isProcessed(item) {
-        return provider().itemType(item).replace(" item", "") == type;
-      },
-      desc: function desc() {
-        return `Show only ${type}`;
-      }
-    });
-  };
-  for (var _i = 0, _arr = ["food", "booze", "spleen"]; _i < _arr.length; _i++) {
-    _loop();
-  }
-  presets.push({
-    name() {
-      return ["beverage"];
-    },
-    isProcessed: function isProcessed(item, worth) {
-      return item.notes.includes("BEVERAGE");
-    },
-    desc: function desc() {
-      return "Show only beverage";
-    }
-  });
-  presets.push({
-    name() {
-      return ["hungry"];
-    },
-    isProcessed: function isProcessed(item, worth) {
-      if (provider().myFullness() + item.fullness >= provider().fullnessLimit() || item.levelreq < provider().myLevel()) {
-        return false;
-      }
-      return provider().itemType(item) == "food";
-    },
-    desc: function desc() {
-      return "Show only food you can fit in stomach";
-    }
-  });
-  presets.push({
-    name() {
-      return ["thirsty"];
-    },
-    isProcessed: function isProcessed(item, worth) {
-      if (provider().myInebriety() + item.inebriety >= provider().inebrietyLimit() || item.levelreq < provider().myLevel()) {
-        return false;
-      }
-      return provider().itemType(item) == "booze";
-    },
-    desc: function desc() {
-      return "Show only booze you can fit in liver";
-    }
-  });
-  presets.push({
-    name() {
-      return ["munchy"];
-    },
-    isProcessed: function isProcessed(item, worth) {
-      if (provider().mySpleenUse() + item.spleen >= provider().spleenLimit() || item.levelreq < provider().myLevel()) {
-        return false;
-      }
-      return provider().itemType(item) == "spleen item";
-    },
-    desc: function desc() {
-      return "Show only spleen items you can fit in spleen";
-    }
-  });
-  presets.push({
-    name() {
-      return ["equip", "equips", "equipment", "gear"];
-    },
-    isProcessed: function isProcessed(item) {
-      return provider().toSlot(item) != KoLSlot.none;
-    },
-    desc: function desc() {
-      return "Show only items that can be equipped";
-    }
-  });
-  presets.push({
-    name() {
-      return ["pvpable", "pvp", "stealable"];
-    },
-    isShown(item, worth) {
-      return item.isTradeable() && item.actualItem.discardable;
-    },
-    desc: function desc() {
-      return "Show only items that can be stolen";
-    }
-  });
-  presets.push({
-    name() {
-      return ["hatchling", "hatchlings", "larva"];
-    },
-    isProcessed: function isProcessed(item, worth) {
-      return provider().itemType(item) == "familiar larva";
-    },
-    desc: function desc() {
-      return "Show only items that can turn into familiars";
-    }
-  });
-  presets.push({
-    name() {
-      return ["autosell", "junk"];
-    },
-    isShown(item, worth) {
-      if (item.isBound() || !item.actualItem.discardable) {
-        return false;
-      }
-      return provider().autosellPrice(item.actualItem) * 2 >= worth;
-    },
-    desc: function desc() {
-      return "Show only items that sell at mall min";
-    }
-  });
-  var autoselluseItems = [
-    "Bag of park garbage",
-    "ancient vinyl coin purse",
-    "Black pension check",
-    "Briefcase",
-    "Collection of tiny spooky objects",
-    "CSA discount card",
-    "Duct tape wallet",
-    "Fat Wallet",
-    "Gathered Meat-Clip",
-    "LOLmec statuette",
-    "Orcish meat locker",
-    "Old coin purse",
-    "Old leather wallet",
-    "Penultimate Fantasy chest",
-    "Roll of meat",
-    "Shiny stones",
-    "SMOOCH bottlecap",
-    "Solid gold jewel",
-    "Stolen meatpouch",
-    "Warm Subject gift certificate",
-    "Envelope full of Meat",
-    "chest of the Bonerdagon",
-    "cursed piece of thirteen",
-    "Discount Telescope Warehouse gift certificate",
-    "dungeon dragon chest",
-    "fat stacks of cash",
-    "flytrap pellet",
-    "Gratitude chocolate (Meat-filled)",
-    "handful of tips",
-    "kobold treasure hoard",
-    "loose Meats",
-    "meat globe",
-    "Mr. Big's Wallet",
-    "pixel coin",
-    "pixellated moneybag",
-    "smut orc keepsake box",
-    "Stock Certificate"
-  ].map((s2) => KoLItem.get(s2));
-  presets.push({
-    name: function name() {
-      return ["autouse"];
-    },
-    isProcessed: function isProcessed(item) {
-      return autoselluseItems.includes(item);
-    },
-    desc: function desc() {
-      return "Show only (some) usable items that could make you some meat";
-    }
-  });
-  presets.forEach((preset) => {
-    if (preset.isProcessed == null && preset.isShown == null) {
-      throw new Error(
-        `The preset ${preset.name()[0]} must have one of isProcessed or isShown defined!`
-      );
-    }
-    if (preset.isProcessed != null && preset.isShown != null) {
-      throw new Error(
-        `The preset ${preset.name()[0]} can only have one of isProcessed and isShown defined!`
-      );
-    }
-  });
-  return presets;
-}
-var presets;
-var init_presets = __esm({
-  "src/settings/presets.ts"() {
-    init_apiSupplier();
-    init_supplierTypings();
-    presets = null;
-  }
-});
-
 // src/settings/grimoireArgs.ts
 function _toConsumableArray6(r) {
-  return _arrayWithoutHoles6(r) || _iterableToArray6(r) || _unsupportedIterableToArray12(r) || _nonIterableSpread6();
+  return _arrayWithoutHoles6(r) || _iterableToArray7(r) || _unsupportedIterableToArray13(r) || _nonIterableSpread6();
 }
 function _nonIterableSpread6() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _iterableToArray6(r) {
+function _iterableToArray7(r) {
   if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
 }
 function _arrayWithoutHoles6(r) {
-  if (Array.isArray(r)) return _arrayLikeToArray12(r);
+  if (Array.isArray(r)) return _arrayLikeToArray13(r);
 }
 function _createForOfIteratorHelper10(r, e) {
   var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
   if (!t) {
-    if (Array.isArray(r) || (t = _unsupportedIterableToArray12(r)) || e && r && "number" == typeof r.length) {
+    if (Array.isArray(r) || (t = _unsupportedIterableToArray13(r)) || e && r && "number" == typeof r.length) {
       t && (r = t);
       var _n = 0, F = function F2() {
       };
@@ -3562,7 +3388,7 @@ function _createForOfIteratorHelper10(r, e) {
     throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
   var o, a = true, u = false;
-  return { s: function s2() {
+  return { s: function s() {
     t = t.call(r);
   }, n: function n() {
     var r2 = t.next();
@@ -3577,14 +3403,14 @@ function _createForOfIteratorHelper10(r, e) {
     }
   } };
 }
-function _unsupportedIterableToArray12(r, a) {
+function _unsupportedIterableToArray13(r, a) {
   if (r) {
-    if ("string" == typeof r) return _arrayLikeToArray12(r, a);
+    if ("string" == typeof r) return _arrayLikeToArray13(r, a);
     var t = {}.toString.call(r).slice(8, -1);
-    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray12(r, a) : void 0;
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray13(r, a) : void 0;
   }
 }
-function _arrayLikeToArray12(r, a) {
+function _arrayLikeToArray13(r, a) {
   (null == a || a > r.length) && (a = r.length);
   for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
   return n;
@@ -3712,6 +3538,7 @@ function _traverse(spec, process, onGroup) {
 var Args, ParseError, specSymbol, scriptSymbol, scriptHelpSymbol, optionsSymbol, WrappedArgMetadata, CommandParser;
 var init_grimoireArgs = __esm({
   "src/settings/grimoireArgs.ts"() {
+    "use strict";
     init_apiSupplier();
     Args = /* @__PURE__ */ (function() {
       function Args2() {
@@ -3768,10 +3595,11 @@ var init_grimoireArgs = __esm({
         value: function arrayFromArg(spec, argFromSpec) {
           var _spec$options3, _spec$options4;
           var spec_without_default = _objectSpread2({}, spec);
-          if ("default" in spec_without_default) {
-            delete spec_without_default["default"];
-          }
-          var arg = argFromSpec.call(this, spec_without_default);
+          delete spec_without_default.default;
+          var arg = argFromSpec.call(
+            this,
+            spec_without_default
+          );
           var raw_options = (_spec$options3 = spec.options) === null || _spec$options3 === void 0 ? void 0 : _spec$options3.map((option) => option[0]);
           if ("default" in spec && raw_options) {
             var _iterator = _createForOfIteratorHelper10(
@@ -3968,20 +3796,20 @@ var init_grimoireArgs = __esm({
             metadata.traverse((keySpec, key) => {
               keys.push(keySpec.key ?? key);
             });
-            var _iterator22 = _createForOfIteratorHelper10(
+            var _iterator2 = _createForOfIteratorHelper10(
               options.positionalArgs
-            ), _step22;
+            ), _step2;
             try {
-              for (_iterator22.s(); !(_step22 = _iterator22.n()).done; ) {
-                var arg = _step22.value;
+              for (_iterator2.s(); !(_step2 = _iterator2.n()).done; ) {
+                var arg = _step2.value;
                 if (!keys.includes(arg)) {
                   throw new Error(`Unknown key for positional arg: ${arg}`);
                 }
               }
             } catch (err) {
-              _iterator22.e(err);
+              _iterator2.e(err);
             } finally {
-              _iterator22.f();
+              _iterator2.f();
             }
           }
           return res;
@@ -4071,7 +3899,7 @@ var init_grimoireArgs = __esm({
          */
       }, {
         key: "parse",
-        value: function parse(scriptName, scriptHelp, spec, command, options) {
+        value: function parse2(scriptName, scriptHelp, spec, command, options) {
           var args = this.create(scriptName, scriptHelp, spec, options);
           this.fill(args, command);
           return args;
@@ -4217,7 +4045,7 @@ var init_grimoireArgs = __esm({
       }
       return _createClass15(CommandParser2, [{
         key: "parse",
-        value: function parse() {
+        value: function parse2() {
           this.index = 0;
           var result = /* @__PURE__ */ new Map();
           while (!this.finished()) {
@@ -4449,11 +4277,220 @@ var init_grimoireArgs = __esm({
   }
 });
 
+// src/settings/presets.ts
+function getPresets() {
+  if (presets !== void 0) {
+    return presets;
+  }
+  presets = [];
+  presets.push({
+    name() {
+      return ["consumables", "consumable", "diet", "consume", "consumeable"];
+    },
+    isProcessed: function isProcessed(item, worth) {
+      return ["food", "booze", "spleen item"].includes(
+        provider().itemType(item)
+      );
+    },
+    desc: function desc() {
+      return "Show only consumables";
+    }
+  });
+  var _loop = function _loop2() {
+    var type = _arr[_i];
+    presets.push({
+      name() {
+        return [type];
+      },
+      isProcessed: function isProcessed(item) {
+        return provider().itemType(item).replace(" item", "") === type;
+      },
+      desc: function desc() {
+        return `Show only ${type}`;
+      }
+    });
+  };
+  for (var _i = 0, _arr = ["food", "booze", "spleen"]; _i < _arr.length; _i++) {
+    _loop();
+  }
+  presets.push({
+    name() {
+      return ["beverage"];
+    },
+    isProcessed: function isProcessed(item, worth) {
+      return item.notes.includes("BEVERAGE");
+    },
+    desc: function desc() {
+      return "Show only beverage";
+    }
+  });
+  presets.push({
+    name() {
+      return ["hungry"];
+    },
+    isProcessed: function isProcessed(item, worth) {
+      if (provider().myFullness() + item.fullness >= provider().fullnessLimit() || item.levelreq < provider().myLevel()) {
+        return false;
+      }
+      return provider().itemType(item) === "food";
+    },
+    desc: function desc() {
+      return "Show only food you can fit in stomach";
+    }
+  });
+  presets.push({
+    name() {
+      return ["thirsty"];
+    },
+    isProcessed: function isProcessed(item, worth) {
+      if (provider().myInebriety() + item.inebriety >= provider().inebrietyLimit() || item.levelreq < provider().myLevel()) {
+        return false;
+      }
+      return provider().itemType(item) === "booze";
+    },
+    desc: function desc() {
+      return "Show only booze you can fit in liver";
+    }
+  });
+  presets.push({
+    name() {
+      return ["munchy"];
+    },
+    isProcessed: function isProcessed(item, worth) {
+      if (provider().mySpleenUse() + item.spleen >= provider().spleenLimit() || item.levelreq < provider().myLevel()) {
+        return false;
+      }
+      return provider().itemType(item) === "spleen item";
+    },
+    desc: function desc() {
+      return "Show only spleen items you can fit in spleen";
+    }
+  });
+  presets.push({
+    name() {
+      return ["equip", "equips", "equipment", "gear"];
+    },
+    isProcessed: function isProcessed(item) {
+      return provider().toSlot(item) !== KoLSlot.none;
+    },
+    desc: function desc() {
+      return "Show only items that can be equipped";
+    }
+  });
+  presets.push({
+    name() {
+      return ["pvpable", "pvp", "stealable"];
+    },
+    isShown(item, worth) {
+      return item.isTradeable() && item.actualItem.discardable;
+    },
+    desc: function desc() {
+      return "Show only items that can be stolen";
+    }
+  });
+  presets.push({
+    name() {
+      return ["hatchling", "hatchlings", "larva"];
+    },
+    isProcessed: function isProcessed(item, worth) {
+      return provider().itemType(item) === "familiar larva";
+    },
+    desc: function desc() {
+      return "Show only items that can turn into familiars";
+    }
+  });
+  presets.push({
+    name() {
+      return ["autosell", "junk"];
+    },
+    isShown(item, worth) {
+      if (item.isBound() || !item.actualItem.discardable) {
+        return false;
+      }
+      return provider().autosellPrice(item.actualItem) * 2 >= worth;
+    },
+    desc: function desc() {
+      return "Show only items that sell at mall min";
+    }
+  });
+  var autoselluseItems = [
+    "Bag of park garbage",
+    "ancient vinyl coin purse",
+    "Black pension check",
+    "Briefcase",
+    "Collection of tiny spooky objects",
+    "CSA discount card",
+    "Duct tape wallet",
+    "Fat Wallet",
+    "Gathered Meat-Clip",
+    "LOLmec statuette",
+    "Orcish meat locker",
+    "Old coin purse",
+    "Old leather wallet",
+    "Penultimate Fantasy chest",
+    "Roll of meat",
+    "Shiny stones",
+    "SMOOCH bottlecap",
+    "Solid gold jewel",
+    "Stolen meatpouch",
+    "Warm Subject gift certificate",
+    "Envelope full of Meat",
+    "chest of the Bonerdagon",
+    "cursed piece of thirteen",
+    "Discount Telescope Warehouse gift certificate",
+    "dungeon dragon chest",
+    "fat stacks of cash",
+    "flytrap pellet",
+    "Gratitude chocolate (Meat-filled)",
+    "handful of tips",
+    "kobold treasure hoard",
+    "loose Meats",
+    "meat globe",
+    "Mr. Big's Wallet",
+    "pixel coin",
+    "pixellated moneybag",
+    "smut orc keepsake box",
+    "Stock Certificate"
+  ].map((s) => KoLItem.get(s));
+  presets.push({
+    name: function name() {
+      return ["autouse"];
+    },
+    isProcessed: function isProcessed(item) {
+      return autoselluseItems.includes(item);
+    },
+    desc: function desc() {
+      return "Show only (some) usable items that could make you some meat";
+    }
+  });
+  presets.forEach((preset) => {
+    if (preset.isProcessed === void 0 && preset.isShown === void 0) {
+      throw new Error(
+        `The preset ${preset.name()[0]} must have one of isProcessed or isShown defined!`
+      );
+    }
+    if (preset.isProcessed !== void 0 && preset.isShown !== void 0) {
+      throw new Error(
+        `The preset ${preset.name()[0]} can only have one of isProcessed and isShown defined!`
+      );
+    }
+  });
+  return presets;
+}
+var presets;
+var init_presets = __esm({
+  "src/settings/presets.ts"() {
+    "use strict";
+    init_apiSupplier();
+    init_supplierTypings();
+  }
+});
+
 // src/settings/settings.ts
 function _slicedToArray7(r, e) {
-  return _arrayWithHoles7(r) || _iterableToArrayLimit7(r, e) || _unsupportedIterableToArray13(r, e) || _nonIterableRest7();
+  return _arrayWithHoles8(r) || _iterableToArrayLimit7(r, e) || _unsupportedIterableToArray14(r, e) || _nonIterableRest8();
 }
-function _nonIterableRest7() {
+function _nonIterableRest8() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 function _iterableToArrayLimit7(r, l) {
@@ -4477,7 +4514,7 @@ function _iterableToArrayLimit7(r, l) {
     return a;
   }
 }
-function _arrayWithHoles7(r) {
+function _arrayWithHoles8(r) {
   if (Array.isArray(r)) return r;
 }
 function _classCallCheck16(a, n) {
@@ -4493,16 +4530,16 @@ function _createClass16(e, r, t) {
   return r && _defineProperties16(e.prototype, r), t && _defineProperties16(e, t), Object.defineProperty(e, "prototype", { writable: false }), e;
 }
 function _toConsumableArray7(r) {
-  return _arrayWithoutHoles7(r) || _iterableToArray7(r) || _unsupportedIterableToArray13(r) || _nonIterableSpread7();
+  return _arrayWithoutHoles7(r) || _iterableToArray8(r) || _unsupportedIterableToArray14(r) || _nonIterableSpread7();
 }
 function _nonIterableSpread7() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _iterableToArray7(r) {
+function _iterableToArray8(r) {
   if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
 }
 function _arrayWithoutHoles7(r) {
-  if (Array.isArray(r)) return _arrayLikeToArray13(r);
+  if (Array.isArray(r)) return _arrayLikeToArray14(r);
 }
 function ownKeys3(e, r) {
   var t = Object.keys(e);
@@ -4545,7 +4582,7 @@ function _toPrimitive16(t, e) {
 function _createForOfIteratorHelper11(r, e) {
   var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
   if (!t) {
-    if (Array.isArray(r) || (t = _unsupportedIterableToArray13(r)) || e && r && "number" == typeof r.length) {
+    if (Array.isArray(r) || (t = _unsupportedIterableToArray14(r)) || e && r && "number" == typeof r.length) {
       t && (r = t);
       var _n = 0, F = function F2() {
       };
@@ -4558,7 +4595,7 @@ function _createForOfIteratorHelper11(r, e) {
     throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
   var o, a = true, u = false;
-  return { s: function s2() {
+  return { s: function s() {
     t = t.call(r);
   }, n: function n() {
     var r2 = t.next();
@@ -4573,14 +4610,14 @@ function _createForOfIteratorHelper11(r, e) {
     }
   } };
 }
-function _unsupportedIterableToArray13(r, a) {
+function _unsupportedIterableToArray14(r, a) {
   if (r) {
-    if ("string" == typeof r) return _arrayLikeToArray13(r, a);
+    if ("string" == typeof r) return _arrayLikeToArray14(r, a);
     var t = {}.toString.call(r).slice(8, -1);
-    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray13(r, a) : void 0;
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray14(r, a) : void 0;
   }
 }
-function _arrayLikeToArray13(r, a) {
+function _arrayLikeToArray14(r, a) {
   (null == a || a > r.length) && (a = r.length);
   for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
   return n;
@@ -4592,18 +4629,18 @@ function numberParser(arg) {
     cleaned = cleaned.replace(/[,_]/g, "");
   }
   var match = cleaned.match(/^((?:\d+)|(?:\d*\.\d+))([mkbt]?)$/i);
-  if (match == null) {
+  if (match === null) {
     return new ParseError("Invalid number format");
   }
   var num = parseFloat(match[1]);
   var mod = (_match$ = match[2]) === null || _match$ === void 0 ? void 0 : _match$.toLowerCase();
-  if (mod == "t") {
+  if (mod === "t") {
     num *= 1e12;
-  } else if (mod == "b") {
+  } else if (mod === "b") {
     num *= 1e9;
-  } else if (mod == "m") {
+  } else if (mod === "m") {
     num *= 1e6;
-  } else if (mod == "k") {
+  } else if (mod === "k") {
     num *= 1e3;
   }
   return num;
@@ -4627,20 +4664,21 @@ function sortByParser(arg) {
   try {
     var _loop = function _loop2() {
       var sort = _step.value;
-      if (sort.name.toLowerCase().replace("_", "") != v && !sort.aliases.some((a) => a.toLowerCase().replace("_", "") == v)) {
+      if (sort.name.toLowerCase().replace("_", "") !== v && !sort.aliases.some((a) => a.toLowerCase().replace("_", "") === v)) {
         return 0;
       }
       if (neg) {
+        var assignValue = sort.assignValue, fallback = sort.fallback;
         return { v: _objectSpread3(_objectSpread3(
           {},
           sort
         ), {}, {
-          assignValue: sort.assignValue ? (item, price, owned, maxPrice) => {
-            sort.assignValue(item, price, owned, maxPrice);
+          assignValue: assignValue ? (item, price, owned, maxPrice) => {
+            assignValue(item, price, owned, maxPrice);
             item.sortValue = -item.sortValue;
           } : void 0,
-          fallback: sort.fallback ? (item1, item2) => {
-            return -sort.fallback(item1, item2);
+          fallback: fallback ? (item1, item2) => {
+            return -fallback(item1, item2);
           } : void 0
         }) };
       }
@@ -4675,12 +4713,13 @@ function logTypeParser(arg) {
 var sortBys, defaultMaxNaturalPrice, staticAccountValSpec, AccountValSettings;
 var init_settings = __esm({
   "src/settings/settings.ts"() {
-    init_colors();
-    init_presets();
-    init_grimoireArgs();
+    "use strict";
     init_apiSupplier();
     init_supplierTypings();
+    init_colors();
     init_timings();
+    init_grimoireArgs();
+    init_presets();
     sortBys = [
       {
         name: "TOTAL_PRICE",
@@ -4706,7 +4745,6 @@ var init_settings = __esm({
       {
         name: "NAME",
         aliases: [],
-        assignValue: void 0,
         fallback: (v1, v2) => v1.name.localeCompare(v2.name)
       },
       {
@@ -4854,7 +4892,7 @@ var init_settings = __esm({
         {
           key: "sort",
           aliases: ["sortby", "sorted"],
-          help: `What we should sort the results by, prefix with ! or - to reverse sort. Supports: ${sortBys.map((s2) => `${s2.name} (${s2.aliases.join(", ")})`).join(", ").toUpperCase()}`,
+          help: `What we should sort the results by, prefix with ! or - to reverse sort. Supports: ${sortBys.map((s) => `${s.name} (${s.aliases.join(", ")})`).join(", ").toUpperCase()}`,
           default: sortByParser("TOTAL_PRICE")
         },
         sortByParser,
@@ -4902,9 +4940,9 @@ var init_settings = __esm({
         {
           key: "color",
           aliases: ["colors", "colorscheme", "scheme"],
-          help: "What color schemes to use, set `accountvalColorScheme` pref to change the default. Supports: " + getAccountvalColors().join(", "),
+          help: `What color schemes to use, set \`accountvalColorScheme\` pref to change the default. Supports: ${getAccountvalColors().join(", ")}`,
           default: "default",
-          options: ["default"].concat(_toConsumableArray7(getAccountvalColors())).map((s2) => [s2])
+          options: ["default"].concat(_toConsumableArray7(getAccountvalColors())).map((s) => [s])
         },
         colorSchemeParser,
         "COLOR_SCHEME"
@@ -5022,12 +5060,12 @@ var init_settings = __esm({
       return _createClass16(AccountValSettings2, [{ key: "doSettings", value: function doSettings(command) {
         var errors = [];
         var presetSpec = {};
-        var _iterator22 = _createForOfIteratorHelper11(
+        var _iterator2 = _createForOfIteratorHelper11(
           getPresets()
-        ), _step22;
+        ), _step2;
         try {
-          for (_iterator22.s(); !(_step22 = _iterator22.n()).done; ) {
-            var preset = _step22.value;
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done; ) {
+            var preset = _step2.value;
             var names = preset.name();
             presetSpec[`preset_${names[0]}`] = Args.boolean({
               key: names[0],
@@ -5038,9 +5076,9 @@ var init_settings = __esm({
             });
           }
         } catch (err) {
-          _iterator22.e(err);
+          _iterator2.e(err);
         } finally {
-          _iterator22.f();
+          _iterator2.f();
         }
         var fullSpec = _objectSpread3(_objectSpread3(
           {},
@@ -5060,7 +5098,7 @@ var init_settings = __esm({
             Args.parse("accountval", scriptHelp.join("\n"), fullSpec, command)
           );
         } catch (e) {
-          errors.push(e.message || e.toString());
+          errors.push(e instanceof Error ? e.message : String(e));
           return errors;
         }
         AccValTiming.enabled = this.timings;
@@ -5068,10 +5106,10 @@ var init_settings = __esm({
         var _iterator3 = _createForOfIteratorHelper11(getPresets()), _step3;
         try {
           for (_iterator3.s(); !(_step3 = _iterator3.n()).done; ) {
-            var _presetFilters;
+            var _this$presetFilters;
             var _preset = _step3.value;
             var _names = _preset.name();
-            var presetVal = (_presetFilters = this.presetFilters) === null || _presetFilters === void 0 ? void 0 : _presetFilters[`preset_${_names[0]}`];
+            var presetVal = (_this$presetFilters = this.presetFilters) === null || _this$presetFilters === void 0 ? void 0 : _this$presetFilters[`preset_${_names[0]}`];
             if (presetVal !== void 0) {
               this.presets.push({ preset: _preset, negated: !presetVal });
             }
@@ -5083,9 +5121,9 @@ var init_settings = __esm({
         }
         this.resolveFetchSources();
         if (this.settings) {
-          for (var _i = 0, _Object$keys = Object.keys(this); _i < _Object$keys.length; _i++) {
-            var setting = _Object$keys[_i];
-            provider().print(`${setting} = ${this[setting]}`);
+          for (var _i = 0, _Object$entries = Object.entries(this); _i < _Object$entries.length; _i++) {
+            var _Object$entries$_i = _slicedToArray7(_Object$entries[_i], 2), setting = _Object$entries$_i[0], value = _Object$entries$_i[1];
+            provider().print(`${setting} = ${value}`);
           }
         }
         return errors;
@@ -5108,7 +5146,7 @@ var init_settings = __esm({
           var _ref4 = _slicedToArray7(_ref3, 1), k = _ref4[0];
           return k;
         });
-        this.fetchingEverywhereish = !this.fetchSession && !this.fetchClan && fetchSources.find((v) => wasSet.includes(v) && this[v]) == null;
+        this.fetchingEverywhereish = !this.fetchSession && !this.fetchClan && fetchSources.find((v) => wasSet.includes(v) && this[v]) === void 0;
         this.fetchClan = this.fetchClan ?? false;
         this.fetchSession = this.fetchSession ?? false;
         if (!wasSet.includes("doTradeables")) {
@@ -5134,10 +5172,10 @@ var init_settings = __esm({
         }
         this.fetchingNonItems = this.fetchingEverywhereish;
       } }, { key: "doesJSFilterUsePriceOrSales", value: function doesJSFilterUsePriceOrSales() {
-        return this.javascriptFilter != null && this.javascriptFilter.split("=>")[0].split(",").length >= 3;
+        return this.javascriptFilter !== void 0 && this.javascriptFilter.split("=>")[0].split(",").length >= 3;
       } }, { key: "isShown", value: function isShown(item, worth) {
         return this.presets.every(
-          (pre) => (pre.preset.isShown != null ? pre.preset.isShown(item, worth) : pre.preset.isProcessed(item.actualItem, worth)) != pre.negated
+          (pre) => (pre.preset.isShown !== void 0 ? pre.preset.isShown(item, worth) : pre.preset.isProcessed(item.actualItem, worth)) !== pre.negated
         );
       } }, { key: "getMaxPriceAge", value: function getMaxPriceAge(price, amount) {
         return Math.min(this.maxAge, this.internalMaxPriceAge(price, amount));
@@ -5192,6 +5230,7 @@ function _toPrimitive17(t, e) {
 var ReportOutput;
 var init_output = __esm({
   "src/ui/output.ts"() {
+    "use strict";
     init_apiSupplier();
     ReportOutput = /* @__PURE__ */ (function() {
       function ReportOutput2(settings) {
@@ -5199,27 +5238,25 @@ var init_output = __esm({
         this.settings = settings;
       }
       return _createClass17(ReportOutput2, [{ key: "printLine", value: function printLine(line, textType, color) {
-        if (this.settings.logOutputAs == "plain" && textType == "html") {
+        if (this.settings.logOutputAs === "plain" && textType === "html") {
           line = line.replace(/<[^>]*>/g, "");
           textType = "plain";
         }
         if (this.settings.logOutputTo) {
-          if (this.output == null) {
-            if (line != null) {
-              line = line.trim();
-            }
-            if (line == null || line == "") {
+          if (this.output === void 0) {
+            line = line.trim();
+            if (line === "") {
               return;
             }
             this.output = [];
           }
-          if (textType == "plain" && this.settings.logOutputTo.endsWith(".html")) {
+          if (textType === "plain" && this.settings.logOutputTo.endsWith(".html")) {
             line = provider().entityEncode(line);
           }
           this.output.push(line);
-        } else if (textType == "html") {
+        } else if (textType === "html") {
           provider().printHtml(line);
-        } else if (color != null) {
+        } else if (color !== void 0) {
           provider().print(line, color);
         } else {
           provider().print(line);
@@ -5227,7 +5264,7 @@ var init_output = __esm({
       } }, { key: "escapeHTML", value: function escapeHTML(str) {
         return provider().entityDecode(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
       } }, { key: "stop", value: function stop() {
-        if (this.output == null || this.output.length == 0) {
+        if (this.output === void 0 || this.output.length === 0) {
           return;
         }
         provider().storeCache(
@@ -5245,9 +5282,9 @@ var init_output = __esm({
 
 // src/ui/valuation.ts
 function _slicedToArray8(r, e) {
-  return _arrayWithHoles8(r) || _iterableToArrayLimit8(r, e) || _unsupportedIterableToArray14(r, e) || _nonIterableRest8();
+  return _arrayWithHoles9(r) || _iterableToArrayLimit8(r, e) || _unsupportedIterableToArray15(r, e) || _nonIterableRest9();
 }
-function _nonIterableRest8() {
+function _nonIterableRest9() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 function _iterableToArrayLimit8(r, l) {
@@ -5271,25 +5308,25 @@ function _iterableToArrayLimit8(r, l) {
     return a;
   }
 }
-function _arrayWithHoles8(r) {
+function _arrayWithHoles9(r) {
   if (Array.isArray(r)) return r;
 }
 function _toConsumableArray8(r) {
-  return _arrayWithoutHoles8(r) || _iterableToArray8(r) || _unsupportedIterableToArray14(r) || _nonIterableSpread8();
+  return _arrayWithoutHoles8(r) || _iterableToArray9(r) || _unsupportedIterableToArray15(r) || _nonIterableSpread8();
 }
 function _nonIterableSpread8() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _iterableToArray8(r) {
+function _iterableToArray9(r) {
   if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
 }
 function _arrayWithoutHoles8(r) {
-  if (Array.isArray(r)) return _arrayLikeToArray14(r);
+  if (Array.isArray(r)) return _arrayLikeToArray15(r);
 }
 function _createForOfIteratorHelper12(r, e) {
   var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
   if (!t) {
-    if (Array.isArray(r) || (t = _unsupportedIterableToArray14(r)) || e && r && "number" == typeof r.length) {
+    if (Array.isArray(r) || (t = _unsupportedIterableToArray15(r)) || e && r && "number" == typeof r.length) {
       t && (r = t);
       var _n = 0, F = function F2() {
       };
@@ -5302,7 +5339,7 @@ function _createForOfIteratorHelper12(r, e) {
     throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
   var o, a = true, u = false;
-  return { s: function s2() {
+  return { s: function s() {
     t = t.call(r);
   }, n: function n() {
     var r2 = t.next();
@@ -5317,14 +5354,14 @@ function _createForOfIteratorHelper12(r, e) {
     }
   } };
 }
-function _unsupportedIterableToArray14(r, a) {
+function _unsupportedIterableToArray15(r, a) {
   if (r) {
-    if ("string" == typeof r) return _arrayLikeToArray14(r, a);
+    if ("string" == typeof r) return _arrayLikeToArray15(r, a);
     var t = {}.toString.call(r).slice(8, -1);
-    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray14(r, a) : void 0;
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray15(r, a) : void 0;
   }
 }
-function _arrayLikeToArray14(r, a) {
+function _arrayLikeToArray15(r, a) {
   (null == a || a > r.length) && (a = r.length);
   for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
   return n;
@@ -5361,12 +5398,13 @@ function _toPrimitive18(t, e) {
 var ValuationReport;
 var init_valuation = __esm({
   "src/ui/valuation.ts"() {
+    "use strict";
     init_apiSupplier();
-    init_settings();
-    init_utils();
-    init_colors();
-    init_typings();
     init_supplierTypings();
+    init_typings();
+    init_settings();
+    init_colors();
+    init_utils();
     ValuationReport = /* @__PURE__ */ (function() {
       function ValuationReport2(logic, settings, out) {
         _classCallCheck18(this, ValuationReport2);
@@ -5375,7 +5413,6 @@ var init_valuation = __esm({
         _defineProperty12(this, "mallExtinct", []);
         _defineProperty12(this, "shopNetValue", 0);
         _defineProperty12(this, "shopPricedAt", 0);
-        _defineProperty12(this, "lastCategory", null);
         _defineProperty12(this, "shelfValue", 0);
         _defineProperty12(this, "exceededMax", false);
         this.logic = logic;
@@ -5384,7 +5421,7 @@ var init_valuation = __esm({
         this.aWorth = this.logic.priceResolver.itemPrice(
           KoLItem.get("Mr. Accessory")
         ).price;
-        this.pronoun = this.settings.fetchClan ? "The clan stash is" : !this.settings.playerId || this.settings.playerId == AccountValUtils.toInt(provider().myId()) ? this.settings.fetchSession ? "Your session is" : "You are" : provider().getPlayerName(this.settings.playerId) + " is";
+        this.pronoun = this.settings.fetchClan ? "The clan stash is" : !this.settings.playerId || this.settings.playerId === AccountValUtils.toInt(provider().myId()) ? this.settings.fetchSession ? "Your session is" : "You are" : `${provider().getPlayerName(this.settings.playerId)} is`;
       }
       return _createClass18(ValuationReport2, [{ key: "run", value: function run3() {
         var resolved = this.filterAndResolveItems();
@@ -5401,40 +5438,40 @@ var init_valuation = __esm({
         } finally {
           _iterator.f();
         }
-        this.onShelfName(null, 0);
+        this.onShelfName(void 0, 0);
         this.printLinesAndExtinct(resolved.length);
         this.printSummary();
       } }, { key: "filterAndResolveItems", value: function filterAndResolveItems() {
-        var useJsFilter = this.logic.jsFilter != null && this.settings.doesJSFilterUsePriceOrSales();
+        var jsFilter = this.settings.doesJSFilterUsePriceOrSales() ? this.logic.jsFilter : void 0;
         var resolved = [];
         for (var no = this.logic.prices.length - 1; no >= 0; no--) {
           var item = this.logic.prices[no][0];
           var price = this.logic.prices[no][1];
           var worthEach = Math.min(
             this.settings.maxNaturalPrice + 1,
-            price.price <= 0 && item.worthMultiplier == 1 ? -1 : price.price * (1 / item.worthMultiplier)
+            price.price <= 0 && item.worthMultiplier === 1 ? -1 : price.price * (1 / item.worthMultiplier)
           );
           var count = this.logic.ownedItems.get(item);
-          if (isNaN(count)) {
+          if (count === void 0 || isNaN(count)) {
             this.out.printLine(
-              "Unable to handle the item '" + item.name + "', skipping..",
+              `Unable to handle the item '${item.name}', skipping..`,
               "plain",
               AccountValColors.attentionGrabbingWarning
             );
             continue;
           }
-          if (useJsFilter && !this.logic.jsFilter(item.actualItem, count, worthEach, price.volume)) {
+          if (jsFilter && !jsFilter(item.actualItem, count, worthEach, price.volume)) {
             continue;
           }
           resolved.push({ item, price, worthEach, count });
         }
         return resolved;
       } }, { key: "onShelfName", value: function onShelfName(name, worth) {
-        if (!this.settings.doCategories || name == this.lastCategory) {
+        if (!this.settings.doCategories || name === this.lastCategory) {
           this.shelfValue += worth;
           return;
         }
-        if (this.lastCategory != null) {
+        if (this.lastCategory !== void 0) {
           this.lines.push(
             `<u><b>DC Shelf:</b> ${this.out.escapeHTML(this.lastCategory)}<font color='${AccountValColors.minorNote}'>, worth ${AccountValUtils.getNumber(this.shelfValue)} meat</font></u>`
           );
@@ -5451,7 +5488,7 @@ var init_valuation = __esm({
           return;
         }
         var title = [];
-        if (item.name != item.tradeableItem.name && item.worthMultiplier != 1) {
+        if (item.name !== item.tradeableItem.name && item.worthMultiplier !== 1) {
           title.push(`=== ${this.out.escapeHTML(item.name)} ===`);
           title.push("");
           title.push(
@@ -5465,9 +5502,9 @@ var init_valuation = __esm({
         if (price.price < 0) {
           tradeableWorth = " as mall extinct.";
         }
-        var accName = price.accuracy == PriceType.NEW_PRICES ? "Last malled" : price.accuracy == PriceType.MALL_SALES ? "Last sold" : price.accuracy == PriceType.AUTOSELL ? "Autosell" : "Last mafia malled";
+        var accName = price.accuracy === PriceType.NEW_PRICES ? "Last malled" : price.accuracy === PriceType.MALL_SALES ? "Last sold" : price.accuracy === PriceType.AUTOSELL ? "Autosell" : "Last mafia malled";
         title.push(accName + tradeableWorth);
-        if (price.price2 > 0 && price.accuracy == PriceType.NEW_PRICES) {
+        if (price.price2 > 0 && price.accuracy === PriceType.NEW_PRICES) {
           title.push(
             `Last sold @ ${AccountValUtils.getNumber(price.price2)} meat.`
           );
@@ -5480,10 +5517,10 @@ var init_valuation = __esm({
         if (count > 1 && this.settings.showSingleItemWorth) {
           title.push(`Worth a total of ${AccountValUtils.getNumber(totalWorth)}`);
         }
-        if (price.accuracy != PriceType.AUTOSELL) {
+        if (price.accuracy !== PriceType.AUTOSELL) {
           title.push("");
           title.push(
-            `Price valid as of ${AccountValUtils.getNumber(price.daysOutdated, 1)} day${price.daysOutdated != 1 ? "s" : ""} ago.`
+            `Price valid as of ${AccountValUtils.getNumber(price.daysOutdated, 1)} day${price.daysOutdated !== 1 ? "s" : ""} ago.`
           );
         }
         if (price.volume >= 0) {
@@ -5492,14 +5529,14 @@ var init_valuation = __esm({
             `${AccountValUtils.getNumber(price.volume)} sold in the last week.`
           );
         }
-        if (item.snapshotSource != null) {
+        if (item.snapshotSource !== void 0) {
           title = [`Owns in ${item.snapshotSource}.`].concat(_toConsumableArray8(title));
         }
         var name = this.out.escapeHTML(item.name);
-        if (item.bound != null) {
+        if (item.bound !== void 0) {
           var boundInfo;
           var color = AccountValColors.shopPricesOverpriced;
-          if (item.bound == ItemStatus.SHOP_WORTH) {
+          if (item.bound === ItemStatus.SHOP_WORTH) {
             var overpricedPerc = item.shopWorth / worthEach;
             if (item.shopWorth < 999999e3) {
               this.shopPricedAt += item.shopWorth * count;
@@ -5525,7 +5562,7 @@ var init_valuation = __esm({
         }
         if (worthEach <= 0 || worthEach > this.settings.maxNaturalPrice) {
           if (count > 1) {
-            this.mallExtinct.push([count + " @ " + name, title.join("&#010;")]);
+            this.mallExtinct.push([`${count} @ ${name}`, title.join("&#010;")]);
           } else {
             this.mallExtinct.push([name, title.join("&#010;")]);
           }
@@ -5539,7 +5576,7 @@ var init_valuation = __esm({
           text += ` worth a total of ${AccountValUtils.getNumber(totalWorth)}`;
         }
         this.lines.push(
-          "<font title='" + this.out.escapeHTML(title.join("&#010;")) + "'>" + text + "</font>"
+          `<font title='${this.out.escapeHTML(title.join("&#010;"))}'>${text}</font>`
         );
       } }, { key: "printLinesAndExtinct", value: function printLinesAndExtinct(totalResolved) {
         if (!this.settings.brief) {
@@ -5555,21 +5592,21 @@ var init_valuation = __esm({
           if (this.lines.length > 0) {
             this.lines.push("");
           }
-          if (this.lines[0] == "") {
+          if (this.lines[0] === "") {
             this.lines.shift();
           }
-          var _iterator22 = _createForOfIteratorHelper12(
+          var _iterator2 = _createForOfIteratorHelper12(
             this.lines
-          ), _step22;
+          ), _step2;
           try {
-            for (_iterator22.s(); !(_step22 = _iterator22.n()).done; ) {
-              var line = _step22.value;
+            for (_iterator2.s(); !(_step2 = _iterator2.n()).done; ) {
+              var line = _step2.value;
               this.out.printLine(line.replace(/\n/g, "&#010;"), "html");
             }
           } catch (err) {
-            _iterator22.e(err);
+            _iterator2.e(err);
           } finally {
-            _iterator22.f();
+            _iterator2.f();
           }
           if (this.mallExtinct.length > 0) {
             var colors = [
@@ -5579,11 +5616,11 @@ var init_valuation = __esm({
             var extinct = this.mallExtinct.map(
               (_ref2, i) => {
                 var _ref3 = _slicedToArray8(_ref2, 2), name = _ref3[0], title = _ref3[1];
-                return "<font color='" + colors[i % 2] + "' title='" + title + "'>" + name + "</font>";
+                return `<font color='${colors[i % 2]}' title='${title}'>${name}</font>`;
               }
             );
             this.out.printLine(
-              "There were " + extinct.length + " mall extinct items! Items: " + extinct.join(", "),
+              `There were ${extinct.length} mall extinct items! Items: ${extinct.join(", ")}`,
               "html"
             );
           }
@@ -5591,11 +5628,11 @@ var init_valuation = __esm({
       } }, { key: "printSummary", value: function printSummary() {
         var mrAMeat = this.netvalue;
         this.out.printLine(
-          this.pronoun + " worth " + AccountValUtils.getNumber(this.netvalue) + " meat!",
+          `${this.pronoun} worth ${AccountValUtils.getNumber(this.netvalue)} meat!`,
           "plain",
           AccountValColors.helpfulStateInfo
         );
-        if (this.settings.fetchSession && provider().mySessionMeat() != 0) {
+        if (this.settings.fetchSession && provider().mySessionMeat() !== 0) {
           mrAMeat = this.netvalue + provider().mySessionMeat();
           this.out.printLine(
             `Add meat from session, that's ${AccountValUtils.getNumber(mrAMeat)} meat!`,
@@ -5633,7 +5670,7 @@ var init_valuation = __esm({
         this.printMeat();
         if (this.exceededMax) {
           this.out.printLine(
-            `<font color='${AccountValColors.minorNote}' title="The max natural price is currently set to ${AccountValUtils.getNumber(this.settings.maxNaturalPrice)}. (${this.settings.maxNaturalPrice == AccountValSettings.defaultMaxNaturalPrice ? "default" : `default is ${AccountValUtils.getNumber(AccountValSettings.defaultMaxNaturalPrice)}`})&#010;&#010;You can change this by using 'max=3b' as an arg.&#010;You can also set the property 'accountval_maxNaturalPrice' to a number (3b, 5,000,000, 3m1k, etc), this cap increases by 2b every year to account for meatflation">Some items were expensive and were marked as mall extinct. Hover for details.</font>`,
+            `<font color='${AccountValColors.minorNote}' title="The max natural price is currently set to ${AccountValUtils.getNumber(this.settings.maxNaturalPrice)}. (${this.settings.maxNaturalPrice === AccountValSettings.defaultMaxNaturalPrice ? "default" : `default is ${AccountValUtils.getNumber(AccountValSettings.defaultMaxNaturalPrice)}`})&#010;&#010;You can change this by using 'max=3b' as an arg.&#010;You can also set the property 'accountval_maxNaturalPrice' to a number (3b, 5,000,000, 3m1k, etc), this cap increases by 2b every year to account for meatflation">Some items were expensive and were marked as mall extinct. Hover for details.</font>`,
             "html"
           );
         }
@@ -5654,27 +5691,27 @@ var init_valuation = __esm({
         }
         var meat = 0;
         var meatSources = [];
-        if (this.settings.fetchInventory && provider().myMeat() != 0) {
+        if (this.settings.fetchInventory && provider().myMeat() !== 0) {
           meat += provider().myMeat();
           meatSources.push(
-            AccountValUtils.getNumber(provider().myMeat()) + " meat in inventory"
+            `${AccountValUtils.getNumber(provider().myMeat())} meat in inventory`
           );
         }
-        if (this.settings.fetchCloset && provider().myClosetMeat() != 0) {
+        if (this.settings.fetchCloset && provider().myClosetMeat() !== 0) {
           meat += provider().myClosetMeat();
           meatSources.push(
-            AccountValUtils.getNumber(provider().myClosetMeat()) + " meat in closet"
+            `${AccountValUtils.getNumber(provider().myClosetMeat())} meat in closet`
           );
         }
-        if (this.settings.fetchStorage && provider().myStorageMeat() != 0) {
+        if (this.settings.fetchStorage && provider().myStorageMeat() !== 0) {
           meat += provider().myStorageMeat();
           meatSources.push(
-            AccountValUtils.getNumber(provider().myStorageMeat()) + " meat in storage"
+            `${AccountValUtils.getNumber(provider().myStorageMeat())} meat in storage`
           );
         }
-        if (meat > 0 && this.settings.playerId == 0) {
+        if (meat > 0 && this.settings.playerId === 0) {
           this.out.printLine(
-            "<font title='" + meatSources.join(", ") + "'>This doesn't include your " + AccountValUtils.getNumber(meat) + " meat!</font>",
+            `<font title='${meatSources.join(", ")}'>This doesn't include your ${AccountValUtils.getNumber(meat)} meat!</font>`,
             "html"
           );
         }
@@ -5689,19 +5726,19 @@ __export(accountval_exports, {
   run: () => run
 });
 function _slicedToArray9(r, e) {
-  return _arrayWithHoles9(r) || _iterableToArrayLimit9(r, e) || _unsupportedIterableToArray15(r, e) || _nonIterableRest9();
+  return _arrayWithHoles10(r) || _iterableToArrayLimit9(r, e) || _unsupportedIterableToArray16(r, e) || _nonIterableRest10();
 }
-function _nonIterableRest9() {
+function _nonIterableRest10() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-function _unsupportedIterableToArray15(r, a) {
+function _unsupportedIterableToArray16(r, a) {
   if (r) {
-    if ("string" == typeof r) return _arrayLikeToArray15(r, a);
+    if ("string" == typeof r) return _arrayLikeToArray16(r, a);
     var t = {}.toString.call(r).slice(8, -1);
-    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray15(r, a) : void 0;
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray16(r, a) : void 0;
   }
 }
-function _arrayLikeToArray15(r, a) {
+function _arrayLikeToArray16(r, a) {
   (null == a || a > r.length) && (a = r.length);
   for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
   return n;
@@ -5727,7 +5764,7 @@ function _iterableToArrayLimit9(r, l) {
     return a;
   }
 }
-function _arrayWithHoles9(r) {
+function _arrayWithHoles10(r) {
   if (Array.isArray(r)) return r;
 }
 function _classCallCheck19(a, n) {
@@ -5770,13 +5807,14 @@ function run(command) {
 var AccountVal;
 var init_accountval = __esm({
   "src/accountval.ts"() {
+    "use strict";
     init_logic();
+    init_grimoireArgs();
     init_settings();
-    init_colors();
-    init_timings();
     init_output();
     init_valuation();
-    init_grimoireArgs();
+    init_colors();
+    init_timings();
     AccountVal = /* @__PURE__ */ (function() {
       function AccountVal2() {
         _classCallCheck19(this, AccountVal2);
@@ -5786,11 +5824,11 @@ var init_accountval = __esm({
       } }, { key: "load", value: function load(command) {
         this.settings = new AccountValSettings();
         this.out = new ReportOutput(this.settings);
-        if (command == "test") {
+        if (command === "test") {
           this.runTests();
           return false;
         }
-        if (command == null) {
+        if (!command) {
           this.out.printLine(
             "To fine tune what we check, including to tradeables only.. Provide the parameter 'help' for more info",
             "plain",
@@ -5815,7 +5853,7 @@ var init_accountval = __esm({
               }
             },
             (g, k) => {
-              if (k != "presetFilters") {
+              if (k !== "presetFilters") {
                 return;
               }
               Args.showGroupHelp(meta, g, k);
@@ -5823,12 +5861,12 @@ var init_accountval = __esm({
           );
         }
         if (this.settings.help || this.settings.showPresetFilters) {
-          return;
+          return false;
         }
         if (unknown.length > 0) {
           unknown.forEach(
-            (s2) => this.out.printLine(
-              `<font color='${AccountValColors.attentionGrabbingWarning}'>${s2}</font>`,
+            (s) => this.out.printLine(
+              `<font color='${AccountValColors.attentionGrabbingWarning}'>${s}</font>`,
               "html"
             )
           );
@@ -5859,7 +5897,7 @@ var init_accountval = __esm({
         for (var _i = 0, _Object$entries = Object.entries(verify); _i < _Object$entries.length; _i++) {
           var _Object$entries$_i = _slicedToArray9(_Object$entries[_i], 2), key = _Object$entries$_i[0], value = _Object$entries$_i[1];
           var setTo = this.settings[key];
-          if (setTo == value) {
+          if (setTo === value) {
             continue;
           }
           this.out.printLine(
@@ -5882,8 +5920,8 @@ module.exports = __toCommonJS(index_exports);
 init_apiSupplier();
 
 // src/kolmafia/kolmafiaProvider.ts
-var import_kolmafia = require("kolmafia");
 var kolmafia = __toESM(require("kolmafia"));
+var import_kolmafia = require("kolmafia");
 function _createForOfIteratorHelper(r, e) {
   var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
   if (!t) {
@@ -5900,7 +5938,7 @@ function _createForOfIteratorHelper(r, e) {
     throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
   var o, a = true, u = false;
-  return { s: function s2() {
+  return { s: function s() {
     t = t.call(r);
   }, n: function n() {
     var r2 = t.next();
@@ -6004,10 +6042,10 @@ var KolmafiaProvider = /* @__PURE__ */ (function() {
       }
     }
   } }, { key: "resolveAllMallPrices", value: function resolveAllMallPrices(previous) {
-    if (previous != "not_loaded" && previous != "unsure") {
+    if (previous !== "not_loaded" && previous !== "unsure") {
       throw new Error(`Illegal mall loaded state: ${previous}`);
     }
-    if (previous == "not_loaded" && (0, import_kolmafia.gitExists)("loathers-mall-check")) {
+    if (previous === "not_loaded" && (0, import_kolmafia.gitExists)("loathers-mall-check")) {
       (0, import_kolmafia.cliExecute)("mallcheck");
       return "unsure";
     }
@@ -6059,12 +6097,12 @@ var KolmafiaProvider = /* @__PURE__ */ (function() {
   } }, { key: "isDarkMode", value: function isDarkMode() {
     return (0, import_kolmafia.isDarkMode)();
   } }, { key: "toItem", value: function toItem(val) {
-    if (typeof val == "string") {
+    if (typeof val === "string") {
       return import_kolmafia.Item.get(val);
     }
     return (0, import_kolmafia.toItem)(val);
   } }, { key: "toFamiliar", value: function toFamiliar(val) {
-    if (typeof val == "string") {
+    if (typeof val === "string") {
       return import_kolmafia.Familiar.get(val);
     }
     return (0, import_kolmafia.toFamiliar)(val);
@@ -6073,17 +6111,17 @@ var KolmafiaProvider = /* @__PURE__ */ (function() {
   } }, { key: "entityDecode", value: function entityDecode(val) {
     return (0, import_kolmafia.entityDecode)(val);
   } }, { key: "storeCache", value: function storeCache(key, data, dataType) {
-    if (dataType == "large_persist") {
+    if (dataType === "large_persist") {
       (0, import_kolmafia.bufferToFile)(data, key);
-    } else if (dataType == "small_persist") {
+    } else if (dataType === "small_persist") {
       (0, import_kolmafia.setProperty)(key, data);
     } else {
       import_kolmafia.sessionStorage.setItem(key, data);
     }
   } }, { key: "retrieveCache", value: function retrieveCache(key, dataType) {
-    if (dataType == "large_persist") {
+    if (dataType === "large_persist") {
       return (0, import_kolmafia.fileToBuffer)(key);
-    } else if (dataType == "small_persist") {
+    } else if (dataType === "small_persist") {
       return (0, import_kolmafia.getProperty)(key);
     }
     return import_kolmafia.sessionStorage.getItem(key) ?? "";
@@ -6101,9 +6139,9 @@ var KolmafiaProvider = /* @__PURE__ */ (function() {
     return (0, import_kolmafia.equippedAmount)(item);
   } }, { key: "familiarEquippedEquipment", value: function familiarEquippedEquipment(fam) {
     return (0, import_kolmafia.familiarEquippedEquipment)(fam);
-  } }, { key: "itemsToMap", value: function itemsToMap(items2) {
+  } }, { key: "itemsToMap", value: function itemsToMap(items) {
     var map2 = /* @__PURE__ */ new Map();
-    for (var _i = 0, _Object$entries = Object.entries(items2); _i < _Object$entries.length; _i++) {
+    for (var _i = 0, _Object$entries = Object.entries(items); _i < _Object$entries.length; _i++) {
       var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2), key = _Object$entries$_i[0], value = _Object$entries$_i[1];
       map2.set(import_kolmafia.Item.get(key), value);
     }
@@ -6115,8 +6153,8 @@ var KolmafiaProvider = /* @__PURE__ */ (function() {
   } }, { key: "getStorage", value: function getStorage() {
     var map2 = this.itemsToMap((0, import_kolmafia.getStorage)());
     for (var _i2 = 0, _arr = [(0, import_kolmafia.getFreePulls)(), (0, import_kolmafia.getNoPulls)()]; _i2 < _arr.length; _i2++) {
-      var items2 = _arr[_i2];
-      var m = this.itemsToMap(items2);
+      var items = _arr[_i2];
+      var m = this.itemsToMap(items);
       var _iterator = _createForOfIteratorHelper(
         m
       ), _step;
@@ -6161,7 +6199,7 @@ var KolmafiaProvider = /* @__PURE__ */ (function() {
     if (keys.length <= 1) {
       return [];
     }
-    return keys.map((s2) => import_kolmafia.Item.get(s2));
+    return keys.map((s) => import_kolmafia.Item.get(s));
   } }, { key: "allNormalOutfits", value: function allNormalOutfits() {
     return (0, import_kolmafia.allNormalOutfits)();
   } }, { key: "itemType", value: function itemType(item) {
