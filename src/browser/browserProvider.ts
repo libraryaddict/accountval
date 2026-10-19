@@ -1,4 +1,5 @@
 import { DataType, KoLAPI, KoLItem } from "../api/supplierTypings";
+import { bindsOf } from "../core/binds";
 import { PageResolver } from "../resolvers/pages";
 import { AccountValUtils } from "../utils/utils";
 import {
@@ -29,63 +30,6 @@ type KoLStatus = {
   equipment: Record<string, string | number>;
   stickers?: (string | number)[];
 };
-
-// Mirrors how KoLmafia sets these properties from the status coolitems list
-const coolItemProperties: Record<string, string> = {
-  sleazeAirportAlways: "airport1",
-  spookyAirportAlways: "airport2",
-  stenchAirportAlways: "airport3",
-  hotAirportAlways: "airport4",
-  coldAirportAlways: "airport5",
-  gingerbreadCityAvailable: "gingerbreadcity",
-  spacegateAlways: "spacegate",
-  frAlways: "fantasyrealm",
-  prAlways: "piraterealm",
-  crAlways: "cyberrealm",
-  neverendingPartyAlways: "neverendingparty",
-  voteAlways: "voterregistered",
-  daycareOpen: "boxingdaycare",
-  hasCosmicBowlingBall: "hascosmicball",
-  hasMaydayContract: "maydaykit",
-  hasAutumnaton: "autumnaton",
-  hasShrunkenHead: "shrunkenhead",
-  hasInterestingCoin: "interesting",
-  loveTunnelAvailable: "tunnelofloveiotm",
-  telegraphOfficeAvailable: "ltt",
-  ownsFloristFriar: "floristfriar",
-};
-
-const pageProperties: Record<string, [string, string]> = {
-  chateauAvailable: ["place.php?whichplace=mountains", "chateau"],
-  snojoAvailable: ["place.php?whichplace=mountains", "snojo"],
-  getawayCampsiteUnlocked: ["place.php?whichplace=woods", "campaway"],
-  horseryAvailable: ["place.php?whichplace=town_right", "Horsery"],
-  hasDetectiveSchool: ["place.php?whichplace=town_wrong", "Precinct"],
-  ownsSpeakeasy: ["place.php?whichplace=town_wrong", "Speakeasy"],
-  barrelShrineUnlocked: ["da.php", "bgshrine.gif"],
-};
-
-const campgroundItems: [string, string][] = [
-  ["doghouse.gif", "Haunted Doghouse"],
-  ["chesstable.gif", "Witchess Set"],
-  ["campterminal.gif", "Source terminal"],
-  ["teatree", "potted tea tree"],
-  ["campground/leaves", "A Guide to Burning Leaves"],
-];
-
-const gardenImages: [string, string][] = [
-  ["pumpkinpatch_", "pumpkin"],
-  ["pepperpatch_", "peppermint"],
-  ["bonegarden", "skeleton"],
-  ["beergarden", "beer"],
-  ["wintergarden", "winter"],
-  ["thanksgarden", "thanksgarden"],
-  ["grassgarden", "grass"],
-  ["mushgarden.gif", "mushroom"],
-  ["/rockgarden/", "rock"],
-];
-
-const blackRoseGarden = /Black Rose Garden \(\d+ days?'?s? growth\)/;
 
 const itemTypes: Record<string, string> = {
   food: "food",
@@ -189,14 +133,18 @@ export class BrowserProvider implements KoLAPI {
     private data: GameData,
     private output: HTMLElement,
   ) {
-    for (const [property, coolItem] of Object.entries(coolItemProperties)) {
-      this.properties.set(property, () =>
-        (this.status().coolitems ?? "").split(",").includes(coolItem),
-      );
-    }
+    for (const { property, coolItem, page } of bindsOf("property")) {
+      const name = property.split("&")[0];
 
-    for (const [property, [url, text]] of Object.entries(pageProperties)) {
-      this.properties.set(property, () => this.visitCached(url).includes(text));
+      if (coolItem != null) {
+        this.properties.set(name, () =>
+          (this.status().coolitems ?? "").split(",").includes(coolItem),
+        );
+      } else if (page != null) {
+        this.properties.set(name, () =>
+          this.visitCached(page.url).includes(page.text),
+        );
+      }
     }
   }
 
@@ -548,9 +496,9 @@ export class BrowserProvider implements KoLAPI {
     const page = this.visitCached("campground.php");
 
     return new Map(
-      campgroundItems
-        .filter(([image]) => page.includes(image))
-        .map(([, name]): [BrowserItem, number] => [this.data.getItem(name), 1]),
+      bindsOf("campground")
+        .filter(({ text }) => page.includes(text))
+        .map(({ item }): [BrowserItem, number] => [this.data.getItem(item), 1]),
     );
   }
 
@@ -660,13 +608,9 @@ export class BrowserProvider implements KoLAPI {
 
   myGardenType(): string {
     const page = this.visitCached("campground.php");
-    const garden = gardenImages.find(([image]) => page.includes(image));
+    const garden = bindsOf("garden").find(({ text }) => page.includes(text));
 
-    if (garden != null) {
-      return garden[1];
-    }
-
-    return blackRoseGarden.test(page) ? "black_rose" : "none";
+    return garden?.garden ?? "none";
   }
 
   getWorkshed(): BrowserItem {

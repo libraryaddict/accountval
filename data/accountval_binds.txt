@@ -108,7 +108,6 @@ i	packaged prismatic beret	prismatic beret
 i	Möbius ring box	Möbius ring
 i	packaged Monodent of the Sea	Monodent of the Sea
 i	Lab-grown blood cubic zirconia	blood cubic zirconia
-i	shrunken head in a duffel bag	shrunken head
 i	seal-clubbing club loot box	legendary seal-clubbing club
 i	discreetly-wrapped Eternity Codpiece	The Eternity Codpiece
 i	boxed Heartstone	Heartstone
@@ -146,33 +145,36 @@ b	The Confiscator's Grimoire	Summon Confiscated Things
 
 
 # Property based detection! Start with p
-p	airplane charter: Spring Break Beach	sleazeAirportAlways&!_sleazeAirportToday
-p	airplane charter: Conspiracy Island	spookyAirportAlways&!_spookyAirportToday
-p	airplane charter: Dinseylandfill	stenchAirportAlways&!_stenchAirportToday
-p	airplane charter: That 70s Volcano	hotAirportAlways&!_hotAirportToday
-p	airplane charter: The Glaciest	coldAirportAlways&!_coldAirportToday
-p	Chateau Mantegna room key	chateauAvailable
+# 3rd and 4th params are either 'coolitem' and their name, or 'page' with the url and text to look for.
+p	airplane charter: Spring Break Beach	sleazeAirportAlways&!_sleazeAirportToday	coolitem	airport1
+p	airplane charter: Conspiracy Island	spookyAirportAlways&!_spookyAirportToday	coolitem	airport2
+p	airplane charter: Dinseylandfill	stenchAirportAlways&!_stenchAirportToday	coolitem	airport3
+p	airplane charter: That 70s Volcano	hotAirportAlways&!_hotAirportToday	coolitem	airport4
+p	airplane charter: The Glaciest	coldAirportAlways&!_coldAirportToday	coolitem	airport5
+p	Chateau Mantegna room key	chateauAvailable	page	place.php?whichplace=mountains	chateau
 p	bottle of lovebug pheromones	lovebugsUnlocked
-p	shrine to the Barrel god	barrelShrineUnlocked
-p	X-32-F snowman crate	snojoAvailable
-p	LT&T telegraph office deed	telegraphOfficeAvailable
-p	detective school application	hasDetectiveSchool
-p	Build-a-City Gingerbread kit	gingerbreadCityAvailable&!_gingerbreadCityToday
-p	heart-shaped crate	loveTunnelAvailable&!_loveTunnelUsed
-p	Spacegate access badge	spacegateAlways&!_spacegateToday
-p	FantasyRealm membership packet	frAlways&!_frToday
-p	Horsery contract	horseryAvailable
-p	Neverending Party invitation envelope	neverendingPartyAlways&!_neverendingPartyToday
-p	voter registration form	voteAlways&!_voteToday
-p	Boxing Day care package	daycareOpen&!_daycareToday
-p	PirateRealm membership packet	prAlways&!_prToday
-p	Distant Woods Getaway Brochure	getawayCampsiteUnlocked
-p	Undrilled cosmic bowling ball	hasCosmicBowlingBall
-p	MayDay™ contract	hasMaydayContract
-p	boxed autumn-aton	hasAutumnaton
-p	deed to Oliver's Place	ownsSpeakeasy
-p	Interesting Coin Inheritance Letter	hasInterestingCoin
-p	Order of the Green Thumb Order Form	ownsFloristFriar
+p	shrine to the Barrel god	barrelShrineUnlocked	page	da.php	bgshrine.gif
+p	X-32-F snowman crate	snojoAvailable	page	place.php?whichplace=mountains	snojo
+p	LT&T telegraph office deed	telegraphOfficeAvailable&!_telegraphOfficeToday	coolitem	ltt
+p	detective school application	hasDetectiveSchool	page	place.php?whichplace=town_wrong	Precinct
+p	Build-a-City Gingerbread kit	gingerbreadCityAvailable&!_gingerbreadCityToday	coolitem	gingerbreadcity
+p	heart-shaped crate	loveTunnelAvailable&!_loveTunnelToday	coolitem	tunnelofloveiotm
+p	Spacegate access badge	spacegateAlways&!_spacegateToday	coolitem	spacegate
+p	FantasyRealm membership packet	frAlways&!_frToday	coolitem	fantasyrealm
+p	Horsery contract	horseryAvailable	page	place.php?whichplace=town_right	Horsery
+p	Neverending Party invitation envelope	neverendingPartyAlways&!_neverendingPartyToday	coolitem	neverendingparty
+p	voter registration form	voteAlways&!_voteToday	coolitem	voterregistered
+p	Boxing Day care package	daycareOpen&!_daycareToday	coolitem	boxingdaycare
+p	PirateRealm membership packet	prAlways&!_prToday	coolitem	piraterealm
+p	CyberRealm keycode	crAlways&!_crToday	coolitem	cyberrealm
+p	Distant Woods Getaway Brochure	getawayCampsiteUnlocked	page	place.php?whichplace=woods	campaway
+p	Undrilled cosmic bowling ball	hasCosmicBowlingBall	coolitem	hascosmicball
+p	MayDay™ contract	hasMaydayContract	coolitem	maydaykit
+p	boxed autumn-aton	hasAutumnaton	coolitem	autumnaton
+p	deed to Oliver's Place	ownsSpeakeasy	page	place.php?whichplace=town_wrong	Speakeasy
+p	Interesting Coin Inheritance Letter	hasInterestingCoin	coolitem	interesting
+p	Order of the Green Thumb Order Form	ownsFloristFriar	coolitem	floristfriar
+p	shrunken head in a duffel bag	hasShrunkenHead	coolitem	shrunkenhead
 
 
 
@@ -186,34 +188,26 @@ e	Black and White Apron Enrollment Form	Black & White Apron
 
 
 
-# visit_url contains... Start with v
+# campground items! Starts with c, followed by the text to look for
+c	Haunted Doghouse	doghouse.gif
+c	Witchess Set	chesstable.gif
+c	Source terminal	campterminal.gif
+c	potted tea tree	teatree
+c	A Guide to Burning Leaves	campground/leaves
 
 
 
-# eval(function) => boolean! Starts with s for script
-
-
-
-# campground items! Starts with c
-c	Haunted Doghouse
-c	Witchess Set
-c	Source terminal
-c	potted tea tree
-c	A Guide to Burning Leaves
-
-
-
-# Gardens
-g	packet of pumpkin seeds	pumpkin	
-g	Peppermint Pip Packet	peppermint
-g	packet of dragon's teeth	skeleton
-g	Packet of beer seeds	beer
-g	packet of winter seeds	winter
-g	packet of thanksgarden seeds	thanksgarden
-g	packet of tall grass seeds	grass
-g	packet of mushroom spores	mushroom
-g	packet of rock seeds	rock
-g	black garden rose	black_rose
+# Gardens, followed by the text to look for
+g	packet of pumpkin seeds	pumpkin	pumpkinpatch_
+g	Peppermint Pip Packet	peppermint	pepperpatch_
+g	packet of dragon's teeth	skeleton	bonegarden
+g	Packet of beer seeds	beer	beergarden
+g	packet of winter seeds	winter	wintergarden
+g	packet of thanksgarden seeds	thanksgarden	thanksgarden
+g	packet of tall grass seeds	grass	grassgarden
+g	packet of mushroom spores	mushroom	mushgarden.gif
+g	packet of rock seeds	rock	/rockgarden/
+g	black garden rose	black_rose	Black Rose Garden (
 
 
 # Items that are dependent on the value of another as they're no-trade
@@ -239,6 +233,21 @@ t	Wal-Mart gift certificate
 t	Rubee™
 t	buffalo dime
 t	Spacegate Research
+
+# Coinmaster shops for each currency, as named in coinmasters.txt. Only the browser uses these
+m	fat loot token	Vending Machine
+m	Driplet	Drip Institute Armory
+m	Chroner	The Neandermall	Ni&ntilde;a Store
+m	Freddy Kruegerand	The Terrified Eagle Inn
+m	Guzzlrbuck	Guzzlr Company Store Website
+m	Beach Buck	Buff Jimmy's Souvenir Shop	The Frozen Brogurt Stand	Taco Dan's Taco Stand
+m	Volcoino	Disco GiftCo
+m	FunFunds&trade;	The Dinsey Company Store
+m	Coinspiracy	The Armory	The Canteen	The SHAWARMA Initiative
+m	Wal-Mart gift certificate	Wal-Mart
+m	Rubee&trade;	FantasyRealm Rubee&trade; Store
+m	buffalo dime	LT&T Gift Shop
+m	Spacegate Research	Spacegate Fabrication Facility
 
 # Items that are best valued at a hardcoded value, although you may not get that value...
 h	meat paste	10

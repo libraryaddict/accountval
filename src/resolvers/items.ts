@@ -1,24 +1,21 @@
 import { provider } from "../api/apiSupplier";
 import { KoLItem, KoLSkill, KoLFamiliar } from "../api/supplierTypings";
-import { ItemStatus, ItemType, ValItem } from "../models/typings";
+import { ItemStatus, ValItem } from "../models/typings";
 import { AccountValColors } from "../utils/colors";
 import { CoinmasterResolver } from "./coinmaster";
 import { PriceResolver } from "../pricing/priceResolver";
-import accountvalBinds from "../../data/accountval_binds.txt";
+import { Bind, binds, bindsOf } from "../core/binds";
 import { AccountValUtils } from "../utils/utils";
 
 class AccValStuff {
-  itemType: ItemType;
-  actualItem: KoLItem;
-  skill?: KoLSkill;
   untradeableItem?: KoLItem;
-  garden?: string;
-  script?: string;
-  userSetting?: string;
-  visitUrlLink?: string;
-  visitUrlIncludes?: string;
-  correspondence?: string;
+  skill?: KoLSkill;
   currencyAmount?: number;
+
+  constructor(
+    public bind: Bind,
+    public actualItem: KoLItem,
+  ) {}
 }
 
 export class ItemResolver {
@@ -81,44 +78,51 @@ export class ItemResolver {
     const origSize = this.accountValCache.size;
 
     for (const s of this.accValStuff) {
-      if (s.itemType == ItemType.BOOK) {
-        if (provider().haveSkill(s.skill)) {
-          items.push([s.actualItem, ItemStatus.BOUND]);
-        }
-      } else if (s.itemType == ItemType.EUDORA) {
-        if (
-          this.visitCheck(
-            s.actualItem,
-            "account.php?tab=correspondence",
-            s.correspondence,
-          )
-        ) {
-          items.push([s.actualItem, ItemStatus.BOUND]);
-        }
-      } else if (s.itemType == ItemType.PROPERTY) {
-        if (this.testProperty(s.userSetting)) {
-          items.push([s.actualItem, ItemStatus.BOUND]);
-        }
-      } else if (s.itemType == ItemType.VISIT_URL_CHECK) {
-        if (this.visitCheck(s.actualItem, s.visitUrlLink, s.visitUrlIncludes)) {
-          items.push([s.actualItem, ItemStatus.BOUND]);
-        }
-      } else if (s.itemType == ItemType.GARDEN) {
-        if (provider().myGardenType() == s.garden) {
-          items.push([s.actualItem, ItemStatus.IN_USE]);
-        }
-      } else if (s.itemType == ItemType.SKILL) {
-        if (provider().getPermedSkills()[s.skill.name]) {
-          items.push([s.actualItem, ItemStatus.BOUND]);
-        }
-      } else if (s.itemType == ItemType.CAMPGROUND) {
-        if (provider().getCampground().has(s.actualItem)) {
-          items.push([s.actualItem, ItemStatus.BOUND]);
-        }
-      } else if (s.itemType == ItemType.SCRIPT) {
-        if (eval(s.script) as boolean) {
-          items.push([s.actualItem, ItemStatus.BOUND]);
-        }
+      const { bind } = s;
+
+      switch (bind.type) {
+        case "book":
+          if (provider().haveSkill(s.skill)) {
+            items.push([s.actualItem, ItemStatus.BOUND]);
+          }
+
+          break;
+        case "eudora":
+          if (
+            this.visitCheck(
+              s.actualItem,
+              "account.php?tab=correspondence",
+              bind.correspondence,
+            )
+          ) {
+            items.push([s.actualItem, ItemStatus.BOUND]);
+          }
+
+          break;
+        case "property":
+          if (this.testProperty(bind.property)) {
+            items.push([s.actualItem, ItemStatus.BOUND]);
+          }
+
+          break;
+        case "garden":
+          if (provider().myGardenType() == bind.garden) {
+            items.push([s.actualItem, ItemStatus.IN_USE]);
+          }
+
+          break;
+        case "skill":
+          if (provider().getPermedSkills()[s.skill.name]) {
+            items.push([s.actualItem, ItemStatus.BOUND]);
+          }
+
+          break;
+        case "campground":
+          if (provider().getCampground().has(s.actualItem)) {
+            items.push([s.actualItem, ItemStatus.BOUND]);
+          }
+
+          break;
       }
     }
 
@@ -161,17 +165,17 @@ export class ItemResolver {
   resolveBoundToTradeables(
     copy: { [item: string]: [ValItem, number] },
     ownedItems: Map<ValItem, number>,
-    resolve: ItemType[],
+    resolve: Bind["type"][],
   ) {
     let coinmaster: CoinmasterResolver;
 
     for (const s of this.accValStuff) {
-      if (!resolve.includes(s.itemType)) {
+      if (!resolve.includes(s.bind.type)) {
         continue;
       }
 
       try {
-        if (s.itemType == ItemType.CURRENCY && s.untradeableItem == null) {
+        if (s.bind.type == "currency" && s.untradeableItem == null) {
           if (coinmaster == null) {
             coinmaster = new CoinmasterResolver(this.prices);
             coinmaster.load();
@@ -205,7 +209,7 @@ export class ItemResolver {
           v.bound == null ||
             v.bound == ItemStatus.NO_TRADE ||
             v.bound == ItemStatus.IN_USE
-            ? s.itemType == ItemType.UNTRADEABLE_ITEM
+            ? s.bind.type == "untradeable"
               ? ItemStatus.BOUND
               : ItemStatus.NO_TRADE
             : v.bound,
@@ -277,112 +281,56 @@ export class ItemResolver {
   }
 
   loadAccountValStuff(): AccValStuff[] {
-    const buffer = accountvalBinds;
-    const values: AccValStuff[] = [];
-
-    loop: for (const line of buffer.split(/(\n|\r)+/)) {
-      if (line.startsWith("#") || line.length == 0) {
-        continue;
-      }
-
-      const spl = line.split("\t");
-
-      if (spl.length < 2) {
-        continue;
-      }
-
-      const v: AccValStuff = new AccValStuff();
-
+    for (const { item, price } of bindsOf("price")) {
       try {
-        v.actualItem = KoLItem.get(spl[1]);
+        this.prices.addSpecialCase(KoLItem.get(item), price);
       } catch (e) {
         provider().print(
           `Error! Update mafia? ${e}`,
           AccountValColors.attentionGrabbingWarning,
         );
+      }
+    }
+
+    const values: AccValStuff[] = [];
+
+    for (const bind of binds) {
+      if (bind.type == "price" || bind.type == "coinmaster") {
         continue;
       }
 
-      switch (spl[0]) {
-        case "i":
-          v.itemType = ItemType.UNTRADEABLE_ITEM;
-          v.untradeableItem = KoLItem.get(spl[2]);
-          break;
-        case "b":
-          v.itemType = ItemType.BOOK;
-          v.skill = KoLSkill.get(spl[2]);
-          break;
-        case "p":
-          v.itemType = ItemType.PROPERTY;
-          v.userSetting = spl[2];
-          break;
-        case "e":
-          v.itemType = ItemType.EUDORA;
-          v.correspondence = spl[2];
-          break;
-        case "v":
-          v.itemType = ItemType.VISIT_URL_CHECK;
-          v.visitUrlLink = spl[2];
-          v.visitUrlIncludes = spl[3];
-          break;
-        case "g":
-          v.itemType = ItemType.GARDEN;
-          v.garden = spl[2];
-          break;
-        case "t":
-          v.itemType = ItemType.CURRENCY;
+      try {
+        const v = new AccValStuff(bind, KoLItem.get(bind.item));
 
-          if (spl.length > 2) {
-            v.untradeableItem = KoLItem.get(spl[2]);
-            v.currencyAmount = parseInt(spl[3]);
-          }
+        if (bind.type == "untradeable") {
+          v.untradeableItem = KoLItem.get(bind.untradeable);
+        } else if (bind.type == "book") {
+          v.skill = KoLSkill.get(bind.skill);
+        } else if (bind.type == "currency" && bind.untradeable != null) {
+          v.untradeableItem = KoLItem.get(bind.untradeable);
+          v.currencyAmount = bind.amount;
+        }
 
-          break;
-        case "c":
-          v.itemType = ItemType.CAMPGROUND;
-          break;
-        case "s":
-          v.itemType = ItemType.SCRIPT;
-          v.script = spl[2];
-          break;
-        case "h":
-          this.prices.addSpecialCase(v.actualItem, parseInt(spl[2]));
-          continue loop;
-          break;
-        default:
-          provider().print(
-            `Found line '${line}' which I can't handle!`,
-            AccountValColors.attentionGrabbingWarning,
-          );
-          continue;
+        values.push(v);
+      } catch (e) {
+        provider().print(
+          `Error! Update mafia? ${e}`,
+          AccountValColors.attentionGrabbingWarning,
+        );
       }
-
-      values.push(v);
     }
 
     this.loadSkills(values);
 
-    loop: for (const v of values) {
+    const tradeableSources = new Set(values.map((v) => v.untradeableItem));
+
+    for (const v of values) {
       if (
         v.actualItem.tradeable ||
-        (v.itemType == ItemType.CURRENCY && v.untradeableItem == null)
+        tradeableSources.has(v.actualItem) ||
+        (v.bind.type == "currency" && v.untradeableItem == null)
       ) {
         continue;
-      }
-
-      for (const v1 of values) {
-        if (
-          v1.itemType != ItemType.UNTRADEABLE_ITEM &&
-          v1.itemType != ItemType.CURRENCY
-        ) {
-          continue;
-        }
-
-        if (v1.untradeableItem != v.actualItem) {
-          continue;
-        }
-
-        continue loop;
       }
 
       provider().print(
@@ -412,9 +360,10 @@ export class ItemResolver {
         continue;
       }
 
-      const v: AccValStuff = new AccValStuff();
-      v.itemType = ItemType.SKILL;
-      v.actualItem = i;
+      const v = new AccValStuff(
+        { type: "skill", item: i.name, skill: skill.name },
+        i,
+      );
       v.skill = skill;
       values.push(v);
     }

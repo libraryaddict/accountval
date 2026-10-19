@@ -6,7 +6,8 @@
   "scripts": {
     "build": "npm run build:types && npm run build:js",
     "build:types": "tsc",
-    "build:js": "node esbuild.mjs"
+    "build:js": "node esbuild.mjs",
+    "validate": "node validate.mjs"
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",

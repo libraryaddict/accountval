@@ -9,19 +9,6 @@ export enum ItemStatus {
   SHOP_WORTH,
 }
 
-export enum ItemType {
-  UNTRADEABLE_ITEM,
-  BOOK,
-  PROPERTY,
-  EUDORA,
-  GARDEN,
-  VISIT_URL_CHECK,
-  SKILL,
-  CURRENCY,
-  CAMPGROUND,
-  SCRIPT,
-}
-
 export enum PriceType {
   NEW_PRICES,
   HISTORICAL,

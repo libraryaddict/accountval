@@ -6,13 +6,7 @@ import { PriceResolver } from "../pricing/priceResolver";
 import { AccountValSettings } from "../settings/settings";
 import { AccountValColors } from "../utils/colors";
 import { AccValTiming } from "../utils/timings";
-import {
-  ItemStatus,
-  ItemType,
-  ValItem,
-  ItemPrice,
-  PriceType,
-} from "../models/typings";
+import { ItemStatus, ValItem, ItemPrice, PriceType } from "../models/typings";
 import { AccountValUtils } from "../utils/utils";
 
 export class AccountValLogic {
@@ -59,7 +53,7 @@ export class AccountValLogic {
     }
 
     provider().print(
-      "JS Filter has been set to: " + this.settings.javascriptFilter,
+      `JS Filter has been set to: ${this.settings.javascriptFilter}`,
       AccountValColors.minorNote,
     );
 
@@ -140,7 +134,7 @@ export class AccountValLogic {
 
       if (this.settings.doBound && this.settings.fetchingNonItems) {
         for (const item of this.resolver.accValStuff.filter(
-          (s) => s.itemType == ItemType.SKILL && skills.includes(s.skill),
+          (s) => s.bind.type == "skill" && skills.includes(s.skill),
         )) {
           this.addItem(
             new ValItem(
@@ -185,7 +179,7 @@ export class AccountValLogic {
         let name = k.name;
         let plural = k.plural;
 
-        if (boundItem.itemType == ItemType.UNTRADEABLE_ITEM) {
+        if (boundItem.bind.type == "untradeable") {
           const untradeable = boundItem.untradeableItem;
           v -= owned.has(k) ? owned.get(k)[1] : 0;
 
@@ -386,8 +380,8 @@ export class AccountValLogic {
 
     if (this.settings.doBound || this.settings.doNonTradeables) {
       this.resolver.resolveBoundToTradeables(copy, this.ownedItems, [
-        this.settings.doBound ? ItemType.UNTRADEABLE_ITEM : null,
-        this.settings.doNonTradeables ? ItemType.CURRENCY : null,
+        this.settings.doBound ? "untradeable" : null,
+        this.settings.doNonTradeables ? "currency" : null,
       ]);
     }
 
@@ -551,13 +545,7 @@ export class AccountValLogic {
         if (++checked % 20 == 0 && lastPrinted + 1000 < Date.now()) {
           lastPrinted = Date.now();
           provider().print(
-            "Checking value of " +
-              i.name +
-              " (" +
-              checked +
-              " / " +
-              toCheck.length +
-              ")",
+            `Checking value of ${i.name} (${checked} / ${toCheck.length})`,
             AccountValColors.helpfulStateInfo,
           );
         }

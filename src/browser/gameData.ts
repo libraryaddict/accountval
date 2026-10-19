@@ -4,6 +4,7 @@ import {
   KoLItem,
   KoLSkill,
 } from "../api/supplierTypings";
+import { bindsOf } from "../core/binds";
 
 const PROXY = "https://accountval.lib.co.nz";
 const MAFIA_DATA = `${PROXY}/data/`;
@@ -23,28 +24,6 @@ const mafiaFiles = [
 ] as const;
 
 type MafiaFile = (typeof mafiaFiles)[number];
-
-// Covers the currencies in accountval_binds.txt, since coinmasters.txt doesn't name each shop's token
-const coinmasterTokens: Record<string, string> = {
-  "Vending Machine": "fat loot token",
-  "Drip Institute Armory": "Driplet",
-  "The Neandermall": "Chroner",
-  "Ni&ntilde;a Store": "Chroner",
-  "The Terrified Eagle Inn": "Freddy Kruegerand",
-  "Guzzlr Company Store Website": "Guzzlrbuck",
-  "Buff Jimmy's Souvenir Shop": "Beach Buck",
-  "The Frozen Brogurt Stand": "Beach Buck",
-  "Taco Dan's Taco Stand": "Beach Buck",
-  "Disco GiftCo": "Volcoino",
-  "The Dinsey Company Store": "FunFunds&trade;",
-  "The Armory": "Coinspiracy",
-  "The Canteen": "Coinspiracy",
-  "The SHAWARMA Initiative": "Coinspiracy",
-  "Wal-Mart": "Wal-Mart gift certificate",
-  "FantasyRealm Rubee&trade; Store": "Rubee&trade;",
-  "LT&T Gift Shop": "buffalo dime",
-  "Spacegate Fabrication Facility": "Spacegate Research",
-};
 
 export class BrowserSkill implements KoLSkill {
   constructor(
@@ -329,9 +308,14 @@ export class GameData {
 
   private loadCoinmasters(file: string) {
     const coinmasters = new Map<string, BrowserCoinmaster>();
+    const tokens = new Map(
+      bindsOf("coinmaster").flatMap(({ item, shops }) =>
+        shops.map((shop): [string, string] => [shop, item]),
+      ),
+    );
 
     for (const [shop, action, cost, name] of rows(file)) {
-      const token = coinmasterTokens[shop];
+      const token = tokens.get(shop);
 
       if (action != "buy" || token == null) {
         continue;

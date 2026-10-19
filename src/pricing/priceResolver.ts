@@ -29,18 +29,10 @@ export class PriceResolver {
 
     this.resolvers.push(specialResolver);
     this.resolvers.push(new HistoricalPricing());
-
-    this.fillSpecialCase();
   }
 
   addSpecialCase(item: KoLItem, meat: number) {
     this.specialCase.set(item, meat);
-  }
-
-  private fillSpecialCase() {
-    this.specialCase.set(KoLItem.get("Meat Paste"), 10);
-    this.specialCase.set(KoLItem.get("Meat Stack"), 100);
-    this.specialCase.set(KoLItem.get("Dense meat stack"), 1000);
   }
 
   doWarning(): boolean {
