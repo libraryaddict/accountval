@@ -12,6 +12,8 @@
     "noImplicitReturns": false,
     "pretty": true,
     "declaration": false,
+    "noEmit": true,
+    "skipLibCheck": true,
     "strict": false,
     "target": "esnext",
     "useDefineForClassFields": true,

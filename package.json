@@ -2,22 +2,19 @@
   "name": "accountval",
   "version": "0.0.2",
   "license": "UNLICENSED",
-  "files": [
-    "tsconfig.json"
-  ],
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "watch": "webpack --watch --progress"
+    "build": "npm run build:types && npm run build:js",
+    "build:types": "tsc",
+    "build:js": "node esbuild.mjs"
   },
   "devDependencies": {
+    "@babel/core": "^7.29.7",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-typescript": "^7.26.0",
     "@types/node": "^25.9.1",
-    "babel-loader": "^9.2.1",
-    "typescript": "^5.2.2",
-    "webpack": "^5.88.2",
-    "webpack-cli": "^4.2.0"
+    "esbuild": "^0.28.2",
+    "typescript": "^5.2.2"
   },
   "dependencies": {
     "kolmafia": "^5.28931.0"
