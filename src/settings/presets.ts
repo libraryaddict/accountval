@@ -194,7 +194,7 @@ export function getPresets(): AccountValPreset[] {
     "cursed piece of thirteen",
     "Discount Telescope Warehouse gift certificate",
     "dungeon dragon chest",
-    "fat stack of cash",
+    "fat stacks of cash",
     "flytrap pellet",
     "Gratitude chocolate (Meat-filled)",
     "handful of tips",

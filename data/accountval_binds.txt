@@ -133,7 +133,7 @@ b	The Smith's Tome	Summon Smithsness
 b	McPhee's Grimoire of Hilarious Object Summoning	Summon Hilarious Objects
 b	Sp'n-Zor's Grimoire of &quot;Tasteful&quot; Gifts	Summon Tasteful Items
 b	Sorcerers of the Shore Grimoire	Summon Alice's Army Cards
-b	Thinknerd's Grimoire of Geeky Gifts	 Summon Geeky Gifts
+b	Thinknerd's Grimoire of Geeky Gifts	Summon Geeky Gifts
 b	Libram of Candy Heart Summoning	Summon Candy Heart
 b	Libram of Divine Favors	Summon Party Favor
 b	Libram of Love Songs	Summon Love Song
