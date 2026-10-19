@@ -82,7 +82,7 @@ export class ItemResolver {
 
       switch (bind.type) {
         case "book":
-          if (provider().haveSkill(s.skill)) {
+          if (provider().haveSkill(s.skill!)) {
             items.push([s.actualItem, ItemStatus.BOUND]);
           }
 
@@ -112,7 +112,7 @@ export class ItemResolver {
 
           break;
         case "skill":
-          if (provider().getPermedSkills()[s.skill.name]) {
+          if (provider().getPermedSkills()[s.skill!.name]) {
             items.push([s.actualItem, ItemStatus.BOUND]);
           }
 
@@ -159,7 +159,7 @@ export class ItemResolver {
   ) {
     const v = new ValItem(actualItem, item, name, plural, bound);
     v.worthMultiplier = worthMultiplier;
-    ownedItems.set(v, (ownedItems.get(v) | 0) + count);
+    ownedItems.set(v, (ownedItems.get(v) ?? 0) + count);
   }
 
   resolveBoundToTradeables(
@@ -167,7 +167,7 @@ export class ItemResolver {
     ownedItems: Map<ValItem, number>,
     resolve: Bind["type"][],
   ) {
-    let coinmaster: CoinmasterResolver;
+    let coinmaster: CoinmasterResolver | undefined;
 
     for (const s of this.accValStuff) {
       if (!resolve.includes(s.bind.type)) {
@@ -183,7 +183,7 @@ export class ItemResolver {
 
           const item = coinmaster.getHighestCoinmaster(s.actualItem);
 
-          if (item === null) {
+          if (item === undefined) {
             continue;
           }
 
@@ -192,7 +192,7 @@ export class ItemResolver {
           s.actualItem = item.item;
         }
 
-        const item = s.untradeableItem;
+        const item = s.untradeableItem!;
         const pair: [ValItem, number] = copy[item.name];
 
         if (pair === undefined) {
@@ -256,7 +256,7 @@ export class ItemResolver {
         continue;
       }
 
-      famEquipped.set(item, (famEquipped.get(item) | 0) + 1);
+      famEquipped.set(item, (famEquipped.get(item) ?? 0) + 1);
     }
 
     return famEquipped;

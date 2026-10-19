@@ -45,11 +45,13 @@ export function loadAccountvalColors(name: string): boolean {
     name = provider().isDarkMode() ? "dark" : "light";
   }
 
-  if (!map.has(name)) {
+  const colors = map.get(name);
+
+  if (colors === undefined) {
     return false;
   }
 
-  AccountValColors = map.get(name);
+  AccountValColors = colors;
 
   return true;
 }
@@ -59,13 +61,13 @@ export function getAccountvalColors(): string[] {
 }
 
 export function showAccountvalColors(name: string) {
-  if (!map.has(name)) {
+  const colors = map.get(name);
+
+  if (colors === undefined) {
     provider().print("Can't find any colors by that name", "red");
 
     return;
   }
-
-  const colors = map.get(name);
 
   for (const [k, v] of Object.entries(colors)) {
     provider().printHtml(`<font color='${v}'>${k}</font>`);

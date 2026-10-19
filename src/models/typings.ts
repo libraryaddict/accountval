@@ -30,7 +30,7 @@ export enum FieldType {
 export interface SortBy {
   name: string;
   aliases: string[];
-  assignValue: (
+  assignValue?: (
     item: ValItem,
     price: ItemPrice,
     owned: Map<ValItem, number>,
@@ -58,11 +58,11 @@ export class ValItem {
   category?: string;
   actualItem: KoLItem;
   tradeableItem: KoLItem;
-  bound: ItemStatus;
-  shopWorth: number;
+  bound?: ItemStatus;
+  shopWorth: number = 0;
   worthMultiplier: number = 1;
-  snapshotSource: string;
-  sortValue: number;
+  snapshotSource?: string;
+  sortValue: number = 0;
 
   constructor(
     actualItem: KoLItem,
@@ -84,13 +84,13 @@ export class ValItem {
     }
   }
 
-  withCategory(category: string): ValItem {
+  withCategory(category: string | undefined): ValItem {
     this.category = category;
 
     return this;
   }
 
-  getBound(): string {
+  getBound(): string | undefined {
     if (this.bound === ItemStatus.BOUND) {
       return "Bound";
     }
@@ -107,7 +107,7 @@ export class ValItem {
       return "Untradeable";
     }
 
-    return null;
+    return undefined;
   }
 
   isBound(): boolean {

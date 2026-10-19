@@ -78,7 +78,7 @@ export class PricegunResolver implements PriceVolunteer {
     });
   }
 
-  bulkResolve(items: KoLItem[]): ItemPrice[] {
+  bulkResolve(items: KoLItem[]): (ItemPrice | undefined)[] {
     const missing = items.filter((i) => !this.items.has(i.id));
 
     if (missing.length) {
@@ -169,7 +169,7 @@ export class PricegunResolver implements PriceVolunteer {
     }
   }
 
-  resolve(item: KoLItem): ItemPrice {
+  resolve(item: KoLItem): ItemPrice | undefined {
     return this.bulkResolve([item])[0];
   }
 

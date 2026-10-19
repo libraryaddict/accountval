@@ -327,11 +327,13 @@ export class GameData {
         continue;
       }
 
-      if (!coinmasters.has(shop)) {
-        coinmasters.set(shop, new BrowserCoinmaster(shop, this.getItem(token)));
+      let coinmaster = coinmasters.get(shop);
+
+      if (coinmaster === undefined) {
+        coinmaster = new BrowserCoinmaster(shop, this.getItem(token));
+        coinmasters.set(shop, coinmaster);
       }
 
-      const coinmaster = coinmasters.get(shop);
       coinmaster.prices.set(item, parseInt(cost));
       item.seller ??= coinmaster;
     }

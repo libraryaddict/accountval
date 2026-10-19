@@ -9,10 +9,10 @@ export interface AccountValPreset {
   desc(): string;
 }
 
-let presets: AccountValPreset[] = null;
+let presets: AccountValPreset[] | undefined;
 
 export function getPresets(): AccountValPreset[] {
-  if (presets !== null) {
+  if (presets !== undefined) {
     return presets;
   }
 
@@ -239,8 +239,4 @@ export function getPresets(): AccountValPreset[] {
   });
 
   return presets;
-}
-
-export function getPreset(name: string): AccountValPreset {
-  return getPresets().find((p) => p.name().includes(name.toLowerCase()));
 }

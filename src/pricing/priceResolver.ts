@@ -78,11 +78,11 @@ export class PriceResolver {
   itemPrice(
     item: KoLItem,
     ignoreFold: boolean = false,
-    forcePricing: PriceType = null,
+    forcePricing?: PriceType,
     doSuperFast: boolean = false,
     doEstimates: boolean = false,
     timingsKey: string = "",
-  ): ItemPrice {
+  ): ItemPrice | undefined {
     if (this.settings.pricegun) {
       ignoreFold = true;
     }
@@ -113,7 +113,7 @@ export class PriceResolver {
             const compare = foldPrices.find((f) => f.item === item);
 
             for (const f of foldPrices) {
-              if (f.daysOutdated > compare.daysOutdated * 3) {
+              if (f.daysOutdated > compare!.daysOutdated * 3) {
                 continue;
               }
 
@@ -133,10 +133,12 @@ export class PriceResolver {
     AccValTiming.start(`${timingsKey}Check Pricing Misc`, true);
 
     try {
-      if (this.specialCase.has(item)) {
+      const specialPrice = this.specialCase.get(item);
+
+      if (specialPrice !== undefined) {
         return new ItemPrice(
           item,
-          this.specialCase.get(item),
+          specialPrice,
           PriceType.MALL,
           0,
         );

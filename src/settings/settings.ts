@@ -18,7 +18,7 @@ const sortBys: SortBy[] = [
       item.sortValue =
         price.price <= 0
           ? maxPrice
-          : (1 / item.worthMultiplier) * price.price * owned.get(item);
+          : (1 / item.worthMultiplier) * price.price * owned.get(item)!;
     },
   },
   {
@@ -33,13 +33,12 @@ const sortBys: SortBy[] = [
     name: "QUANTITY",
     aliases: ["COUNT", "AMOUNT"],
     assignValue(item, price, owned, maxPrice) {
-      item.sortValue = owned.get(item);
+      item.sortValue = owned.get(item)!;
     },
   },
   {
     name: "NAME",
     aliases: [],
-    assignValue: undefined,
     fallback: (v1, v2) => v1.name.localeCompare(v2.name),
   },
   {
@@ -118,17 +117,19 @@ function sortByParser(arg: string): SortBy | ParseError {
 
     // Negate the sort
     if (neg) {
+      const { assignValue, fallback } = sort;
+
       return {
         ...sort,
-        assignValue: sort.assignValue
+        assignValue: assignValue
           ? (item, price, owned, maxPrice) => {
-              sort.assignValue(item, price, owned, maxPrice);
+              assignValue(item, price, owned, maxPrice);
               item.sortValue = -item.sortValue;
             }
           : undefined,
-        fallback: sort.fallback
+        fallback: fallback
           ? (item1, item2) => {
-              return -sort.fallback(item1, item2);
+              return -fallback(item1, item2);
             }
           : undefined,
       };
@@ -451,7 +452,6 @@ export class AccountValSettings {
   public expensivePricesAt: number = 40_000_000;
   public cheapTotalsLessThan: number = 20_000_000;
   public cheapPricesLessThan: number = 2_000_000;
-  public maxPriceAge: number;
 
   doSettings(command: string): string[] {
     const errors: string[] = [];
@@ -599,7 +599,7 @@ export class AccountValSettings {
       (pre) =>
         (pre.preset.isShown !== undefined
           ? pre.preset.isShown(item, worth)
-          : pre.preset.isProcessed(item.actualItem, worth)) !== pre.negated,
+          : pre.preset.isProcessed!(item.actualItem, worth)) !== pre.negated,
     );
   }
 

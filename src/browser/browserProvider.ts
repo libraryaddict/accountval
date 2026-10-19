@@ -31,6 +31,13 @@ type KoLStatus = {
   stickers?: (string | number)[];
 };
 
+type KoLApiData = {
+  status: KoLStatus;
+  inventory: Record<string, string>;
+  closet: Record<string, string>;
+  storage: Record<string, string>;
+};
+
 const itemTypes: Record<string, string> = {
   food: "food",
   drink: "booze",
@@ -80,10 +87,10 @@ function notAvailable(what: string): Error {
 }
 
 function isHardcorePermed(link: Element): boolean | undefined {
-  let hardcore: boolean;
+  let hardcore: boolean | undefined;
 
   for (let node = link.nextSibling; node !== null; node = node.nextSibling) {
-    const text = node.textContent;
+    const text = node.textContent ?? "";
 
     if (node.nodeType === Node.TEXT_NODE) {
       if (text.includes("(HP)")) {
@@ -113,21 +120,16 @@ export class BrowserProvider implements KoLAPI {
   private ele = document.createElement("div");
   private pages = new Map<string, string>();
   private properties = new Map<string, () => boolean>();
-  private apiData: {
-    status: KoLStatus;
-    inventory: Record<string, string>;
-    closet: Record<string, string>;
-    storage: Record<string, string>;
-  };
+  private apiData?: KoLApiData;
 
-  private equipped: Map<BrowserItem, number>;
-  private skills: {
+  private equipped?: Map<BrowserItem, number>;
+  private skills?: {
     available: Set<BrowserSkill>;
     permed: Map<BrowserSkill, boolean>;
   };
 
-  private terrarium: Map<BrowserFamiliar, BrowserItem>;
-  private store: Map<BrowserItem, { amount: number; price: number }>;
+  private terrarium?: Map<BrowserFamiliar, BrowserItem>;
+  private store?: Map<BrowserItem, { amount: number; price: number }>;
 
   constructor(
     private data: GameData,
@@ -161,23 +163,26 @@ export class BrowserProvider implements KoLAPI {
   }
 
   private visitCached(url: string): string {
-    if (!this.pages.has(url)) {
-      this.pages.set(url, this.request(url));
+    let page = this.pages.get(url);
+
+    if (page === undefined) {
+      page = this.request(url);
+      this.pages.set(url, page);
     }
 
-    return this.pages.get(url);
+    return page;
   }
 
   private parse(url: string): Document {
     return new DOMParser().parseFromString(this.request(url), "text/html");
   }
 
-  private api() {
+  private api(): KoLApiData {
     this.apiData ??= JSON.parse(
       this.request(
         "api.php?what=status,inventory,closet,storage&for=accountval",
       ),
-    );
+    ) as KoLApiData;
 
     return this.apiData;
   }
@@ -213,7 +218,7 @@ export class BrowserProvider implements KoLAPI {
       "a[onclick*=skill]",
     )) {
       const match = link
-        .getAttribute("onclick")
+        .getAttribute("onclick")!
         .match(/\bwhichskill=(\d+)|\bskill\((\d+)\)/);
 
       if (match === null) {
@@ -259,18 +264,25 @@ export class BrowserProvider implements KoLAPI {
         row.querySelector("input[name=newfam]")?.getAttribute("value") ??
         row
           .querySelector("[onclick*='fam(']")
-          ?.getAttribute("onclick")
+          ?.getAttribute("onclick")!
           .match(/fam\((\d+)\)/)?.[1];
+
+      if (id === undefined) {
+        continue;
+      }
+
       const descid = row
         .querySelector("[onclick*='descitem(']")
-        ?.getAttribute("onclick")
+        ?.getAttribute("onclick")!
         .match(/descitem\((\d+)\)/)?.[1];
       const familiar = this.data.familiarsById.get(parseInt(id));
 
       if (familiar !== undefined) {
         this.terrarium.set(
           familiar,
-          this.data.itemsByDescid.get(descid) ?? noItem,
+          descid === undefined
+            ? noItem
+            : (this.data.itemsByDescid.get(descid) ?? noItem),
         );
       }
     }
@@ -288,9 +300,9 @@ export class BrowserProvider implements KoLAPI {
     for (const row of this.parse(
       "backoffice.php?which=1",
     ).querySelectorAll<HTMLTableRowElement>("tr.deets")) {
-      const price = row.querySelector<HTMLInputElement>("input.price");
+      const price = row.querySelector<HTMLInputElement>("input.price")!;
       const item = this.data.itemsById.get(
-        parseInt(price.name.match(/\d+/)[0]),
+        parseInt(price.name.match(/\d+/)![0]),
       );
 
       if (item !== undefined) {
@@ -335,8 +347,10 @@ export class BrowserProvider implements KoLAPI {
       return this.data.irratPrices;
     }
 
-    if (dataType === "small_persist" && this.properties.has(key)) {
-      return String(this.properties.get(key)());
+    const property = this.properties.get(key);
+
+    if (dataType === "small_persist" && property !== undefined) {
+      return String(property());
     }
 
     const storage = dataType === "transient" ? sessionStorage : localStorage;
@@ -455,7 +469,7 @@ export class BrowserProvider implements KoLAPI {
       "form[name=takegoodies] option",
     )) {
       const item = this.data.itemsById.get(
-        parseInt(option.getAttribute("value")),
+        parseInt(option.getAttribute("value") ?? ""),
       );
       const amount = option.textContent.match(/\(([\d,]+)\)(?: \(-[\d,]*\))?$/);
 
@@ -550,9 +564,13 @@ export class BrowserProvider implements KoLAPI {
     return 0;
   }
 
-  private addEquipped(item: BrowserItem | undefined, amount: number) {
+  private addEquipped(
+    equipped: Map<BrowserItem, number>,
+    item: BrowserItem | undefined,
+    amount: number,
+  ) {
     if (item !== undefined) {
-      this.equipped.set(item, (this.equipped.get(item) ?? 0) + amount);
+      equipped.set(item, (equipped.get(item) ?? 0) + amount);
     }
   }
 
@@ -563,14 +581,26 @@ export class BrowserProvider implements KoLAPI {
 
       for (const [slot, value] of Object.entries(equipment)) {
         if (slot === "fakehands") {
-          this.addEquipped(this.data.getItem("fake hand"), Number(value));
+          this.addEquipped(
+            this.equipped,
+            this.data.getItem("fake hand"),
+            Number(value),
+          );
         } else {
-          this.addEquipped(this.data.itemsById.get(Number(value)), 1);
+          this.addEquipped(
+            this.equipped,
+            this.data.itemsById.get(Number(value)),
+            1,
+          );
         }
       }
 
       for (const sticker of stickers ?? []) {
-        this.addEquipped(this.data.itemsById.get(Number(sticker)), 1);
+        this.addEquipped(
+          this.equipped,
+          this.data.itemsById.get(Number(sticker)),
+          1,
+        );
       }
     }
 

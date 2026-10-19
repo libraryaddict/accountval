@@ -2,7 +2,7 @@ import { provider } from "../api/apiSupplier";
 import { AccountValSettings } from "../settings/settings";
 
 export class ReportOutput {
-  private output: string[];
+  private output?: string[];
   private settings: AccountValSettings;
 
   constructor(settings: AccountValSettings) {

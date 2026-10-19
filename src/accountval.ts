@@ -11,15 +11,15 @@ import {
 import { AccValTiming } from "./utils/timings";
 
 class AccountVal {
-  private logic: AccountValLogic;
-  private settings: AccountValSettings;
-  private out: ReportOutput;
+  private logic!: AccountValLogic;
+  private settings!: AccountValSettings;
+  private out!: ReportOutput;
 
   getSettings(): AccountValSettings {
     return this.settings;
   }
 
-  load(command: string): boolean {
+  load(command?: string): boolean {
     this.settings = new AccountValSettings();
     this.out = new ReportOutput(this.settings);
 
@@ -68,7 +68,7 @@ class AccountVal {
     }
 
     if (this.settings.help || this.settings.showPresetFilters) {
-      return;
+      return false;
     }
 
     if (unknown.length > 0) {
@@ -138,7 +138,7 @@ class AccountVal {
   }
 }
 
-export function run(command: string) {
+export function run(command?: string) {
   initAccountValColors();
 
   const val = new AccountVal();

@@ -39,7 +39,7 @@ export class ValuationReport {
     this.out = out;
     this.aWorth = this.logic.priceResolver.itemPrice(
       KoLItem.get("Mr. Accessory"),
-    ).price;
+    )!.price;
     this.pronoun = this.settings.fetchClan
       ? "The clan stash is"
       : !this.settings.playerId ||
@@ -63,9 +63,9 @@ export class ValuationReport {
   }
 
   private filterAndResolveItems(): ResolvedItem[] {
-    const useJsFilter =
-      this.logic.jsFilter != null &&
-      this.settings.doesJSFilterUsePriceOrSales();
+    const jsFilter = this.settings.doesJSFilterUsePriceOrSales()
+      ? this.logic.jsFilter
+      : undefined;
     const resolved: ResolvedItem[] = [];
 
     for (let no = this.logic.prices.length - 1; no >= 0; no--) {
@@ -79,7 +79,7 @@ export class ValuationReport {
       );
       const count = this.logic.ownedItems.get(item);
 
-      if (isNaN(count)) {
+      if (count === undefined || isNaN(count)) {
         this.out.printLine(
           `Unable to handle the item '${  item.name  }', skipping..`,
           "plain",
@@ -89,8 +89,8 @@ export class ValuationReport {
       }
 
       if (
-        useJsFilter &&
-        !this.logic.jsFilter(item.actualItem, count, worthEach, price.volume)
+        jsFilter &&
+        !jsFilter(item.actualItem, count, worthEach, price.volume)
       ) {
         continue;
       }
@@ -101,7 +101,7 @@ export class ValuationReport {
     return resolved;
   }
 
-  private onShelfName(name: string, worth: number) {
+  private onShelfName(name: string | undefined, worth: number) {
     if (!this.settings.doCategories || name === this.lastCategory) {
       this.shelfValue += worth;
 
@@ -224,7 +224,7 @@ export class ValuationReport {
           boundInfo = `Price: ${boundInfo}%`;
         }
       } else {
-        boundInfo = item.getBound();
+        boundInfo = item.getBound()!;
       }
 
       name = `${name} (<font color='${color}' title='${title.join("&#010;")}'>${this.out.escapeHTML(boundInfo)}</font>)`;

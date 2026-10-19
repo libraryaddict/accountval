@@ -2,7 +2,7 @@ import { setProvider } from "../api/apiSupplier";
 import { BrowserProvider } from "./browserProvider";
 import { GameData, loadGameData } from "./gameData";
 
-let gameData: Promise<GameData>;
+let gameData: Promise<GameData> | undefined;
 
 function appendLine(output: HTMLElement, text: string, color: string) {
   const line = output.ownerDocument.createElement("div");
@@ -14,7 +14,7 @@ function appendLine(output: HTMLElement, text: string, color: string) {
 }
 
 async function runCommand(output: HTMLElement, input: HTMLInputElement) {
-  const view = output.ownerDocument.defaultView;
+  const view = output.ownerDocument.defaultView!;
   const command = input.value.trim().replace(/^accountval(\.js)?\b\s*/i, "");
 
   input.value = "";
@@ -72,10 +72,10 @@ export function main() {
   );
   doc.close();
 
-  const output = doc.getElementById("output");
+  const output = doc.getElementById("output")!;
   const input = doc.getElementById("command") as HTMLInputElement;
 
-  doc.getElementById("cli").addEventListener("submit", (event) => {
+  doc.getElementById("cli")!.addEventListener("submit", (event) => {
     event.preventDefault();
     runCommand(output, input);
   });

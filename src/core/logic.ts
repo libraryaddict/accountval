@@ -8,6 +8,7 @@ import { AccountValSettings } from "../settings/settings";
 import { AccountValColors } from "../utils/colors";
 import { AccValTiming } from "../utils/timings";
 import { AccountValUtils } from "../utils/utils";
+import { Bind } from "./binds";
 
 export class AccountValLogic {
   ownedItems: Map<ValItem, number> = new Map();
@@ -15,7 +16,7 @@ export class AccountValLogic {
   priceResolver: PriceResolver;
   prices: [ValItem, ItemPrice][] = [];
   categoryOrder: string[] = [];
-  jsFilter: (
+  jsFilter?: (
     item: KoLItem,
     amount: number,
     price?: number,
@@ -28,7 +29,7 @@ export class AccountValLogic {
   }
 
   addItem(item: ValItem, count: number = 1) {
-    this.ownedItems.set(item, (this.ownedItems.get(item) | 0) + count);
+    this.ownedItems.set(item, (this.ownedItems.get(item) ?? 0) + count);
   }
 
   loadItems() {
@@ -89,7 +90,7 @@ export class AccountValLogic {
     if (this.settings.fetchDisplaycase) {
       const items = pager.getDisplaycase(this.settings.playerId);
       items.forEach((v, k) => {
-        if (!this.categoryOrder.includes(k.shelf)) {
+        if (k.shelf !== undefined && !this.categoryOrder.includes(k.shelf)) {
           this.categoryOrder.push(k.shelf);
         }
 
@@ -134,7 +135,10 @@ export class AccountValLogic {
 
       if (this.settings.doBound && this.settings.fetchingNonItems) {
         for (const item of this.resolver.accValStuff.filter(
-          (s) => s.bind.type === "skill" && skills.includes(s.skill),
+          (s) =>
+            s.bind.type === "skill" &&
+            s.skill !== undefined &&
+            skills.includes(s.skill),
         )) {
           this.addItem(
             new ValItem(
@@ -157,7 +161,7 @@ export class AccountValLogic {
         );
 
         if (boundItem === undefined) {
-          v -= owned.has(k) ? owned.get(k)[1] : 0;
+          v -= owned.get(k)?.[1] ?? 0;
 
           if (v <= 0) {
             return;
@@ -166,7 +170,7 @@ export class AccountValLogic {
           this.addItem(new ValItem(k), v);
 
           return;
-        } else if (owned.has(k) && owned.get(k)[0].isBound()) {
+        } else if (owned.get(k)?.[0].isBound()) {
           return;
         } else if (
           boundItem.untradeableItem !== undefined &&
@@ -180,8 +184,8 @@ export class AccountValLogic {
         let plural = k.plural;
 
         if (boundItem.bind.type === "untradeable") {
-          const untradeable = boundItem.untradeableItem;
-          v -= owned.has(k) ? owned.get(k)[1] : 0;
+          const untradeable = boundItem.untradeableItem!;
+          v -= owned.get(k)?.[1] ?? 0;
 
           if (v <= 0) {
             return;
@@ -220,7 +224,7 @@ export class AccountValLogic {
 
     const mega: Map<KoLItem, number> = new Map();
 
-    const megaExtra: Map<KoLItem, { count: number; shelf: string }> = new Map();
+    const megaExtra: Map<KoLItem, { count: number; shelf?: string }> = new Map();
 
     const add = (stuff: Map<KoLItem, number>) => {
       for (const [item, amount] of stuff) {
@@ -260,7 +264,7 @@ export class AccountValLogic {
           AccountValUtils.toInt(provider().myId()),
         );
         items.forEach((v, k) => {
-          if (!this.categoryOrder.includes(k.shelf)) {
+          if (k.shelf !== undefined && !this.categoryOrder.includes(k.shelf)) {
             this.categoryOrder.push(k.shelf);
           }
 
@@ -275,10 +279,11 @@ export class AccountValLogic {
     }
 
     AccValTiming.start("Resolve Shop");
-    const shop = this.settings.fetchShop ? provider().getShop() : null;
+    const shop = this.settings.fetchShop ? provider().getShop() : undefined;
     AccValTiming.stop("Resolve Shop");
 
-    if (this.settings.fetchShop && !this.settings.shopWorth) {
+    // Shop is only undefined when fetchShop is off
+    if (shop !== undefined && !this.settings.shopWorth) {
       AccValTiming.start("Add Shop");
       add(shop);
       AccValTiming.stop("Add Shop");
@@ -297,18 +302,20 @@ export class AccountValLogic {
         amount += provider().equippedAmount(item) + (famItems.get(item) ?? 0);
       }
 
-      let category: string;
+      const extra = megaExtra.get(item);
+      const category = extra?.shelf;
 
-      if (megaExtra.has(item)) {
-        amount += megaExtra.get(item).count;
-        category = megaExtra.get(item).shelf;
+      if (extra !== undefined) {
+        amount += extra.count;
       }
 
-      if (this.settings.shopWorth && (shop.get(item) ?? 0) > 0) {
+      const shopAmount = shop?.get(item) ?? 0;
+
+      if (this.settings.shopWorth && shopAmount > 0) {
         const i = new ValItem(item).withCategory(category);
         i.bound = ItemStatus.SHOP_WORTH;
         i.shopWorth = provider().shopPrice(item);
-        this.ownedItems.set(i, shop.get(item));
+        this.ownedItems.set(i, shopAmount);
         continue;
       }
 
@@ -378,20 +385,27 @@ export class AccountValLogic {
       copy[k.tradeableItem.name] = [k, v];
     });
 
-    if (this.settings.doBound || this.settings.doNonTradeables) {
-      this.resolver.resolveBoundToTradeables(copy, this.ownedItems, [
-        this.settings.doBound ? "untradeable" : null,
-        this.settings.doNonTradeables ? "currency" : null,
-      ]);
+    const resolve: Bind["type"][] = [];
+
+    if (this.settings.doBound) {
+      resolve.push("untradeable");
+    }
+
+    if (this.settings.doNonTradeables) {
+      resolve.push("currency");
+    }
+
+    if (resolve.length > 0) {
+      this.resolver.resolveBoundToTradeables(copy, this.ownedItems, resolve);
     }
 
     const skipJsFilter = this.settings.doesJSFilterUsePriceOrSales();
 
-    for (const item of this.ownedItems.keys()) {
+    for (const [item, amount] of this.ownedItems) {
       if (
         !skipJsFilter &&
-        this.jsFilter != null &&
-        !this.jsFilter(item.tradeableItem, this.ownedItems.get(item))
+        this.jsFilter &&
+        !this.jsFilter(item.tradeableItem, amount)
       ) {
         this.ownedItems.delete(item);
         continue;
@@ -406,7 +420,7 @@ export class AccountValLogic {
         continue;
       }
 
-      if (this.ownedItems.get(item) < this.settings.minimumAmount) {
+      if (amount < this.settings.minimumAmount) {
         this.ownedItems.delete(item);
         continue;
       }
@@ -447,7 +461,7 @@ export class AccountValLogic {
         continue;
       }
 
-      if (item.isBound() && this.ownedItems.get(item) > 1) {
+      if (item.isBound() && amount > 1) {
         this.ownedItems.set(item, 1);
       }
     }
@@ -500,14 +514,14 @@ export class AccountValLogic {
 
     for (const item of this.ownedItems.keys()) {
       AccValTiming.start("Price Item", true);
-      const price: ItemPrice = this.priceResolver.itemPrice(
+      const price = this.priceResolver.itemPrice(
         item.tradeableItem,
         false,
         this.settings.doSuperFast
           ? PriceType.HISTORICAL
           : this.settings.useLastSold
             ? PriceType.MALL_SALES
-            : null,
+            : undefined,
         this.settings.doSuperFast,
         true,
         "Logic Item Prices - ",
@@ -550,7 +564,7 @@ export class AccountValLogic {
           );
         }
 
-        const price: ItemPrice = this.priceResolver.itemPrice(
+        const price = this.priceResolver.itemPrice(
           i.tradeableItem,
           false,
           check[1].accuracy,
@@ -575,9 +589,11 @@ export class AccountValLogic {
   }
 
   doSort() {
-    if (!this.settings.sortBy.fallback) {
+    const { assignValue, fallback } = this.settings.sortBy;
+
+    if (assignValue) {
       for (const [v, p] of this.prices) {
-        this.settings.sortBy.assignValue(
+        assignValue(
           v,
           p,
           this.ownedItems,
@@ -587,8 +603,8 @@ export class AccountValLogic {
     }
 
     const sorter = (v1: [ValItem, ItemPrice], v2: [ValItem, ItemPrice]) =>
-      this.settings.sortBy.fallback
-        ? this.settings.sortBy.fallback(v1[0], v2[0])
+      fallback
+        ? fallback(v1[0], v2[0])
         : v1[0].sortValue - v2[0].sortValue;
 
     if (this.settings.doCategories) {

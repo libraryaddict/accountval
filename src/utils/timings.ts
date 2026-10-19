@@ -9,10 +9,10 @@ export class AccValTiming {
 
   name: string;
   started: number = Date.now();
-  stopped: number;
+  stopped?: number;
   depth: number = 0;
-  stepStarted: number;
-  totalTimeTaken: number = null;
+  stepStarted?: number;
+  totalTimeTaken?: number;
 
   constructor(name: string, isSteps: boolean = false) {
     this.name = name;
@@ -28,7 +28,7 @@ export class AccValTiming {
   }
 
   start() {
-    if (this.totalTimeTaken === null) {
+    if (this.totalTimeTaken === undefined) {
       throw new Error(
         `${this.getName()} was not configured as a total time timings`,
       );
@@ -58,8 +58,8 @@ export class AccValTiming {
       );
     }
 
-    if (this.totalTimeTaken !== null) {
-      this.totalTimeTaken += Date.now() - this.stepStarted;
+    if (this.totalTimeTaken !== undefined) {
+      this.totalTimeTaken += Date.now() - this.stepStarted!;
       this.stepStarted = undefined;
     }
 
@@ -76,9 +76,9 @@ export class AccValTiming {
     }${this.stepStarted !== undefined ? " (step never stopped)" : ""}`;
   }
 
-  static start(name: string, withSteps: boolean = false): AccValTiming {
+  static start(name: string, withSteps: boolean = false) {
     if (!this.enabled) {
-      return null;
+      return;
     }
 
     const started = Date.now();
@@ -86,7 +86,8 @@ export class AccValTiming {
 
     if (
       existing !== undefined &&
-      (existing.totalTimeTaken === null || existing.stepStarted !== undefined)
+      (existing.totalTimeTaken === undefined ||
+        existing.stepStarted !== undefined)
     ) {
       throw new Error(`The timing for ${name} was already started`);
     }
@@ -104,13 +105,11 @@ export class AccValTiming {
     }
 
     this.timingsSlowdown += Date.now() - started;
-
-    return existing;
   }
 
-  static stop(name: string, print: boolean = false): AccValTiming {
+  static stop(name: string, print: boolean = false) {
     if (!this.enabled) {
-      return null;
+      return;
     }
 
     const started = Date.now();
@@ -140,8 +139,6 @@ export class AccValTiming {
 
     existing.stop(print);
     this.timingsSlowdown += Date.now() - started;
-
-    return existing;
   }
 
   static printTracked(

@@ -3,7 +3,7 @@ import { KoLFamiliar, KoLItem, KoLSkill } from "../api/supplierTypings";
 import { AccountValColors } from "../utils/colors";
 import { AccountValUtils } from "../utils/utils";
 
-export class StoreItem {
+export interface StoreItem {
   item: KoLItem;
   amount: number;
   limit: number;
@@ -11,7 +11,7 @@ export class StoreItem {
 }
 
 export interface DisplaycaseItem {
-  shelf: string;
+  shelf?: string;
   item: KoLItem;
 }
 
@@ -62,7 +62,7 @@ export class PageResolver {
     const tdRegex = /<td(.*?)<\/td>/m;
     const linkRegex =
       /class='(perm|hcperm|fam_run_90|fam_have|fam_run_100)'.*?<a href="[^"]+" rel="noreferrer">(?:.*?>)?([^>]*?)<\/a>/;
-    let match: string[];
+    let match: RegExpMatchArray | null;
     const has: (KoLFamiliar | KoLSkill | KoLItem | [KoLItem, number])[] = [];
 
     while ((match = page.match(tdRegex)) !== null) {
@@ -83,8 +83,10 @@ export class PageResolver {
       const isFam = !type.includes("perm");
 
       if (isFam) {
-        if (fams.has(name)) {
-          has.push(fams.get(name));
+        const familiar = fams.get(name);
+
+        if (familiar !== undefined) {
+          has.push(familiar);
         } else {
           provider().print(
             `Unable to resolve the familiar '${  name  }' from av-snapshot`,
@@ -103,13 +105,17 @@ export class PageResolver {
         continue;
       }
 
-      if (skills.has(name)) {
-        has.push(skills.get(name));
+      const skill = skills.get(name);
+
+      if (skill !== undefined) {
+        has.push(skill);
         continue;
       }
 
-      if (items.has(name)) {
-        has.push(items.get(name));
+      const exactItem = items.get(name);
+
+      if (exactItem !== undefined) {
+        has.push(exactItem);
         continue;
       }
 
@@ -122,7 +128,9 @@ export class PageResolver {
         name = name.substring(0, name.lastIndexOf(" "));
       }
 
-      if (!items.has(name)) {
+      const item = items.get(name);
+
+      if (item === undefined) {
         provider().print(
           `Unable to resolve the item '${  name  }' from av-snapshot`,
           AccountValColors.attentionGrabbingWarning,
@@ -130,7 +138,7 @@ export class PageResolver {
         continue;
       }
 
-      has.push([items.get(name), count]);
+      has.push([item, count]);
     }
 
     return has;
@@ -139,7 +147,7 @@ export class PageResolver {
   getFamiliars(userId: number): KoLFamiliar[] {
     let page = provider().visitUrl(`showfamiliars.php?who=${  userId}`);
     const regex = /onClick='fam\((\d+)\)'/;
-    let match: string[];
+    let match: RegExpMatchArray | null;
     const familiars: KoLFamiliar[] = [];
 
     while ((match = page.match(regex)) !== null) {
@@ -163,12 +171,12 @@ export class PageResolver {
         continue;
       }
 
-      const item = new StoreItem();
-      item.item = KoLItem.get(AccountValUtils.toInt(match[1]));
-      item.amount = AccountValUtils.toInt(match[2]);
-      item.limit = match[3] == null ? 0 : AccountValUtils.toInt(match[3]);
-      item.price = AccountValUtils.toInt(match[4]);
-      items.push(item);
+      items.push({
+        item: KoLItem.get(AccountValUtils.toInt(match[1])),
+        amount: AccountValUtils.toInt(match[2]),
+        limit: match[3] == null ? 0 : AccountValUtils.toInt(match[3]),
+        price: AccountValUtils.toInt(match[4]),
+      });
     }
 
     return items;
@@ -180,7 +188,7 @@ export class PageResolver {
       KoLItem.all().map((i) => [i.descid, i]),
     );
     const page = provider().visitUrl(`displaycollection.php?who=${  userId}`);
-    let lastShelf: string;
+    let lastShelf: string | undefined;
     const itemRegex =
       /<td width=30 height=30><img src=".+?" class=hand onClick='descitem\((\d+),(\d+)\)'><\/td><td valign=center><b>.+?<\/b>(?: \(((?:\d|,)+)\))?<\/td><\/tr>/;
     const shelfRegex = /<font color=white>([^<]+)<\/font>/;

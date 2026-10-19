@@ -11,13 +11,13 @@ export interface ItemPriceMap {
 }
 
 export abstract class FlatfilePrices implements PriceVolunteer {
-  prices: ItemPriceMap[];
-  lastUpdated: number;
+  prices?: ItemPriceMap[];
+  lastUpdated?: number;
 
   constructor(protected settings: AccountValSettings) {}
 
-  resolve(item: KoLItem): ItemPrice {
-    const price = this.prices[item.id];
+  resolve(item: KoLItem): ItemPrice | undefined {
+    const price = this.prices![item.id];
 
     if (price === undefined) {
       return undefined;
