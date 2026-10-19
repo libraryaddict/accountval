@@ -12,6 +12,13 @@ type PricegunItem = {
   retrieved: number;
 };
 
+type PricegunApiItem = {
+  itemId: number;
+  value: number | { __decimal__: string };
+  volume: number;
+  dateTime?: number;
+};
+
 export class PricegunResolver implements PriceVolunteer {
   items: Map<number, PricegunItem> = new Map();
 
@@ -55,13 +62,13 @@ export class PricegunResolver implements PriceVolunteer {
     );
   }
 
-  private parseValue(item: any): number {
+  private parseValue(item: PricegunApiItem): number {
     return typeof item.value === "number"
       ? item.value
       : parseFloat(item.value?.__decimal__ ?? "0");
   }
 
-  private loadItemFromApi(item: any) {
+  private loadItemFromApi(item: PricegunApiItem) {
     this.items.set(item.itemId, {
       itemId: item.itemId,
       value: this.parseValue(item),

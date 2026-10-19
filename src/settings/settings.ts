@@ -1,13 +1,13 @@
 import { provider } from "../api/apiSupplier";
 import { KoLItem } from "../api/supplierTypings";
-import { PresetSetting,SortBy, ValItem } from "../models/typings";
+import { PresetSetting, SortBy, ValItem } from "../models/typings";
 import {
   AccountValColors,
   getAccountvalColors as getColorSchemes,
   loadAccountvalColors,
 } from "../utils/colors";
 import { AccValTiming } from "../utils/timings";
-import { Args,ParseError } from "./grimoireArgs";
+import { ArgMap, Args, ParseError } from "./grimoireArgs";
 import { getPresets } from "./presets";
 
 const sortBys: SortBy[] = [
@@ -388,7 +388,7 @@ const staticAccountValSpec = {
       help: [
         `If accountval should log everything with "fancy" text, which means html, or "plain" which means the output is also logged to your session log,`,
         `but will have no hover text or colors.`,
-        `Try looking into kolmafia \'mirror\' if you want the output as html. Example usage: "text=plain". Change the default by using "set accountval_text=plain"`,
+        `Try looking into kolmafia 'mirror' if you want the output as html. Example usage: "text=plain". Change the default by using "set accountval_text=plain"`,
       ].join(" "),
       default: "fancy",
       setting: "accountval_text",
@@ -434,10 +434,12 @@ const staticAccountValSpec = {
   timings: Args.boolean({ hidden: true, default: false }),
 };
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type, @typescript-eslint/no-unsafe-declaration-merging
 export interface AccountValSettings extends ReturnType<
   typeof Args.create<typeof staticAccountValSpec>
 > {}
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class AccountValSettings {
   static defaultMaxNaturalPrice = defaultMaxNaturalPrice;
 
@@ -445,6 +447,7 @@ export class AccountValSettings {
   fetchingEverywhereish: boolean = true;
   fetchingNonItems: boolean = true;
   presets: PresetSetting[] = [];
+  presetFilters?: Record<string, boolean | undefined>;
   public expensivePricesAt: number = 40_000_000;
   public cheapTotalsLessThan: number = 20_000_000;
   public cheapPricesLessThan: number = 2_000_000;
@@ -453,7 +456,7 @@ export class AccountValSettings {
   doSettings(command: string): string[] {
     const errors: string[] = [];
 
-    const presetSpec: any = {};
+    const presetSpec: ArgMap = {};
 
     for (const preset of getPresets()) {
       const names = preset.name();
@@ -483,8 +486,8 @@ export class AccountValSettings {
         this,
         Args.parse("accountval", scriptHelp.join("\n"), fullSpec, command),
       );
-    } catch (e: any) {
-      errors.push(e.message || e.toString());
+    } catch (e) {
+      errors.push(e instanceof Error ? e.message : String(e));
 
       return errors;
     }
@@ -496,7 +499,7 @@ export class AccountValSettings {
     // Resolve Presets dynamically
     for (const preset of getPresets()) {
       const names = preset.name();
-      const presetVal = (this as any).presetFilters?.[`preset_${names[0]}`];
+      const presetVal = this.presetFilters?.[`preset_${names[0]}`];
 
       if (presetVal !== undefined) {
         this.presets.push({ preset: preset, negated: !presetVal });
@@ -515,7 +518,7 @@ export class AccountValSettings {
   }
 
   private resolveFetchSources() {
-    const fetchSources: (keyof typeof staticAccountValSpec)[] = [
+    const fetchSources = [
       "fetchCloset",
       "fetchStorage",
       "fetchShop",
@@ -525,7 +528,7 @@ export class AccountValSettings {
       "fetchSession",
       "fetchFamiliars",
       "fetchSnapshot",
-    ];
+    ] as const;
     const wasSet = Object.entries(this)
       .filter(([k, v]) => v !== undefined)
       .map(([k]) => k as keyof AccountValSettings);
@@ -574,11 +577,11 @@ export class AccountValSettings {
     }
 
     for (const fetchSource of fetchSources) {
-      if ((this as any)[fetchSource] !== undefined) {
+      if (this[fetchSource] !== undefined) {
         continue;
       }
 
-      (this as any)[fetchSource] = this.fetchingEverywhereish;
+      this[fetchSource] = this.fetchingEverywhereish;
     }
 
     this.fetchingNonItems = this.fetchingEverywhereish;

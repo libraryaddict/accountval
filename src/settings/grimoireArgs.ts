@@ -146,13 +146,13 @@ export class Args {
     //
     // The default argument of an ArraySpec is of type T[], which causes
     // problems, so we must remove it.
-    const spec_without_default = { ...spec } as any; // Avoid "the operand of a 'delete' operator must be optional"
+    const spec_without_default: Partial<ArraySpec<T>> = { ...spec };
+    delete spec_without_default.default;
 
-    if ("default" in spec_without_default) {
-      delete spec_without_default["default"];
-    }
-
-    const arg = argFromSpec.call(this, spec_without_default);
+    const arg = argFromSpec.call(
+      this,
+      spec_without_default as ArgSpecNoDefault<T>,
+    );
 
     // Next, check that all default values actually appear in the options.
     const raw_options = spec.options?.map((option) => option[0]);
@@ -363,7 +363,7 @@ export class Args {
       [scriptSymbol]: scriptName,
       [scriptHelpSymbol]: scriptHelp,
       [optionsSymbol]: options ?? {},
-    } as any;
+    } as unknown as ParsedArgs<T> & { help: boolean };
 
     if (options?.positionalArgs) {
       const keys: string[] = [];
@@ -674,11 +674,11 @@ type ArgMetadata<T extends ArgMap> = {
  *
  * Finally, there are hidden keys in ArgMetadata for fill(*) and showHelp(*).
  */
-type ArgMap = {
+export type ArgMap = {
   [key: string]: Arg<unknown> | ArgNoDefault<unknown> | ArgGroup<ArgMap>;
 };
 type ParsedGroup<T extends ArgMap> = {
-  [k in keyof T]: T[k] extends ArgGroup<any>
+  [k in keyof T]: T[k] extends ArgGroup<ArgMap>
     ? ParsedGroup<T[k]["args"]>
     : T[k] extends Arg<unknown>
       ? Exclude<ReturnType<T[k]["parser"]>, undefined | ParseError>
@@ -778,7 +778,7 @@ class WrappedArgMetadata<T extends ArgMap> {
  * @param spec The spec for all arguments.
  */
 function loadDefaultValues<T extends ArgMap>(spec: T): ParsedGroup<T> {
-  const result: { [key: string]: any } = {};
+  const result: Record<string, unknown> = {};
 
   for (const k in spec) {
     const argSpec = spec[k];
@@ -794,7 +794,7 @@ function loadDefaultValues<T extends ArgMap>(spec: T): ParsedGroup<T> {
     }
   }
 
-  return result as ParsedGroup<T>;
+  return result as unknown as ParsedGroup<T>;
 }
 
 /**
@@ -824,14 +824,16 @@ function traverseAndMaybeSet<T extends ArgMap>(
         continue;
       }
 
-      result[k] = value as any;
+      result[k] = value as ParsedArgs<T>[typeof k];
     }
   }
 
   for (const group_and_key of groups) {
     traverseAndMaybeSet(
       group_and_key[0].args,
-      result[group_and_key[1]] as any,
+      (result as Record<string, unknown>)[
+        group_and_key[1]
+      ] as ParsedArgs<ArgMap>,
       setTo,
     );
   }

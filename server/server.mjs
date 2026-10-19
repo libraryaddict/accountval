@@ -108,7 +108,7 @@ async function isBrowserHead(commit) {
     },
   );
 
-  return response.ok && (await response.json()).status == "identical";
+  return response.ok && (await response.json()).status === "identical";
 }
 
 async function refresh(req, url) {
@@ -132,13 +132,13 @@ createServer(async (req, res) => {
   try {
     const url = new URL(req.url, "http://localhost");
 
-    if (url.pathname == "/refresh") {
-      res.writeHead(req.method == "POST" ? await refresh(req, url) : 405).end();
+    if (url.pathname === "/refresh") {
+      res.writeHead(req.method === "POST" ? await refresh(req, url) : 405).end();
 
       return;
     }
 
-    const isScript = url.pathname == "/accountval.js";
+    const isScript = url.pathname === "/accountval.js";
     const target = isScript ? scriptUrl : routes.get(url.pathname);
 
     if (target == null) {
@@ -147,7 +147,7 @@ createServer(async (req, res) => {
       return;
     }
 
-    if (req.method != "GET") {
+    if (req.method !== "GET") {
       res.writeHead(405).end();
 
       return;

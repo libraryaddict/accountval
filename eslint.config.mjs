@@ -1,7 +1,8 @@
 import eslint from "@eslint/js";
+import { defineConfig, globalIgnores } from "eslint/config";
 import importSort from "eslint-plugin-simple-import-sort";
 import unusedImports from "eslint-plugin-unused-imports";
-import { defineConfig, globalIgnores } from "eslint/config";
+import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default defineConfig(
@@ -9,11 +10,23 @@ export default defineConfig(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
+    files: ["*.js", "*.mjs", "server/**/*.mjs"],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
+  {
+    files: ["babel.config.js"],
+    languageOptions: {
+      sourceType: "commonjs",
+    },
+  },
+  {
     plugins: {
       "unused-imports": unusedImports,
       "simple-import-sort": importSort,
     },
-    files: ["src/**/*.ts"],
+    files: ["**/*.ts", "**/*.js", "**/*.mjs"],
     rules: {
       "no-empty": "off",
       "block-scoped-var": "error",

@@ -1,6 +1,6 @@
 import { provider } from "../api/apiSupplier";
 import { KoLFamiliar, KoLItem, KoLSkill } from "../api/supplierTypings";
-import { ItemPrice, ItemStatus, PriceType,ValItem } from "../models/typings";
+import { ItemPrice, ItemStatus, PriceType, ValItem } from "../models/typings";
 import { PriceResolver } from "../pricing/priceResolver";
 import { ItemResolver } from "../resolvers/items";
 import { PageResolver } from "../resolvers/pages";

@@ -1,7 +1,7 @@
 import { provider } from "../api/apiSupplier";
 import { KoLItem } from "../api/supplierTypings";
 import { AccountValLogic } from "../core/logic";
-import { ItemPrice, ItemStatus, PriceType,ValItem } from "../models/typings";
+import { ItemPrice, ItemStatus, PriceType, ValItem } from "../models/typings";
 import { AccountValSettings } from "../settings/settings";
 import { AccountValColors } from "../utils/colors";
 import { AccountValUtils } from "../utils/utils";

@@ -54,7 +54,7 @@ async function runCommand(output: HTMLElement, input: HTMLInputElement) {
 }
 
 export function main() {
-  const frame: Window = (window.top as any).mainpane ?? window;
+  const frame = window.top?.mainpane ?? window;
   const doc = frame.document;
 
   doc.open();

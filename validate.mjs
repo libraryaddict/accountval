@@ -28,7 +28,7 @@ async function fetchText(path) {
 function coolItemProperties(apiRequest) {
   const start = apiRequest.indexOf("PREF_TO_COOL_ITEM =");
 
-  if (start == -1) {
+  if (start === -1) {
     throw new Error("PREF_TO_COOL_ITEM is missing from ApiRequest.java");
   }
 
@@ -60,7 +60,7 @@ const tradeable = new Map(
 const skills = new Set(skillRows.map(([, name]) => key(name ?? "")));
 const shops = new Set(
   coinmasterRows
-    .filter(([, action]) => action == "buy")
+    .filter(([, action]) => action === "buy")
     .map(([shop]) => shop),
 );
 
@@ -73,14 +73,14 @@ function checkItem(name, line) {
 }
 
 const currencies = binds.filter(
-  ([type, , untradeable]) => type == "t" && untradeable == null,
+  ([type, , untradeable]) => type === "t" && untradeable == null,
 );
 const shopTokens = new Set(
-  binds.filter(([type]) => type == "m").map(([, token]) => key(token)),
+  binds.filter(([type]) => type === "m").map(([, token]) => key(token)),
 );
 const tradeableSources = new Set(
   binds
-    .filter(([type, , untradeable]) => type == "i" || type == "t")
+    .filter(([type, , untradeable]) => type === "i" || type === "t")
     .map(([, , untradeable]) => key(untradeable ?? "")),
 );
 
@@ -93,17 +93,17 @@ for (const line of binds) {
 
   checkItem(name, line);
 
-  if (type == "i" || (type == "t" && rest.length > 0)) {
+  if (type === "i" || (type === "t" && rest.length > 0)) {
     checkItem(rest[0], line);
-  } else if (type == "b" && !skills.has(key(rest[0]))) {
+  } else if (type === "b" && !skills.has(key(rest[0]))) {
     problems.push(`Unknown skill "${rest[0]}" in: ${line.join("\t")}`);
-  } else if (type == "p" && !["coolitem", "page"].includes(rest[1])) {
+  } else if (type === "p" && !["coolitem", "page"].includes(rest[1])) {
     problems.push(`No browser check for property line: ${line.join("\t")}`);
-  } else if (type == "c" && rest[0] == null) {
+  } else if (type === "c" && rest[0] == null) {
     problems.push(`No campground image for: ${line.join("\t")}`);
-  } else if (type == "g" && rest[1] == null) {
+  } else if (type === "g" && rest[1] == null) {
     problems.push(`No campground text for garden: ${line.join("\t")}`);
-  } else if (type == "m") {
+  } else if (type === "m") {
     for (const shop of rest.filter((shop) => !shops.has(shop))) {
       problems.push(`No coinmaster "${shop}" in: ${line.join("\t")}`);
     }
@@ -122,14 +122,14 @@ for (const line of binds) {
 const mafiaCoolItems = coolItemProperties(apiRequest);
 const bindCoolItems = new Map(
   binds
-    .filter(([type, , , check]) => type == "p" && check == "coolitem")
+    .filter(([type, , , check]) => type === "p" && check === "coolitem")
     .map(([, , property, , coolItem]) => [coolItem, property]),
 );
 
 for (const [coolItem, property] of mafiaCoolItems) {
   if (!bindCoolItems.has(coolItem)) {
     problems.push(`No property line uses the cool item "${coolItem}"`);
-  } else if (bindCoolItems.get(coolItem) != property) {
+  } else if (bindCoolItems.get(coolItem) !== property) {
     problems.push(
       `Cool item "${coolItem}" should use "${property}", not "${bindCoolItems.get(coolItem)}"`,
     );

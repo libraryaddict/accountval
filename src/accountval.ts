@@ -1,5 +1,5 @@
 import { AccountValLogic } from "./core/logic";
-import { Args } from "./settings/grimoireArgs";
+import { ArgMap, Args, ParsedArgs } from "./settings/grimoireArgs";
 import { AccountValSettings } from "./settings/settings";
 import { ReportOutput } from "./ui/output";
 import { ValuationReport } from "./ui/valuation";
@@ -50,7 +50,7 @@ class AccountVal {
     }
 
     if (this.settings.showPresetFilters) {
-      const meta = Args.getMetadata(this.settings as any);
+      const meta = Args.getMetadata(this.settings as unknown as ParsedArgs<ArgMap>);
       meta.traverse(
         (v, k) => {
           if ((v.setting ?? "").startsWith("accountval_preset_")) {
@@ -119,11 +119,11 @@ class AccountVal {
     this.out.printLine("Tests Finished", "plain", "green");
   }
 
-  runTest(args: string, verify: { [key: string]: any }) {
+  runTest(args: string, verify: Partial<AccountValSettings>) {
     this.load(args);
 
     for (const [key, value] of Object.entries(verify)) {
-      const setTo = (this.settings as any)[key];
+      const setTo = this.settings[key as keyof AccountValSettings];
 
       if (setTo === value) {
         continue;
