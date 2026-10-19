@@ -1,43 +1,399 @@
-import { StoreItem } from "../resolvers/pages";
+import { DataType, KoLAPI, KoLItem } from "../api/supplierTypings";
+import { PageResolver } from "../resolvers/pages";
+import { AccountValUtils } from "../utils/utils";
 import {
-  DataType,
-  KoLAPI,
-  KoLCoinmaster,
-  KoLItem,
-  MallPricesOutcome,
-} from "../api/supplierTypings";
+  BrowserCoinmaster,
+  BrowserFamiliar,
+  BrowserItem,
+  BrowserSkill,
+  GameData,
+  noFamiliar,
+  noItem,
+  noSkill,
+} from "./gameData";
 
 const KEY_PREFIX = "kol-accountval-";
 
-export class BrowserProvider implements KoLAPI {
-  ele = document.createElement("div");
-  status: KoLStatus;
-  myFamiliars: Familiar[];
-  myShop: StoreItem[];
-  mySkills: Skill[];
+type KoLStatus = {
+  playerid: string;
+  pwd: string;
+  meat: string;
+  closetmeat: string;
+  storagemeat: string;
+  level: string;
+  full: string;
+  drunk: string;
+  spleen: string;
+  familiar: string;
+  coolitems?: string;
+  equipment: Record<string, string | number>;
+  stickers?: (string | number)[];
+};
 
-  mallPrice(item: KoLItem): number {
-    throw new Error("Method not implemented.");
+// Mirrors how KoLmafia sets these properties from the status coolitems list
+const coolItemProperties: Record<string, string> = {
+  sleazeAirportAlways: "airport1",
+  spookyAirportAlways: "airport2",
+  stenchAirportAlways: "airport3",
+  hotAirportAlways: "airport4",
+  coldAirportAlways: "airport5",
+  gingerbreadCityAvailable: "gingerbreadcity",
+  spacegateAlways: "spacegate",
+  frAlways: "fantasyrealm",
+  prAlways: "piraterealm",
+  crAlways: "cyberrealm",
+  neverendingPartyAlways: "neverendingparty",
+  voteAlways: "voterregistered",
+  daycareOpen: "boxingdaycare",
+  hasCosmicBowlingBall: "hascosmicball",
+  hasMaydayContract: "maydaykit",
+  hasAutumnaton: "autumnaton",
+  hasShrunkenHead: "shrunkenhead",
+  hasInterestingCoin: "interesting",
+  loveTunnelAvailable: "tunnelofloveiotm",
+  telegraphOfficeAvailable: "ltt",
+  ownsFloristFriar: "floristfriar",
+};
+
+const pageProperties: Record<string, [string, string]> = {
+  chateauAvailable: ["place.php?whichplace=mountains", "chateau"],
+  snojoAvailable: ["place.php?whichplace=mountains", "snojo"],
+  getawayCampsiteUnlocked: ["place.php?whichplace=woods", "campaway"],
+  horseryAvailable: ["place.php?whichplace=town_right", "Horsery"],
+  hasDetectiveSchool: ["place.php?whichplace=town_wrong", "Precinct"],
+  ownsSpeakeasy: ["place.php?whichplace=town_wrong", "Speakeasy"],
+  barrelShrineUnlocked: ["da.php", "bgshrine.gif"],
+};
+
+const campgroundItems: [string, string][] = [
+  ["doghouse.gif", "Haunted Doghouse"],
+  ["chesstable.gif", "Witchess Set"],
+  ["campterminal.gif", "Source terminal"],
+  ["teatree", "potted tea tree"],
+  ["campground/leaves", "A Guide to Burning Leaves"],
+];
+
+const gardenImages: [string, string][] = [
+  ["pumpkinpatch_", "pumpkin"],
+  ["pepperpatch_", "peppermint"],
+  ["bonegarden", "skeleton"],
+  ["beergarden", "beer"],
+  ["wintergarden", "winter"],
+  ["thanksgarden", "thanksgarden"],
+  ["grassgarden", "grass"],
+  ["mushgarden.gif", "mushroom"],
+  ["/rockgarden/", "rock"],
+];
+
+const blackRoseGarden = /Black Rose Garden \(\d+ days?'?s? growth\)/;
+
+const itemTypes: Record<string, string> = {
+  food: "food",
+  drink: "booze",
+  spleen: "spleen item",
+  "food helper": "food helper",
+  "drink helper": "drink helper",
+  sticker: "sticker",
+  card: "card",
+  folder: "folder",
+  bootskin: "bootskin",
+  bootspur: "bootspur",
+  sixgun: "sixgun",
+  potion: "potion",
+  avatar: "avatar potion",
+  grow: "familiar larva",
+  zap: "zap wand",
+  familiar: "familiar equipment",
+  accessory: "accessory",
+  hat: "hat",
+  pants: "pants",
+  shirt: "shirt",
+  weapon: "weapon",
+  offhand: "offhand",
+  container: "container",
+  guardian: "pasta guardian",
+};
+
+const slots: Record<string, string> = {
+  hat: "hat",
+  weapon: "weapon",
+  sixgun: "holster",
+  offhand: "off-hand",
+  container: "back",
+  shirt: "shirt",
+  pants: "pants",
+  accessory: "acc1",
+  familiar: "familiar",
+  sticker: "sticker1",
+  card: "card-sleeve",
+  folder: "folder1",
+  bootskin: "bootskin",
+  bootspur: "bootspur",
+};
+
+function notAvailable(what: string): Error {
+  return new Error(`${what} isn't available outside of KoLmafia`);
+}
+
+function isHardcorePermed(link: Element): boolean | undefined {
+  let hardcore: boolean;
+
+  for (let node = link.nextSibling; node != null; node = node.nextSibling) {
+    const text = node.textContent;
+
+    if (node.nodeType == Node.TEXT_NODE) {
+      if (text.includes("(HP)")) {
+        hardcore = true;
+      } else if (text.includes("(P)")) {
+        hardcore = false;
+      }
+
+      continue;
+    }
+
+    if (node.nodeName == "B") {
+      if (text.includes("HP")) {
+        hardcore = true;
+      } else if (text.includes("P")) {
+        hardcore = false;
+      }
+    }
+
+    break;
   }
 
-  resolveAllMallPrices(previous: MallPricesOutcome): MallPricesOutcome {
-    throw new Error("Method not implemented.");
+  return hardcore;
+}
+
+export class BrowserProvider implements KoLAPI {
+  private ele = document.createElement("div");
+  private pages = new Map<string, string>();
+  private properties = new Map<string, () => boolean>();
+  private apiData: {
+    status: KoLStatus;
+    inventory: Record<string, string>;
+    closet: Record<string, string>;
+    storage: Record<string, string>;
+  };
+
+  private equipped: Map<BrowserItem, number>;
+  private skills: {
+    available: Set<BrowserSkill>;
+    permed: Map<BrowserSkill, boolean>;
+  };
+
+  private terrarium: Map<BrowserFamiliar, BrowserItem>;
+  private store: Map<BrowserItem, { amount: number; price: number }>;
+
+  constructor(
+    private data: GameData,
+    private output: HTMLElement,
+  ) {
+    for (const [property, coolItem] of Object.entries(coolItemProperties)) {
+      this.properties.set(property, () =>
+        (this.status().coolitems ?? "").split(",").includes(coolItem),
+      );
+    }
+
+    for (const [property, [url, text]] of Object.entries(pageProperties)) {
+      this.properties.set(property, () => this.visitCached(url).includes(text));
+    }
+  }
+
+  private request(url: string): string {
+    const request = new XMLHttpRequest();
+    request.open("GET", new URL(url, location.origin).href, false);
+    request.send();
+
+    if (request.status != 200) {
+      throw new Error(`Visiting ${url} failed with status ${request.status}`);
+    }
+
+    return request.responseText;
+  }
+
+  private visitCached(url: string): string {
+    if (!this.pages.has(url)) {
+      this.pages.set(url, this.request(url));
+    }
+
+    return this.pages.get(url);
+  }
+
+  private parse(url: string): Document {
+    return new DOMParser().parseFromString(this.request(url), "text/html");
+  }
+
+  private api() {
+    this.apiData ??= JSON.parse(
+      this.request(
+        "api.php?what=status,inventory,closet,storage&for=accountval",
+      ),
+    );
+
+    return this.apiData;
+  }
+
+  private status(): KoLStatus {
+    return this.api().status;
+  }
+
+  private apiItems(
+    what: "inventory" | "closet" | "storage",
+  ): Map<BrowserItem, number> {
+    const items = new Map<BrowserItem, number>();
+
+    for (const [id, amount] of Object.entries(this.api()[what])) {
+      const item = this.data.itemsById.get(parseInt(id));
+
+      if (item != null) {
+        items.set(item, Number(amount));
+      }
+    }
+
+    return items;
+  }
+
+  private charSheet() {
+    if (this.skills != null) {
+      return this.skills;
+    }
+
+    this.skills = { available: new Set(), permed: new Map() };
+
+    for (const link of this.parse("charsheet.php").querySelectorAll(
+      "a[onclick*=skill]",
+    )) {
+      const match = link
+        .getAttribute("onclick")
+        .match(/\bwhichskill=(\d+)|\bskill\((\d+)\)/);
+
+      if (match == null) {
+        continue;
+      }
+
+      let id = parseInt(match[1] ?? match[2]);
+
+      // KoL lists Summon Hilarious Objects under skill id 17
+      if (id == 17 && link.textContent.trim() == "Summon Hilarious Objects") {
+        id = 7226;
+      }
+
+      const skill = this.data.skillsById.get(id);
+
+      if (skill == null) {
+        continue;
+      }
+
+      if (link.closest("#permskills") == null) {
+        this.skills.available.add(skill);
+      }
+
+      const hardcore = isHardcorePermed(link);
+
+      if (hardcore != null) {
+        this.skills.permed.set(skill, hardcore);
+      }
+    }
+
+    return this.skills;
+  }
+
+  private familiars(): Map<BrowserFamiliar, BrowserItem> {
+    if (this.terrarium != null) {
+      return this.terrarium;
+    }
+
+    this.terrarium = new Map();
+
+    for (const row of this.parse("familiar.php").querySelectorAll("tr.frow")) {
+      const id =
+        row.querySelector("input[name=newfam]")?.getAttribute("value") ??
+        row
+          .querySelector("[onclick*='fam(']")
+          ?.getAttribute("onclick")
+          .match(/fam\((\d+)\)/)?.[1];
+      const descid = row
+        .querySelector("[onclick*='descitem(']")
+        ?.getAttribute("onclick")
+        .match(/descitem\((\d+)\)/)?.[1];
+      const familiar = this.data.familiarsById.get(parseInt(id));
+
+      if (familiar != null) {
+        this.terrarium.set(
+          familiar,
+          this.data.itemsByDescid.get(descid) ?? noItem,
+        );
+      }
+    }
+
+    return this.terrarium;
+  }
+
+  private shop(): Map<BrowserItem, { amount: number; price: number }> {
+    if (this.store != null) {
+      return this.store;
+    }
+
+    this.store = new Map();
+
+    for (const row of this.parse(
+      "backoffice.php?which=1",
+    ).querySelectorAll<HTMLTableRowElement>("tr.deets")) {
+      const price = row.querySelector<HTMLInputElement>("input.price");
+      const item = this.data.itemsById.get(
+        parseInt(price.name.match(/\d+/)[0]),
+      );
+
+      if (item != null) {
+        this.store.set(item, {
+          amount: AccountValUtils.toInt(row.cells[2].textContent),
+          price: AccountValUtils.toInt(price.value),
+        });
+      }
+    }
+
+    return this.store;
+  }
+
+  private whois(player: string): RegExpMatchArray | null {
+    const status = this.status();
+    const response = JSON.parse(
+      this.request(
+        `submitnewchat.php?j=1&pwd=${status.pwd}&playerid=${status.playerid}&graf=${encodeURIComponent(`/whois ${player}`)}`,
+      ),
+    );
+
+    return (response.output ?? "").match(
+      /showplayer\.php\?who=(\d+)['"][^>]*>(.*?)<\/a>/,
+    );
+  }
+
+  mallPrice(): never {
+    throw notAvailable("Mall searching");
+  }
+
+  resolveAllMallPrices(): never {
+    throw notAvailable("Mall searching");
   }
 
   storeCache(key: string, value: string, dataType: DataType): void {
-    if (dataType == "transient") {
-      sessionStorage.setItem(KEY_PREFIX + key, value);
-    } else {
-      localStorage.setItem(KEY_PREFIX + key, value);
-    }
+    const storage = dataType == "transient" ? sessionStorage : localStorage;
+    storage.setItem(KEY_PREFIX + key, value);
   }
 
   retrieveCache(key: string, dataType: DataType): string {
-    if (dataType == "transient") {
-      return sessionStorage.getItem(KEY_PREFIX + key) ?? "";
+    if (dataType == "large_persist" && key == "irrats_item_prices.txt") {
+      return this.data.irratPrices;
     }
 
-    return localStorage.getItem(KEY_PREFIX + key) ?? "";
+    if (dataType == "small_persist" && this.properties.has(key)) {
+      return String(this.properties.get(key)());
+    }
+
+    const storage = dataType == "transient" ? sessionStorage : localStorage;
+
+    return storage.getItem(KEY_PREFIX + key) ?? "";
   }
 
   print(message: string, color?: string): void {
@@ -51,150 +407,167 @@ export class BrowserProvider implements KoLAPI {
   }
 
   printHtml(message: string): void {
-    // TODO print it to w/e they're using
-    throw new Error("Method not implemented.");
+    const line = this.output.ownerDocument.createElement("div");
+    line.innerHTML = message || "<br>";
+    this.output.append(line);
   }
 
   abort(message: string): void {
-    console.error(message);
-    this.print(message, "red");
-
     throw new Error(message);
   }
 
   visitUrl(url: string): string {
-    // TODO If relative url, it's kol and should have credentials.
-    const response = fetch(url, {
-      method: "GET",
-      headers: {
-        Accept: "text/plain",
-        "User-Agent": `accountval - https://github.com/libraryaddict/accountval`,
-      },
-    });
-    //let text = response.text();
-    throw new Error("Method not implemented.");
+    try {
+      return this.request(url);
+    } catch (e) {
+      console.warn(e);
+
+      return "";
+    }
   }
 
   checkOutdated(): void {}
 
   myId(): string {
-    return this.status.playerid;
+    return this.status().playerid;
   }
 
   getPlayerId(name: string): string {
-    // TODO Change the rest of accountval to use a {name,id} instead of this
-    throw new Error("Method not implemented.");
+    return this.whois(name)?.[1] ?? name;
   }
 
   getPlayerName(id: number): string {
-    throw new Error("Method not implemented.");
+    return this.whois(String(id))?.[2].replace(/<[^>]*>/g, "") ?? String(id);
   }
 
   myMeat(): number {
-    return this.status.meat;
+    return Number(this.status().meat);
   }
 
   myClosetMeat(): number {
-    throw new Error("Method not implemented.");
+    return Number(this.status().closetmeat);
   }
 
   myStorageMeat(): number {
-    throw new Error("Method not implemented.");
+    return Number(this.status().storagemeat);
   }
 
-  mySessionMeat(): number {
-    throw new Error("Not available in non-kolmafia.");
+  mySessionMeat(): never {
+    throw notAvailable("Session tracking");
   }
 
   myFullness(): number {
-    throw new Error("Not available in non-kolmafia.");
+    return Number(this.status().full);
   }
 
-  fullnessLimit(): number {
-    throw new Error("Not available in non-kolmafia.");
+  fullnessLimit(): never {
+    throw notAvailable("Fullness limit");
   }
 
   myInebriety(): number {
-    throw new Error("Not available in non-kolmafia.");
+    return Number(this.status().drunk);
   }
 
-  inebrietyLimit(): number {
-    throw new Error("Not available in non-kolmafia.");
+  inebrietyLimit(): never {
+    throw notAvailable("Inebriety limit");
   }
 
   mySpleenUse(): number {
-    throw new Error("Not available in non-kolmafia.");
+    return Number(this.status().spleen);
   }
 
-  spleenLimit(): number {
-    throw new Error("Not available in non-kolmafia.");
+  spleenLimit(): never {
+    throw notAvailable("Spleen limit");
   }
 
   myLevel(): number {
-    throw new Error("Not available in non-kolmafia.");
+    return Number(this.status().level);
   }
 
   isDarkMode(): boolean {
     return false;
   }
 
-  getInventory(): Map<KoLItem, number> {
-    throw new Error("Method not implemented.");
+  getInventory(): Map<BrowserItem, number> {
+    return this.apiItems("inventory");
   }
 
-  getCloset(): Map<KoLItem, number> {
-    throw new Error("Method not implemented.");
+  getCloset(): Map<BrowserItem, number> {
+    return this.apiItems("closet");
   }
 
-  getStorage(): Map<KoLItem, number> {
-    // TODO Get storage, but filter out everything that's free and nopull
-    throw new Error("Method not implemented.");
+  getStorage(): Map<BrowserItem, number> {
+    return this.apiItems("storage");
   }
 
-  getFreePulls(): Map<KoLItem, number> {
-    // TODO Return the free pulls of storage
-    throw new Error("Method not implemented.");
-  }
+  getStash(): Map<BrowserItem, number> {
+    const items = new Map<BrowserItem, number>();
 
-  getNoPulls(): Map<KoLItem, number> {
-    // TODO Return the no pulls of storage
-    throw new Error("Method not implemented.");
-  }
+    for (const option of this.parse("clan_stash.php").querySelectorAll(
+      "form[name=takegoodies] option",
+    )) {
+      const item = this.data.itemsById.get(
+        parseInt(option.getAttribute("value")),
+      );
+      const amount = option.textContent.match(/\(([\d,]+)\)(?: \(-[\d,]*\))?$/);
 
-  getStash(): Map<KoLItem, number> {
-    throw new Error("Method not implemented.");
+      if (item != null) {
+        items.set(item, amount ? AccountValUtils.toInt(amount[1]) : 1);
+      }
+    }
+
+    return items;
   }
 
   getDisplay(): Map<KoLItem, number> {
-    throw new Error("Method not implemented.");
+    const items = new Map<KoLItem, number>();
+
+    new PageResolver()
+      .getDisplaycase(parseInt(this.myId()))
+      .forEach((amount, { item }) =>
+        items.set(item, (items.get(item) ?? 0) + amount),
+      );
+
+    return items;
   }
 
-  getShop(): Map<KoLItem, number> {
-    throw new Error("Method not implemented.");
+  getShop(): Map<BrowserItem, number> {
+    return new Map(
+      [...this.shop()].map(([item, { amount }]): [BrowserItem, number] => [
+        item,
+        amount,
+      ]),
+    );
   }
 
-  mySessionItems(): Map<KoLItem, number> {
-    throw new Error("Not available in non-kolmafia.");
+  mySessionItems(): Map<BrowserItem, number> {
+    return new Map();
   }
 
-  getCampground(): Map<KoLItem, number> {
-    throw new Error("Method not implemented.");
+  getCampground(): Map<BrowserItem, number> {
+    const page = this.visitCached("campground.php");
+
+    return new Map(
+      campgroundItems
+        .filter(([image]) => page.includes(image))
+        .map(([, name]): [BrowserItem, number] => [this.data.getItem(name), 1]),
+    );
   }
 
-  getFoldables(item: KoLItem, type: "fold"): Item[] {
-    throw new Error("Method not implemented.");
+  getFoldables(item: BrowserItem): BrowserItem[] {
+    return this.data.folds.get(item) ?? [];
   }
 
-  toItem(val: number): Item {
-    return allItems[val];
+  toItem(val: number): BrowserItem {
+    return this.data.itemsById.get(val) ?? noItem;
   }
 
-  toFamiliar(val: string | number): Familiar {
+  toFamiliar(val: string | number): BrowserFamiliar {
     if (typeof val == "number") {
-      return allFamiliars[val];
+      return this.data.familiarsById.get(val) ?? noFamiliar;
     }
 
-    return allFamiliars.find((f) => f.type.toLowerCase() == val.toLowerCase());
+    return this.data.getFamiliar(val) ?? noFamiliar;
   }
 
   entityEncode(val: string): string {
@@ -209,319 +582,152 @@ export class BrowserProvider implements KoLAPI {
     return this.ele.textContent;
   }
 
-  autosellPrice(item: Item): number {
-    return item.autosellPrice;
+  autosellPrice(item: BrowserItem): number {
+    return item.autosell;
   }
 
-  shopPrice(item: Item): number {
-    throw new Error("Method not implemented.");
+  shopPrice(item: BrowserItem): number {
+    return this.shop().get(item)?.price ?? 0;
   }
 
-  sellPrice(coinmaster: KoLCoinmaster, item: Item): number {
-    throw new Error("Method not implemented.");
+  sellPrice(coinmaster: BrowserCoinmaster, item: BrowserItem): number {
+    return coinmaster.prices.get(item) ?? 0;
   }
 
-  historicalPrice(item: Item): number {
-    return item.historicalPrice;
+  historicalPrice(): number {
+    return 0;
   }
 
-  historicalAge(item: Item): number {
-    return item.historicalAge;
+  historicalAge(): number {
+    return 0;
   }
 
-  equippedAmount(item: Item): number {
-    throw new Error("Method not implemented.");
+  private addEquipped(item: BrowserItem | undefined, amount: number) {
+    if (item != null) {
+      this.equipped.set(item, (this.equipped.get(item) ?? 0) + amount);
+    }
   }
 
-  familiarEquippedEquipment(fam: Familiar): Item {
-    return fam.equipment;
-  }
+  equippedAmount(item: BrowserItem): number {
+    if (this.equipped == null) {
+      const { equipment, stickers } = this.status();
+      this.equipped = new Map();
 
-  myFamiliar(): Familiar {
-    if (this.status.familiar) {
-      return this.toFamiliar(this.status.familiar);
+      for (const [slot, value] of Object.entries(equipment)) {
+        if (slot == "fakehands") {
+          this.addEquipped(this.data.getItem("fake hand"), Number(value));
+        } else {
+          this.addEquipped(this.data.itemsById.get(Number(value)), 1);
+        }
+      }
+
+      for (const sticker of stickers ?? []) {
+        this.addEquipped(this.data.itemsById.get(Number(sticker)), 1);
+      }
     }
 
-    return noFam;
+    return this.equipped.get(item) ?? 0;
   }
 
-  haveFamiliar(fam: Familiar): boolean {
-    if (this.myFamiliars == null) {
-      // TODO
-      throw new Error("Method not implemented.");
-    }
-
-    return this.myFamiliars.includes(fam);
+  familiarEquippedEquipment(fam: BrowserFamiliar): BrowserItem {
+    return this.familiars().get(fam) ?? noItem;
   }
 
-  haveSkill(skill: Skill): boolean {
-    if (this.mySkills == null) {
-      // TODO
-      throw new Error("Method not implemented.");
-    }
+  myFamiliar(): BrowserFamiliar {
+    return this.toFamiliar(Number(this.status().familiar));
+  }
 
-    return this.mySkills.includes(skill);
+  haveFamiliar(fam: BrowserFamiliar): boolean {
+    return fam == this.myFamiliar() || this.familiars().has(fam);
+  }
+
+  haveSkill(skill: BrowserSkill): boolean {
+    return this.charSheet().available.has(skill);
   }
 
   getPermedSkills(): { [skill: string]: boolean } {
-    throw new Error("Method not implemented.");
+    return Object.fromEntries(
+      [...this.charSheet().permed].map(([skill, hardcore]) => [
+        skill.name,
+        hardcore,
+      ]),
+    );
   }
 
-  associatedSkill(item: Item): Skill {
+  associatedSkill(item: BrowserItem): BrowserSkill {
     return item.skill;
   }
 
   myGardenType(): string {
-    throw new Error("Method not implemented.");
-  }
+    const page = this.visitCached("campground.php");
+    const garden = gardenImages.find(([image]) => page.includes(image));
 
-  getWorkshed(): Item {
-    throw new Error("Method not implemented.");
-  }
-
-  allNormalOutfits(): string[] {
-    throw new Error("Method not implemented.");
-  }
-
-  itemType(item: Item): string {
-    return item.type;
-  }
-
-  getItem(name: string | number): Item {
-    if (typeof name == "number") {
-      return allItems[name];
+    if (garden != null) {
+      return garden[1];
     }
 
-    return allItems.find((i) => i.name.toLowerCase() == name.toLowerCase());
+    return blackRoseGarden.test(page) ? "black_rose" : "none";
   }
 
-  allItems(): Item[] {
-    return allItems;
-  }
-
-  noItem(): Item {
+  getWorkshed(): BrowserItem {
     return noItem;
   }
 
-  allFamiliars(): Familiar[] {
-    return allFamiliars;
+  allNormalOutfits(): string[] {
+    return this.data.outfits;
   }
 
-  getSkill(name: string): Skill {
-    return allSkills.find((s) => s.name.toLowerCase() == name.toLowerCase());
+  itemType(item: BrowserItem): string {
+    return itemTypes[item.use] ?? "";
   }
 
-  allSkills(): Skill[] {
-    return allSkills;
+  getItem(name: string | number): BrowserItem {
+    if (typeof name == "string") {
+      return this.data.getItem(name);
+    }
+
+    const item = this.data.itemsById.get(name);
+
+    if (item == null) {
+      throw new Error(`Bad item value: "${name}"`);
+    }
+
+    return item;
   }
 
-  noSkill(): Skill {
+  allItems(): BrowserItem[] {
+    return this.data.items;
+  }
+
+  noItem(): BrowserItem {
+    return noItem;
+  }
+
+  allFamiliars(): BrowserFamiliar[] {
+    return this.data.familiars;
+  }
+
+  getSkill(name: string): BrowserSkill {
+    return this.data.getSkill(name);
+  }
+
+  allSkills(): BrowserSkill[] {
+    return this.data.skills;
+  }
+
+  noSkill(): BrowserSkill {
     return noSkill;
   }
 
-  noSlot(): Slot {
+  noSlot(): string {
     return "none";
   }
 
-  toSlot(item: Item): Slot {
-    return item.slot;
+  toSlot(item: BrowserItem): string {
+    return slots[item.use] ?? "none";
   }
 
-  evalJsFilter(
-    js: string,
-  ): (item: Item, amount: number, price?: number, sales?: number) => boolean {
-    // Not worth the effort
-    throw new Error("Not available in non-kolmafia.");
-  }
-}
-
-type KoLStatus = {
-  playerid: string;
-  name: string;
-  equipment: Map<Slot, number>;
-  familiar?: number;
-  meat: number;
-  pwd: string;
-};
-
-type Skill = {
-  id: number;
-  name: string;
-};
-
-const slotNames = [
-  "hat",
-  "weapon",
-  "holster",
-  "off-hand",
-  "back",
-  "shirt",
-  "pants",
-  "acc1",
-  "acc2",
-  "acc3",
-  "familiar",
-  "crown-of-thrones",
-  "sticker1",
-  "sticker2",
-  "sticker3",
-  "card-sleeve",
-  "folder1",
-  "folder2",
-  "folder3",
-  "folder4",
-  "folder5",
-  "buddy-bjorn",
-  "bootskin",
-  "bootspur",
-  "codpiece1",
-  "codpiece2",
-  "codpiece3",
-  "codpiece4",
-  "codpiece5",
-  "fakehand",
-  "hats",
-  "none",
-] as const;
-
-type Slot = (typeof slotNames)[number];
-
-type Item = {
-  id: number;
-  name: string;
-  plural: string;
-  tradeable: boolean;
-  gift: boolean;
-  quest: boolean;
-  seller?: KoLCoinmaster;
-  descid: string;
-  notes: string;
-  fullness: number;
-  inebriety: number;
-  spleen: number;
-  levelreq: number;
-  reusable: boolean;
-  discardable: boolean;
-
-  skill: Skill;
-  type: string;
-  slot: Slot;
-  historicalAge: number;
-  historicalPrice: number;
-  autosellPrice: number;
-};
-
-type Familiar = {
-  id: number;
-  type: string;
-  hatchling: Item;
-  equipment: Item;
-};
-
-const allItems: Item[] = [];
-const allFamiliars: Familiar[] = [];
-const allSkills: Skill[] = [];
-const noSkill: Skill = {
-  id: -1,
-  name: "none",
-};
-const noItem: Item = {
-  id: -1,
-  name: "none",
-  plural: "none",
-  tradeable: false,
-  gift: false,
-  quest: false,
-  descid: "",
-  notes: "",
-  fullness: 0,
-  inebriety: 0,
-  spleen: 0,
-  levelreq: 0,
-  reusable: false,
-  discardable: false,
-  skill: {
-    id: 0,
-    name: "",
-  },
-  type: "",
-  slot: "none",
-  autosellPrice: -1,
-  historicalAge: -1,
-  historicalPrice: -1,
-};
-const noFam: Familiar = {
-  id: -1,
-  type: "none",
-  hatchling: noItem,
-  equipment: noItem,
-};
-
-const cache = new PageCache();
-
-// TODO
-cache.load(
-  `https://raw.githubusercontent.com/kolmafia/kolmafia/refs/heads/main/src/main/resources/data/items.txt`,
-  `https://raw.githubusercontent.com/kolmafia/kolmafia/refs/heads/main/src/main/resources/data/classskills.txt`,
-  `https://raw.githubusercontent.com/kolmafia/kolmafia/refs/heads/main/src/main/resources/data/familiars.txt`,
-  `https://raw.githubusercontent.com/kolmafia/kolmafia/refs/heads/main/src/main/resources/data/foldgroups.txt`,
-  `https://raw.githubusercontent.com/kolmafia/kolmafia/refs/heads/main/src/main/resources/data/outfits.txt`,
-  `https://kolmafia.us/scripts/updateprices.php?action=getmap`,
-  // One of these?  `https://raw.githubusercontent.com/kolmafia/kolmafia/refs/heads/main/src/data/coinmasters.txt`,`https://github.com/kolmafia/kolmafia/raw/refs/heads/main/src/data/npcstores.txt`,
-);
-
-function loadItems() {
-  // https://raw.githubusercontent.com/kolmafia/kolmafia/refs/heads/main/src/data/items.txt
-  // # id \t name \t descid \t image \t use \t access \t autosell \t plural
-}
-
-function loadSkills() {
-  // https://github.com/kolmafia/kolmafia/raw/refs/heads/main/src/data/classskills.txt
-  // id \t name \t image \t tags \t cost \t duration & attributes
-}
-
-function loadFamiliars() {
-  // https://github.com/kolmafia/kolmafia/raw/refs/heads/main/src/data/familiars.txt
-  // id \t name \t image \t type \t item \t stuff we dont care about
-}
-
-function loadFoldables() {
-  // https://github.com/kolmafia/kolmafia/raw/refs/heads/main/src/data/foldgroups.txt
-  // hp (ignored) \t [\t seperated items]
-}
-
-async function loadData() {
-  await cache.resolve();
-  loadItems();
-  loadSkills();
-  loadFamiliars();
-  loadFoldables();
-}
-
-function makeSyncRequest(
-  method: "GET" | "POST",
-  url: string,
-  cookies?: string,
-  payload: string | null = null,
-): string {
-  const xhr: XMLHttpRequest = new XMLHttpRequest();
-
-  // Set the third argument to 'false' to force synchronous execution
-  xhr.open(method, url, false);
-
-  if (cookies) {
-    xhr.setRequestHeader("Cookie", cookies);
-  }
-
-  if (method === "POST" && payload) {
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  }
-
-  xhr.send(payload);
-
-  if (xhr.status >= 200 && xhr.status < 300) {
-    return xhr.responseText;
-  } else {
-    throw new Error(`Sync Request Failed: ${xhr.status} - ${xhr.statusText}`);
+  evalJsFilter(): never {
+    throw notAvailable("jsfilter");
   }
 }
