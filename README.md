@@ -38,7 +38,7 @@ accountval.js
 
 Accountval can also run in the browser without requiring KoLMafia. It replaces the main pane with a commandline replica which will act the same as KoLMafia's gCLI, featuring jawdropping commands such as `trade` or `help`.
 
-**You should be aware that this is not sane, or a good idea in general. This is the same setup someone would do for a remote code exploit, and you are executing it blindly. In this case, the code isn't going to do anything bad, but it's still very unsafe. Although it is cool to see, it's very cursed.**
+**You should be aware that this is not sane, or a good idea in general. This is the same setup someone would do for a remote code exploit, and you are executing it blindly. In this case, the code isn't going to do anything bad, but it's still very unsafe. Although it is cool to see, it's very cursed. Your data is not uploaded anywhere, it stays in the browser. The unsafe part is running code that someone gave you, because that code may be doing something you didn't expect.**
 
 To run this without KoLMafia, paste this into KoL's chat while logged in, or save it as a chat macro. This will load the script from a backend and execute it.
 
