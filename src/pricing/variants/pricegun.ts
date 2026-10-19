@@ -163,7 +163,7 @@ export class PricegunResolver implements PriceVolunteer {
   }
 
   resolve(item: KoLItem): ItemPrice {
-    return this.bulkResolve([item])[1];
+    return this.bulkResolve([item])[0];
   }
 
   isViable(): boolean {
