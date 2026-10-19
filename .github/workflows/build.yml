@@ -34,8 +34,10 @@ jobs:
           rm -r scripts/
           mv built/scripts scripts
           git add scripts/
-          git commit -m "Build Mafia files for commit $GITHUB_SHA"
-          git push origin release
+          if ! git diff --cached --quiet; then
+            git commit -m "Build Mafia files for commit $GITHUB_SHA"
+            git push origin release
+          fi
       - if: github.event_name == 'push'
         env:
           REFRESH_SECRET: ${{ secrets.ACCOUNTVAL_REFRESH_SECRET }}
@@ -43,6 +45,8 @@ jobs:
           git switch browser || git switch --orphan browser
           cp built/browser/accountval.js accountval.js
           git add accountval.js
-          git commit -m "Build browser script for commit $GITHUB_SHA"
-          git push origin browser
-          curl -fsS -X POST -H "Authorization: Bearer $REFRESH_SECRET" "https://accountval.lib.co.nz/refresh?sha=$(git rev-parse HEAD)"
+          if ! git diff --cached --quiet; then
+            git commit -m "Build browser script for commit $GITHUB_SHA"
+            git push origin browser
+            curl -fsS -X POST -H "Authorization: Bearer $REFRESH_SECRET" "https://accountval.lib.co.nz/refresh?sha=$(git rev-parse HEAD)"
+          fi
