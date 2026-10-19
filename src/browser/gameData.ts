@@ -7,8 +7,15 @@ import {
 import { bindsOf } from "../core/binds";
 
 const PROXY = "https://accountval.lib.co.nz";
-const MAFIA_DATA = `${PROXY}/data/`;
-const IRRAT_PRICES = `${PROXY}/prices/live`;
+const PROXY_TIMEOUT_MS = 20 * 1000;
+const MAFIA_DATA = [
+  `${PROXY}/data/`,
+  "https://raw.githubusercontent.com/kolmafia/kolmafia/main/src/main/resources/data/",
+] as const;
+const IRRAT_PRICES = [
+  `${PROXY}/prices/live`,
+  "https://kolprices.lib.co.nz/file/live",
+] as const;
 
 const mafiaFiles = [
   "items",
@@ -340,8 +347,8 @@ export class GameData {
   }
 }
 
-async function fetchText(url: string): Promise<string> {
-  const response = await fetch(url);
+async function fetchText(url: string, init?: RequestInit): Promise<string> {
+  const response = await fetch(url, init);
 
   if (!response.ok) {
     throw new Error(
@@ -352,10 +359,19 @@ async function fetchText(url: string): Promise<string> {
   return response.text();
 }
 
+async function fetchEither(
+  [url, fallback]: readonly [string, string],
+  suffix = "",
+): Promise<string> {
+  return fetchText(url + suffix, {
+    signal: AbortSignal.timeout(PROXY_TIMEOUT_MS),
+  }).catch(() => fetchText(fallback + suffix));
+}
+
 export async function loadGameData(): Promise<GameData> {
   const [irratPrices, ...files] = await Promise.all([
-    fetchText(IRRAT_PRICES),
-    ...mafiaFiles.map((file) => fetchText(`${MAFIA_DATA}${file}.txt`)),
+    fetchEither(IRRAT_PRICES),
+    ...mafiaFiles.map((file) => fetchEither(MAFIA_DATA, `${file}.txt`)),
   ]);
 
   return new GameData(
