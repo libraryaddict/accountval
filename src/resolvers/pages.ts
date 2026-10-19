@@ -1,5 +1,5 @@
 import { provider } from "../api/apiSupplier";
-import { KoLItem, KoLFamiliar, KoLSkill } from "../api/supplierTypings";
+import { KoLFamiliar, KoLItem, KoLSkill } from "../api/supplierTypings";
 import { AccountValColors } from "../utils/colors";
 import { AccountValUtils } from "../utils/utils";
 
@@ -50,7 +50,7 @@ export class PageResolver {
     ignore.push("miming regalia");
 
     let page = provider().visitUrl(
-      "https://api.aventuristo.net/av-snapshot?u=" + username,
+      `https://api.aventuristo.net/av-snapshot?u=${  username}`,
     );
 
     if (!page.includes("<p>Snapshot for <b>")) {
@@ -65,11 +65,11 @@ export class PageResolver {
     let match: string[];
     const has = [];
 
-    while ((match = page.match(tdRegex)) != null) {
+    while ((match = page.match(tdRegex)) !== null) {
       page = page.substring(page.indexOf(match[0]) + match[0].length);
       const link = match[1].match(linkRegex);
 
-      if (link == null) {
+      if (link === null) {
         continue;
       }
 
@@ -87,7 +87,7 @@ export class PageResolver {
           has.push(fams.get(name));
         } else {
           provider().print(
-            "Unable to resolve the familiar '" + name + "' from av-snapshot",
+            `Unable to resolve the familiar '${  name  }' from av-snapshot`,
             AccountValColors.attentionGrabbingWarning,
           );
         }
@@ -124,7 +124,7 @@ export class PageResolver {
 
       if (!items.has(name)) {
         provider().print(
-          "Unable to resolve the item '" + name + "' from av-snapshot",
+          `Unable to resolve the item '${  name  }' from av-snapshot`,
           AccountValColors.attentionGrabbingWarning,
         );
         continue;
@@ -137,12 +137,12 @@ export class PageResolver {
   }
 
   getFamiliars(userId: number): KoLFamiliar[] {
-    let page = provider().visitUrl("showfamiliars.php?who=" + userId);
+    let page = provider().visitUrl(`showfamiliars.php?who=${  userId}`);
     const regex = /onClick='fam\((\d+)\)'/;
     let match: string[];
     const familiars: KoLFamiliar[] = [];
 
-    while ((match = page.match(regex)) != null) {
+    while ((match = page.match(regex)) !== null) {
       page = page.replace(match[0], "");
       familiars.push(provider().toFamiliar(AccountValUtils.toInt(match[1])));
     }
@@ -152,14 +152,14 @@ export class PageResolver {
 
   getStore(userId: number): StoreItem[] {
     const items: StoreItem[] = [];
-    const page = provider().visitUrl("mallstore.php?whichstore=" + userId);
+    const page = provider().visitUrl(`mallstore.php?whichstore=${  userId}`);
 
     for (const s of page.split("<tr>")) {
       const match = s.match(
         /selecteditem=(\d+).+?<b>.+?<\/b> \(([\d,]+)\) +(?:\(Limit ([\d,]+) \/ day\))?<\/td><td>((?:\d|,)+) Meat<\/td>/,
       );
 
-      if (match == null) {
+      if (match === null) {
         continue;
       }
 
@@ -179,7 +179,7 @@ export class PageResolver {
     const descs: Map<string, KoLItem> = new Map(
       KoLItem.all().map((i) => [i.descid, i]),
     );
-    const page = provider().visitUrl("displaycollection.php?who=" + userId);
+    const page = provider().visitUrl(`displaycollection.php?who=${  userId}`);
     let lastShelf: string;
     const itemRegex =
       /<td width=30 height=30><img src=".+?" class=hand onClick='descitem\((\d+),(\d+)\)'><\/td><td valign=center><b>.+?<\/b>(?: \(((?:\d|,)+)\))?<\/td><\/tr>/;
@@ -188,21 +188,21 @@ export class PageResolver {
     for (const s of page.split("<tr>")) {
       const shelfMatch = s.match(shelfRegex);
 
-      if (shelfMatch != null) {
+      if (shelfMatch !== null) {
         lastShelf = provider().entityDecode(shelfMatch[1]);
       }
 
       const match = s.match(itemRegex);
 
-      if (match == null) {
+      if (match === null) {
         continue;
       }
 
       const item = descs.get(match[1]);
 
-      if (item == null) {
+      if (item === undefined) {
         provider().print(
-          "Unknown item description: " + match[1] + ", update mafia?",
+          `Unknown item description: ${  match[1]  }, update mafia?`,
           AccountValColors.attentionGrabbingWarning,
         );
         continue;

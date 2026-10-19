@@ -170,7 +170,7 @@ export class GameData {
   findItem(name: string): BrowserItem | undefined {
     const id = name.match(/^\[(\d+)\]/);
 
-    if (id != null) {
+    if (id !== null) {
       return this.itemsById.get(parseInt(id[1]));
     }
 
@@ -180,7 +180,7 @@ export class GameData {
   getItem(name: string): BrowserItem {
     const item = this.findItem(name);
 
-    if (item == null) {
+    if (item === undefined) {
       throw new Error(`Bad item value: "${name}"`);
     }
 
@@ -190,7 +190,7 @@ export class GameData {
   getSkill(name: string): BrowserSkill {
     const skill = this.skillsByName.get(name.toLowerCase());
 
-    if (skill == null) {
+    if (skill === undefined) {
       throw new Error(`Bad skill value: "${name}"`);
     }
 
@@ -199,7 +199,7 @@ export class GameData {
 
   getFamiliar(name: string): BrowserFamiliar | undefined {
     return this.familiars.find(
-      (f) => f.name.toLowerCase() == name.toLowerCase(),
+      (f) => f.name.toLowerCase() === name.toLowerCase(),
     );
   }
 
@@ -229,7 +229,7 @@ export class GameData {
     for (const columns of rows(file)) {
       const item = this.findItem(columns[0]);
 
-      if (item == null || columns.length < 3) {
+      if (item === undefined || columns.length < 3) {
         continue;
       }
 
@@ -241,7 +241,7 @@ export class GameData {
 
   private loadSkills(file: string) {
     for (const [id, name] of rows(file)) {
-      if (name == null) {
+      if (name === undefined) {
         continue;
       }
 
@@ -257,14 +257,14 @@ export class GameData {
     for (const [type, name, modifiers] of rows(file)) {
       const skillName = modifiers?.match(/(?:^|, )Skill: "(.+?)"/)?.[1];
 
-      if (type != "Item" || skillName == null) {
+      if (type !== "Item" || skillName === undefined) {
         continue;
       }
 
       const item = this.findItem(name);
       const skill = this.skillsByName.get(skillName.toLowerCase());
 
-      if (item != null && skill != null) {
+      if (item !== undefined && skill !== undefined) {
         item.skill = skill;
       }
     }
@@ -272,7 +272,7 @@ export class GameData {
 
   private loadFamiliars(file: string) {
     for (const [id, name, , , hatchling] of rows(file)) {
-      if (hatchling == null) {
+      if (hatchling === undefined) {
         continue;
       }
 
@@ -290,7 +290,7 @@ export class GameData {
     for (const [, ...names] of rows(file)) {
       const group = names
         .map((name) => this.findItem(name))
-        .filter((item) => item != null);
+        .filter((item) => item !== undefined);
 
       for (const item of group) {
         this.folds.set(item, group);
@@ -300,7 +300,7 @@ export class GameData {
 
   private loadOutfits(file: string) {
     for (const [, name] of rows(file)) {
-      if (name != null) {
+      if (name !== undefined) {
         this.outfits.push(name);
       }
     }
@@ -317,13 +317,13 @@ export class GameData {
     for (const [shop, action, cost, name] of rows(file)) {
       const token = tokens.get(shop);
 
-      if (action != "buy" || token == null) {
+      if (action !== "buy" || token === undefined) {
         continue;
       }
 
       const item = this.findItem(name.replace(/ \(\d+\)$/, ""));
 
-      if (item == null) {
+      if (item === undefined) {
         continue;
       }
 

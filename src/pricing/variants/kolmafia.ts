@@ -1,7 +1,7 @@
 import { provider } from "../../api/apiSupplier";
+import { KoLItem, MallPricesOutcome } from "../../api/supplierTypings";
 import { ItemPrice, PriceType } from "../../models/typings";
 import { PriceVolunteer } from "../priceInterface";
-import { KoLItem, MallPricesOutcome } from "../../api/supplierTypings";
 
 export class MallPricing implements PriceVolunteer {
   sessionKey = "accountval_loadedAllMallItems";
@@ -12,7 +12,7 @@ export class MallPricing implements PriceVolunteer {
     this.loadLastState();
 
     // If prices have not been loaded yet
-    if (this.loadedAllMallItems == "not_loaded") {
+    if (this.loadedAllMallItems === "not_loaded") {
       this.loadMallPrices();
     }
   }
@@ -28,21 +28,21 @@ export class MallPricing implements PriceVolunteer {
   }
 
   resetStateMaybe() {
-    if (provider().retrieveCache(this.ignoreKey, "small_persist") != "true") {
+    if (provider().retrieveCache(this.ignoreKey, "small_persist") !== "true") {
       return;
     }
 
     // If it used mallcheck.js
-    if (this.loadedAllMallItems == "not_loaded") {
+    if (this.loadedAllMallItems === "not_loaded") {
       // Force it to resolve prices ourselves
       this.loadedAllMallItems = "unsure";
     }
   }
 
   loadMallPrices() {
-    if (this.loadedAllMallItems == "loaded") {
+    if (this.loadedAllMallItems === "loaded") {
       throw new Error(`Mall prices failed to load, check that loathers/mall-check (mallcheck.js) is installed and working, set '${this.ignoreKey}=true' to ignore this error`);
-    } else if (this.loadedAllMallItems == "unsure") {
+    } else if (this.loadedAllMallItems === "unsure") {
       provider().print(
         `Mall prices didn't resolve properly, please make sure that mallcheck.js from loathers/mall-check is installed, now falling back to manually searching.`,
         "red",

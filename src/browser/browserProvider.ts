@@ -82,10 +82,10 @@ function notAvailable(what: string): Error {
 function isHardcorePermed(link: Element): boolean | undefined {
   let hardcore: boolean;
 
-  for (let node = link.nextSibling; node != null; node = node.nextSibling) {
+  for (let node = link.nextSibling; node !== null; node = node.nextSibling) {
     const text = node.textContent;
 
-    if (node.nodeType == Node.TEXT_NODE) {
+    if (node.nodeType === Node.TEXT_NODE) {
       if (text.includes("(HP)")) {
         hardcore = true;
       } else if (text.includes("(P)")) {
@@ -95,7 +95,7 @@ function isHardcorePermed(link: Element): boolean | undefined {
       continue;
     }
 
-    if (node.nodeName == "B") {
+    if (node.nodeName === "B") {
       if (text.includes("HP")) {
         hardcore = true;
       } else if (text.includes("P")) {
@@ -136,11 +136,11 @@ export class BrowserProvider implements KoLAPI {
     for (const { property, coolItem, page } of bindsOf("property")) {
       const name = property.split("&")[0];
 
-      if (coolItem != null) {
+      if (coolItem !== undefined) {
         this.properties.set(name, () =>
           (this.status().coolitems ?? "").split(",").includes(coolItem),
         );
-      } else if (page != null) {
+      } else if (page !== undefined) {
         this.properties.set(name, () =>
           this.visitCached(page.url).includes(page.text),
         );
@@ -153,7 +153,7 @@ export class BrowserProvider implements KoLAPI {
     request.open("GET", new URL(url, location.origin).href, false);
     request.send();
 
-    if (request.status != 200) {
+    if (request.status !== 200) {
       throw new Error(`Visiting ${url} failed with status ${request.status}`);
     }
 
@@ -194,7 +194,7 @@ export class BrowserProvider implements KoLAPI {
     for (const [id, amount] of Object.entries(this.api()[what])) {
       const item = this.data.itemsById.get(parseInt(id));
 
-      if (item != null) {
+      if (item !== undefined) {
         items.set(item, Number(amount));
       }
     }
@@ -203,7 +203,7 @@ export class BrowserProvider implements KoLAPI {
   }
 
   private charSheet() {
-    if (this.skills != null) {
+    if (this.skills !== undefined) {
       return this.skills;
     }
 
@@ -216,30 +216,30 @@ export class BrowserProvider implements KoLAPI {
         .getAttribute("onclick")
         .match(/\bwhichskill=(\d+)|\bskill\((\d+)\)/);
 
-      if (match == null) {
+      if (match === null) {
         continue;
       }
 
       let id = parseInt(match[1] ?? match[2]);
 
       // KoL lists Summon Hilarious Objects under skill id 17
-      if (id == 17 && link.textContent.trim() == "Summon Hilarious Objects") {
+      if (id === 17 && link.textContent.trim() === "Summon Hilarious Objects") {
         id = 7226;
       }
 
       const skill = this.data.skillsById.get(id);
 
-      if (skill == null) {
+      if (skill === undefined) {
         continue;
       }
 
-      if (link.closest("#permskills") == null) {
+      if (link.closest("#permskills") === null) {
         this.skills.available.add(skill);
       }
 
       const hardcore = isHardcorePermed(link);
 
-      if (hardcore != null) {
+      if (hardcore !== undefined) {
         this.skills.permed.set(skill, hardcore);
       }
     }
@@ -248,7 +248,7 @@ export class BrowserProvider implements KoLAPI {
   }
 
   private familiars(): Map<BrowserFamiliar, BrowserItem> {
-    if (this.terrarium != null) {
+    if (this.terrarium !== undefined) {
       return this.terrarium;
     }
 
@@ -267,7 +267,7 @@ export class BrowserProvider implements KoLAPI {
         .match(/descitem\((\d+)\)/)?.[1];
       const familiar = this.data.familiarsById.get(parseInt(id));
 
-      if (familiar != null) {
+      if (familiar !== undefined) {
         this.terrarium.set(
           familiar,
           this.data.itemsByDescid.get(descid) ?? noItem,
@@ -279,7 +279,7 @@ export class BrowserProvider implements KoLAPI {
   }
 
   private shop(): Map<BrowserItem, { amount: number; price: number }> {
-    if (this.store != null) {
+    if (this.store !== undefined) {
       return this.store;
     }
 
@@ -293,7 +293,7 @@ export class BrowserProvider implements KoLAPI {
         parseInt(price.name.match(/\d+/)[0]),
       );
 
-      if (item != null) {
+      if (item !== undefined) {
         this.store.set(item, {
           amount: AccountValUtils.toInt(row.cells[2].textContent),
           price: AccountValUtils.toInt(price.value),
@@ -326,20 +326,20 @@ export class BrowserProvider implements KoLAPI {
   }
 
   storeCache(key: string, value: string, dataType: DataType): void {
-    const storage = dataType == "transient" ? sessionStorage : localStorage;
+    const storage = dataType === "transient" ? sessionStorage : localStorage;
     storage.setItem(KEY_PREFIX + key, value);
   }
 
   retrieveCache(key: string, dataType: DataType): string {
-    if (dataType == "large_persist" && key == "irrats_item_prices.txt") {
+    if (dataType === "large_persist" && key === "irrats_item_prices.txt") {
       return this.data.irratPrices;
     }
 
-    if (dataType == "small_persist" && this.properties.has(key)) {
+    if (dataType === "small_persist" && this.properties.has(key)) {
       return String(this.properties.get(key)());
     }
 
-    const storage = dataType == "transient" ? sessionStorage : localStorage;
+    const storage = dataType === "transient" ? sessionStorage : localStorage;
 
     return storage.getItem(KEY_PREFIX + key) ?? "";
   }
@@ -459,7 +459,7 @@ export class BrowserProvider implements KoLAPI {
       );
       const amount = option.textContent.match(/\(([\d,]+)\)(?: \(-[\d,]*\))?$/);
 
-      if (item != null) {
+      if (item !== undefined) {
         items.set(item, amount ? AccountValUtils.toInt(amount[1]) : 1);
       }
     }
@@ -511,7 +511,7 @@ export class BrowserProvider implements KoLAPI {
   }
 
   toFamiliar(val: string | number): BrowserFamiliar {
-    if (typeof val == "number") {
+    if (typeof val === "number") {
       return this.data.familiarsById.get(val) ?? noFamiliar;
     }
 
@@ -551,18 +551,18 @@ export class BrowserProvider implements KoLAPI {
   }
 
   private addEquipped(item: BrowserItem | undefined, amount: number) {
-    if (item != null) {
+    if (item !== undefined) {
       this.equipped.set(item, (this.equipped.get(item) ?? 0) + amount);
     }
   }
 
   equippedAmount(item: BrowserItem): number {
-    if (this.equipped == null) {
+    if (this.equipped === undefined) {
       const { equipment, stickers } = this.status();
       this.equipped = new Map();
 
       for (const [slot, value] of Object.entries(equipment)) {
-        if (slot == "fakehands") {
+        if (slot === "fakehands") {
           this.addEquipped(this.data.getItem("fake hand"), Number(value));
         } else {
           this.addEquipped(this.data.itemsById.get(Number(value)), 1);
@@ -586,7 +586,7 @@ export class BrowserProvider implements KoLAPI {
   }
 
   haveFamiliar(fam: BrowserFamiliar): boolean {
-    return fam == this.myFamiliar() || this.familiars().has(fam);
+    return fam === this.myFamiliar() || this.familiars().has(fam);
   }
 
   haveSkill(skill: BrowserSkill): boolean {
@@ -626,13 +626,13 @@ export class BrowserProvider implements KoLAPI {
   }
 
   getItem(name: string | number): BrowserItem {
-    if (typeof name == "string") {
+    if (typeof name === "string") {
       return this.data.getItem(name);
     }
 
     const item = this.data.itemsById.get(name);
 
-    if (item == null) {
+    if (item === undefined) {
       throw new Error(`Bad item value: "${name}"`);
     }
 

@@ -1,14 +1,14 @@
+import { provider } from "../api/apiSupplier";
+import { KoLItem } from "../api/supplierTypings";
+import { PresetSetting,SortBy, ValItem } from "../models/typings";
 import {
   AccountValColors,
   getAccountvalColors as getColorSchemes,
   loadAccountvalColors,
 } from "../utils/colors";
-import { getPresets } from "./presets";
-import { ValItem, SortBy, PresetSetting } from "../models/typings";
-import { ParseError, Args } from "./grimoireArgs";
-import { provider } from "../api/apiSupplier";
-import { KoLItem } from "../api/supplierTypings";
 import { AccValTiming } from "../utils/timings";
+import { Args,ParseError } from "./grimoireArgs";
+import { getPresets } from "./presets";
 
 const sortBys: SortBy[] = [
   {
@@ -67,20 +67,20 @@ function numberParser(arg: string): number | ParseError {
 
   const match = cleaned.match(/^((?:\d+)|(?:\d*\.\d+))([mkbt]?)$/i);
 
-  if (match == null) {
+  if (match === null) {
     return new ParseError("Invalid number format");
   }
 
   let num = parseFloat(match[1]);
   const mod = match[2]?.toLowerCase();
 
-  if (mod == "t") {
+  if (mod === "t") {
     num *= 1_000_000_000_000;
-  } else if (mod == "b") {
+  } else if (mod === "b") {
     num *= 1_000_000_000;
-  } else if (mod == "m") {
+  } else if (mod === "m") {
     num *= 1_000_000;
-  } else if (mod == "k") {
+  } else if (mod === "k") {
     num *= 1_000;
   }
 
@@ -110,8 +110,8 @@ function sortByParser(arg: string): SortBy | ParseError {
 
   for (const sort of sortBys) {
     if (
-      sort.name.toLowerCase().replace("_", "") != v &&
-      !sort.aliases.some((a) => a.toLowerCase().replace("_", "") == v)
+      sort.name.toLowerCase().replace("_", "") !== v &&
+      !sort.aliases.some((a) => a.toLowerCase().replace("_", "") === v)
     ) {
       continue;
     }
@@ -344,8 +344,8 @@ const staticAccountValSpec = {
       key: "color",
       aliases: ["colors", "colorscheme", "scheme"],
       help:
-        "What color schemes to use, set `accountvalColorScheme` pref to change the default. Supports: " +
-        getColorSchemes().join(", "),
+        `What color schemes to use, set \`accountvalColorScheme\` pref to change the default. Supports: ${
+        getColorSchemes().join(", ")}`,
       default: "default",
       options: ["default", ...getColorSchemes()].map((s) => [s]),
     },
@@ -534,7 +534,7 @@ export class AccountValSettings {
     this.fetchingEverywhereish =
       !this.fetchSession &&
       !this.fetchClan &&
-      fetchSources.find((v) => wasSet.includes(v) && this[v]) == null;
+      fetchSources.find((v) => wasSet.includes(v) && this[v]) === undefined;
 
     this.fetchClan = this.fetchClan ?? false;
     this.fetchSession = this.fetchSession ?? false;
@@ -586,7 +586,7 @@ export class AccountValSettings {
 
   doesJSFilterUsePriceOrSales(): boolean {
     return (
-      this.javascriptFilter != null &&
+      this.javascriptFilter !== undefined &&
       this.javascriptFilter.split("=>")[0].split(",").length >= 3
     );
   }
@@ -594,9 +594,9 @@ export class AccountValSettings {
   isShown(item: ValItem, worth: number): boolean {
     return this.presets.every(
       (pre) =>
-        (pre.preset.isShown != null
+        (pre.preset.isShown !== undefined
           ? pre.preset.isShown(item, worth)
-          : pre.preset.isProcessed(item.actualItem, worth)) != pre.negated,
+          : pre.preset.isProcessed(item.actualItem, worth)) !== pre.negated,
     );
   }
 

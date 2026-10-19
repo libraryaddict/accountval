@@ -1,5 +1,5 @@
-import { AccountValPreset } from "../settings/presets";
 import { KoLItem } from "../api/supplierTypings";
+import { AccountValPreset } from "../settings/presets";
 
 export enum ItemStatus {
   BOUND,
@@ -79,7 +79,7 @@ export class ValItem {
     this.bound = bound;
     this.snapshotSource = snapshotSource;
 
-    if (this.bound == null && !item.tradeable) {
+    if (this.bound === undefined && !item.tradeable) {
       this.bound = ItemStatus.NO_TRADE;
     }
   }
@@ -91,19 +91,19 @@ export class ValItem {
   }
 
   getBound(): string {
-    if (this.bound == ItemStatus.BOUND) {
+    if (this.bound === ItemStatus.BOUND) {
       return "Bound";
     }
 
-    if (this.bound == ItemStatus.FAMILIAR) {
+    if (this.bound === ItemStatus.FAMILIAR) {
       return "Familiar";
     }
 
-    if (this.bound == ItemStatus.IN_USE) {
+    if (this.bound === ItemStatus.IN_USE) {
       return "In Use";
     }
 
-    if (this.bound == ItemStatus.NO_TRADE) {
+    if (this.bound === ItemStatus.NO_TRADE) {
       return "Untradeable";
     }
 
@@ -111,14 +111,14 @@ export class ValItem {
   }
 
   isBound(): boolean {
-    return this.bound == ItemStatus.BOUND || this.bound == ItemStatus.FAMILIAR;
+    return this.bound === ItemStatus.BOUND || this.bound === ItemStatus.FAMILIAR;
   }
 
   isTradeable(): boolean {
     return (
-      this.bound == null ||
-      this.bound == ItemStatus.IN_USE ||
-      this.bound == ItemStatus.SHOP_WORTH
+      this.bound === undefined ||
+      this.bound === ItemStatus.IN_USE ||
+      this.bound === ItemStatus.SHOP_WORTH
     );
   }
 }

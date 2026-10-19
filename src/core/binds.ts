@@ -34,8 +34,8 @@ function parse(line: string): Bind {
         type: "property",
         item,
         property,
-        coolItem: check == "coolitem" ? args[0] : undefined,
-        page: check == "page" ? { url: args[0], text: args[1] } : undefined,
+        coolItem: check === "coolitem" ? args[0] : undefined,
+        page: check === "page" ? { url: args[0], text: args[1] } : undefined,
       };
     }
 
@@ -72,6 +72,6 @@ export function bindsOf<T extends Bind["type"]>(
   type: T,
 ): Extract<Bind, { type: T }>[] {
   return binds.filter(
-    (bind): bind is Extract<Bind, { type: T }> => bind.type == type,
+    (bind): bind is Extract<Bind, { type: T }> => bind.type === type,
   );
 }

@@ -1,5 +1,5 @@
-import { ItemPrice } from "../models/typings";
 import { KoLItem } from "../api/supplierTypings";
+import { ItemPrice } from "../models/typings";
 
 export interface PriceVolunteer {
   isViable(): boolean;

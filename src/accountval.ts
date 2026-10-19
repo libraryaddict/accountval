@@ -1,14 +1,14 @@
 import { AccountValLogic } from "./core/logic";
+import { Args } from "./settings/grimoireArgs";
 import { AccountValSettings } from "./settings/settings";
-import {
-  AccountValColors,
-  showAccountvalColors,
-  initAccountValColors,
-} from "./utils/colors";
-import { AccValTiming } from "./utils/timings";
 import { ReportOutput } from "./ui/output";
 import { ValuationReport } from "./ui/valuation";
-import { Args } from "./settings/grimoireArgs";
+import {
+  AccountValColors,
+  initAccountValColors,
+  showAccountvalColors,
+} from "./utils/colors";
+import { AccValTiming } from "./utils/timings";
 
 class AccountVal {
   private logic: AccountValLogic;
@@ -23,7 +23,7 @@ class AccountVal {
     this.settings = new AccountValSettings();
     this.out = new ReportOutput(this.settings);
 
-    if (command == "test") {
+    if (command === "test") {
       this.runTests();
 
       return false;
@@ -58,7 +58,7 @@ class AccountVal {
           }
         },
         (g, k) => {
-          if (k != "presetFilters") {
+          if (k !== "presetFilters") {
             return;
           }
 
@@ -125,7 +125,7 @@ class AccountVal {
     for (const [key, value] of Object.entries(verify)) {
       const setTo = (this.settings as any)[key];
 
-      if (setTo == value) {
+      if (setTo === value) {
         continue;
       }
 

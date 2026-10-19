@@ -10,32 +10,30 @@ export class ReportOutput {
   }
 
   printLine(line: string, textType: "html" | "plain", color?: string) {
-    if (this.settings.logOutputAs == "plain" && textType == "html") {
+    if (this.settings.logOutputAs === "plain" && textType === "html") {
       line = line.replace(/<[^>]*>/g, "");
       textType = "plain";
     }
 
     if (this.settings.logOutputTo) {
-      if (this.output == null) {
-        if (line != null) {
-          line = line.trim();
-        }
+      if (this.output === undefined) {
+        line = line.trim();
 
-        if (line == null || line == "") {
+        if (line === "") {
           return;
         }
 
         this.output = [];
       }
 
-      if (textType == "plain" && this.settings.logOutputTo.endsWith(".html")) {
+      if (textType === "plain" && this.settings.logOutputTo.endsWith(".html")) {
         line = provider().entityEncode(line);
       }
 
       this.output.push(line);
-    } else if (textType == "html") {
+    } else if (textType === "html") {
       provider().printHtml(line);
-    } else if (color != null) {
+    } else if (color !== undefined) {
       provider().print(line, color);
     } else {
       provider().print(line);
@@ -53,7 +51,7 @@ export class ReportOutput {
   }
 
   stop() {
-    if (this.output == null || this.output.length == 0) {
+    if (this.output === undefined || this.output.length === 0) {
       return;
     }
 

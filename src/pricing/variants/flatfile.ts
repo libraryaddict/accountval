@@ -1,7 +1,7 @@
-import { AccountValSettings } from "../../settings/settings";
-import { ItemPrice, PriceType } from "../../models/typings";
-import { PriceVolunteer } from "../priceInterface";
 import { KoLItem } from "../../api/supplierTypings";
+import { ItemPrice, PriceType } from "../../models/typings";
+import { AccountValSettings } from "../../settings/settings";
+import { PriceVolunteer } from "../priceInterface";
 
 export interface ItemPriceMap {
   updated: number;
@@ -19,8 +19,8 @@ export abstract class FlatfilePrices implements PriceVolunteer {
   resolve(item: KoLItem): ItemPrice {
     const price = this.prices[item.id];
 
-    if (price == null) {
-      return null;
+    if (price === undefined) {
+      return undefined;
     }
 
     return new ItemPrice(
@@ -52,7 +52,7 @@ export abstract class FlatfilePrices implements PriceVolunteer {
 
       const spl2 = spl.split("\t");
 
-      if (spl2.length == 2 && spl2[0] == "Last Updated:") {
+      if (spl2.length === 2 && spl2[0] === "Last Updated:") {
         this.lastUpdated = parseInt(spl2[1]);
         continue;
       }
@@ -62,11 +62,6 @@ export abstract class FlatfilePrices implements PriceVolunteer {
       }
 
       const result = this.loadDataItem(spl2);
-
-      if (result == null) {
-        continue;
-      }
-
       this.prices[result[0]] = result[1];
     }
   }

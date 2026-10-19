@@ -41,7 +41,7 @@ map.set("dark", {
 });
 
 export function loadAccountvalColors(name: string): boolean {
-  if (name == "default") {
+  if (name === "default") {
     name = provider().isDarkMode() ? "dark" : "light";
   }
 

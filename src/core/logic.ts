@@ -1,12 +1,12 @@
 import { provider } from "../api/apiSupplier";
-import { KoLItem, KoLFamiliar, KoLSkill } from "../api/supplierTypings";
+import { KoLFamiliar, KoLItem, KoLSkill } from "../api/supplierTypings";
+import { ItemPrice, ItemStatus, PriceType,ValItem } from "../models/typings";
+import { PriceResolver } from "../pricing/priceResolver";
 import { ItemResolver } from "../resolvers/items";
 import { PageResolver } from "../resolvers/pages";
-import { PriceResolver } from "../pricing/priceResolver";
 import { AccountValSettings } from "../settings/settings";
 import { AccountValColors } from "../utils/colors";
 import { AccValTiming } from "../utils/timings";
-import { ItemStatus, ValItem, ItemPrice, PriceType } from "../models/typings";
 import { AccountValUtils } from "../utils/utils";
 
 export class AccountValLogic {
@@ -48,7 +48,7 @@ export class AccountValLogic {
   }
 
   private loadJsFilter() {
-    if (this.settings.javascriptFilter == "") {
+    if (this.settings.javascriptFilter === "") {
       return;
     }
 
@@ -99,13 +99,13 @@ export class AccountValLogic {
 
     let resolvedFamiliars = false;
 
-    if (this.settings.fetchFamiliars != false) {
+    if (this.settings.fetchFamiliars !== false) {
       const familiars = pager.getFamiliars(this.settings.playerId);
       resolvedFamiliars = familiars.length > 0;
       this.resolver.resolveFamiliars(familiars, this.ownedItems);
     }
 
-    if (this.settings.fetchSnapshot == true) {
+    if (this.settings.fetchSnapshot === true) {
       const snapshot = pager.getSnapshot(
         provider().getPlayerName(this.settings.playerId),
       );
@@ -134,7 +134,7 @@ export class AccountValLogic {
 
       if (this.settings.doBound && this.settings.fetchingNonItems) {
         for (const item of this.resolver.accValStuff.filter(
-          (s) => s.bind.type == "skill" && skills.includes(s.skill),
+          (s) => s.bind.type === "skill" && skills.includes(s.skill),
         )) {
           this.addItem(
             new ValItem(
@@ -153,10 +153,10 @@ export class AccountValLogic {
       );
       items.forEach((v, k) => {
         const boundItem = this.resolver.accValStuff.find(
-          (i) => i.actualItem == k,
+          (i) => i.actualItem === k,
         );
 
-        if (boundItem == null) {
+        if (boundItem === undefined) {
           v -= owned.has(k) ? owned.get(k)[1] : 0;
 
           if (v <= 0) {
@@ -169,7 +169,7 @@ export class AccountValLogic {
         } else if (owned.has(k) && owned.get(k)[0].isBound()) {
           return;
         } else if (
-          boundItem.untradeableItem != null &&
+          boundItem.untradeableItem !== undefined &&
           owned.has(boundItem.untradeableItem)
         ) {
           return;
@@ -179,7 +179,7 @@ export class AccountValLogic {
         let name = k.name;
         let plural = k.plural;
 
-        if (boundItem.bind.type == "untradeable") {
+        if (boundItem.bind.type === "untradeable") {
           const untradeable = boundItem.untradeableItem;
           v -= owned.has(k) ? owned.get(k)[1] : 0;
 
@@ -312,7 +312,7 @@ export class AccountValLogic {
         continue;
       }
 
-      if (amount == 0) {
+      if (amount === 0) {
         continue;
       }
 
@@ -321,7 +321,7 @@ export class AccountValLogic {
 
     AccValTiming.stop("Process All Items");
 
-    if (this.settings.fetchFamiliars != false) {
+    if (this.settings.fetchFamiliars !== false) {
       AccValTiming.start("Resolve Familiars");
       this.resolver.resolveFamiliars(
         KoLFamiliar.all().filter((f) => provider().haveFamiliar(f)),
@@ -338,7 +338,7 @@ export class AccountValLogic {
 
         if (
           i != null &&
-          i != KoLItem.none &&
+          i !== KoLItem.none &&
           (i.tradeable ? this.settings.doTradeables : this.settings.doBound)
         ) {
           this.addItem(new ValItem(i, i, i.name, i.plural, ItemStatus.IN_USE));
@@ -354,7 +354,7 @@ export class AccountValLogic {
       for (const [item, status] of this.resolver.getUrledItems()) {
         if (
           item.tradeable &&
-          (status == ItemStatus.FAMILIAR || status != ItemStatus.BOUND)
+          (status === ItemStatus.FAMILIAR || status !== ItemStatus.BOUND)
             ? !this.settings.doTradeables
             : !this.settings.doBound
         ) {
@@ -400,7 +400,7 @@ export class AccountValLogic {
       if (
         !item.isBound() &&
         (!item.tradeableItem.tradeable || item.tradeableItem.gift) &&
-        provider().autosellPrice(item.tradeableItem) == 0
+        provider().autosellPrice(item.tradeableItem) === 0
       ) {
         this.ownedItems.delete(item);
         continue;
@@ -414,16 +414,16 @@ export class AccountValLogic {
       if (
         !this.settings.doBound &&
         item.isBound() &&
-        item.bound != ItemStatus.FAMILIAR
+        item.bound !== ItemStatus.FAMILIAR
       ) {
         this.ownedItems.delete(item);
         continue;
       }
 
       if (
-        item.bound == ItemStatus.FAMILIAR &&
-        (this.settings.fetchFamiliars == false ||
-          (this.settings.fetchFamiliars == null && !this.settings.doBound))
+        item.bound === ItemStatus.FAMILIAR &&
+        (this.settings.fetchFamiliars === false ||
+          (this.settings.fetchFamiliars === undefined && !this.settings.doBound))
       ) {
         this.ownedItems.delete(item);
         continue;
@@ -514,9 +514,9 @@ export class AccountValLogic {
       );
       AccValTiming.stop("Price Item");
 
-      if (price == null) {
+      if (price === undefined) {
         continue;
-      } else if (price.price > 0 || price.accuracy == PriceType.NEW_PRICES) {
+      } else if (price.price > 0 || price.accuracy === PriceType.NEW_PRICES) {
         AccValTiming.start("Add Item Price", true);
         addPrice(item, price);
         AccValTiming.stop("Add Item Price");
@@ -542,7 +542,7 @@ export class AccountValLogic {
       for (const check of toCheck) {
         const i = check[0];
 
-        if (++checked % 20 == 0 && lastPrinted + 1000 < Date.now()) {
+        if (++checked % 20 === 0 && lastPrinted + 1000 < Date.now()) {
           lastPrinted = Date.now();
           provider().print(
             `Checking value of ${i.name} (${checked} / ${toCheck.length})`,
@@ -559,7 +559,7 @@ export class AccountValLogic {
           "Remaining Logic Item Prices - ",
         );
 
-        if (price == null) {
+        if (price === undefined) {
           continue;
         }
 
@@ -591,19 +591,19 @@ export class AccountValLogic {
         ? this.settings.sortBy.fallback(v1[0], v2[0])
         : v1[0].sortValue - v2[0].sortValue;
 
-    if (this.settings.doCategories && this.categoryOrder != null) {
+    if (this.settings.doCategories) {
       this.prices.sort((v1, v2) => {
         const c1 = v1[0].category ?? "";
         const c2 = v2[0].category ?? "";
 
-        if (c1 == c2) {
+        if (c1 === c2) {
           return sorter(v1, v2);
         }
 
         const i1 = this.categoryOrder.indexOf(c1);
         const i2 = this.categoryOrder.indexOf(c2);
 
-        if (i1 == i2) {
+        if (i1 === i2) {
           return sorter(v1, v2);
         }
 

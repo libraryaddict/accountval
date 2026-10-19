@@ -27,7 +27,7 @@ export class CoinmasterResolver {
 
       const token = item.seller.item;
 
-      if (token == KoLItem.none) {
+      if (token === KoLItem.none) {
         continue;
       }
 
@@ -52,14 +52,14 @@ export class CoinmasterResolver {
     let highest: CoinmasterItem = null;
 
     for (const item of this.items) {
-      if (item.currency != currency) {
+      if (item.currency !== currency) {
         continue;
       }
 
-      if (item.price == null) {
+      if (item.price === undefined) {
         const itemPrice = this.prices.itemPrice(item.item);
 
-        if (itemPrice == null) {
+        if (itemPrice === undefined) {
           return null;
         }
 
@@ -67,7 +67,7 @@ export class CoinmasterResolver {
         item.priceEach = item.price / item.currencyCost;
       }
 
-      if (highest != null && highest.priceEach > item.priceEach) {
+      if (highest !== null && highest.priceEach > item.priceEach) {
         continue;
       }
 

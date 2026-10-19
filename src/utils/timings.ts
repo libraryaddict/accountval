@@ -28,13 +28,13 @@ export class AccValTiming {
   }
 
   start() {
-    if (this.totalTimeTaken == null) {
+    if (this.totalTimeTaken === null) {
       throw new Error(
         `${this.getName()} was not configured as a total time timings`,
       );
     }
 
-    if (this.stepStarted != null) {
+    if (this.stepStarted !== undefined) {
       throw new Error(`${this.getName()} was not stopped properly`);
     }
 
@@ -46,7 +46,7 @@ export class AccValTiming {
   }
 
   stop(print: boolean = false): AccValTiming {
-    if (this.stopped != null && this.stepStarted == null) {
+    if (this.stopped !== undefined && this.stepStarted === undefined) {
       throw new Error(`The timing for ${this.getName()} was already stopped`);
     }
 
@@ -58,9 +58,9 @@ export class AccValTiming {
       );
     }
 
-    if (this.totalTimeTaken != null) {
+    if (this.totalTimeTaken !== null) {
       this.totalTimeTaken += Date.now() - this.stepStarted;
-      this.stepStarted = null;
+      this.stepStarted = undefined;
     }
 
     return this;
@@ -72,8 +72,8 @@ export class AccValTiming {
 
   getTimeStr(): string {
     return `${AccountValUtils.getNumber(this.getTime())}ms${
-      this.stopped == null ? " (never stopped)" : ""
-    }${this.stepStarted != null ? " (step never stopped)" : ""}`;
+      this.stopped === undefined ? " (never stopped)" : ""
+    }${this.stepStarted !== undefined ? " (step never stopped)" : ""}`;
   }
 
   static start(name: string, withSteps: boolean = false): AccValTiming {
@@ -85,19 +85,19 @@ export class AccValTiming {
     let existing = this.trackingMap.get(name);
 
     if (
-      existing != null &&
-      (existing.totalTimeTaken == null || existing.stepStarted != null)
+      existing !== undefined &&
+      (existing.totalTimeTaken === null || existing.stepStarted !== undefined)
     ) {
       throw new Error(`The timing for ${name} was already started`);
     }
 
-    if (existing == null) {
+    if (existing === undefined) {
       existing = new AccValTiming(name, withSteps);
       this.trackingMap.set(name, existing);
       this.tracking.push(["STARTED", existing]);
       existing.depth =
         this.tracking.filter(
-          ([state, t]) => t.stopped == null && state == "STARTED",
+          ([state, t]) => t.stopped === undefined && state === "STARTED",
         ).length - 1;
     } else {
       existing.start();
@@ -116,7 +116,7 @@ export class AccValTiming {
     const started = Date.now();
     const existing = this.trackingMap.get(name);
 
-    if (existing == null) {
+    if (existing === undefined) {
       throw new Error(`There was no time tracking created for ${name}`);
     }
 
@@ -156,7 +156,7 @@ export class AccValTiming {
     ];
 
     this.tracking.forEach(([state, t]) => {
-      if (t.stopped == null) {
+      if (t.stopped === undefined) {
         sortedTimes.push(["STOPPED", t]);
       }
     });
@@ -164,16 +164,16 @@ export class AccValTiming {
     for (const [state, timing] of sortedTimes) {
       const depthStr = `<font color='gray'>${">&nbsp;".repeat(timing.depth)}</font>`;
 
-      if (method == "PRINT_JUST_ONCE") {
-        if (state != "STARTED") {
+      if (method === "PRINT_JUST_ONCE") {
+        if (state !== "STARTED") {
           continue;
         }
 
         this.printHtml(
           `${depthStr}<font color='blue'>${timing.getName()} <font color='green'>time taken:</font> ${timing.getTimeStr()}</font>`,
         );
-      } else if (method == "PRINT_START_AND_END") {
-        if (state == "STARTED") {
+      } else if (method === "PRINT_START_AND_END") {
+        if (state === "STARTED") {
           this.printHtml(
             `${depthStr}<font color='blue'>${timing.getName()}</font> <font color='green'>started</font>`,
           );
@@ -182,8 +182,8 @@ export class AccValTiming {
             `${depthStr}<font color='blue'>${timing.getName()}<font color='green'> stopped, time taken: </font>${timing.getTimeStr()}</font>`,
           );
         }
-      } else if (method == "PRINT_JUST_END") {
-        if (state == "STARTED") {
+      } else if (method === "PRINT_JUST_END") {
+        if (state === "STARTED") {
           continue;
         }
 

@@ -1,12 +1,12 @@
 import { provider } from "../api/apiSupplier";
+import { KoLItem } from "../api/supplierTypings";
+import { ItemPrice, PriceType } from "../models/typings";
 import { AccountValSettings } from "../settings/settings";
 import { AccValTiming } from "../utils/timings";
-import { ItemPrice, PriceType } from "../models/typings";
 import { PriceVolunteer } from "./priceInterface";
-import { HistoricalPricing, MallPricing } from "./variants/kolmafia";
 import { IrratPrices } from "./variants/irratprices";
+import { HistoricalPricing, MallPricing } from "./variants/kolmafia";
 import { PricegunResolver } from "./variants/pricegun";
-import { KoLItem } from "../api/supplierTypings";
 
 export class PriceResolver {
   private specialCase: Map<KoLItem, number> = new Map();
@@ -101,16 +101,16 @@ export class PriceResolver {
               .map((f) =>
                 this.itemPrice(f, true, forcePricing, doSuperFast, doEstimates),
               )
-              .filter((p) => p != null);
+              .filter((p) => p !== undefined);
 
             foldPrices.sort((f1, f2) =>
-              f1.item.tradeable != f2.item.tradeable
+              f1.item.tradeable !== f2.item.tradeable
                 ? f1.item.tradeable
                   ? -1
                   : 1
                 : f1.price - f2.price,
             );
-            const compare = foldPrices.find((f) => f.item == item);
+            const compare = foldPrices.find((f) => f.item === item);
 
             for (const f of foldPrices) {
               if (f.daysOutdated > compare.daysOutdated * 3) {
@@ -160,7 +160,7 @@ export class PriceResolver {
       for (const resolver of this.resolvers) {
         const price = resolver.resolve(item);
 
-        if (price == null && this.settings.dateToFetch == null) {
+        if (price === undefined && this.settings.dateToFetch === undefined) {
           continue;
         }
 

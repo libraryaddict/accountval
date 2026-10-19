@@ -7,15 +7,22 @@
     "build": "npm run build:types && npm run build:js",
     "build:types": "tsc",
     "build:js": "node esbuild.mjs",
-    "validate": "node validate.mjs"
+    "validate": "node validate.mjs",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-typescript": "^7.26.0",
+    "@eslint/js": "^10.0.1",
     "@types/node": "^25.9.1",
     "esbuild": "^0.28.2",
-    "typescript": "^5.2.2"
+    "eslint": "^10.13.0",
+    "eslint-plugin-simple-import-sort": "^14.0.0",
+    "eslint-plugin-unused-imports": "^4.4.1",
+    "typescript": "^5.2.2",
+    "typescript-eslint": "^8.72.0"
   },
   "dependencies": {
     "kolmafia": "^5.28931.0"

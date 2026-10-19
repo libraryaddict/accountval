@@ -1,72 +1,73 @@
+import * as kolmafia from "kolmafia";
 import {
-  print,
-  printHtml,
   abort,
-  visitUrl,
-  getRevision,
-  myId,
+  allNormalOutfits,
+  autosellPrice,
+  bufferToFile,
+  cliExecute,
+  Coinmaster,
+  entityDecode,
+  entityEncode,
+  equippedAmount,
+  Familiar,
+  familiarEquippedEquipment,
+  fileToBuffer,
+  fullnessLimit,
+  getCampground,
+  getCloset,
+  getDisplay,
+  getFreePulls,
+  getInventory,
+  getNoPulls,
+  getPermedSkills,
   getPlayerId,
   getPlayerName,
-  myMeat,
-  myClosetMeat,
-  myStorageMeat,
-  mySessionMeat,
-  myFullness,
-  fullnessLimit,
-  myInebriety,
+  getProperty,
+  getRelated,
+  getRevision,
+  getShop,
+  getStash,
+  getStorage,
+  getWorkshed,
+  gitExists,
+  haveFamiliar,
+  haveSkill,
+  historicalAge,
+  historicalPrice,
   inebrietyLimit,
-  mySpleenUse,
-  spleenLimit,
-  myLevel,
   isDarkMode,
   Item,
-  toItem,
-  Familiar,
-  toFamiliar,
-  entityEncode,
-  entityDecode,
-  bufferToFile,
-  fileToBuffer,
-  autosellPrice,
-  shopPrice,
-  Coinmaster,
-  sellPrice,
-  historicalPrice,
-  historicalAge,
-  equippedAmount,
-  familiarEquippedEquipment,
-  getInventory,
-  getCloset,
-  getStorage,
-  getFreePulls,
-  getNoPulls,
-  getStash,
-  getDisplay,
-  getShop,
-  mySessionItems,
-  getCampground,
-  myFamiliar,
-  haveFamiliar,
-  Skill,
-  haveSkill,
-  getPermedSkills,
-  skillModifier,
-  myGardenType,
-  getWorkshed,
-  getRelated,
-  allNormalOutfits,
   itemType,
-  Slot,
-  toSlot,
+  mallPrice,
+  mallPrices,
+  myClosetMeat,
+  myFamiliar,
+  myFullness,
+  myGardenType,
+  myId,
+  myInebriety,
+  myLevel,
+  myMeat,
+  mySessionItems,
+  mySessionMeat,
+  mySpleenUse,
+  myStorageMeat,
+  print,
+  printHtml,
+  sellPrice,
   sessionStorage,
   setProperty,
-  getProperty,
-  mallPrice,
-  gitExists,
-  cliExecute,
-  mallPrices,
+  shopPrice,
+  Skill,
+  skillModifier,
+  Slot,
+  spleenLimit,
+  toFamiliar,
+  toItem,
+  toSlot,
+  visitUrl,
 } from "kolmafia";
-import * as kolmafia from "kolmafia";
+
 import { DataType, KoLAPI, MallPricesOutcome } from "../api/supplierTypings";
 
 const requiredRevision = 29360;
@@ -93,11 +94,11 @@ export class KolmafiaProvider implements KoLAPI {
   }
 
   resolveAllMallPrices(previous: MallPricesOutcome): MallPricesOutcome {
-    if (previous != "not_loaded" && previous != "unsure") {
+    if (previous !== "not_loaded" && previous !== "unsure") {
       throw new Error(`Illegal mall loaded state: ${previous}`);
     }
 
-    if (previous == "not_loaded" && gitExists("loathers-mall-check")) {
+    if (previous === "not_loaded" && gitExists("loathers-mall-check")) {
       cliExecute("mallcheck");
 
       // It's possible mallcheck was aborted, or didn't run!
@@ -196,7 +197,7 @@ export class KolmafiaProvider implements KoLAPI {
   }
 
   toItem(val: number): Item {
-    if (typeof val == "string") {
+    if (typeof val === "string") {
       return Item.get(val);
     }
 
@@ -204,7 +205,7 @@ export class KolmafiaProvider implements KoLAPI {
   }
 
   toFamiliar(val: string | number): Familiar {
-    if (typeof val == "string") {
+    if (typeof val === "string") {
       return Familiar.get(val);
     }
 
@@ -220,9 +221,9 @@ export class KolmafiaProvider implements KoLAPI {
   }
 
   storeCache(key: string, data: string, dataType: DataType): void {
-    if (dataType == "large_persist") {
+    if (dataType === "large_persist") {
       bufferToFile(data, key);
-    } else if (dataType == "small_persist") {
+    } else if (dataType === "small_persist") {
       setProperty(key, data);
     } else {
       sessionStorage.setItem(key, data);
@@ -230,9 +231,9 @@ export class KolmafiaProvider implements KoLAPI {
   }
 
   retrieveCache(key: string, dataType: DataType): string {
-    if (dataType == "large_persist") {
+    if (dataType === "large_persist") {
       return fileToBuffer(key);
-    } else if (dataType == "small_persist") {
+    } else if (dataType === "small_persist") {
       return getProperty(key);
     }
 

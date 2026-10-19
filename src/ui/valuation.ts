@@ -1,11 +1,11 @@
 import { provider } from "../api/apiSupplier";
-import { AccountValLogic } from "../core/logic";
-import { AccountValSettings } from "../settings/settings";
-import { AccountValUtils } from "../utils/utils";
-import { AccountValColors } from "../utils/colors";
-import { ReportOutput } from "./output";
-import { ValItem, ItemStatus, ItemPrice, PriceType } from "../models/typings";
 import { KoLItem } from "../api/supplierTypings";
+import { AccountValLogic } from "../core/logic";
+import { ItemPrice, ItemStatus, PriceType,ValItem } from "../models/typings";
+import { AccountValSettings } from "../settings/settings";
+import { AccountValColors } from "../utils/colors";
+import { AccountValUtils } from "../utils/utils";
+import { ReportOutput } from "./output";
 
 interface ResolvedItem {
   item: ValItem;
@@ -21,7 +21,7 @@ export class ValuationReport {
   private mallExtinct: [string, string][] = [];
   private shopNetValue: number = 0;
   private shopPricedAt: number = 0;
-  private lastCategory: string | null = null;
+  private lastCategory: string | undefined;
   private shelfValue: number = 0;
   private exceededMax = false;
   private pronoun: string;
@@ -43,11 +43,11 @@ export class ValuationReport {
     this.pronoun = this.settings.fetchClan
       ? "The clan stash is"
       : !this.settings.playerId ||
-          this.settings.playerId == AccountValUtils.toInt(provider().myId())
+          this.settings.playerId === AccountValUtils.toInt(provider().myId())
         ? this.settings.fetchSession
           ? "Your session is"
           : "You are"
-        : provider().getPlayerName(this.settings.playerId) + " is";
+        : `${provider().getPlayerName(this.settings.playerId)  } is`;
   }
 
   public run() {
@@ -57,7 +57,7 @@ export class ValuationReport {
       this.formatResolvedItem(res);
     }
 
-    this.onShelfName(null, 0); // close shelf
+    this.onShelfName(undefined, 0); // close shelf
     this.printLinesAndExtinct(resolved.length);
     this.printSummary();
   }
@@ -73,7 +73,7 @@ export class ValuationReport {
       const price = this.logic.prices[no][1];
       const worthEach = Math.min(
         this.settings.maxNaturalPrice + 1,
-        price.price <= 0 && item.worthMultiplier == 1
+        price.price <= 0 && item.worthMultiplier === 1
           ? -1
           : price.price * (1 / item.worthMultiplier),
       );
@@ -81,7 +81,7 @@ export class ValuationReport {
 
       if (isNaN(count)) {
         this.out.printLine(
-          "Unable to handle the item '" + item.name + "', skipping..",
+          `Unable to handle the item '${  item.name  }', skipping..`,
           "plain",
           AccountValColors.attentionGrabbingWarning,
         );
@@ -102,13 +102,13 @@ export class ValuationReport {
   }
 
   private onShelfName(name: string, worth: number) {
-    if (!this.settings.doCategories || name == this.lastCategory) {
+    if (!this.settings.doCategories || name === this.lastCategory) {
       this.shelfValue += worth;
 
       return;
     }
 
-    if (this.lastCategory != null) {
+    if (this.lastCategory !== undefined) {
       this.lines.push(
         `<u><b>DC Shelf:</b> ${this.out.escapeHTML(this.lastCategory)}<font color='${AccountValColors.minorNote}'>, worth ${AccountValUtils.getNumber(this.shelfValue)} meat</font></u>`,
       );
@@ -133,7 +133,7 @@ export class ValuationReport {
 
     let title: string[] = [];
 
-    if (item.name != item.tradeableItem.name && item.worthMultiplier != 1) {
+    if (item.name !== item.tradeableItem.name && item.worthMultiplier !== 1) {
       title.push(`=== ${this.out.escapeHTML(item.name)} ===`);
       title.push("");
       title.push(
@@ -151,16 +151,16 @@ export class ValuationReport {
     }
 
     const accName =
-      price.accuracy == PriceType.NEW_PRICES
+      price.accuracy === PriceType.NEW_PRICES
         ? "Last malled"
-        : price.accuracy == PriceType.MALL_SALES
+        : price.accuracy === PriceType.MALL_SALES
           ? "Last sold"
-          : price.accuracy == PriceType.AUTOSELL
+          : price.accuracy === PriceType.AUTOSELL
             ? "Autosell"
             : "Last mafia malled";
     title.push(accName + tradeableWorth);
 
-    if (price.price2 > 0 && price.accuracy == PriceType.NEW_PRICES) {
+    if (price.price2 > 0 && price.accuracy === PriceType.NEW_PRICES) {
       title.push(
         `Last sold @ ${AccountValUtils.getNumber(price.price2)} meat.`,
       );
@@ -176,10 +176,10 @@ export class ValuationReport {
       title.push(`Worth a total of ${AccountValUtils.getNumber(totalWorth)}`);
     }
 
-    if (price.accuracy != PriceType.AUTOSELL) {
+    if (price.accuracy !== PriceType.AUTOSELL) {
       title.push("");
       title.push(
-        `Price valid as of ${AccountValUtils.getNumber(price.daysOutdated, 1)} day${price.daysOutdated != 1 ? "s" : ""} ago.`,
+        `Price valid as of ${AccountValUtils.getNumber(price.daysOutdated, 1)} day${price.daysOutdated !== 1 ? "s" : ""} ago.`,
       );
     }
 
@@ -190,17 +190,17 @@ export class ValuationReport {
       );
     }
 
-    if (item.snapshotSource != null) {
+    if (item.snapshotSource !== undefined) {
       title = [`Owns in ${item.snapshotSource}.`, ...title];
     }
 
     let name = this.out.escapeHTML(item.name);
 
-    if (item.bound != null) {
+    if (item.bound !== undefined) {
       let boundInfo: string;
       let color = AccountValColors.shopPricesOverpriced;
 
-      if (item.bound == ItemStatus.SHOP_WORTH) {
+      if (item.bound === ItemStatus.SHOP_WORTH) {
         const overpricedPerc = item.shopWorth / worthEach;
 
         if (item.shopWorth < 999_999_000) {
@@ -232,7 +232,7 @@ export class ValuationReport {
 
     if (worthEach <= 0 || worthEach > this.settings.maxNaturalPrice) {
       if (count > 1) {
-        this.mallExtinct.push([count + " @ " + name, title.join("&#010;")]);
+        this.mallExtinct.push([`${count  } @ ${  name}`, title.join("&#010;")]);
       } else {
         this.mallExtinct.push([name, title.join("&#010;")]);
       }
@@ -251,11 +251,11 @@ export class ValuationReport {
     }
 
     this.lines.push(
-      "<font title='" +
-        this.out.escapeHTML(title.join("&#010;")) +
-        "'>" +
-        text +
-        "</font>",
+      `<font title='${
+        this.out.escapeHTML(title.join("&#010;"))
+        }'>${
+        text
+        }</font>`,
     );
   }
 
@@ -276,7 +276,7 @@ export class ValuationReport {
         this.lines.push("");
       }
 
-      if (this.lines[0] == "") {
+      if (this.lines[0] === "") {
         this.lines.shift();
       }
 
@@ -291,19 +291,19 @@ export class ValuationReport {
         ];
         const extinct = this.mallExtinct.map(
           ([name, title], i) =>
-            "<font color='" +
-            colors[i % 2] +
-            "' title='" +
-            title +
-            "'>" +
-            name +
-            "</font>",
+            `<font color='${
+            colors[i % 2]
+            }' title='${
+            title
+            }'>${
+            name
+            }</font>`,
         );
         this.out.printLine(
-          "There were " +
-            extinct.length +
-            " mall extinct items! Items: " +
-            extinct.join(", "),
+          `There were ${
+            extinct.length
+            } mall extinct items! Items: ${
+            extinct.join(", ")}`,
           "html",
         );
       }
@@ -313,15 +313,15 @@ export class ValuationReport {
   private printSummary() {
     let mrAMeat = this.netvalue;
     this.out.printLine(
-      this.pronoun +
-        " worth " +
-        AccountValUtils.getNumber(this.netvalue) +
-        " meat!",
+      `${this.pronoun
+        } worth ${
+        AccountValUtils.getNumber(this.netvalue)
+        } meat!`,
       "plain",
       AccountValColors.helpfulStateInfo,
     );
 
-    if (this.settings.fetchSession && provider().mySessionMeat() != 0) {
+    if (this.settings.fetchSession && provider().mySessionMeat() !== 0) {
       mrAMeat = this.netvalue + provider().mySessionMeat();
       this.out.printLine(
         `Add meat from session, that's ${AccountValUtils.getNumber(mrAMeat)} meat!`,
@@ -366,7 +366,7 @@ export class ValuationReport {
 
     if (this.exceededMax) {
       this.out.printLine(
-        `<font color='${AccountValColors.minorNote}' title="The max natural price is currently set to ${AccountValUtils.getNumber(this.settings.maxNaturalPrice)}. (${this.settings.maxNaturalPrice == AccountValSettings.defaultMaxNaturalPrice ? "default" : `default is ${AccountValUtils.getNumber(AccountValSettings.defaultMaxNaturalPrice)}`})&#010;&#010;You can change this by using 'max=3b' as an arg.&#010;You can also set the property 'accountval_maxNaturalPrice' to a number (3b, 5,000,000, 3m1k, etc), this cap increases by 2b every year to account for meatflation">Some items were expensive and were marked as mall extinct. Hover for details.</font>`,
+        `<font color='${AccountValColors.minorNote}' title="The max natural price is currently set to ${AccountValUtils.getNumber(this.settings.maxNaturalPrice)}. (${this.settings.maxNaturalPrice === AccountValSettings.defaultMaxNaturalPrice ? "default" : `default is ${AccountValUtils.getNumber(AccountValSettings.defaultMaxNaturalPrice)}`})&#010;&#010;You can change this by using 'max=3b' as an arg.&#010;You can also set the property 'accountval_maxNaturalPrice' to a number (3b, 5,000,000, 3m1k, etc), this cap increases by 2b every year to account for meatflation">Some items were expensive and were marked as mall extinct. Hover for details.</font>`,
         "html",
       );
     }
@@ -392,36 +392,36 @@ export class ValuationReport {
     let meat = 0;
     const meatSources: string[] = [];
 
-    if (this.settings.fetchInventory && provider().myMeat() != 0) {
+    if (this.settings.fetchInventory && provider().myMeat() !== 0) {
       meat += provider().myMeat();
       meatSources.push(
-        AccountValUtils.getNumber(provider().myMeat()) + " meat in inventory",
+        `${AccountValUtils.getNumber(provider().myMeat())  } meat in inventory`,
       );
     }
 
-    if (this.settings.fetchCloset && provider().myClosetMeat() != 0) {
+    if (this.settings.fetchCloset && provider().myClosetMeat() !== 0) {
       meat += provider().myClosetMeat();
       meatSources.push(
-        AccountValUtils.getNumber(provider().myClosetMeat()) +
-          " meat in closet",
+        `${AccountValUtils.getNumber(provider().myClosetMeat())
+          } meat in closet`,
       );
     }
 
-    if (this.settings.fetchStorage && provider().myStorageMeat() != 0) {
+    if (this.settings.fetchStorage && provider().myStorageMeat() !== 0) {
       meat += provider().myStorageMeat();
       meatSources.push(
-        AccountValUtils.getNumber(provider().myStorageMeat()) +
-          " meat in storage",
+        `${AccountValUtils.getNumber(provider().myStorageMeat())
+          } meat in storage`,
       );
     }
 
-    if (meat > 0 && this.settings.playerId == 0) {
+    if (meat > 0 && this.settings.playerId === 0) {
       this.out.printLine(
-        "<font title='" +
-          meatSources.join(", ") +
-          "'>This doesn't include your " +
-          AccountValUtils.getNumber(meat) +
-          " meat!</font>",
+        `<font title='${
+          meatSources.join(", ")
+          }'>This doesn't include your ${
+          AccountValUtils.getNumber(meat)
+          } meat!</font>`,
         "html",
       );
     }

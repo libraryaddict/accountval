@@ -5,7 +5,7 @@ export class IrratPrices extends FlatfilePrices {
   ofThePast: boolean = false;
 
   doWarning() {
-    if (this.prices == null || this.ofThePast || this.lastUpdated == null) {
+    if (this.prices === undefined || this.ofThePast || this.lastUpdated === undefined) {
       return false;
     }
 
@@ -19,7 +19,7 @@ export class IrratPrices extends FlatfilePrices {
   }
 
   isViable() {
-    if (this.prices == null) {
+    if (this.prices === undefined) {
       return false;
     }
 
@@ -27,7 +27,7 @@ export class IrratPrices extends FlatfilePrices {
       return true;
     }
 
-    if (this.lastUpdated == null) {
+    if (this.lastUpdated === undefined) {
       return false;
     }
 
@@ -47,7 +47,7 @@ export class IrratPrices extends FlatfilePrices {
   loadDataFile(): string {
     const toFetch = this.settings.dateToFetch;
 
-    if (toFetch == null) {
+    if (toFetch === undefined) {
       return provider().retrieveCache(
         "irrats_item_prices.txt",
         "large_persist",

@@ -1,11 +1,11 @@
 import { provider } from "../api/apiSupplier";
-import { KoLItem, KoLSkill, KoLFamiliar } from "../api/supplierTypings";
-import { ItemStatus, ValItem } from "../models/typings";
-import { AccountValColors } from "../utils/colors";
-import { CoinmasterResolver } from "./coinmaster";
-import { PriceResolver } from "../pricing/priceResolver";
+import { KoLFamiliar,KoLItem, KoLSkill } from "../api/supplierTypings";
 import { Bind, binds, bindsOf } from "../core/binds";
+import { ItemStatus, ValItem } from "../models/typings";
+import { PriceResolver } from "../pricing/priceResolver";
+import { AccountValColors } from "../utils/colors";
 import { AccountValUtils } from "../utils/utils";
+import { CoinmasterResolver } from "./coinmaster";
 
 class AccValStuff {
   untradeableItem?: KoLItem;
@@ -61,7 +61,7 @@ export class ItemResolver {
       provider().retrieveCache(
         this.accountValVisitCachePropName,
         "transient",
-      ) == val
+      ) === val
     ) {
       return;
     }
@@ -106,7 +106,7 @@ export class ItemResolver {
 
           break;
         case "garden":
-          if (provider().myGardenType() == bind.garden) {
+          if (provider().myGardenType() === bind.garden) {
             items.push([s.actualItem, ItemStatus.IN_USE]);
           }
 
@@ -126,7 +126,7 @@ export class ItemResolver {
       }
     }
 
-    if (origSize != this.accountValCache.size) {
+    if (origSize !== this.accountValCache.size) {
       this.saveCache();
     }
 
@@ -141,7 +141,7 @@ export class ItemResolver {
         provider().retrieveCache(prop.replace("!", ""), "small_persist"),
       );
       const isNotNegated = !prop.includes("!");
-      result = result && isTrue == isNotNegated;
+      result = result && isTrue === isNotNegated;
     }
 
     return result;
@@ -175,15 +175,15 @@ export class ItemResolver {
       }
 
       try {
-        if (s.bind.type == "currency" && s.untradeableItem == null) {
-          if (coinmaster == null) {
+        if (s.bind.type === "currency" && s.untradeableItem === undefined) {
+          if (coinmaster === undefined) {
             coinmaster = new CoinmasterResolver(this.prices);
             coinmaster.load();
           }
 
           const item = coinmaster.getHighestCoinmaster(s.actualItem);
 
-          if (item == null) {
+          if (item === null) {
             continue;
           }
 
@@ -195,7 +195,7 @@ export class ItemResolver {
         const item = s.untradeableItem;
         const pair: [ValItem, number] = copy[item.name];
 
-        if (pair == null) {
+        if (pair === undefined) {
           continue;
         }
 
@@ -206,10 +206,10 @@ export class ItemResolver {
           s.actualItem,
           item.name,
           item.plural,
-          v.bound == null ||
-            v.bound == ItemStatus.NO_TRADE ||
-            v.bound == ItemStatus.IN_USE
-            ? s.bind.type == "untradeable"
+          v.bound === undefined ||
+            v.bound === ItemStatus.NO_TRADE ||
+            v.bound === ItemStatus.IN_USE
+            ? s.bind.type === "untradeable"
               ? ItemStatus.BOUND
               : ItemStatus.NO_TRADE
             : v.bound,
@@ -246,13 +246,13 @@ export class ItemResolver {
     const famEquipped: Map<KoLItem, number> = new Map();
 
     for (const fam of KoLFamiliar.all()) {
-      if (!provider().haveFamiliar(fam) || provider().myFamiliar() == fam) {
+      if (!provider().haveFamiliar(fam) || provider().myFamiliar() === fam) {
         continue;
       }
 
       const item = provider().familiarEquippedEquipment(fam);
 
-      if (item == null || item == KoLItem.none) {
+      if (item == null || item === KoLItem.none) {
         continue;
       }
 
@@ -269,7 +269,7 @@ export class ItemResolver {
 
     let page = this.visitCache.get(url);
 
-    if (page == null) {
+    if (page === undefined) {
       page = provider().visitUrl(url);
       this.visitCache.set(url, page);
     }
@@ -295,18 +295,18 @@ export class ItemResolver {
     const values: AccValStuff[] = [];
 
     for (const bind of binds) {
-      if (bind.type == "price" || bind.type == "coinmaster") {
+      if (bind.type === "price" || bind.type === "coinmaster") {
         continue;
       }
 
       try {
         const v = new AccValStuff(bind, KoLItem.get(bind.item));
 
-        if (bind.type == "untradeable") {
+        if (bind.type === "untradeable") {
           v.untradeableItem = KoLItem.get(bind.untradeable);
-        } else if (bind.type == "book") {
+        } else if (bind.type === "book") {
           v.skill = KoLSkill.get(bind.skill);
-        } else if (bind.type == "currency" && bind.untradeable != null) {
+        } else if (bind.type === "currency" && bind.untradeable !== undefined) {
           v.untradeableItem = KoLItem.get(bind.untradeable);
           v.currencyAmount = bind.amount;
         }
@@ -328,7 +328,7 @@ export class ItemResolver {
       if (
         v.actualItem.tradeable ||
         tradeableSources.has(v.actualItem) ||
-        (v.bind.type == "currency" && v.untradeableItem == null)
+        (v.bind.type === "currency" && v.untradeableItem === undefined)
       ) {
         continue;
       }
@@ -350,7 +350,7 @@ export class ItemResolver {
         .map((i) => [i, provider().associatedSkill(i)] as [KoLItem, KoLSkill])
         .filter(
           ([i, skill]) =>
-            !i.reusable && !i.quest && !i.gift && skill != KoLSkill.none,
+            !i.reusable && !i.quest && !i.gift && skill !== KoLSkill.none,
         ),
     );
     const alreadyNoted = values.map((v) => v.actualItem);

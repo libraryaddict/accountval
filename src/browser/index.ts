@@ -41,7 +41,7 @@ async function runCommand(output: HTMLElement, input: HTMLInputElement) {
     const { run } = require("../accountval");
 
     status.remove();
-    run(command == "" ? undefined : command);
+    run(command === "" ? undefined : command);
   } catch (e) {
     console.error(e);
     status.remove();

@@ -1,6 +1,6 @@
 import { provider } from "../api/apiSupplier";
-import { ValItem } from "../models/typings";
 import { KoLItem, KoLSlot } from "../api/supplierTypings";
+import { ValItem } from "../models/typings";
 
 export interface AccountValPreset {
   name(): string[];
@@ -12,7 +12,7 @@ export interface AccountValPreset {
 let presets: AccountValPreset[] = null;
 
 export function getPresets(): AccountValPreset[] {
-  if (presets != null) {
+  if (presets !== null) {
     return presets;
   }
 
@@ -38,7 +38,7 @@ export function getPresets(): AccountValPreset[] {
         return [type];
       },
       isProcessed: function (item: KoLItem): boolean {
-        return provider().itemType(item).replace(" item", "") == type;
+        return provider().itemType(item).replace(" item", "") === type;
       },
       desc: function (): string {
         return `Show only ${type}`;
@@ -70,7 +70,7 @@ export function getPresets(): AccountValPreset[] {
         return false;
       }
 
-      return provider().itemType(item) == "food";
+      return provider().itemType(item) === "food";
     },
     desc: function (): string {
       return "Show only food you can fit in stomach";
@@ -90,7 +90,7 @@ export function getPresets(): AccountValPreset[] {
         return false;
       }
 
-      return provider().itemType(item) == "booze";
+      return provider().itemType(item) === "booze";
     },
     desc: function (): string {
       return "Show only booze you can fit in liver";
@@ -109,7 +109,7 @@ export function getPresets(): AccountValPreset[] {
         return false;
       }
 
-      return provider().itemType(item) == "spleen item";
+      return provider().itemType(item) === "spleen item";
     },
     desc: function (): string {
       return "Show only spleen items you can fit in spleen";
@@ -121,7 +121,7 @@ export function getPresets(): AccountValPreset[] {
       return ["equip", "equips", "equipment", "gear"];
     },
     isProcessed: function (item: KoLItem): boolean {
-      return provider().toSlot(item) != KoLSlot.none;
+      return provider().toSlot(item) !== KoLSlot.none;
     },
     desc: function (): string {
       return "Show only items that can be equipped";
@@ -145,7 +145,7 @@ export function getPresets(): AccountValPreset[] {
       return ["hatchling", "hatchlings", "larva"];
     },
     isProcessed: function (item: KoLItem, worth: number): boolean {
-      return provider().itemType(item) == "familiar larva";
+      return provider().itemType(item) === "familiar larva";
     },
     desc: function (): string {
       return "Show only items that can turn into familiars";
@@ -221,7 +221,7 @@ export function getPresets(): AccountValPreset[] {
   });
 
   presets.forEach((preset) => {
-    if (preset.isProcessed == null && preset.isShown == null) {
+    if (preset.isProcessed === undefined && preset.isShown === undefined) {
       throw new Error(
         `The preset ${
           preset.name()[0]
@@ -229,7 +229,7 @@ export function getPresets(): AccountValPreset[] {
       );
     }
 
-    if (preset.isProcessed != null && preset.isShown != null) {
+    if (preset.isProcessed !== undefined && preset.isShown !== undefined) {
       throw new Error(
         `The preset ${
           preset.name()[0]

@@ -1,8 +1,8 @@
 import { provider } from "../../api/apiSupplier";
-import { ItemPrice, PriceType } from "../../models/typings";
-import { PriceVolunteer } from "../priceInterface";
 import { KoLItem } from "../../api/supplierTypings";
+import { ItemPrice, PriceType } from "../../models/typings";
 import { AccountValSettings } from "../../settings/settings";
+import { PriceVolunteer } from "../priceInterface";
 
 type PricegunItem = {
   value: number;
@@ -84,7 +84,7 @@ export class PricegunResolver implements PriceVolunteer {
       const price = this.items.get(i.id);
 
       if (!price || price.volume < 0) {
-        return null;
+        return undefined;
       }
 
       return new ItemPrice(
