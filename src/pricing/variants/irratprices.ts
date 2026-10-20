@@ -11,11 +11,7 @@ export class IrratPrices extends FlatfilePrices {
 
     const aWeekIsThisManyMillis = 7 * 24 * 60 * 60 * 1000;
 
-    if (this.lastUpdated + aWeekIsThisManyMillis < Date.now()) {
-      return false;
-    }
-
-    return true;
+    return this.lastUpdated + aWeekIsThisManyMillis < Date.now();
   }
 
   isViable() {
