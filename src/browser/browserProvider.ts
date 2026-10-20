@@ -450,6 +450,10 @@ export class BrowserProvider implements KoLAPI {
     return false;
   }
 
+  isHeadless(): boolean {
+    return false;
+  }
+
   getInventory(): Map<BrowserItem, number> {
     return this.apiItems("inventory");
   }

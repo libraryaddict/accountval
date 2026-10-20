@@ -47,7 +47,7 @@ export class ValuationReport {
         ? this.settings.fetchSession
           ? "Your session is"
           : "You are"
-        : `${provider().getPlayerName(this.settings.playerId)  } is`;
+        : `${provider().getPlayerName(this.settings.playerId)} is`;
   }
 
   public run() {
@@ -81,7 +81,7 @@ export class ValuationReport {
 
       if (count === undefined || isNaN(count)) {
         this.out.printLine(
-          `Unable to handle the item '${  item.name  }', skipping..`,
+          `Unable to handle the item '${item.name}', skipping..`,
           "plain",
           AccountValColors.attentionGrabbingWarning,
         );
@@ -232,7 +232,7 @@ export class ValuationReport {
 
     if (worthEach <= 0 || worthEach > this.settings.maxNaturalPrice) {
       if (count > 1) {
-        this.mallExtinct.push([`${count  } @ ${  name}`, title.join("&#010;")]);
+        this.mallExtinct.push([`${count} @ ${name}`, title.join("&#010;")]);
       } else {
         this.mallExtinct.push([name, title.join("&#010;")]);
       }
@@ -251,11 +251,9 @@ export class ValuationReport {
     }
 
     this.lines.push(
-      `<font title='${
-        this.out.escapeHTML(title.join("&#010;"))
-        }'>${
+      `<font title='${this.out.escapeHTML(title.join("&#010;"))}'>${
         text
-        }</font>`,
+      }</font>`,
     );
   }
 
@@ -291,19 +289,12 @@ export class ValuationReport {
         ];
         const extinct = this.mallExtinct.map(
           ([name, title], i) =>
-            `<font color='${
-            colors[i % 2]
-            }' title='${
-            title
-            }'>${
-            name
-            }</font>`,
+            `<font color='${colors[i % 2]}' title='${title}'>${name}</font>`,
         );
         this.out.printLine(
           `There were ${
             extinct.length
-            } mall extinct items! Items: ${
-            extinct.join(", ")}`,
+          } mall extinct items! Items: ${extinct.join(", ")}`,
           "html",
         );
       }
@@ -313,10 +304,7 @@ export class ValuationReport {
   private printSummary() {
     let mrAMeat = this.netvalue;
     this.out.printLine(
-      `${this.pronoun
-        } worth ${
-        AccountValUtils.getNumber(this.netvalue)
-        } meat!`,
+      `${this.pronoun} worth ${AccountValUtils.getNumber(this.netvalue)} meat!`,
       "plain",
       AccountValColors.helpfulStateInfo,
     );
@@ -366,7 +354,7 @@ export class ValuationReport {
 
     if (this.exceededMax) {
       this.out.printLine(
-        `<font color='${AccountValColors.minorNote}' title="The max natural price is currently set to ${AccountValUtils.getNumber(this.settings.maxNaturalPrice)}. (${this.settings.maxNaturalPrice === AccountValSettings.defaultMaxNaturalPrice ? "default" : `default is ${AccountValUtils.getNumber(AccountValSettings.defaultMaxNaturalPrice)}`})&#010;&#010;You can change this by using 'max=3b' as an arg.&#010;You can also set the property 'accountval_maxNaturalPrice' to a number (3b, 5,000,000, 3m1k, etc), this cap increases by 2b every year to account for meatflation">Some items were expensive and were marked as mall extinct. Hover for details.</font>`,
+        `<font color='${AccountValColors.minorNote}' title="The max natural price is currently set to ${AccountValUtils.getNumber(this.settings.maxNaturalPrice)}. (${this.settings.maxNaturalPrice === AccountValSettings.defaultMaxNaturalPrice ? "default" : `default is ${AccountValUtils.getNumber(AccountValSettings.defaultMaxNaturalPrice)}`})&#010;&#010;You can change this by using 'max=3b' as an arg.&#010;You can also set the property 'accountval_maxNaturalPrice' to a number (3b, 5,000,000, 3m1k, etc), this cap increases by 2b every year to account for meatflation">Some items were expensive and were marked as mall extinct.${!provider().isHeadless() ? " Hover for details." : ""}</font>`,
         "html",
       );
     }
@@ -395,33 +383,35 @@ export class ValuationReport {
     if (this.settings.fetchInventory && provider().myMeat() !== 0) {
       meat += provider().myMeat();
       meatSources.push(
-        `${AccountValUtils.getNumber(provider().myMeat())  } meat in inventory`,
+        `${AccountValUtils.getNumber(provider().myMeat())} meat in inventory`,
       );
     }
 
     if (this.settings.fetchCloset && provider().myClosetMeat() !== 0) {
       meat += provider().myClosetMeat();
       meatSources.push(
-        `${AccountValUtils.getNumber(provider().myClosetMeat())
-          } meat in closet`,
+        `${AccountValUtils.getNumber(
+          provider().myClosetMeat(),
+        )} meat in closet`,
       );
     }
 
     if (this.settings.fetchStorage && provider().myStorageMeat() !== 0) {
       meat += provider().myStorageMeat();
       meatSources.push(
-        `${AccountValUtils.getNumber(provider().myStorageMeat())
-          } meat in storage`,
+        `${AccountValUtils.getNumber(
+          provider().myStorageMeat(),
+        )} meat in storage`,
       );
     }
 
     if (meat > 0 && this.settings.playerId === 0) {
       this.out.printLine(
-        `<font title='${
-          meatSources.join(", ")
-          }'>This doesn't include your ${
-          AccountValUtils.getNumber(meat)
-          } meat!</font>`,
+        `<font title='${meatSources.join(
+          ", ",
+        )}'>This doesn't include your ${AccountValUtils.getNumber(
+          meat,
+        )} meat!</font>`,
         "html",
       );
     }

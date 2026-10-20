@@ -104,6 +104,7 @@ export interface KoLAPI {
   spleenLimit(): number;
   myLevel(): number;
   isDarkMode(): boolean;
+  isHeadless(): boolean;
   toItem(val: number): KoLItem;
   toFamiliar(val: string | number): KoLFamiliar;
   entityEncode(val: string): string;

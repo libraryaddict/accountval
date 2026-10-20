@@ -36,6 +36,7 @@ import {
   historicalPrice,
   inebrietyLimit,
   isDarkMode,
+  isHeadless,
   Item,
   itemType,
   mallPrice,
@@ -194,6 +195,10 @@ export class KolmafiaProvider implements KoLAPI {
 
   isDarkMode(): boolean {
     return isDarkMode();
+  }
+
+  isHeadless(): boolean {
+    return isHeadless();
   }
 
   toItem(val: number): Item {
