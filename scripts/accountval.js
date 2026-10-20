@@ -839,10 +839,7 @@ var init_irratprices = __esm({
           return false;
         }
         var aWeekIsThisManyMillis = 7 * 24 * 60 * 60 * 1e3;
-        if (this.lastUpdated + aWeekIsThisManyMillis < Date.now()) {
-          return false;
-        }
-        return true;
+        return this.lastUpdated + aWeekIsThisManyMillis < Date.now();
       } }, { key: "isViable", value: function isViable() {
         if (this.prices === void 0) {
           return false;
@@ -5670,17 +5667,13 @@ var init_valuation = __esm({
         this.printMeat();
         if (this.exceededMax) {
           this.out.printLine(
-            `<font color='${AccountValColors.minorNote}' title="The max natural price is currently set to ${AccountValUtils.getNumber(this.settings.maxNaturalPrice)}. (${this.settings.maxNaturalPrice === AccountValSettings.defaultMaxNaturalPrice ? "default" : `default is ${AccountValUtils.getNumber(AccountValSettings.defaultMaxNaturalPrice)}`})&#010;&#010;You can change this by using 'max=3b' as an arg.&#010;You can also set the property 'accountval_maxNaturalPrice' to a number (3b, 5,000,000, 3m1k, etc), this cap increases by 2b every year to account for meatflation">Some items were expensive and were marked as mall extinct. Hover for details.</font>`,
+            `<font color='${AccountValColors.minorNote}' title="The max natural price is currently set to ${AccountValUtils.getNumber(this.settings.maxNaturalPrice)}. (${this.settings.maxNaturalPrice === AccountValSettings.defaultMaxNaturalPrice ? "default" : `default is ${AccountValUtils.getNumber(AccountValSettings.defaultMaxNaturalPrice)}`})&#010;&#010;You can change this by using 'max=3b' as an arg.&#010;You can also set the property 'accountval_maxNaturalPrice' to a number (3b, 5,000,000, 3m1k, etc), this cap increases by 2b every year to account for meatflation">Some items were expensive and were marked as mall extinct.${!provider().isHeadless() ? " Hover for details." : ""}</font>`,
             "html"
           );
         }
         if (this.logic.priceResolver.doWarning()) {
           this.out.printLine(
-            `<font color='${AccountValColors.attentionGrabbingWarning}'>Unfortunately I'm having issues resolving mall prices, the old database has gone down and my PR for the other source is on hold and waiting for approval. <u><a href='https://github.com/loathers/pricegun/pull/8'>https://github.com/loathers/pricegun/pull/8</a></u></font>`,
-            "html"
-          );
-          this.out.printLine(
-            `As such please bear with me that prices are effectively 'frozen'.`,
+            "The prices database was not updated in the last week, so valuations may be out of date.",
             "plain",
             AccountValColors.attentionGrabbingWarning
           );
@@ -5700,18 +5693,26 @@ var init_valuation = __esm({
         if (this.settings.fetchCloset && provider().myClosetMeat() !== 0) {
           meat += provider().myClosetMeat();
           meatSources.push(
-            `${AccountValUtils.getNumber(provider().myClosetMeat())} meat in closet`
+            `${AccountValUtils.getNumber(
+              provider().myClosetMeat()
+            )} meat in closet`
           );
         }
         if (this.settings.fetchStorage && provider().myStorageMeat() !== 0) {
           meat += provider().myStorageMeat();
           meatSources.push(
-            `${AccountValUtils.getNumber(provider().myStorageMeat())} meat in storage`
+            `${AccountValUtils.getNumber(
+              provider().myStorageMeat()
+            )} meat in storage`
           );
         }
         if (meat > 0 && this.settings.playerId === 0) {
           this.out.printLine(
-            `<font title='${meatSources.join(", ")}'>This doesn't include your ${AccountValUtils.getNumber(meat)} meat!</font>`,
+            `<font title='${meatSources.join(
+              ", "
+            )}'>This doesn't include your ${AccountValUtils.getNumber(
+              meat
+            )} meat!</font>`,
             "html"
           );
         }
@@ -6096,6 +6097,8 @@ var KolmafiaProvider = /* @__PURE__ */ (function() {
     return (0, import_kolmafia.myLevel)();
   } }, { key: "isDarkMode", value: function isDarkMode() {
     return (0, import_kolmafia.isDarkMode)();
+  } }, { key: "isHeadless", value: function isHeadless() {
+    return (0, import_kolmafia.isHeadless)();
   } }, { key: "toItem", value: function toItem(val) {
     if (typeof val === "string") {
       return import_kolmafia.Item.get(val);
