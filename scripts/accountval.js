@@ -685,7 +685,7 @@ var init_flatfile = __esm({
             }
             var spl2 = spl.split("	");
             if (spl2.length === 2 && spl2[0] === "Last Updated:") {
-              this.lastUpdated = parseInt(spl2[1]);
+              this.lastUpdated = parseInt(spl2[1]) * 1e3;
               continue;
             }
             if (spl2.length < 3) {
