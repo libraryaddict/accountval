@@ -53,7 +53,7 @@ export abstract class FlatfilePrices implements PriceVolunteer {
       const spl2 = spl.split("\t");
 
       if (spl2.length === 2 && spl2[0] === "Last Updated:") {
-        this.lastUpdated = parseInt(spl2[1]);
+        this.lastUpdated = parseInt(spl2[1]) * 1000;
         continue;
       }
 
