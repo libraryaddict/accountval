@@ -1499,8 +1499,9 @@ var init_priceResolver = __esm({
                 var foldPrices = foldables.map(
                   (f2) => this.itemPrice(f2, true, forcePricing, doSuperFast, doEstimates)
                 ).filter((p) => p !== void 0);
+                var sortPrice = (f2) => f2.price <= 0 ? 999999999999 : f2.price;
                 foldPrices.sort(
-                  (f1, f2) => f1.item.tradeable !== f2.item.tradeable ? f1.item.tradeable ? -1 : 1 : f1.price - f2.price
+                  (f1, f2) => f1.item.tradeable !== f2.item.tradeable ? f1.item.tradeable ? -1 : 1 : sortPrice(f1) - sortPrice(f2)
                 );
                 var compare = foldPrices.find((f2) => f2.item === item);
                 var _iterator3 = _createForOfIteratorHelper5(
@@ -1532,12 +1533,7 @@ var init_priceResolver = __esm({
         try {
           var specialPrice = this.specialCase.get(item);
           if (specialPrice !== void 0) {
-            return new ItemPrice(
-              item,
-              specialPrice,
-              PriceType.MALL,
-              0
-            );
+            return new ItemPrice(item, specialPrice, PriceType.MALL, 0);
           }
           if (!item.tradeable) {
             return new ItemPrice(
