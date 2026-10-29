@@ -103,12 +103,15 @@ export class PriceResolver {
               )
               .filter((p) => p !== undefined);
 
+            const sortPrice = (f: ItemPrice) =>
+              f.price <= 0 ? 999_999_999_999 : f.price;
+
             foldPrices.sort((f1, f2) =>
               f1.item.tradeable !== f2.item.tradeable
                 ? f1.item.tradeable
                   ? -1
                   : 1
-                : f1.price - f2.price,
+                : sortPrice(f1) - sortPrice(f2),
             );
             const compare = foldPrices.find((f) => f.item === item);
 
@@ -136,12 +139,7 @@ export class PriceResolver {
       const specialPrice = this.specialCase.get(item);
 
       if (specialPrice !== undefined) {
-        return new ItemPrice(
-          item,
-          specialPrice,
-          PriceType.MALL,
-          0,
-        );
+        return new ItemPrice(item, specialPrice, PriceType.MALL, 0);
       }
 
       if (!item.tradeable) {
