@@ -1115,8 +1115,9 @@
                   const foldPrices = foldables.map(
                     (f) => this.itemPrice(f, true, forcePricing, doSuperFast, doEstimates)
                   ).filter((p) => p !== void 0);
+                  const sortPrice = (f) => f.price <= 0 ? 999999999999 : f.price;
                   foldPrices.sort(
-                    (f1, f2) => f1.item.tradeable !== f2.item.tradeable ? f1.item.tradeable ? -1 : 1 : f1.price - f2.price
+                    (f1, f2) => f1.item.tradeable !== f2.item.tradeable ? f1.item.tradeable ? -1 : 1 : sortPrice(f1) - sortPrice(f2)
                   );
                   const compare = foldPrices.find((f) => f.item === item);
                   for (const f of foldPrices) {
@@ -1138,12 +1139,7 @@
           try {
             const specialPrice = this.specialCase.get(item);
             if (specialPrice !== void 0) {
-              return new ItemPrice(
-                item,
-                specialPrice,
-                2 /* MALL */,
-                0
-              );
+              return new ItemPrice(item, specialPrice, 2 /* MALL */, 0);
             }
             if (!item.tradeable) {
               return new ItemPrice(
